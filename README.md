@@ -47,7 +47,7 @@ use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) at the start of a task. it r
 
 ### just use [`/poteto-mode`](./skills/poteto-mode/SKILL.md)
 
-this skill is the main shortcut. i use it whenever i need the agent to do rigorous engineering work. it comes with twenty-two playbooks:
+this skill is the main shortcut for rigorous engineering work. it comes with twenty-two playbooks:
 
 ```
 /poteto-mode this pr has a subtle bug where the scroll drifts every 750ms even when idle. repro
@@ -152,7 +152,7 @@ the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/po
 
 ### examples
 
-mostly i type [`/poteto-mode`](./skills/poteto-mode/SKILL.md) at the start of a task and let it route to a playbook. the other skills fire as the steps need them. a few i reach for directly.
+most workflows start with [`/poteto-mode`](./skills/poteto-mode/SKILL.md) and let it route to a playbook. the other skills fire as the steps need them; invoke one directly only when you want that specific workflow.
 
 
 <details>
@@ -197,7 +197,7 @@ automate-me:       /automate-me
 
 ## the `poteto-agent` and Comment Sicko subagents
 
-pstack also ships a subagent that runs my style end to end. spawn it from a parent agent via a native `task` call with [`agent: "poteto-agent"`](./agents/poteto-agent.md). it reads `poteto-mode` in full, including its inline principles index, before doing any work. substituting an ordinary worker agent skips that read and drifts.
+pstack also ships a subagent that runs poteto's style end to end. spawn it from a parent agent via a native `task` call with [`agent: "poteto-agent"`](./agents/poteto-agent.md). it reads `poteto-mode` in full, including its inline principles index, before doing any work. substituting an ordinary worker agent skips that read and drifts.
 
 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) and [`agent: "poteto-agent"`](./agents/poteto-agent.md) route through the same wrapper.
 
@@ -248,11 +248,11 @@ inside `poteto-mode`, the [babysit playbook](./skills/poteto-mode/playbooks/baby
 
 ## why are there no planning skills?
 
-omp has native plan mode which works great with pstack. but personally, i don't believe in planning. the best spec is code. if you do want to make a plan, [`/poteto-mode`](./skills/poteto-mode/SKILL.md) covers it, but it's not a default. 
+omp has native plan mode, which works well with pstack. planning is deliberately not the default: code is usually the best spec. when a plan is useful, [`/poteto-mode`](./skills/poteto-mode/SKILL.md) covers it.
 
 ## make it yours
 
-`poteto-mode` is my style. you may not want exactly that.
+`poteto-mode` encodes poteto's style. you may not want exactly that.
 
 type [`/automate-me`](./skills/automate-me/SKILL.md). it mines your recent transcripts, drafts a `<your-name>-mode` skill from how you've actually worked, and routes through pstack underneath. you keep pstack as the base and end up with your own routing skill alongside `poteto-mode`.
 
