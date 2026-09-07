@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "cancellationUnchanged": true,
+  "nativeBatches": [
+    [
+      {
+        "id": "FirstOne",
+        "agent": "omp-pstack-88f9cfe58ad028985c73703c",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_INDEX_1, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and project-wide test suites.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "exitCode": 0,
+        "output": "{\n  \"text\": \"PSTACK_First_INDEX_1\"\n}",
+        "resolvedModel": "openai-codex/gpt-6-astra:high"
+      },
+      {
+        "id": "FirstTwo",
+        "agent": "omp-pstack-88f9cfe58ad028985c73703c",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_INDEX_2, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and project-wide test suites.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "exitCode": 0,
+        "output": "{\n  \"text\": \"PSTACK_First_INDEX_2\"\n}",
+        "resolvedModel": "openai-codex/gpt-6-astra:high"
+      },
+      {
+        "id": "FirstThree",
+        "agent": "omp-pstack-0003eca3be0c9d11aa341bf3",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_INDEX_3, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and project-wide test suites.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "exitCode": 0,
+        "output": "{\n  \"text\": \"PSTACK_First_INDEX_3\"\n}",
+        "resolvedModel": "openai-codex/gpt-5.4-mini:high"
+      }
+    ],
+    [
+      {
+        "id": "SecondOne",
+        "agent": "omp-pstack-88f9cfe58ad028985c73703c",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_Second_INDEX_1, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "exitCode": 0,
+        "output": "{\n  \"text\": \"PSTACK_Second_INDEX_1\"\n}",
+        "resolvedModel": "openai-codex/gpt-5.4-mini:high"
+      },
+      {
+        "id": "SecondTwo",
+        "agent": "omp-pstack-88f9cfe58ad028985c73703c",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_Second_INDEX_2, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "exitCode": 0,
+        "output": "{\n  \"text\": \"PSTACK_Second_2_INDEX_2\"\n}",
+        "resolvedModel": "openai-codex/gpt-5.4-mini:high"
+      },
+      {
+        "id": "SecondThree",
+        "agent": "omp-pstack-0003eca3be0c9d11aa341bf3",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_Second_INDEX_3, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "exitCode": 0,
+        "output": "{\n  \"text\": \"PSTACK_Second_INDEX_3\"\n}",
+        "resolvedModel": "openai-codex/gpt-5.4-mini:high"
+      }
+    ]
+  ]
+}

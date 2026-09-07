@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Benny fixture counter</title></head>
+<body data-benny-app="benny-fixture-counter">
+<main>
+	<p>Count: <span data-testid="count">0</span></p>
+	<button data-testid="increment">Increment</button>
+	<button data-testid="decrement">Decrement</button>
+	<button data-testid="reset">Reset</button>
+	<input data-testid="item-input" placeholder="item" />
+	<button data-testid="add">Add</button>
+	<ul id="items"></ul>
+</main>
+<script>
+	let count = 0;
+	const label = document.querySelector('[data-testid=count]');
+	const input = document.querySelector('[data-testid=item-input]');
+	const items = document.getElementById('items');
+	function render() { label.textContent = String(count); }
+	document.querySelector('[data-testid=increment]').addEventListener('click', () => { count++; /* benny-fix */ });
+	document.querySelector('[data-testid=decrement]').addEventListener('click', () => { count--; render(); });
+	document.querySelector('[data-testid=reset]').addEventListener('click', () => { count = 0; render(); });
+	document.querySelector('[data-testid=add]').addEventListener('click', () => {
+		const li = document.createElement('li');
+		li.setAttribute('data-testid', 'item');
+		li.textContent = input.value || 'item';
+		items.appendChild(li);
+		input.value = '';
+	});
+</script>
+</body>
+</html>

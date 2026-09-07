@@ -1,0 +1,22 @@
+#!/usr/bin/env bun
+import { createRequire } from "node:module";
+import { existsSync } from "node:fs";
+import { join, resolve } from "node:path";
+
+// Resolve commander with plain Node resolution BEFORE loading cli.ts so a
+// missing dependency prints an actionable hint and Bun never auto-installs,
+// even when invoked from an arbitrary target cwd.
+const packageRoot = resolve(import.meta.dir, "../../../..");
+try {
+  if (!existsSync(join(packageRoot, "node_modules", "commander", "package.json"))) throw new Error("commander is not installed locally");
+  createRequire(import.meta.url).resolve("commander");
+} catch {
+  process.stderr.write(
+    "pstack watch-pr requires commander. Run `bun install` in the omp-pstack package root and retry.\n",
+  );
+  process.exit(1);
+}
+
+const cliModule = "." + "/cli.ts";
+const { main } = await import(cliModule);
+process.exitCode = await main(process.argv.slice(2));

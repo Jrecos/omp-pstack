@@ -1,0 +1,49 @@
+{
+  "stage": "baseline native surface before final integration",
+  "omp": "18.1.11",
+  "bun": "1.3.14",
+  "sessionId": null,
+  "modeEntries": [
+    {
+      "type": "custom",
+      "customType": "omp-pstack.mode",
+      "data": {
+        "version": 1,
+        "active": true
+      },
+      "details": null,
+      "attribution": null
+    },
+    {
+      "type": "custom",
+      "customType": "omp-pstack.mode",
+      "data": {
+        "version": 1,
+        "active": false
+      },
+      "details": null,
+      "attribution": null
+    },
+    {
+      "type": "custom_message",
+      "customType": "skill-prompt",
+      "data": null,
+      "details": {
+        "name": "poteto-mode",
+        "path": "/home/jreco/dev/omp-pstack/skills/poteto-mode/SKILL.md",
+        "args": "Say exactly PSTACK_NATIVE_TUI_OK. Casual greeting only; use no tools.",
+        "lineCount": 128
+      },
+      "attribution": "user"
+    }
+  ],
+  "assistantOutputs": [
+    "PSTACK_MODE_SMOKE_OK",
+    "PSTACK_LOOP_OBSERVATION 1",
+    "PSTACK_LOOP_OBSERVATION 2",
+    "PSTACK_LOOP_OBSERVATION 3",
+    "PSTACK_NATIVE_TUI_OK"
+  ],
+  "loopInput": "/loop 2 Say exactly PSTACK_LOOP_OBSERVATION followed by the next observation number, starting with 1. This is a casual smoke check. Use no tools.",
+  "loopObservation": "initial response plus two repeats; preserve native duration/count semantics"
+}

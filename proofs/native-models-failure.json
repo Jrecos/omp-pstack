@@ -1,0 +1,18 @@
+[
+  {
+    "type": "model_change",
+    "id": "33087980",
+    "parentId": null,
+    "timestamp": "2026-09-05T22:26:06.818Z",
+    "model": "openai-codex/gpt-6-astra",
+    "resolvedModelIsFallback": false
+  },
+  {
+    "type": "thinking_level_change",
+    "id": "9a1635fa",
+    "parentId": "33087980",
+    "timestamp": "2026-09-05T22:26:06.818Z",
+    "thinkingLevel": "high",
+    "configured": null
+  }
+]

@@ -1,0 +1,87 @@
+{
+  "fixture": true,
+  "capturedAt": "2026-09-07T04:28:00.106Z",
+  "actualModel": "openai-codex/gpt-6-astra:high",
+  "fixtureTransports": {
+    "slack": "http://localhost:45171/api",
+    "tracker": "http://localhost:44711/graphql",
+    "github": "localhost:43769"
+  },
+  "effectiveBudgets": {
+    "poll_seconds": 45,
+    "verdict_wait_minutes": 45,
+    "triage_follow_up_minutes": 0,
+    "triage_total_minutes": 30,
+    "repro_minutes": 60,
+    "rejection_window_minutes": 0,
+    "fix_minutes": 90,
+    "operations_follow_up_minutes": 0
+  },
+  "effectiveZeroWaitWindows": [
+    "triage_follow_up_minutes",
+    "rejection_window_minutes",
+    "operations_follow_up_minutes"
+  ],
+  "liveReadback": false,
+  "phases": [
+    {
+      "phase": "triage",
+      "status": "succeeded",
+      "canaryEvidence": [
+        "slack.verdict.readback",
+        "tracker.mutation.readback"
+      ]
+    },
+    {
+      "phase": "reproduce",
+      "status": "succeeded",
+      "canaryEvidence": [
+        "control.all-seven",
+        "media.every-artifact",
+        "git.remote-head",
+        "github.draft-oid",
+        "control.cleanup"
+      ]
+    }
+  ],
+  "trackerIssues": 1,
+  "draftPulls": 1,
+  "publishedHeadOid": "bfa1b4860821f41451fa7bd3244757d29582d5c8",
+  "sourceThreadPosts": 2,
+  "canaryEligible": true,
+  "producerInputs": [
+    "automations/benny/FOR_AGENTS.md",
+    "automations/benny/README.md",
+    "automations/benny/skills/reproduce-and-fix-issues/SKILL.md",
+    "automations/benny/skills/reproduce-and-fix-issues/references/control-adapter.md",
+    "automations/benny/skills/reproduce-and-fix-issues/references/feature-map.example.md",
+    "automations/benny/skills/reproduce-and-fix-issues/references/verify-existing-fix.md",
+    "automations/benny/skills/setup-benny/SKILL.md",
+    "automations/benny/skills/triage-issue-reports/SKILL.md",
+    "automations/benny/skills/triage-issue-reports/references/routing.example.md",
+    "automations/benny/templates/configuration.example.yaml",
+    "automations/benny/templates/reproduce-automation-prompt.md",
+    "automations/benny/templates/triage-automation-prompt.md",
+    "bun.lock",
+    "scripts/check-content.ts",
+    "scripts/fixtures/benny-transports.ts",
+    "scripts/fixtures/benny-workspace/Dockerfile",
+    "scripts/fixtures/benny-workspace/app/index.html",
+    "scripts/fixtures/benny-workspace/app/server.ts",
+    "scripts/fixtures/benny-workspace/control.mjs",
+    "scripts/fixtures/benny-workspace/proof.ts",
+    "scripts/smoke-benny.ts",
+    "src/benny-actions.ts",
+    "src/benny-policy.ts",
+    "src/benny-run.ts",
+    "src/benny-setup.ts",
+    "src/benny-socket.ts",
+    "src/benny-workspace.ts",
+    "src/benny.ts",
+    "src/models.ts",
+    "src/runner.ts",
+    "src/trackers/contract.ts",
+    "src/trackers/linear.ts"
+  ],
+  "producerDigest": "4ca98669d453bae3c63d29fb6d6d040dcd1dbdb2de25a1e093eaaf4da1a37a5c"
+}

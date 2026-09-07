@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "browserClick": true,
+  "keyAbsentFromHtmlAndBrowserRequest": true,
+  "run": {
+    "id": 1,
+    "event_id": "bfe3fe31-2131-434d-969b-9b58b5c17b27",
+    "status": "succeeded",
+    "body_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "session_path": "/tmp/pstack-browser-proof-2GO8re/.omp/pstack/state/sessions/2026-09-05T21-30-12-191Z_01a0737a-a35f-7000-8070-ae8fdd085920.jsonl",
+    "diagnostic": null
+  },
+  "responses": [
+    "ROUTINE_BROWSER_OK"
+  ],
+  "replayRowCount": 1
+}

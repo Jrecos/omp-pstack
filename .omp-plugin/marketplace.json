@@ -1,0 +1,5 @@
+{
+  "name": "omp-pstack",
+  "owner": { "name": "omp-pstack maintainers" },
+  "plugins": [{ "name": "omp-pstack", "source": "./", "description": "OMP-native Potato's P Stack" }]
+}
