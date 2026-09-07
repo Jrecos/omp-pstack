@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/omp-pstack-hero.webp" alt="Illustrated Jrecos leading four OMP robot agents in a watercolor engineering workshop beside the omp-pstack title." width="100%">
+</p>
+
 # omp-pstack
 
 `omp-pstack` is our OMP-native adaptation of [P Stack](https://github.com/cursor/plugins/tree/main/pstack). This repository is the independently maintained OMP plugin: its packaging, host integrations, CLI/runtime, automations, and documentation are built for OMP rather than Cursor.
@@ -42,6 +46,8 @@ new here? the [pstack guide](./docs/guide/README.md) walks you through a first r
 that's it. the other skills are situational; the mode skill uses them for you as needed. out of the box the mode splits work by model strength: precisely-specified code, prose, and judgment go to fable 5.1, while fast mechanical code goes to grok. the default panel is fable 5.1 / sol / grok / opus 5. [`/setup-pstack`](./skills/setup-pstack/SKILL.md) changes any of it.
 
 ## usage
+[![Illustrated Jrecos routes OMP robot agents through bug-fix, feature, and investigation playbooks.](./assets/readme-routing.webp)](./docs/guide/02-poteto-mode.md)
+
 
 use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) at the start of a task. it reads your request, picks from a set of playbooks, and runs the other skills as the steps need them.
 
@@ -204,6 +210,8 @@ pstack also ships a subagent that runs poteto's style end to end. spawn it from 
 pstack also ships [Comment Sicko](./agents/comment-sicko.md), a read-only comment reviewer shipped as a native agent. dispatch it with a native `task` call and `agent` set to `Comment Sicko`. usually invoke it through [`/no-comments`](./skills/no-comments/SKILL.md), not directly.
 
 ## principles
+[![Illustrated Jrecos supervises OMP robot agents verifying a real machine and capturing evidence.](./assets/readme-verification.webp)](./docs/guide/06-verify-and-ship.md)
+
 
 twenty-one short skills, one principle each. `poteto-mode` indexes them inline and reads that index at task start. the standalone files are there so other skills can reference a principle by name, and so the index can point at the full rule for each.
 
@@ -259,6 +267,8 @@ type [`/automate-me`](./skills/automate-me/SKILL.md). it mines your recent trans
 models are configurable too. type [`/setup-pstack`](./skills/setup-pstack/SKILL.md). it detects the models you have access to and writes a small always-applied rule mapping each role (code, judgment, the review panels) to a model. every skill reads it and falls back to sensible defaults when the rule is absent, so you override only what you want.
 
 ## automations
+[![Illustrated Jrecos supervises an autonomous plan, build, verify, review, and ship loop.](./assets/readme-automation.webp)](./docs/guide/07-overnight.md)
+
 
 pstack also ships a dormant [benny automation pack](./automations/benny/). benny triages slack issue reports, then reproduces and fixes confirmed bugs with real ui evidence. its files are not registered as slash skills.
 
