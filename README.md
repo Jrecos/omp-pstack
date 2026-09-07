@@ -1,21 +1,21 @@
-# pstack
+# omp-pstack
 
-i'm [poteto](https://x.com/poteto). i'm not a president or ceo, but i've worked with millions of lines of code at Meta, Netflix, and Cursor. i'm also on the react core team where i help build and maintain react compiler.
+`omp-pstack` is our OMP-native adaptation of [P Stack](https://github.com/cursor/plugins/tree/main/pstack). This repository is the independently maintained OMP plugin: its packaging, host integrations, CLI/runtime, automations, and documentation are built for OMP rather than Cursor.
 
-there's a growing sense that ai writes too much slop code. i agree. i don't want to ship like a team of twenty slop artists. throughput without quality is not a goal i aspire to. if you want to go fast, go deep first. 
+The original P Stack was created by [Lauren Tan (poteto)](https://x.com/poteto). Its engineering approach and much of its skill content originated in the upstream project. This adaptation preserves that credit and the original MIT license while owning the OMP-specific implementation and direction here.
 
-**pstack is my answer.** these are the same skills i use everyday to ship high quality code. this turns your agent into a real engineering team. the goal is not to maximize loc, in fact it's the opposite. pstack helps you write less, but higher quality code.
+P Stack is an answer to AI-generated slop: go deep before going fast, write less code, and demand evidence that the result works.
 
-**pstack gives you fearless parallelism.** when you can go deep on one agent and trust it to write good, verifiable code, you can truly parallelize with confidence. start multiple agents up with `poteto-mode` and trust that they'll apply rigorous engineering principles to their work.
+**pstack gives you fearless parallelism.** when you can go deep on one agent and trust it to write good, verifiable code, you can truly parallelize with confidence. start multiple agents with `poteto-mode` and trust that they'll apply rigorous engineering principles to their work.
 
-**omp gives you the best of all worlds.** every frontier model has its strengths and weaknesses. use any model with pstack. in fact, many of my skills use multi-model workflows to take advantage of each model's unique strengths.
+**omp-pstack gives you the best of OMP.** use P Stack with any model available through OMP, including its multi-model workflows, native agents, tools, and plugin runtime.
 
-fork it. improve it. make it yours. PRs are welcome! 
+fork it. improve it. make it yours. PRs are welcome!
 
-## install
+## install in OMP
 
 ```bash
-omp plugin marketplace add <path-or-git-url>
+omp plugin marketplace add https://github.com/Jrecos/omp-pstack
 omp plugin install omp-pstack@omp-pstack
 ```
 
@@ -272,6 +272,8 @@ bun "$PSTACK_ROOT/src/cli.ts" benny sweep --config .omp/benny/configuration.yaml
 
 with `PSTACK_ROOT` resolved once per host as in [running the `pstack` CLI after install](#running-the-pstack-cli-after-install). the sweep never deletes evidence owned by queued or running runs, and it fails closed (deletes nothing) when run ownership cannot be established.
 
-## license
+## credits and license
 
-MIT
+Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.14.8`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
+
+Released under the [MIT License](./LICENSE). The original copyright notice is retained.

@@ -4,10 +4,10 @@ In this page you install the plugin, pick which models pstack uses, and run your
 
 ## Install the plugin
 
-From a terminal, add a marketplace that contains this plugin and install it:
+From a terminal, add this repository as an OMP marketplace and install the plugin:
 
 ```bash
-omp plugin marketplace add <path-or-git-url>
+omp plugin marketplace add https://github.com/Jrecos/omp-pstack
 omp plugin install omp-pstack@omp-pstack
 ```
 
