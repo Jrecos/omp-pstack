@@ -32,15 +32,15 @@ One message, three native `task` calls. For each reviewer, get a descriptor from
 
 | Lens | `model` | Prompt template | `pstack_agent` role |
 |---|---|---|---|
-| Judgment | your configured reflect-judgment model (default `claude-fable-5-1-thinking-max`) | `references/judgment-reviewer.md` | `role: "reflect judgment, divergent, synthesizer"` |
-| Tooling | your configured reflect-tooling model (default `gpt-5.6-sol-max`) | `references/tooling-reviewer.md` | `role: "reflect tooling"` |
-| Divergent | your configured reflect-judgment model (default `claude-fable-5-1-thinking-max`) | `references/divergent-reviewer.md` | `role: "reflect judgment, divergent, synthesizer"` |
+| Judgment | your configured reflect-judgment model | `references/judgment-reviewer.md` | `role: "reflect judgment, divergent, synthesizer"` |
+| Tooling | your configured reflect-tooling model | `references/tooling-reviewer.md` | `role: "reflect tooling"` |
+| Divergent | your configured reflect-judgment model | `references/divergent-reviewer.md` | `role: "reflect judgment, divergent, synthesizer"` |
 
 Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in the `task` result.
 
 ### 3. Synthesize
 
-One more `task` call, using `pstack_agent` with `role: "reflect judgment, divergent, synthesizer"` and `kind: "general"` (your configured reflect-judgment model, default `claude-fable-5-1-thinking-max`). The synthesizer's quality check includes spot-verifying citations, which can require MCP access; `readonly` strips MCPs. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+One more `task` call, using `pstack_agent` with `role: "reflect judgment, divergent, synthesizer"` and `kind: "general"` (your configured reflect-judgment model). The synthesizer's quality check includes spot-verifying citations, which can require MCP access; `readonly` strips MCPs. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
 
 ### 4. Structural enforcement check
 

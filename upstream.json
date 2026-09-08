@@ -247,7 +247,7 @@
       "target": "automations/benny/templates/reproduce-automation-prompt.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Automation prompt templates are documentation of the run shape for setup and review, not runtime consumers — the runner executes the operational SKILL.md files directly. Header and operational path converted from the /automate draft workflow to `.omp/automations/benny/skills/reproduce-and-fix-issues/SKILL.md`; child Slack-write ban rewritten to the bound-action model; 'control-adapter skill' wording aligned with the configured adapter command.",
+        "reason": "Automation prompt templates are documentation of the run shape for setup and review, not runtime consumers \u2014 the runner executes the operational SKILL.md files directly. Header and operational path converted from the /automate draft workflow to `.omp/automations/benny/skills/reproduce-and-fix-issues/SKILL.md`; child Slack-write ban rewritten to the bound-action model; 'control-adapter skill' wording aligned with the configured adapter command.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -262,7 +262,7 @@
       "target": "automations/benny/templates/triage-automation-prompt.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Automation prompt template is documentation of the run shape for setup and review, not a runtime consumer — the runner executes the operational SKILL.md files directly. Header and operational path converted from the /automate draft workflow to `.omp/automations/benny/skills/triage-issue-reports/SKILL.md`.",
+        "reason": "Automation prompt template is documentation of the run shape for setup and review, not a runtime consumer \u2014 the runner executes the operational SKILL.md files directly. Header and operational path converted from the /automate draft workflow to `.omp/automations/benny/skills/triage-issue-reports/SKILL.md`.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -422,7 +422,16 @@
       "source": "pstack/skills/architect/SKILL.md",
       "blob": "7bda4347cbd78059bc8a39a23eede4f657f95adc",
       "target": "skills/architect/SKILL.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Hardcoded Cursor-slug architect runner panel removed; runner selection now reads the configured architect runners role from the pstack-models rule and requires /setup-pstack when a role is unset or a selected model is unavailable. Covered by the model-dispatch proof class (scripts/smoke-models.ts) rather than being unclassified.",
+        "verification": {
+          "kind": "omp/cli scenario",
+          "artifacts": [
+            "scripts/smoke-models.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/architect/references/design-red-flags.md",
@@ -448,7 +457,7 @@
       "target": "skills/arena/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "run_in_background fan-out replaced with native async task batch + hub wait; runner descriptors via pstack_agent role arena runners.; Cross-judge pool selection made concrete against the live parent (first family-different entry, else first entry) per plan; judge dispatched via pstack_agent role arena cross-judge pool, kind readonly.; Config source changed from ~/.cursor/rules/pstack-models.mdc to the pstack-models profile rule.",
+        "reason": "run_in_background fan-out replaced with native async task batch + hub wait; runner descriptors via pstack_agent role arena runners.; Cross-judge pool selection made concrete against the live parent (first family-different entry, else first entry) per plan; judge dispatched via pstack_agent role arena cross-judge pool, kind readonly.; Config source changed from ~/.cursor/rules/pstack-models.mdc to the pstack-models profile rule. Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution).",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -530,7 +539,7 @@
       "target": "skills/how/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Task recipes (subagent_type generalPurpose / model / readonly) translated to pstack_agent descriptors ({role, kind}) + native task dispatch for explorer, explainer, and the ordered how-critics panel (index per entry, duplicates count).",
+        "reason": "Task recipes (subagent_type generalPurpose / model / readonly) translated to pstack_agent descriptors ({role, kind}) + native task dispatch for explorer, explainer, and the ordered how-critics panel (index per entry, duplicates count). Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution).",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -569,7 +578,7 @@
       "target": "skills/interrogate/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Reviewer fan-out translated to pstack_agent role interrogate reviewers with per-entry index and native task dispatch.; Config source changed to the pstack-models profile rule, queried with pstack_models show.; Cursor slug-fallback paragraph (pick closest equivalent) replaced with the native contract: unresolvable configured model fails the dispatch naming the role; rerun /setup-pstack; inherit-parent/auto dispatch as returned.",
+        "reason": "Reviewer fan-out translated to pstack_agent role interrogate reviewers with per-entry index and native task dispatch.; Config source changed to the pstack-models profile rule, queried with pstack_models show.; Cursor slug-fallback paragraph (pick closest equivalent) replaced with the native contract: unresolvable configured model fails the dispatch naming the role; rerun /setup-pstack; inherit-parent/auto dispatch as returned. Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution).",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -654,7 +663,7 @@
       "target": "skills/poteto-mode/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Removed inert Cursor mode:true metadata. Deslop/control/create-skill host-skill references repointed to packaged references omp-deslop.md, omp-control-cli.md, omp-control-ui.md, omp-create-skill.md. Babysit disambiguation generalized to any same-named host or user skill. AskQuestion translated to plain human-question wording. Cursor restart wording translated to OMP session restart. Subagents section rewritten to native task dispatch: agent poteto-agent, pstack_agent descriptor resolution ({agent,model,role,index}), async results + Agent Hub steering, rules/pstack-models.md role config with upstream default selectors kept visible and unavailable-selector-implies-setup rule, no per-call model on the task wire API, readonly descriptor for read-only roles, child checklist reported to parent todo. Principles-first todolist, verbatim playbook checklist, casual-turn noninterference, pstack_mode on/off routing, all 24 playbook entries, and the reply contract preserved unchanged.",
+        "reason": "Removed inert Cursor mode:true metadata. Deslop/control/create-skill host-skill references repointed to packaged references omp-deslop.md, omp-control-cli.md, omp-control-ui.md, omp-create-skill.md. Babysit disambiguation generalized to any same-named host or user skill. AskQuestion translated to plain human-question wording. Cursor restart wording translated to OMP session restart. Subagents section rewritten to native task dispatch: agent poteto-agent, pstack_agent descriptor resolution ({agent,model,role,index}), async results + Agent Hub steering, rules/pstack-models.md role config with upstream default selectors kept visible and unavailable-selector-implies-setup rule, no per-call model on the task wire API, readonly descriptor for read-only roles, child checklist reported to parent todo. Principles-first todolist, verbatim playbook checklist, casual-turn noninterference, pstack_mode on/off routing, all 24 playbook entries, and the reply contract preserved unchanged. Hardcoded upstream model defaults (grok for code, fable for prose/judgment) removed; role models come only from the pstack-models rule and an unset or unavailable selectors now requires /setup-pstack.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -744,7 +753,7 @@
       "target": "skills/poteto-mode/playbooks/bug-fix.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor /loop reference translated to native /loop. All other steps (repro on surface, binary search, architect gate, red-first commit order) preserved verbatim.",
+        "reason": "Cursor /loop reference translated to native /loop. All other steps (repro on surface, binary search, architect gate, red-first commit order) preserved verbatim. Hardcoded bug-fix default model (claude-fable-5-1-thinking-max) removed; delegation now uses the configured bug-fix model from /setup-pstack and requires setup when unset.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -772,13 +781,31 @@
       "source": "pstack/skills/poteto-mode/playbooks/feature.md",
       "blob": "77dd564f1f7f4c9969a823449d4848434beaf92f",
       "target": "skills/poteto-mode/playbooks/feature.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Hardcoded feature default model (grok-4.6-fast-xhigh) removed; delegation now uses the configured feature model from /setup-pstack and requires setup when unset.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/hillclimb.md",
       "blob": "c6adf1f3261849f0511a8796613536b4ce20fc0d",
       "target": "skills/poteto-mode/playbooks/hillclimb.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Hardcoded hillclimb default model (claude-fable-5-1-thinking-max) removed; delegation now uses the configured hillclimb model from /setup-pstack and requires setup when unset.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/investigation.md",
@@ -851,7 +878,16 @@
       "source": "pstack/skills/poteto-mode/playbooks/perf-issue.md",
       "blob": "62f81bb2844f6211c07156143a27b590b69f414a",
       "target": "skills/poteto-mode/playbooks/perf-issue.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Hardcoded perf-issue default model (claude-fable-5-1-thinking-max) removed; delegation now uses the configured perf-issue model from /setup-pstack and requires setup when unset.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/prototype.md",
@@ -863,7 +899,16 @@
       "source": "pstack/skills/poteto-mode/playbooks/refactoring.md",
       "blob": "70d74ac869d6a71bdbccfb0cfcbcfb086d9ed9e3",
       "target": "skills/poteto-mode/playbooks/refactoring.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Hardcoded refactoring default model (grok-4.6-fast-xhigh) removed; delegation now uses the configured refactoring model from /setup-pstack and requires setup when unset.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/runtime-forensics.md",
@@ -1303,7 +1348,7 @@
       "target": "skills/reflect/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Transcript location rewritten: parent passes its own current-session JSONL path; Cursor agent-transcripts layouts and ~/.cursor globs removed; digest fallback preserved.; Three reviewer Task calls and the synthesizer translated to pstack_agent roles reflect tooling / reflect judgment, divergent, synthesizer, kind general (readonly strips MCP in native terms); reviewer table gained the role column.; Cursor built-in create-skill routing replaced with the packaged OMP authoring guidance skills/poteto-mode/references/omp-create-skill.md.",
+        "reason": "Transcript location rewritten: parent passes its own current-session JSONL path; Cursor agent-transcripts layouts and ~/.cursor globs removed; digest fallback preserved.; Three reviewer Task calls and the synthesizer translated to pstack_agent roles reflect tooling / reflect judgment, divergent, synthesizer, kind general (readonly strips MCP in native terms); reviewer table gained the role column.; Cursor built-in create-skill routing replaced with the packaged OMP authoring guidance skills/poteto-mode/references/omp-create-skill.md. Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution).",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -1369,7 +1414,7 @@
       "target": "skills/setup-pstack/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Rule target changed from ~/.cursor/rules/pstack-models.mdc to the plugin-managed rule rules/pstack-models.md in the active OMP profile (getAgentDir()), written via pstack_models action save with roles mapping.; Detection now uses the authenticated model registry (ctx.models.list()); pstack_models validates against the same registry before saving.; AskQuestion (Cursor-only tool) replaced with a structured chat question; headless/non-interactive runs cancel and write nothing.; Step 5 documents atomic managed-body replacement, comment preservation outside the body, and error-not-reset on malformed existing content.; Line comment 'omit Task model' reworded to dispatch-without-model-override semantics; all 18 role labels and defaults byte-preserved.",
+        "reason": "Rule target changed from ~/.cursor/rules/pstack-models.mdc to the plugin-managed rule rules/pstack-models.md in the active OMP profile (getAgentDir()), written via pstack_models action save with roles mapping.; Detection now uses the authenticated model registry (ctx.models.list()); pstack_models validates against the same registry before saving.; AskQuestion (Cursor-only tool) replaced with a structured chat question; headless/non-interactive runs cancel and write nothing.; Step 5 documents atomic managed-body replacement, comment preservation outside the body, and error-not-reset on malformed existing content.; Line comment 'omit Task model' reworded to dispatch-without-model-override semantics; all 18 role labels and defaults byte-preserved. Flow reordered to pool-first: detect via pstack_models list, user selects an approved pool before any role-map recommendation, pstack recommends the role map with honest rationale from pool capabilities and user priorities, explicit panel count/diversity, confirmation, then save pool+roles. Hardcoded Cursor-slug defaults removed as the recommendation seed; unused pool members persisted; inherit-parent/auto permission explicit; unavailable model errors and proposes an approved replacement, never silent substitution.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -1412,7 +1457,7 @@
       "target": "skills/swarm/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor cloud-worker mechanics (environment cloud/local, cloud_base_branch) removed: OMP native task has no cloud environment. Workers run locally as native task calls.; Per-arm model override in races routed through pstack_agent model; worker descriptors via role swarm workers.; Worktree/branch/tmp isolation retained explicitly because workers share no cloud sandbox; config source changed to the pstack-models profile rule.",
+        "reason": "Cursor cloud-worker mechanics (environment cloud/local, cloud_base_branch) removed: OMP native task has no cloud environment. Workers run locally as native task calls.; Per-arm model override in races routed through pstack_agent model; worker descriptors via role swarm workers.; Worktree/branch/tmp isolation retained explicitly because workers share no cloud sandbox; config source changed to the pstack-models profile rule. Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution).",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -1463,7 +1508,7 @@
       "target": "skills/why/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor MCP discovery (available-tools map, mcps/ directory) replaced with native MCP discovery of configured servers and their tools; source-category fan-out and skip rules preserved verbatim.; Investigator and synthesizer dispatch translated to pstack_agent roles why investigators / why synthesizer with kind general; the readonly-strips-MCP rationale preserved in native kind terms.; Editor-flavored 'cursor location' context reference reworded.",
+        "reason": "Cursor MCP discovery (available-tools map, mcps/ directory) replaced with native MCP discovery of configured servers and their tools; source-category fan-out and skip rules preserved verbatim.; Investigator and synthesizer dispatch translated to pstack_agent roles why investigators / why synthesizer with kind general; the readonly-strips-MCP rationale preserved in native kind terms.; Editor-flavored 'cursor location' context reference reworded. Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution).",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [

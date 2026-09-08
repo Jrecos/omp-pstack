@@ -188,7 +188,7 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
   },
   {
     id: "model-dispatch-skill",
-    pattern: /^skills\/(arena|how|interrogate|reflect|setup-pstack|swarm|why)\/SKILL\.md$/,
+    pattern: /^skills\/(architect|arena|how|interrogate|reflect|setup-pstack|swarm|why)\/SKILL\.md$/,
     kind: "omp/cli scenario",
     artifacts: ["scripts/smoke-models.ts"],
     contract: "pstack_agent/native-task fan-out translation proven by the generated-agent panel scenario: ordered alias entries execute, per-arm resolved-model readback, parent-model change re-resolves, cancelled setup writes nothing.",
@@ -865,7 +865,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "990c1305804ee4d93f6c3da9d8e77b80349817446eba05ff8dcafb98e8815ba8";
+    const pinnedDigest = "26298ca3ccb469f34b34d29b2be7c31be93513c97669fff16e5f734df7591954";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

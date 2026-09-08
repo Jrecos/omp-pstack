@@ -118,7 +118,7 @@ Launch all matching investigators in a single message so they run concurrently. 
 
 Subagent config (each):
 - Dispatch: get each investigator's descriptor from `pstack_agent` (`{role: "why investigators", kind: "general"}`) and run one native `task` call with the returned `agent` only. `pstack_agent` has already resolved the configured model into the prepared agent; its returned `model` is metadata, not a native `task` field.
-- Model selection: your configured why-investigators model (default `grok-4.6-fast-xhigh`)
+- Model selection: your configured why-investigators model (configured via `/setup-pstack`; if unset or unavailable, run setup first)
 - `kind`: `general`, **not** `readonly`. The `readonly` kind strips MCP access, which disables MCP-backed investigators entirely. The source control investigator would be safe in readonly, but keep kinds uniform. Investigators still shouldn't write anything. That's a posture, not a sandbox.
 
 Each investigator gets:
@@ -163,7 +163,7 @@ If your scope assessment suggests a single-commit trivial target where the PR de
 
 Spawn one synthesizer subagent:
 
-Get the descriptor from `pstack_agent` (`{role: "why synthesizer", kind: "general"}`) and spawn one synthesizer subagent as a native `task` call with the returned `agent` (your configured why-synthesizer model, default `claude-fable-5-1-thinking-max`). Use `general`, not the `readonly` kind: the synthesizer's quality check spot-verifies citations, which can require MCP access, and `readonly` strips MCPs and defeats that.
+Get the descriptor from `pstack_agent` (`{role: "why synthesizer", kind: "general"}`) and spawn one synthesizer subagent as a native `task` call with the returned `agent` (your configured why-synthesizer model; if unset or unavailable, run setup first). Use `general`, not the `readonly` kind: the synthesizer's quality check spot-verifies citations, which can require MCP access, and `readonly` strips MCPs and defeats that.
 
 The synthesizer gets:
 1. The investigator findings, including any null results and any categories skipped with justification

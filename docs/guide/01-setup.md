@@ -21,11 +21,11 @@ Run:
 /setup-pstack
 ```
 
-[`/setup-pstack`](../../skills/setup-pstack/SKILL.md) detects the models you have access to, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes the `pstack-models` rule into your OMP profile's `rules/` directory, a small always-applied rule every pstack skill reads.
+[`/setup-pstack`](../../skills/setup-pstack/SKILL.md) detects the models you have access to, asks you to pick an approved pool first, then recommends a model for each role (code delegates, judgment, the review panels) from that pool, with a short rationale. You confirm or adjust, and it writes the `pstack-models` rule into your OMP profile's `rules/` directory, a small always-applied rule every pstack skill reads.
 
-You only override what you care about. A role with no line in the rule keeps the skill's default. To restore a default later, delete that role's line, or just run `/setup-pstack` again.
+There are no built-in defaults a role can fall back to. A role with no line in the rule is unconfigured and won't dispatch until `/setup-pstack` assigns it a model from the pool. Every selector must be a member of the pool; pstack fails closed rather than substituting a model you didn't approve. Unused pool members stay saved so you can route to them later.
 
-You might be wondering what happens if you use Auto. Set a role to `inherit-parent` or `auto` and pstack omits the subagent `model` field, so the subagent inherits your parent chat model. Both values mean the same thing, and neither is a model slug. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. Setup also configures `swarm workers`, the default model for every `/swarm` worker unless a race names a model for each arm.
+You might be wondering what happens if you use Auto. Set a role to `inherit-parent` or `auto` (both must appear in the approved pool) and pstack omits the subagent `model` field, so the subagent inherits your parent chat model. Both values mean the same thing, and neither is a model slug. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. Setup also sets `swarm workers`, the model every `/swarm` worker uses unless a race names a model for each arm.
 
 ## Accept the verification offer, or don't
 

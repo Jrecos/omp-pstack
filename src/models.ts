@@ -55,28 +55,6 @@ export const KINDS: readonly AgentKind[] = ["poteto", "general", "readonly"];
  */
 const ALIAS_TOKEN = "inherit-parent";
 
-/** Exact upstream defaults. Ordered duplicate entries stay separate panel members. */
-const DEFAULT_ROLES: Record<Role, string[]> = {
-	"feature, refactoring": ["grok-4.6-fast-xhigh"],
-	"bug-fix": ["claude-fable-5-1-thinking-max"],
-	"perf-issue": ["claude-fable-5-1-thinking-max"],
-	hillclimb: ["claude-fable-5-1-thinking-max"],
-	"judgment and prose": ["claude-fable-5-1-thinking-max"],
-	"hardest tasks": ["claude-fable-5-1-thinking-max"],
-	"how explorer": ["grok-4.6-fast-xhigh"],
-	"how explainer": ["claude-fable-5-1-thinking-max"],
-	"how critics": ["claude-fable-5-1-thinking-max", "gpt-5.6-sol-max", "grok-4.6-fast-xhigh", "claude-opus-5-thinking-xhigh"],
-	"why investigators": ["grok-4.6-fast-xhigh"],
-	"why synthesizer": ["claude-fable-5-1-thinking-max"],
-	"reflect tooling": ["gpt-5.6-sol-max"],
-	"reflect judgment, divergent, synthesizer": ["claude-fable-5-1-thinking-max"],
-	"arena runners": ["claude-fable-5-1-thinking-max", "gpt-5.6-sol-max", "grok-4.6-fast-xhigh", "claude-opus-5-thinking-xhigh"],
-	"arena cross-judge pool": ["claude-fable-5-1-thinking-max", "gpt-5.6-sol-max", "grok-4.6-fast-xhigh", "claude-opus-5-thinking-xhigh"],
-	"swarm workers": ["grok-4.6-fast-xhigh"],
-	"architect runners": ["claude-fable-5-1-thinking-max", "gpt-5.6-sol-max", "grok-4.6-fast-xhigh", "claude-opus-5-thinking-xhigh"],
-	"interrogate reviewers": ["claude-fable-5-1-thinking-max", "gpt-5.6-sol-max", "grok-4.6-fast-xhigh", "claude-opus-5-thinking-xhigh"],
-};
-
 /** Which generated-agent kind each role dispatches by default. */
 const ROLE_KIND: Record<Role, AgentKind> = {
 	"feature, refactoring": "poteto",
@@ -106,13 +84,13 @@ const MANAGED_START = "<!-- omp-pstack:managed-start -->";
 const MANAGED_END = "<!-- omp-pstack:managed-end -->";
 const FRONTMATTER = [
 	"---",
-	"description: pstack per-role model choices (overrides skill defaults)",
+	"description: pstack per-role model choices backed by an explicit approved pool",
 	"alwaysApply: true",
 	"---",
 ];
 const HEADER_LINES = [
-	"# pstack model configuration. One line per role. Delete a line to fall back to the skill default.",
-	"# `inherit-parent` or `auto` as a value: the role runs on the parent chat model (dispatch without a model override). Alias entries in a panel list still count toward its fan-out.",
+	"# pstack model configuration. `pool:` lists the only approved selectors (concrete provider/id base identities plus `inherit-parent`/`auto` alias permission). A role line lists that role's ordered entries; a missing or empty role line is unconfigured and requires /setup-pstack.",
+	"# `inherit-parent` or `auto` as a value: the role runs on the parent chat model (dispatch without a model override). An alias is only granted when the pool contains the same token. Alias entries in a panel list still count toward its fan-out.",
 	"# The addresses below map role[index] kind to prepared native task agents; dispatch with task agent=<name>.",
 ];
 
@@ -222,6 +200,101 @@ export function agentName(kind: AgentKind, selector: string): string {
 	return `omp-pstack-${hash}`;
 }
 
+// ─── Approved pool (concrete base identities plus explicit alias permission) ──
+
+/**
+ * Base model identity for a canonical selector. A validated thinking suffix is
+ * stripped (`openai-codex/gpt-6-astra:high` → `openai-codex/gpt-6-astra`);
+ * a literal id whose own trailing `:max`/`:auto` is the wire id keeps it
+ * (`moonshotai/glm-4.7:max` stays whole), matching the SDK literal-id guard.
+ */
+function baseIdentity(selector: string, thinking: string | undefined): string {
+	return thinking !== undefined ? selector.slice(0, selector.lastIndexOf(":")) : selector;
+}
+
+/** Raw base identity for an unvalidated string: strip any recognized thinking suffix. */
+function baseIdentityRaw(selector: string): string {
+	const colon = selector.lastIndexOf(":");
+	if (colon > 0 && THINKING_LEVELS[selector.slice(colon + 1).toLowerCase()]) return selector.slice(0, colon);
+	return selector;
+}
+
+function isPoolMember(selector: string, thinking: string | undefined, pool: readonly string[]): boolean {
+	if (isAlias(selector)) return pool.includes(selector);
+	return pool.includes(baseIdentity(selector, thinking));
+}
+
+/**
+ * Affirm a selector against the approved pool. An empty pool is the legacy
+ * no-config carve-out: nothing is approved yet, so an explicit selector the
+ * caller supplied (prepare / per-arm override / task dispatch) is assumed
+ * intentional. Never silently swaps a family; it fails closed with the pool.
+ */
+function assertInApprovedPool(selector: string, thinking: string | undefined, pool: readonly string[], context: string): void {
+	if (pool.length === 0) return;
+	if (isPoolMember(selector, thinking, pool)) return;
+	if (isAlias(selector)) {
+		throw new Error(`${context}: alias "${selector}" is not granted by the approved pool (${pool.join(", ")}). Add "${selector}" to the pool or pick a pool model.`);
+	}
+	throw new Error(`${context}: model "${selector}" is not in the approved pool (${pool.join(", ")}). Reconfigure the pool or pick one of its models; no other family is substituted.`);
+}
+
+/** Canonicalize an explicit pool: concrete entries must be authenticated; thinking suffix collapses to the base identity; alias tokens pass through. */
+function canonicalizePool(pool: readonly string[], available: readonly PstackModel[]): string[] {
+	const out: string[] = [];
+	const seen = new Set<string>();
+	for (const entry of pool) {
+		const trimmed = entry.trim();
+		if (trimmed === "") continue;
+		if (isAlias(trimmed)) {
+			if (!seen.has(trimmed)) { seen.add(trimmed); out.push(trimmed); }
+			continue;
+		}
+		const verdict = validateConcreteSelector(trimmed, available);
+		if (!verdict.ok) throw new Error(`pool: ${verdict.error}`);
+		const base = baseIdentity(verdict.selector, verdict.thinking);
+		if (!seen.has(base)) { seen.add(base); out.push(base); }
+	}
+	return out;
+}
+
+/** Derive a legacy/back-compat pool from already-canonical assignment entries (never DEFAULT_ROLES). */
+function derivePoolFromCanonical(canonicalRoles: Partial<Record<Role, string[]>>, thinking: Map<string, string | undefined>): string[] {
+	const out: string[] = [];
+	const seen = new Set<string>();
+	for (const role of ROLES) {
+		for (const entry of canonicalRoles[role] ?? []) {
+			const key = isAlias(entry) ? entry : baseIdentity(entry, thinking.get(entry));
+			if (!seen.has(key)) { seen.add(key); out.push(key); }
+		}
+	}
+	return out;
+}
+
+/** Derive a legacy pool from a parsed rule's explicit role lines (never DEFAULT_ROLES). */
+function derivePoolFromConfig(roles: Partial<Record<Role, string[]>>, available: readonly PstackModel[]): string[] {
+	const out: string[] = [];
+	const seen = new Set<string>();
+	for (const role of ROLES) {
+		for (const entry of roles[role] ?? []) {
+			let key: string;
+			if (isAlias(entry)) key = entry;
+			else {
+				const verdict = validateConcreteSelector(entry, available);
+				key = verdict.ok ? baseIdentity(verdict.selector, verdict.thinking) : baseIdentityRaw(entry);
+			}
+			if (!seen.has(key)) { seen.add(key); out.push(key); }
+		}
+	}
+	return out;
+}
+
+/** The effective approved pool for a parsed rule: the explicit pool, else derived from its explicit assignments (legacy). */
+function effectivePool(parsed: ParsedConfig, available: readonly PstackModel[]): string[] {
+	if (parsed.pool.length > 0) return parsed.pool;
+	return derivePoolFromConfig(parsed.roles, available);
+}
+
 // ─── Config parsing / serialization ──────────────────────────────────────────
 
 export class MalformedConfigError extends Error {}
@@ -229,6 +302,8 @@ export class MalformedConfigError extends Error {}
 export interface ParsedConfig {
 	exists: boolean;
 	roles: Partial<Record<Role, string[]>>;
+	/** Approved pool: concrete base identities plus alias tokens. Empty for a legacy rule without a `pool:` line. */
+	pool: string[];
 	postamble: string;
 	preamble?: string;
 }
@@ -256,7 +331,7 @@ function parseRoleLine(line: string): { role: Role; entries: string[] } | null {
  * (or a broken frontmatter) is a hard error, never a silent reset.
  */
 export function parseConfig(text: string): ParsedConfig {
-	if (text.trim() === "") return { exists: false, roles: {}, postamble: "" };
+	if (text.trim() === "") return { exists: false, roles: {}, pool: [], postamble: "" };
 	const lines = text.replace(/\r\n?/g, "\n").split("\n");
 	if (lines[0] !== "---") {
 		throw new MalformedConfigError(`${RULE_REL_PATH}: content must start with the managed frontmatter. Fix or delete the file, then save again.`);
@@ -277,8 +352,16 @@ export function parseConfig(text: string): ParsedConfig {
 	const preamble = lines.slice(0, startIndex).join("\n");
 	const postamble = lines.slice(endIndex + 1).join("\n").replace(/^\n+/, "");
 	const roles: Partial<Record<Role, string[]>> = {};
+	const pool: string[] = [];
+	let poolSeen = false;
 	for (const [index, line] of managed.entries()) {
 		if (line.trim() === "" || line.startsWith("#")) continue;
+		if (line.startsWith("pool:")) {
+			if (poolSeen) throw new MalformedConfigError(`${RULE_REL_PATH}: the pool appears more than once. Keep one pool line.`);
+			poolSeen = true;
+			pool.push(...splitEntries(line.slice("pool:".length).trim()));
+			continue;
+		}
 		const parsed = parseRoleLine(line);
 		if (!parsed) {
 			throw new MalformedConfigError(`${RULE_REL_PATH}: line ${closing + 2 + index} ("${line.trim()}") is not a known pstack role. Fix or delete the file, then save again.`);
@@ -288,19 +371,21 @@ export function parseConfig(text: string): ParsedConfig {
 		}
 		roles[parsed.role] = parsed.entries;
 	}
-	return { exists: true, roles, preamble, postamble };
+	return { exists: true, roles, pool, preamble, postamble };
 }
 
 function entriesFor(parsed: ParsedConfig, role: Role): string[] {
-	return parsed.roles[role] ?? DEFAULT_ROLES[role];
+	return parsed.roles[role] ?? [];
 }
 
-function addressLines(roles: Partial<Record<Role, string[]>>): string[] {
+/** Address comments derive only from roles that have an explicit line; a missing/empty role is unconfigured. */
+function addressLines(parsed: ParsedConfig): string[] {
 	const lines: string[] = [];
 	for (const role of ROLES) {
+		const entries = parsed.roles[role];
+		if (entries === undefined) continue;
 		const kind = ROLE_KIND[role];
-		const effective: ParsedConfig = { exists: true, roles, postamble: "" };
-		for (const [index, entry] of entriesFor(effective, role).entries()) {
+		for (const [index, entry] of entries.entries()) {
 			const name = agentName(kind, isAlias(entry) ? ALIAS_TOKEN : entry);
 			lines.push(`# ${role}[${index + 1}] ${kind} -> ${name} (${entry})`);
 		}
@@ -310,10 +395,14 @@ function addressLines(roles: Partial<Record<Role, string[]>>): string[] {
 
 export function serializeConfig(parsed: ParsedConfig): string {
 	const out: string[] = [...(parsed.preamble === undefined ? [...FRONTMATTER, "", ...HEADER_LINES] : [parsed.preamble]), MANAGED_START];
+	// The pool line is emitted only when approved selectors exist; a legacy rule
+	// without one is preserved verbatim rather than gaining an empty pool line.
+	if (parsed.pool.length > 0) out.push(`pool: ${parsed.pool.join(", ")}`);
 	for (const role of ROLES) {
-		out.push(`${role}: ${entriesFor(parsed, role).join(", ")}`);
+		if (parsed.roles[role] === undefined) continue;
+		out.push(`${role}: ${parsed.roles[role].join(", ")}`);
 	}
-	out.push("", ...addressLines(parsed.roles), MANAGED_END);
+	out.push("", ...addressLines(parsed), MANAGED_END);
 	if (parsed.postamble) out.push("", parsed.postamble);
 	return `${out.join("\n")}\n`;
 }
@@ -474,6 +563,7 @@ export async function saveRoles(
 	query: ModelQuery,
 	paths: Paths,
 	cwd?: string,
+	pool?: string[],
 ): Promise<SaveResult> {
 	const normalized = normalizeRoleInput(roles);
 	const existing = parseConfig(readRuleFile(paths));
@@ -481,6 +571,7 @@ export async function saveRoles(
 
 	const confirmed: { input: string; canonical: string }[] = [];
 	const concrete = new Set<string>();
+	const selectorThinking = new Map<string, string | undefined>();
 	const canonicalRoles: Partial<Record<Role, string[]>> = {};
 	for (const role of ROLES) {
 		const canonical: string[] = [];
@@ -494,25 +585,35 @@ export async function saveRoles(
 			confirmed.push({ input: entry, canonical: verdict.selector });
 			canonical.push(verdict.selector);
 			concrete.add(verdict.selector);
+			selectorThinking.set(verdict.selector, verdict.thinking);
 		}
 		canonicalRoles[role] = canonical;
 	}
 
-	// The managed rule documents delete-a-line → upstream default, and
-	// resolveRoleAgent falls back to DEFAULT_ROLES for a deleted line. Stage
-	// every concrete default the authenticated session can serve so that
-	// fallback resolves instead of failing with "No prepared descriptor".
-	// Unavailable Cursor-slug defaults stay unstaged: deleting their line then
-	// fails with the actionable "not available in this session" error.
+	// Approved pool: explicit if supplied (canonicalized + authenticated), else
+	// derived from the explicit choice for legacy callers. Every concrete
+	// selector must be in the pool; an alias must be granted by a pool token.
+	// An explicitly-supplied pool that canonicalizes to nothing is a hard error:
+	// it must never fall back to inferring a pool from the role choice (that
+	// would approve models the user did not list).
+	let approvedPool: string[];
+	if (pool !== undefined) {
+		approvedPool = canonicalizePool(pool, available);
+		if (approvedPool.length === 0) {
+			throw new Error("save requires at least one approved pool member; an explicit pool that approves nothing is a misconfiguration, not a fallback to the role choice.");
+		}
+	} else {
+		approvedPool = derivePoolFromCanonical(canonicalRoles, selectorThinking);
+	}
 	for (const role of ROLES) {
-		for (const entry of DEFAULT_ROLES[role]) {
-			if (isAlias(entry)) continue;
-			const verdict = validateConcreteSelector(entry, available);
-			if (verdict.ok) concrete.add(verdict.selector);
+		// The prior loop assigns every role, but a Partial<Record> index is
+		// not provably assigned to TS; iterate the entries we wrote.
+		for (const entry of canonicalRoles[role] ?? []) {
+			assertInApprovedPool(entry, isAlias(entry) ? undefined : selectorThinking.get(entry), approvedPool, role);
 		}
 	}
 
-	// Three alias templates (one per kind, both alias tokens) plus concrete
+	// Three alias templates (one per kind, both alias tokens) plus concrete selectors actually used.
 	const staged = new Map<string, string>();
 	const agents: AgentRecord[] = [];
 	const names: string[] = [];
@@ -531,7 +632,7 @@ export async function saveRoles(
 
 	await assertNoOverrides(paths, cwd, names);
 	commitStaged(paths, staged);
-	writeRuleAtomic(paths, serializeConfig({ exists: true, roles: canonicalRoles, preamble: existing.preamble, postamble: existing.postamble }));
+	writeRuleAtomic(paths, serializeConfig({ exists: true, roles: canonicalRoles, pool: approvedPool, preamble: existing.preamble, postamble: existing.postamble }));
 	return { rulePath: paths.rulePath, agents, confirmed };
 }
 
@@ -543,9 +644,12 @@ export async function prepareModels(
 	cwd?: string,
 ): Promise<{ agents: AgentRecord[] }> {
 	const available = query.list();
+	// Enforce the approved pool; an empty pool (no rule yet) is the explicit-prepare carve-out.
+	const pool = effectivePool(parseConfig(readRuleFile(paths)), available);
 	const canonical = models.map((model) => {
 		const verdict = validateConcreteSelector(model, available);
 		if (!verdict.ok) throw new Error(`prepare: ${verdict.error}`);
+		assertInApprovedPool(verdict.selector, verdict.thinking, pool, "prepare");
 		return verdict.selector;
 	});
 	const staged = new Map<string, string>();
@@ -566,7 +670,8 @@ export async function prepareModels(
 export interface RoleStatus {
 	role: Role;
 	panel: boolean;
-	source: "configured" | "default";
+	kind: AgentKind;
+	source: "configured" | "unconfigured";
 	entries: { value: string; alias: boolean; available: boolean }[];
 	needsSetup: boolean;
 }
@@ -574,18 +679,28 @@ export interface RoleStatus {
 export function currentRoles(paths: Paths, query: ModelQuery): { roles: RoleStatus[]; needsSetup: boolean } {
 	const parsed = parseConfig(readRuleFile(paths));
 	const available = query.list();
+	const pool = effectivePool(parsed, available);
 	const roles: RoleStatus[] = ROLES.map((role) => {
-		const entries = entriesFor(parsed, role).map((value) => ({
-			value,
-			alias: isAlias(value),
-			available: isAlias(value) || validateConcreteSelector(value, available).ok,
-		}));
+		const configuredEntries = parsed.roles[role];
+		const entries = (configuredEntries ?? []).map((value) => {
+			const alias = isAlias(value);
+			let availableEntry: boolean;
+			if (alias) {
+				availableEntry = pool.includes(value);
+			} else {
+				const verdict = validateConcreteSelector(value, available);
+				availableEntry = verdict.ok && isPoolMember(verdict.selector, verdict.thinking, pool);
+			}
+			return { value, alias, available: availableEntry };
+		});
+		const configured = configuredEntries !== undefined && entries.length > 0;
 		return {
 			role,
 			panel: PANEL_ROLES.includes(role),
-			source: parsed.roles[role] !== undefined ? "configured" : "default",
+			kind: ROLE_KIND[role],
+			source: configured ? "configured" : "unconfigured",
 			entries,
-			needsSetup: entries.some((entry) => !entry.available),
+			needsSetup: entries.length === 0 || entries.some((entry) => !entry.available),
 		};
 	});
 	return { roles, needsSetup: roles.some((role) => role.needsSetup) };
@@ -633,21 +748,24 @@ export function resolveRoleAgent(
 	const role = params.role as Role;
 	const kind = params.kind ?? ROLE_KIND[role];
 	const panel = PANEL_ROLES.includes(role);
-	const entries = entriesFor(parseConfig(readRuleFile(paths)), role);
+	const available = query.list();
+	const parsed = parseConfig(readRuleFile(paths));
+	const pool = effectivePool(parsed, available);
+	const entries = entriesFor(parsed, role);
 
 	let selector: string;
 	let index: number | undefined;
 	if (params.model !== undefined) {
-		// Explicit per-arm override: works even when the role default/config is empty.
+		// Explicit per-arm override: works even when the role line is missing/empty.
 		selector = params.model.trim();
 	} else {
 		if (entries.length === 0) {
-			throw new Error(`Role "${role}" is not configured and has no default. Run /setup-pstack or pstack_models save to choose a model for it.`);
+			throw new Error(`Role "${role}" is not configured. Run /setup-pstack or pstack_models save to choose a model for it.`);
 		}
 		if (panel) {
 			if (params.index === undefined) {
 				if (role === "arena cross-judge pool" && params.family) {
-					index = pickCrossJudge(entries, { list: () => query.list(), current: () => query.current(), family: params.family }).index;
+					index = pickCrossJudge(entries, { list: () => available, current: () => query.current(), family: params.family }).index;
 				} else {
 					throw new Error(`Role "${role}" is a panel role with ${entries.length} entries; pass index (1-based).`);
 				}
@@ -664,13 +782,16 @@ export function resolveRoleAgent(
 	}
 
 	const alias = isAlias(selector);
+	let thinking: string | undefined;
 	if (!alias) {
-		const verdict = validateConcreteSelector(selector, query.list());
+		const verdict = validateConcreteSelector(selector, available);
 		if (!verdict.ok) {
 			throw new Error(`${role}: configured model ${selector} is not available in this session. Rerun /setup-pstack; no other family is substituted.`);
 		}
 		selector = verdict.selector;
+		thinking = verdict.thinking;
 	}
+	assertInApprovedPool(selector, thinking, pool, `${role}${panel && index !== undefined ? `[${index}]` : ""}`);
 	const name = agentName(kind, alias ? ALIAS_TOKEN : selector);
 	const file = readAgentFile(paths, name);
 	if (file === undefined) {
@@ -750,6 +871,7 @@ export function registerModels(pi: ExtensionAPI): void {
 		try {
 			const paths = resolvePaths();
 			await assertNoOverrides(paths, ctx.cwd, names);
+			const pool = effectivePool(parseConfig(readRuleFile(paths)), ctx.models.list());
 			for (const name of names) {
 				const content = readAgentFile(paths, name);
 				if (!content) throw new Error(`Prepared P Stack descriptor ${name} is missing.`);
@@ -760,7 +882,11 @@ export function registerModels(pi: ExtensionAPI): void {
 				if (selector) {
 					const verdict = validateConcreteSelector(selector, ctx.models.list());
 					if (!verdict.ok) throw new Error(verdict.error);
-				} else if (!ctx.models.current()) throw new Error("P Stack alias dispatch requires a live parent model.");
+					assertInApprovedPool(verdict.selector, verdict.thinking, pool, `agent ${name}`);
+				} else {
+					assertInApprovedPool(ALIAS_TOKEN, undefined, pool, `agent ${name}`);
+					if (!ctx.models.current()) throw new Error("P Stack alias dispatch requires a live parent model.");
+				}
 			}
 			// Project/package agents resolve before the profile in native discovery;
 			// byte-checking the profile file alone would let a workspace shadow win.
@@ -776,17 +902,19 @@ export function registerModels(pi: ExtensionAPI): void {
 		name: "pstack_models",
 		label: "P Stack models",
 		description:
-			"Inspect authenticated model identities and configure all P Stack role mappings. list: models, roles and availability. show: raw rule and parsed roles. save: validate the full 18-role choice, publish immutable native descriptors, then atomically publish the managed rule. prepare: extra concrete per-arm selectors. Failed publication never points the role configuration at incomplete descriptors.",
+			"Inspect authenticated model identities and configure all P Stack role mappings against an explicit approved pool. list: available models with selector/name/family/reasoning/efforts, the approved pool, per-role configuration and availability. show: raw rule and parsed roles. save: validate the full 18-role choice against an explicit pool, publish immutable native descriptors, then atomically publish the managed rule. prepare: extra concrete per-arm selectors constrained to the pool. Failed publication never points the role configuration at incomplete descriptors.",
 		parameters: z.object({
 			action: z.enum(["list", "show", "save", "prepare"]),
 			roles: z.record(z.string(), z.union([z.string(), z.array(z.string())])).optional(),
 			models: z.array(z.string()).optional(),
+			pool: z.array(z.string()).describe("Approved selectors (concrete provider/id base identities plus `inherit-parent`/`auto` alias permission). Required for save.").optional(),
 		}),
 		async execute(_id, params, _signal, _onUpdate, ctx) {
 			const input = params as {
 				action: "list" | "show" | "save" | "prepare";
 				roles?: Record<string, RoleInput>;
 				models?: string[];
+				pool?: string[];
 			};
 			const paths = resolvePaths();
 			try {
@@ -794,7 +922,14 @@ export function registerModels(pi: ExtensionAPI): void {
 					const current = ctx.models.current();
 					const result = {
 						...currentRoles(paths, ctx.models),
-						models: ctx.models.list().map((model) => ({ selector: `${model.provider}/${model.id}`, thinking: model.thinking?.efforts })),
+						pool: effectivePool(parseConfig(readRuleFile(paths)), ctx.models.list()),
+						models: ctx.models.list().map((model) => ({
+							selector: `${model.provider}/${model.id}`,
+							name: model.name,
+							family: ctx.models.family(model),
+							reasoning: model.reasoning,
+							efforts: model.thinking?.efforts,
+						})),
 						current: current && `${current.provider}/${current.id}`,
 					};
 					return {
@@ -815,7 +950,10 @@ export function registerModels(pi: ExtensionAPI): void {
 					if (!input.roles || Object.keys(input.roles).length === 0) {
 						return errorResult("save requires the full explicit roles choice; an absent choice writes nothing.");
 					}
-					const result = await saveRoles(input.roles, ctx.models, paths, ctx.cwd);
+					if (!input.pool || input.pool.some((p) => p.trim() !== "") === false) {
+						return errorResult("save requires an explicit pool of approved model selectors; an absent pool writes nothing.");
+					}
+					const result = await saveRoles(input.roles, ctx.models, paths, ctx.cwd, input.pool);
 					const created = result.agents.filter((a) => a.status === "created").length;
 					return {
 						content: [{ type: "text", text: `Saved ${result.rulePath} and ${created} newly generated agents (${result.agents.length} total prepared).` }],
@@ -845,7 +983,7 @@ export function registerModels(pi: ExtensionAPI): void {
 			role: z.string(),
 			index: z.number().int().nullable().describe("1-based panel index; null for a scalar role. Omit it on 'arena cross-judge pool' to auto-select by model family.").optional(),
 			kind: z.enum(["poteto", "general", "readonly"]).nullable().describe("Null selects the configured role's agent kind. Set only for an explicit kind override.").optional(),
-			model: z.string().min(1).nullable().describe("Null selects the saved role/index, including ordered panel members. Set a selector only for an explicit, already-prepared per-arm override; never invent one.").optional(),
+			model: z.string().min(1).nullable().describe("Null selects the saved role/index, including ordered panel members. Set a selector only for an explicit, already-prepared per-arm override that is also a member of the approved pool; never invent one.").optional(),
 		}),
 		async execute(_id, params, _signal, _onUpdate, ctx) {
 			const input = params as { role: string; index?: number | null; kind?: AgentKind | null; model?: string | null };

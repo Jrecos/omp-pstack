@@ -1,12 +1,13 @@
 {
   "ok": true,
   "cancellationUnchanged": true,
+  "recommendedRule": "---\ndescription: pstack per-role model choices backed by an explicit approved pool\nalwaysApply: true\n---\n\n# pstack model configuration. `pool:` lists the only approved selectors (concrete provider/id base identities plus `inherit-parent`/`auto` alias permission). A role line lists that role's ordered entries; a missing or empty role line is unconfigured and requires /setup-pstack.\n# `inherit-parent` or `auto` as a value: the role runs on the parent chat model (dispatch without a model override). An alias is only granted when the pool contains the same token. Alias entries in a panel list still count toward its fan-out.\n# The addresses below map role[index] kind to prepared native task agents; dispatch with task agent=<name>.\n<!-- omp-pstack:managed-start -->\npool: openai-codex/gpt-6-astra, openai-codex/gpt-5.4-mini, inherit-parent, auto\nfeature, refactoring: inherit-parent\nbug-fix: inherit-parent\nperf-issue: inherit-parent\nhillclimb: openai-codex/gpt-5.4-mini:high\njudgment and prose: inherit-parent\nhardest tasks: inherit-parent\nhow explorer: openai-codex/gpt-5.4-mini:medium\nhow explainer: openai-codex/gpt-5.4-mini:high\nhow critics: inherit-parent, openai-codex/gpt-5.4-mini:high\nwhy investigators: inherit-parent\nwhy synthesizer: inherit-parent\nreflect tooling: openai-codex/gpt-5.4-mini:high\nreflect judgment, divergent, synthesizer: inherit-parent\narena runners: inherit-parent, openai-codex/gpt-5.4-mini:high\narena cross-judge pool: openai-codex/gpt-5.4-mini:high, inherit-parent\nswarm workers: openai-codex/gpt-5.4-mini:medium\narchitect runners: inherit-parent, openai-codex/gpt-5.4-mini:xhigh\ninterrogate reviewers: inherit-parent, openai-codex/gpt-5.4-mini:high\n\n# feature, refactoring[1] poteto -> omp-pstack-84ee2ff958404f1f1b4c05f3 (inherit-parent)\n# bug-fix[1] poteto -> omp-pstack-84ee2ff958404f1f1b4c05f3 (inherit-parent)\n# perf-issue[1] poteto -> omp-pstack-84ee2ff958404f1f1b4c05f3 (inherit-parent)\n# hillclimb[1] poteto -> omp-pstack-9b211883053f55bec1596a9d (openai-codex/gpt-5.4-mini:high)\n# judgment and prose[1] general -> omp-pstack-bf2477c1de52fe0e62e4b0ec (inherit-parent)\n# hardest tasks[1] poteto -> omp-pstack-84ee2ff958404f1f1b4c05f3 (inherit-parent)\n# how explorer[1] general -> omp-pstack-1779464980363b84f5231679 (openai-codex/gpt-5.4-mini:medium)\n# how explainer[1] general -> omp-pstack-4f17a4ab831dd62220c5a8a2 (openai-codex/gpt-5.4-mini:high)\n# how critics[1] readonly -> omp-pstack-88f9cfe58ad028985c73703c (inherit-parent)\n# how critics[2] readonly -> omp-pstack-30c74d664a10e8feb35f34e4 (openai-codex/gpt-5.4-mini:high)\n# why investigators[1] poteto -> omp-pstack-84ee2ff958404f1f1b4c05f3 (inherit-parent)\n# why synthesizer[1] general -> omp-pstack-bf2477c1de52fe0e62e4b0ec (inherit-parent)\n# reflect tooling[1] general -> omp-pstack-4f17a4ab831dd62220c5a8a2 (openai-codex/gpt-5.4-mini:high)\n# reflect judgment, divergent, synthesizer[1] general -> omp-pstack-bf2477c1de52fe0e62e4b0ec (inherit-parent)\n# arena runners[1] poteto -> omp-pstack-84ee2ff958404f1f1b4c05f3 (inherit-parent)\n# arena runners[2] poteto -> omp-pstack-9b211883053f55bec1596a9d (openai-codex/gpt-5.4-mini:high)\n# arena cross-judge pool[1] readonly -> omp-pstack-30c74d664a10e8feb35f34e4 (openai-codex/gpt-5.4-mini:high)\n# arena cross-judge pool[2] readonly -> omp-pstack-88f9cfe58ad028985c73703c (inherit-parent)\n# swarm workers[1] poteto -> omp-pstack-9327627fa0905f90d0199472 (openai-codex/gpt-5.4-mini:medium)\n# architect runners[1] poteto -> omp-pstack-84ee2ff958404f1f1b4c05f3 (inherit-parent)\n# architect runners[2] poteto -> omp-pstack-85a875b4581731e3e4873f8e (openai-codex/gpt-5.4-mini:xhigh)\n# interrogate reviewers[1] readonly -> omp-pstack-88f9cfe58ad028985c73703c (inherit-parent)\n# interrogate reviewers[2] readonly -> omp-pstack-30c74d664a10e8feb35f34e4 (openai-codex/gpt-5.4-mini:high)\n<!-- omp-pstack:managed-end -->\n",
   "nativeBatches": [
     [
       {
         "id": "FirstOne",
         "agent": "omp-pstack-88f9cfe58ad028985c73703c",
-        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_INDEX_1, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and project-wide test suites.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_INDEX_1, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and project-wide test suites; skip all validation.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
         "exitCode": 0,
         "output": "{\n  \"text\": \"PSTACK_First_INDEX_1\"\n}",
         "resolvedModel": "openai-codex/gpt-6-astra:high"
@@ -14,7 +15,7 @@
       {
         "id": "FirstTwo",
         "agent": "omp-pstack-88f9cfe58ad028985c73703c",
-        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_INDEX_2, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and project-wide test suites.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_INDEX_2, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and project-wide test suites; skip all validation.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
         "exitCode": 0,
         "output": "{\n  \"text\": \"PSTACK_First_INDEX_2\"\n}",
         "resolvedModel": "openai-codex/gpt-6-astra:high"
@@ -22,10 +23,20 @@
       {
         "id": "FirstThree",
         "agent": "omp-pstack-0003eca3be0c9d11aa341bf3",
-        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_INDEX_3, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and project-wide test suites.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_INDEX_3, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and project-wide test suites; skip all validation.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
         "exitCode": 0,
         "output": "{\n  \"text\": \"PSTACK_First_INDEX_3\"\n}",
         "resolvedModel": "openai-codex/gpt-5.4-mini:high"
+      }
+    ],
+    [
+      {
+        "id": "FirstArchitect",
+        "agent": "omp-pstack-84ee2ff958404f1f1b4c05f3",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_First_ARCH, replacing ARCH with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required. Skip formatters, linters, builds, and all validation including project-wide test suites.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "exitCode": 0,
+        "output": "\"PSTACK_First_1\"",
+        "resolvedModel": "openai-codex/gpt-6-astra:high"
       }
     ],
     [
@@ -42,7 +53,7 @@
         "agent": "omp-pstack-88f9cfe58ad028985c73703c",
         "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_Second_INDEX_2, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
         "exitCode": 0,
-        "output": "{\n  \"text\": \"PSTACK_Second_2_INDEX_2\"\n}",
+        "output": "{\n  \"text\": \"PSTACK_Second_INDEX_2\"\n}",
         "resolvedModel": "openai-codex/gpt-5.4-mini:high"
       },
       {
@@ -51,6 +62,17 @@
         "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_Second_INDEX_3, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
         "exitCode": 0,
         "output": "{\n  \"text\": \"PSTACK_Second_INDEX_3\"\n}",
+        "resolvedModel": "openai-codex/gpt-5.4-mini:high"
+      }
+    ],
+    [],
+    [
+      {
+        "id": "SecondArchitect",
+        "agent": "omp-pstack-84ee2ff958404f1f1b4c05f3",
+        "task": "Complete assignment thoroughly:\n\n# Target\nReturn PSTACK_Second_ARCH, replacing ARCH with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null.",
+        "exitCode": 0,
+        "output": "\"PSTACK_Second_1\"",
         "resolvedModel": "openai-codex/gpt-5.4-mini:high"
       }
     ]

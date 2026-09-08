@@ -112,6 +112,11 @@ test("saveRoles publishes alias + concrete agents and the managed rule", async (
 	const raw = readFileSync(paths.rulePath, "utf8");
 	const parsed = parseConfig(raw);
 	expect(parsed.exists).toBe(true);
+	// The approved pool is persisted as concrete base identities (thinking suffix
+	// stripped) plus the alias tokens actually used. Unused members are kept.
+	expect(parsed.pool).toHaveLength(3);
+	expect(parsed.pool).toEqual(expect.arrayContaining(["inherit-parent", "auto", "openai-codex/gpt-6-astra"]));
+	expect(raw).toMatch(/^pool: /m);
 	expect(parsed.roles["how critics"]).toEqual(["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"]);
 	// Ordered duplicate panel entries survive verbatim; no deduplication.
 	expect(parsed.roles["arena runners"]).toEqual(["inherit-parent", "inherit-parent"]);
@@ -216,32 +221,15 @@ test("descriptor lookup fails closed on missing/stale descriptors, unconfigured 
 	);
 });
 
-test("a deleted role line falls back to the staged upstream default descriptor", async () => {
+test("a deleted role line requires setup instead of falling back to a hardcoded default", async () => {
 	const paths = freshPaths();
-	const catalog = [...MODELS, { provider: "xai", id: "grok-4.6-fast-xhigh", reasoning: true }] as PstackModel[];
-	await saveRoles(fullChoice(), fakeQuery(catalog), paths);
-	// Delete the managed "feature, refactoring" line so the role resolves
-	// through DEFAULT_ROLES instead of the configured choice.
+	await saveRoles(fullChoice(), fakeQuery(), paths);
+	// Delete the managed "feature, refactoring" line so the role has no config.
 	const raw = readFileSync(paths.rulePath, "utf8");
 	writeFileSync(paths.rulePath, raw.split("\n").filter((line) => !line.startsWith("feature, refactoring:")).join("\n"));
-
-	const resolved = resolveRoleAgent({ role: "feature, refactoring" }, fakeQuery(catalog), paths);
-	expect(resolved.agent).toBe(agentName("poteto", "xai/grok-4.6-fast-xhigh"));
-	expect(resolved.model).toBe("xai/grok-4.6-fast-xhigh");
-	expect(resolved.role).toBe("feature, refactoring");
-	expect(resolved.index).toBeUndefined();
-	// The descriptor bytes really pin the canonical default selector.
-	expect(readFileSync(join(paths.agentsDir, `${resolved.agent}.md`), "utf8")).toContain("model: xai/grok-4.6-fast-xhigh");
-
-	// Unavailable Cursor-slug default: the same deletion fails with the
-	// actionable setup error, never "No prepared descriptor" or a substitute.
-	const paths2 = freshPaths();
-	await saveRoles(fullChoice(), fakeQuery(), paths2);
-	const raw2 = readFileSync(paths2.rulePath, "utf8");
-	writeFileSync(paths2.rulePath, raw2.split("\n").filter((line) => !line.startsWith("feature, refactoring:")).join("\n"));
-	expect(() => resolveRoleAgent({ role: "feature, refactoring" }, fakeQuery(), paths2)).toThrow(
-		/not available in this session. Rerun \/setup-pstack/,
-	);
+	// DEFAULT_ROLES is removed: a deleted line means unconfigured → requires setup.
+	// No hardcoded brand default and no family substitution is ever attempted.
+	expect(() => resolveRoleAgent({ role: "feature, refactoring" }, fakeQuery(), paths)).toThrow(/not configured|setup-pstack/);
 });
 
 // ─── Malformed configuration ─────────────────────────────────────────────────
@@ -309,16 +297,25 @@ test("task.agentModelOverrides entries for generated agents (aliases included) r
 
 // ─── Defaults, prepare and cross-judge ───────────────────────────────────────
 
-test("fresh profile lists upstream defaults and marks unavailable Cursor slugs as needing setup", () => {
+test("a fresh profile lists every role as requiring setup, with no hardcoded brand default", () => {
 	const { roles, needsSetup } = currentRoles(freshPaths(), fakeQuery());
 	expect(roles).toHaveLength(18);
-	expect(roles.every((role) => role.source === "default")).toBe(true);
 	expect(needsSetup).toBe(true);
+	// DEFAULT_ROLES is gone: nothing is silently assumed on a fresh profile. Every
+	// role is unconfigured and needs a choice from the approved pool.
+	for (const role of roles) {
+		expect(role.source).toBe("unconfigured");
+		expect(role.kind).toBeDefined();
+		expect(role.entries).toEqual([]);
+		expect(role.needsSetup).toBe(true);
+	}
 	const howCritics = roles.find((role) => role.role === "how critics")!;
 	expect(howCritics.panel).toBe(true);
+	expect(howCritics.kind).toBe("readonly");
 	expect(howCritics.needsSetup).toBe(true);
 	const bugFix = roles.find((role) => role.role === "bug-fix")!;
-	expect(bugFix.entries).toEqual([{ value: "claude-fable-5-1-thinking-max", available: false, alias: false }]);
+	expect(bugFix.kind).toBe("poteto");
+	expect(bugFix.entries).toEqual([]);
 	expect(bugFix.needsSetup).toBe(true);
 	expect(showConfig(freshPaths()).exists).toBe(false);
 });
@@ -405,12 +402,21 @@ test("saveRoles and prepareModels publish the canonical bytes they validated", a
 	expect(prepared.agents.every((agent) => agent.selector === "openai-codex/gpt-5.4-mini")).toBe(true);
 });
 
-test("an explicit prepared per-arm override dispatches even when the role's default is unavailable", async () => {
+test("an explicit prepared per-arm override dispatches; outside-pool overrides are rejected", async () => {
 	const paths = freshPaths();
-	await prepareModels(["openai-codex/gpt-6-astra"], fakeQuery(), paths);
-	// "bug-fix" defaults to an unavailable Cursor slug on a fresh profile, so the
-	// no-override path fails availability; the explicit per-arm override dispatches.
-	expect(() => resolveRoleAgent({ role: "bug-fix" }, fakeQuery(), paths)).toThrow(/not available in this session/);
+	const pool = ["openai-codex/gpt-6-astra", "inherit-parent"];
+	await saveRoles(fullChoice({ "how critics": ["inherit-parent", "openai-codex/gpt-6-astra:high"] }), fakeQuery(), paths, undefined, pool);
+	// "bug-fix" has no hardcoded default now, but an explicit in-pool per-arm
+	// override dispatches its prepared descriptor regardless.
+	const resolved = resolveRoleAgent({ role: "bug-fix", model: "openai-codex/gpt-6-astra:high" }, fakeQuery(), paths);
+	expect(resolved.model).toBe("openai-codex/gpt-6-astra:high");
+	expect(resolved.agent).toBe(agentName("poteto", "openai-codex/gpt-6-astra:high"));
+	// Outside-pool override is rejected even though it authenticates.
+	expect(() => resolveRoleAgent({ role: "bug-fix", model: "moonshotai/glm-4.7:max" }, fakeQuery(), paths)).toThrow(/pool/);
+	// A role line with an empty value is unconfigured → requires setup.
+	const paths2 = freshPaths();
+	await saveRoles(fullChoice({ "bug-fix": "" }), fakeQuery(), paths2, undefined, pool);
+	expect(() => resolveRoleAgent({ role: "bug-fix" }, fakeQuery(), paths2)).toThrow(/not configured/);
 });
 
 test("empty settings overrides never block; effective pattern lists still do", async () => {
@@ -467,4 +473,115 @@ test("cross-judge auto-selection flows through role resolution", async () => {
 	const fallback = resolveRoleAgent({ role: "arena cross-judge pool", family: query.family }, query, paths);
 	expect(fallback.index).toBe(1);
 	expect(fallback.model).toBe("openai-codex/gpt-5.4-mini");
+});
+
+// ─── Approved model pool contract ────────────────────────────────────────────
+
+test("the approved pool persists alongside role assignments, including unused members", async () => {
+	const paths = freshPaths();
+	const pool = ["openai-codex/gpt-6-astra", "openai-codex/gpt-5.4-mini", "inherit-parent"];
+	await saveRoles(allRoles("inherit-parent"), fakeQuery(), paths, undefined, pool);
+	const raw = readFileSync(paths.rulePath, "utf8");
+	const parsed = parseConfig(raw);
+	expect([...parsed.pool].sort()).toEqual([...pool].sort());
+	// Roundtrip is stable: the pool line survives serialize/parse.
+	expect(serializeConfig(parsed)).toBe(raw);
+	// Even though gpt-6-astra and gpt-5.4-mini are never used by a role, they persist.
+	expect(raw).toContain("openai-codex/gpt-5.4-mini");
+});
+
+test("saveRoles rejects any role selector outside the approved pool", async () => {
+	const paths = freshPaths();
+	const pool = ["openai-codex/gpt-6-astra", "inherit-parent"];
+	// bug-fix on gpt-5.4-mini is outside the pool: nothing is written.
+	await expect(saveRoles(fullChoice({ "bug-fix": "openai-codex/gpt-5.4-mini" }), fakeQuery(), paths, undefined, pool)).rejects.toThrow(/pool/);
+	expect(existsSync(paths.rulePath)).toBe(false);
+	expect(agentFiles(paths)).toEqual([]);
+	// The same concrete base identity at a different thinking level is in-pool.
+	await expect(saveRoles(fullChoice({ "bug-fix": "openai-codex/gpt-6-astra:high" }), fakeQuery(), paths, undefined, pool)).resolves.toBeTruthy();
+});
+
+test("prepareModels enforces an existing pool but keeps the no-config explicit path", async () => {
+	const paths = freshPaths();
+	const pool = ["openai-codex/gpt-6-astra", "inherit-parent"];
+	await saveRoles(allRoles("inherit-parent"), fakeQuery(), paths, undefined, pool);
+	// Outside-pool model is rejected once a pool is configured.
+	await expect(prepareModels(["openai-codex/gpt-5.4-mini"], fakeQuery(), paths)).rejects.toThrow(/pool/);
+	// In-pool prepare works, and reuses on a second call.
+	const first = await prepareModels(["openai-codex/gpt-6-astra"], fakeQuery(), paths);
+	expect(first.agents).toHaveLength(3);
+	const second = await prepareModels(["openai-codex/gpt-6-astra"], fakeQuery(), paths);
+	expect(second.agents.every((agent) => agent.status === "reused")).toBe(true);
+	// No config at all: explicit prepare is preserved (no-pool carve-out), even for
+	// a model a configured pool would exclude.
+	const paths2 = freshPaths();
+	const third = await prepareModels(["openai-codex/gpt-5.4-mini"], fakeQuery(), paths2);
+	expect(third.agents).toHaveLength(3);
+	expect(third.agents.every((agent) => agent.status === "created")).toBe(true);
+});
+
+test("alias tokens are permitted only when the pool explicitly opts in", async () => {
+	const poolNoAlias = ["openai-codex/gpt-6-astra"];
+	const paths = freshPaths();
+	await expect(saveRoles(allRoles("inherit-parent"), fakeQuery(), paths, undefined, poolNoAlias)).rejects.toThrow(/pool/);
+	expect(existsSync(paths.rulePath)).toBe(false);
+	// inherit-parent in the pool grants it.
+	const poolInherit = ["openai-codex/gpt-6-astra", "inherit-parent"];
+	const paths2 = freshPaths();
+	await expect(saveRoles(allRoles("inherit-parent"), fakeQuery(), paths2, undefined, poolInherit)).resolves.toBeTruthy();
+	// inherit-parent permission does not grant the distinct auto token.
+	const paths3 = freshPaths();
+	await expect(saveRoles(allRoles("auto"), fakeQuery(), paths3, undefined, poolInherit)).rejects.toThrow(/pool/);
+});
+
+test("a legacy rule without a pool line infers its effective pool from explicit assignments", async () => {
+	const paths = freshPaths();
+	mkdirSync(paths.rulesDir, { recursive: true });
+	const legacy = [
+		"---",
+		"description: pstack per-role model choices (overrides skill defaults)",
+		"alwaysApply: true",
+		"---",
+		"<!-- omp-pstack:managed-start -->",
+		"bug-fix: openai-codex/gpt-6-astra:high",
+		"how critics: inherit-parent, auto, openai-codex/gpt-6-astra",
+		"<!-- omp-pstack:managed-end -->",
+		"",
+	].join("\n");
+	writeFileSync(paths.rulePath, legacy);
+	const parsed = parseConfig(legacy);
+	// No explicit pool line → stored pool is empty; the effective pool is derived
+	// from the explicit assignments (never DEFAULT_ROLES).
+	expect(parsed.pool).toEqual([]);
+	const roles = currentRoles(paths, fakeQuery()).roles;
+	const bugFix = roles.find((role) => role.role === "bug-fix")!;
+	expect(bugFix.source).toBe("configured");
+	expect(bugFix.entries).toEqual([{ value: "openai-codex/gpt-6-astra:high", alias: false, available: true }]);
+	// A role absent from the legacy rule requires setup; no brand default.
+	const perf = roles.find((role) => role.role === "perf-issue")!;
+	expect(perf.source).toBe("unconfigured");
+	expect(perf.entries).toEqual([]);
+	expect(perf.needsSetup).toBe(true);
+	// Enforcement uses the derived pool: in-pool prepare passes, outside-pool fails.
+	await expect(prepareModels(["openai-codex/gpt-6-astra"], fakeQuery(), paths)).resolves.toBeTruthy();
+	await expect(prepareModels(["openai-codex/gpt-5.4-mini"], fakeQuery(), paths)).rejects.toThrow(/pool/);
+});
+
+// An explicitly-supplied pool must never be inferred from (or silently fall
+// back to) the role choice. A pool the caller supplies is canonicalized as
+// given; if it approves nothing, the save fails closed rather than blessing
+// models the user never listed.
+test("an explicit empty pool is rejected, never inferred from the role choice", async () => {
+	const paths = freshPaths();
+	// All-whitespace entries canonicalize to nothing — must not derive from roles.
+	await expect(saveRoles(allRoles("inherit-parent"), fakeQuery(), paths, undefined, ["  "])).rejects.toThrow(/approved pool member/);
+	await expect(saveRoles(allRoles("inherit-parent"), fakeQuery(), paths, undefined, [])).rejects.toThrow(/approved pool member/);
+	expect(existsSync(paths.rulePath)).toBe(false);
+	expect(agentFiles(paths)).toEqual([]);
+	// The legacy absent-pool path is unchanged: derive from the explicit choice.
+	const derivedPaths = freshPaths();
+	await saveRoles(allRoles("inherit-parent"), fakeQuery(), derivedPaths);
+	const derived = parseConfig(readFileSync(derivedPaths.rulePath, "utf8"));
+	expect(derived.pool).toEqual(["inherit-parent"]);
+	expect(derived.roles["bug-fix"]).toEqual(["inherit-parent"]);
 });

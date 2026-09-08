@@ -33,18 +33,11 @@ Write one clear paragraph. Reviewers challenge whether the work achieves the int
 
 ## Step 3, Spawn Reviewers
 
-Launch all reviewers in a single message as native `task` calls. Use the `interrogate reviewers` list from the `pstack-models` profile rule (written by `/setup-pstack`; query it with `pstack_models` action `show`) when present, one reviewer per entry, extending or shrinking the Reviewer A/B/C/D labels below to the configured entry count; otherwise use the table defaults.
-
-| Subagent | Default model |
-|----------|---------------|
-| Reviewer A | `claude-fable-5-1-thinking-max` |
-| Reviewer B | `gpt-5.6-sol-max` |
-| Reviewer C | `grok-4.6-fast-xhigh` |
-| Reviewer D | `claude-opus-5-thinking-xhigh` |
+Launch all reviewers in a single message as native `task` calls. Use the `interrogate reviewers` list from the `pstack-models` profile rule (written by `/setup-pstack`; query it with `pstack_models` action `show`), one reviewer per entry, naming them Reviewer A, B, C, and so on up to the configured entry count. If the list is unset or any selected model is unavailable in this session, run `/setup-pstack` first — never substitute a model outside the approved pool.
 
 For each reviewer, get a descriptor from `pstack_agent` (`{role: "interrogate reviewers", index: <1-based entry number>, kind: "readonly"}`) and dispatch one native `task` call:
 - `agent`: the value `pstack_agent` returns for that entry
-- `model`: resolved metadata only. `pstack_agent` has already built the configured or default model into the prepared agent, so do not pass `model` to native `task`.
+- `model`: resolved metadata only. `pstack_agent` has already built the configured model into the prepared agent, so do not pass `model` to native `task`.
 - `readonly`: the `readonly` kind
 
 Ordered duplicate entries count as separate reviewers; never deduplicate or substitute a fallback array. If a configured concrete model fails to resolve at dispatch, the task fails naming the role — rerun `/setup-pstack` and pick a model that resolves. Do not silently substitute another model. If the configured value is `inherit-parent` or `auto`, pass the returned `agent`; those aliases resolve to the live parent model and are never treated as broken selectors.

@@ -46,7 +46,7 @@ The right decomposition depends on the question. Use your judgment. Narrow quest
 
 Get each explorer's descriptor from `pstack_agent` (`{role: "how explorer", kind: "readonly"}`), then spawn all explorers in a single message as native `task` calls:
 
-- `agent`: the value `pstack_agent` returns for the configured how-explorer role (default model `grok-4.6-fast-xhigh`)
+- `agent`: the value `pstack_agent` returns for the configured how-explorer role (configured via `/setup-pstack`; if unset or unavailable, run it first)
 - `readonly`: the `readonly` kind — file discovery and reading only, no writes
 
 Each explorer gets the same base prompt from `references/explorer-prompt.md` plus a specific exploration angle naming its slice. Each explorer should:
@@ -64,7 +64,7 @@ Then proceed to Step 3.
 
 Get the descriptor from `pstack_agent` (`{role: "how explainer", kind: "readonly"}`) and spawn a single native `task` subagent that explores and explains in one pass:
 
-- `agent`: the value `pstack_agent` returns for the configured how-explainer role (default model `claude-fable-5-1-thinking-max`)
+- `agent`: the value `pstack_agent` returns for the configured how-explainer role (configured via `/setup-pstack`; if unset or unavailable, run it first)
 - `readonly`: the `readonly` kind
 
 The agent does its own exploration (Glob, Grep, Read) and writes the explanation directly. Read `references/explainer-prompt.md` for the communication style and output format. Same structure, just no explorer findings as input.
@@ -75,7 +75,7 @@ Proceed to Step 4.
 
 Once all explorers return, get the descriptor from `pstack_agent` (`{role: "how explainer", kind: "readonly"}`) and spawn a single native `task` subagent to synthesize their findings into one coherent explanation:
 
-- `agent`: the value `pstack_agent` returns for the configured how-explainer role (default model `claude-fable-5-1-thinking-max`)
+- `agent`: the value `pstack_agent` returns for the configured how-explainer role (configured via `/setup-pstack`; if unset or unavailable, run it first)
 - `readonly`: the `readonly` kind
 
 The explainer gets all explorers' findings and writes the human-facing explanation (output format below). Read `references/explainer-prompt.md` for the full prompt template. The explainer reconciles overlapping findings, resolves contradictions, and weaves the slices into a unified picture.
@@ -108,7 +108,7 @@ Run the full explain flow above (Steps 1-4). You must understand the architectur
 
 ### Step 2. Spawn Critics
 
-After the explanation is complete, spawn one architectural critic per ordered entry in your configured how-critics list (defaults `claude-fable-5-1-thinking-max`, `gpt-5.6-sol-max`, `grok-4.6-fast-xhigh`, `claude-opus-5-thinking-xhigh`), all in a single message. For each entry `n` (1-based, alias entries included — ordered duplicates count as separate critics), get a descriptor from `pstack_agent` (`{role: "how critics", index: n, kind: "readonly"}`) and dispatch one native `task` call with the returned `agent`.
+After the explanation is complete, spawn one architectural critic per ordered entry in your configured how-critics list (configured via `/setup-pstack`; if unset or any selected model is unavailable, run `/setup-pstack` first — never substitute a model outside the approved pool), all in a single message. For each entry `n` (1-based, alias entries included — ordered duplicates count as separate critics), get a descriptor from `pstack_agent` (`{role: "how critics", index: n, kind: "readonly"}`) and dispatch one native `task` call with the returned `agent`.
 
 For each critic:
 - `agent`: the value `pstack_agent` returned for that entry. The configured model selection represents a minimum reasoning level. The lead should request a stronger override from `pstack_agent` when the architecture warrants deeper analysis.

@@ -43,7 +43,7 @@ two steps:
 
 new here? the [pstack guide](./docs/guide/README.md) walks you through a first real task, from setup and prompting through verification and overnight runs.
 
-that's it. the other skills are situational; the mode skill uses them for you as needed. out of the box the mode splits work by model strength: precisely-specified code, prose, and judgment go to fable 5.1, while fast mechanical code goes to grok. the default panel is fable 5.1 / sol / grok / opus 5. [`/setup-pstack`](./skills/setup-pstack/SKILL.md) changes any of it.
+that's it. the other skills are situational; the mode skill uses them for you as needed. the mode dispatches each role on the model you configure with [`/setup-pstack`](./skills/setup-pstack/SKILL.md): you pick the approved pool first, it recommends the role map from that pool, and you confirm or adjust. no model is used that you didn't approve, and an unset role needs setup rather than falling back to a brand.
 
 ## usage
 [![Illustrated Jrecos routes OMP robot agents through bug-fix, feature, and investigation playbooks.](./assets/readme-routing.webp)](./docs/guide/02-poteto-mode.md)
@@ -138,7 +138,7 @@ the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/po
 | [`/interrogate`](./skills/interrogate/SKILL.md) | you have a diff and want several different models to try to break it, including a strict code-quality lens. |
 | [`/automate-me`](./skills/automate-me/SKILL.md) | you want your own `-mode` skill, drafted from how you've actually worked. |
 | [`/make-bot-ui`](./skills/make-bot-ui/SKILL.md) | you want a page or dashboard whose buttons wake a Grok Bot over a webhook, including the sender-key handoff and Tailscale. |
-| [`/setup-pstack`](./skills/setup-pstack/SKILL.md) | you want to pick which models pstack uses per role. detects your models and writes a config rule. |
+| [`/setup-pstack`](./skills/setup-pstack/SKILL.md) | you want to pick which models pstack uses per role. detects your models, takes the approved pool, recommends the role map, and writes a config rule. |
 | [`/reflect`](./skills/reflect/SKILL.md) | a long task landed and you want the recipe captured as a skill edit. |
 | [`/teach`](./skills/teach/SKILL.md) | you want to actually understand a change or subsystem, not just have it summarized. runs how + why and weaves one plain explanation, built up diagram by diagram. |
 | [`/tdd`](./skills/tdd/SKILL.md) | you're fixing a bug and there's a cheap local test path. write the failing test first, then the fix. |
@@ -264,7 +264,7 @@ omp has native plan mode, which works well with pstack. planning is deliberately
 
 type [`/automate-me`](./skills/automate-me/SKILL.md). it mines your recent transcripts, drafts a `<your-name>-mode` skill from how you've actually worked, and routes through pstack underneath. you keep pstack as the base and end up with your own routing skill alongside `poteto-mode`.
 
-models are configurable too. type [`/setup-pstack`](./skills/setup-pstack/SKILL.md). it detects the models you have access to and writes a small always-applied rule mapping each role (code, judgment, the review panels) to a model. every skill reads it and falls back to sensible defaults when the rule is absent, so you override only what you want.
+models are configurable too. type [`/setup-pstack`](./skills/setup-pstack/SKILL.md). it detects the models you have access to, takes the approved pool first, and writes a small always-applied rule mapping each role (code, judgment, the review panels) to a pool member. every skill reads that rule; there are no hardcoded defaults left, so a role that isn't configured needs setup, and dispatch fails closed rather than substituting a model you didn't approve.
 
 ## automations
 [![Illustrated Jrecos supervises an autonomous plan, build, verify, review, and ship loop.](./assets/readme-automation.webp)](./docs/guide/07-overnight.md)
