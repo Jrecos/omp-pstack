@@ -1,4 +1,4 @@
-import { linkSync, mkdirSync, readFileSync, realpathSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
+import { linkSync, mkdirSync, readdirSync, readFileSync, realpathSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
 import { createHash, randomBytes } from "node:crypto";
 import { join } from "node:path";
 import { getAgentDir, Settings, type ExtensionAPI } from "@oh-my-pi/pi-coding-agent";
@@ -195,9 +195,24 @@ export function isAlias(value: string): boolean {
 	return (ALIASES as readonly string[]).includes(value);
 }
 
+// Funny deterministic names: same (kind, selector) always maps to the same
+// adjective-noun pair, with a short hash tail so distinct pairs never collide
+// and the omp-pstack- dispatch prefix (task guard) is preserved.
+const NAME_ADJECTIVES = [
+	"grumpy", "sleepy", "feral", "chaotic", "paranoid", "drunken", "sarcastic", "stubborn",
+	"caffeinated", "unhinged", "bald", "spicy", "moody", "naked", "clueless", "menacing",
+] as const;
+const NAME_NOUNS = [
+	"llama", "gremlin", "potato", "goblin", "ferret", "walrus", "pigeon", "badger",
+	"tortoise", "hamster", "raccoon", "penguin", "goose", "toad", "weasel", "axolotl",
+] as const;
+
 export function agentName(kind: AgentKind, selector: string): string {
-	const hash = createHash("sha256").update(`${kind}\0${selector.trim()}`).digest("hex").slice(0, 24);
-	return `omp-pstack-${hash}`;
+	const digest = createHash("sha256").update(`${kind}\0${selector.trim()}`).digest();
+	const adjective = NAME_ADJECTIVES[digest[0]! % NAME_ADJECTIVES.length];
+	const noun = NAME_NOUNS[digest[1]! % NAME_NOUNS.length];
+	const tail = digest.toString("hex").slice(2, 8);
+	return `omp-pstack-${adjective}-${noun}-${tail}`;
 }
 
 // ─── Approved pool (concrete base identities plus explicit alias permission) ──
@@ -476,7 +491,19 @@ function commitStaged(paths: Paths, staged: Map<string, string>): void {
 			}
 		} finally { unlinkSync(tmp); }
 	}
+	// The staged map is the complete desired set; sweep profiles this plugin
+	// owns (prefix match) but no longer stages. Foreign agent files never match
+	// the prefix and are never touched.
+	let stale: string[] = [];
+	try {
+		stale = readdirSync(paths.agentsDir).filter((name) => name.startsWith("omp-pstack-") && name.endsWith(".md"));
+	} catch { /* agentsDir vanished or unreadable; nothing to prune */ }
+	for (const file of stale) {
+		if (staged.has(file)) continue;
+		try { unlinkSync(join(paths.agentsDir, file)); } catch { /* raced or read-only; harmless */ }
+	}
 }
+
 
 function writeRuleAtomic(paths: Paths, content: string): void {
 	mkdirSync(paths.rulesDir, { recursive: true });
