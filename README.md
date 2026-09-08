@@ -34,6 +34,22 @@ bun "$PSTACK_ROOT/src/cli.ts" routine list
 
 marketplace installs are listed under the canonical id `omp-pstack@omp-pstack`, and each entry carries an `installPath` — project-scope installs are listed before user-scope (a shadowed user entry is marked `shadowedBy`), so the resolver above picks the active scope automatically. npm/link installs appear under `npm` with `path`. working from a checkout of this repository instead? skip the resolver: `PSTACK_ROOT="$(pwd)"`.
 
+### update
+
+marketplace installs update in place with the same id:
+
+```bash
+omp plugin upgrade omp-pstack@omp-pstack
+```
+
+if your omp version has no `plugin upgrade`, reinstall over the existing entry:
+
+```bash
+omp plugin install omp-pstack@omp-pstack
+```
+
+updating replaces the plugin code (skills, CLI, runtime) but keeps your configuration: the managed rule `rules/pstack-models.md`, your approved model pool, and the prepared agent profiles under `agents/` are regenerated on the next `/setup-pstack` save or `pstack prepare`, not by the update itself. after a breaking change to agent naming or profile layout, run `/setup-pstack` once and save to restage fresh profiles and sweep stale ones.
+
 ## get started
 
 two steps:
