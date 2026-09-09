@@ -1,12 +1,12 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "commit": "93b00b89ef425a9c1bac0d0b317dfc49c930ac99",
-  "version": "0.14.8",
-  "subtree": "ae6fff5803260f38f075feb8c3b008ed68153fa0",
+  "commit": "71ed0d1076fec562c1b74ee353121a8d00f75382",
+  "version": "0.15.0",
+  "subtree": "cf6f79b65a0608c77ab77ac8d4f22d440e96971a",
   "files": [
     {
       "source": "pstack/.cursor-plugin/plugin.json",
-      "blob": "469c2d534b44cce593759f8ac8c8aced710130b9",
+      "blob": "e6c54aee6d3c70bacb43754ef5eb85839c38766d",
       "target": "package.json",
       "mode": "100644",
       "adaptation": {
@@ -42,7 +42,7 @@
     },
     {
       "source": "pstack/README.md",
-      "blob": "00ca86b0139fa67893e3203cd8a9a9808e8bdad9",
+      "blob": "c29f91cb6ada31cf10850a41cb20c02192422f44",
       "target": "README.md",
       "mode": "100644",
       "adaptation": {
@@ -247,7 +247,7 @@
       "target": "automations/benny/templates/reproduce-automation-prompt.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Automation prompt templates are documentation of the run shape for setup and review, not runtime consumers \u2014 the runner executes the operational SKILL.md files directly. Header and operational path converted from the /automate draft workflow to `.omp/automations/benny/skills/reproduce-and-fix-issues/SKILL.md`; child Slack-write ban rewritten to the bound-action model; 'control-adapter skill' wording aligned with the configured adapter command.",
+        "reason": "Automation prompt templates are documentation of the run shape for setup and review, not runtime consumers — the runner executes the operational SKILL.md files directly. Header and operational path converted from the /automate draft workflow to `.omp/automations/benny/skills/reproduce-and-fix-issues/SKILL.md`; child Slack-write ban rewritten to the bound-action model; 'control-adapter skill' wording aligned with the configured adapter command.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -262,7 +262,7 @@
       "target": "automations/benny/templates/triage-automation-prompt.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Automation prompt template is documentation of the run shape for setup and review, not a runtime consumer \u2014 the runner executes the operational SKILL.md files directly. Header and operational path converted from the /automate draft workflow to `.omp/automations/benny/skills/triage-issue-reports/SKILL.md`.",
+        "reason": "Automation prompt template is documentation of the run shape for setup and review, not a runtime consumer — the runner executes the operational SKILL.md files directly. Header and operational path converted from the /automate draft workflow to `.omp/automations/benny/skills/triage-issue-reports/SKILL.md`.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -273,7 +273,7 @@
     },
     {
       "source": "pstack/docs/guide/01-setup.md",
-      "blob": "8f30116c0a059269c84cc1a067960e6326bd4a38",
+      "blob": "21dc4a4fc837ec2ee29c8edb94c9169008fe886f",
       "target": "docs/guide/01-setup.md",
       "mode": "100644",
       "adaptation": {
@@ -288,13 +288,13 @@
     },
     {
       "source": "pstack/docs/guide/02-poteto-mode.md",
-      "blob": "48d25d041c8fa726cd0a23b7c3f93c56f2be30f0",
+      "blob": "403cbe8cc9dbc5204c6f9399abcced228f8e76f7",
       "target": "docs/guide/02-poteto-mode.md",
       "mode": "100644"
     },
     {
       "source": "pstack/docs/guide/03-understand.md",
-      "blob": "5231c6c2bdc9d69f7002a2d8cd1ece9be98daadc",
+      "blob": "af985988c2ac9babbabf6e9b4447c2f22a346ee7",
       "target": "docs/guide/03-understand.md",
       "mode": "100644"
     },
@@ -351,7 +351,7 @@
     },
     {
       "source": "pstack/docs/guide/08-principles.md",
-      "blob": "97dc61cebecd1d31ac371d8e71c9b01b47602195",
+      "blob": "be1102d678a9748b396f829e29fb3dfdd60ba205",
       "target": "docs/guide/08-principles.md",
       "mode": "100644"
     },
@@ -378,7 +378,7 @@
     },
     {
       "source": "pstack/docs/guide/README.md",
-      "blob": "e376601964ae294fa7ce9607783eaec446d6eccd",
+      "blob": "b8b1b079456d6f2b2c536937d21180ba5c21f733",
       "target": "docs/guide/README.md",
       "mode": "100644"
     },
@@ -420,7 +420,7 @@
     },
     {
       "source": "pstack/skills/architect/SKILL.md",
-      "blob": "7bda4347cbd78059bc8a39a23eede4f657f95adc",
+      "blob": "923ffc55e8f3f760c80b7ff8a9992fd848c56614",
       "target": "skills/architect/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -441,19 +441,19 @@
     },
     {
       "source": "pstack/skills/architect/references/rationale-template.md",
-      "blob": "1ddd50545c977264ac387ab805afbef257df03b9",
+      "blob": "a10f77f59510c532cd909faaf3bfeee5ffbfd588",
       "target": "skills/architect/references/rationale-template.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/architect/references/runner-prompt.md",
-      "blob": "d2daeee48c50f31825fdb0645e0df05c08e37bb6",
+      "blob": "580ec47a5df4259a6a9ace5c452e33092053bb90",
       "target": "skills/architect/references/runner-prompt.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/arena/SKILL.md",
-      "blob": "a38fea089bf47d2eb76613b1c599063def84c733",
+      "blob": "d1aec509a2b3aeee58b88c25eb6933db57d4a029",
       "target": "skills/arena/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -468,7 +468,7 @@
     },
     {
       "source": "pstack/skills/automate-me/SKILL.md",
-      "blob": "56829250c1fdce1ad72456d5421e1f1e5142373f",
+      "blob": "cd3636e9a53c7c782cf15254204dccfc854086b5",
       "target": "skills/automate-me/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -484,7 +484,7 @@
     },
     {
       "source": "pstack/skills/blast-radius/SKILL.md",
-      "blob": "4b24c77e102955af19ae60aa10af642f69eaa8ba",
+      "blob": "298d030cb606b051ca57e89c7b39a12f7fad75a0",
       "target": "skills/blast-radius/SKILL.md",
       "mode": "100644"
     },
@@ -529,17 +529,17 @@
     },
     {
       "source": "pstack/skills/figure-it-out/SKILL.md",
-      "blob": "6ffc04db212737584aac966c69c53836757fa545",
+      "blob": "aa6967aa4bba8a51ada469310e356df02d47916e",
       "target": "skills/figure-it-out/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/how/SKILL.md",
-      "blob": "7da56ddda31197fe6c9c54800f579c57e503ccc6",
+      "blob": "7d4627c3bec8a6a994a3cf9bb5686ab33c39ac8f",
       "target": "skills/how/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Task recipes (subagent_type generalPurpose / model / readonly) translated to pstack_agent descriptors ({role, kind}) + native task dispatch for explorer, explainer, and the ordered how-critics panel (index per entry, duplicates count). Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution).",
+        "reason": "Explorer and explainer dispatch uses pstack_agent descriptors with explicit role and readonly kind, then native task calls. Models come from the approved profile pool rather than Cursor defaults. Upstream 0.15.0 condensation and removal of critique mode are preserved.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -549,32 +549,20 @@
       }
     },
     {
-      "source": "pstack/skills/how/references/critic-prompt.md",
-      "blob": "e17298e8499d919d7700d06334d0c3d1744c4bfb",
-      "target": "skills/how/references/critic-prompt.md",
-      "mode": "100644"
-    },
-    {
-      "source": "pstack/skills/how/references/critique-rubric.md",
-      "blob": "b4d452f536de805107d3b96fc0772e9bbc1c1209",
-      "target": "skills/how/references/critique-rubric.md",
-      "mode": "100644"
-    },
-    {
       "source": "pstack/skills/how/references/explainer-prompt.md",
-      "blob": "868c737894352bc4f9a401eb0c3ab2051f2be37f",
+      "blob": "3a36fb6736c5b74ac2774350841e332a019dec94",
       "target": "skills/how/references/explainer-prompt.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/how/references/explorer-prompt.md",
-      "blob": "80228270978dcd403bae34ed22b0f517fd38a6fc",
+      "blob": "8b898d9e729e5d5fa41e95720e44f23a4204de43",
       "target": "skills/how/references/explorer-prompt.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/interrogate/SKILL.md",
-      "blob": "4e23d35ee2af0188b52654e7467e508261789c42",
+      "blob": "b59dff74c3f665cf82fabd9d197d814df8115531",
       "target": "skills/interrogate/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -589,13 +577,13 @@
     },
     {
       "source": "pstack/skills/interrogate/references/code-quality-review.md",
-      "blob": "569c9a4915dbbca8f02ede9359e1bad733fd7959",
+      "blob": "50230358f9b6138caf66065b1084be595d453d81",
       "target": "skills/interrogate/references/code-quality-review.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/interrogate/references/lead-judgment.md",
-      "blob": "ea6262ebe540a156e7b12f6b353f92ad621114a6",
+      "blob": "5ce526097fdd3dfeaf4cd3b126a3f486c3ee36ae",
       "target": "skills/interrogate/references/lead-judgment.md",
       "mode": "100644"
     },
@@ -607,7 +595,7 @@
     },
     {
       "source": "pstack/skills/interrogate/references/rubric.md",
-      "blob": "0f63289b7138bd300ed302ebfb919f67c7f9cb83",
+      "blob": "04bd4ca6d31a17694071c415c349128a3b404006",
       "target": "skills/interrogate/references/rubric.md",
       "mode": "100644"
     },
@@ -643,7 +631,7 @@
     },
     {
       "source": "pstack/skills/no-comments/SKILL.md",
-      "blob": "a14bdda050e71788638733d3b7c342be7f7a2523",
+      "blob": "3b3e76295a7ad66806dcc683e4de92fb25690f8b",
       "target": "skills/no-comments/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -659,11 +647,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/SKILL.md",
-      "blob": "930bea154f48180ce5c112a180e6e9d823474df3",
+      "blob": "22d8b0509c01b3bbbd2de90cae5765f970940726",
       "target": "skills/poteto-mode/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Removed inert Cursor mode:true metadata. Deslop/control/create-skill host-skill references repointed to packaged references omp-deslop.md, omp-control-cli.md, omp-control-ui.md, omp-create-skill.md. Babysit disambiguation generalized to any same-named host or user skill. AskQuestion translated to plain human-question wording. Cursor restart wording translated to OMP session restart. Subagents section rewritten to native task dispatch: agent poteto-agent, pstack_agent descriptor resolution ({agent,model,role,index}), async results + Agent Hub steering, rules/pstack-models.md role config with upstream default selectors kept visible and unavailable-selector-implies-setup rule, no per-call model on the task wire API, readonly descriptor for read-only roles, child checklist reported to parent todo. Principles-first todolist, verbatim playbook checklist, casual-turn noninterference, pstack_mode on/off routing, all 24 playbook entries, and the reply contract preserved unchanged. Hardcoded upstream model defaults (grok for code, fable for prose/judgment) removed; role models come only from the pstack-models rule and an unset or unavailable selectors now requires /setup-pstack.",
+        "reason": "OMP branch state persists through pstack_mode instead of Cursor mode metadata. Host-only skills use packaged OMP references. Ordinary delegates resolve pstack_agent roles with kind poteto and pass only the returned prepared agent to native task. Models come from the approved profile pool without hardcoded defaults. Async delivery, Agent Hub steering, parent-owned todos, and native read-only kinds replace Cursor mechanics. The 23-principle index, 23 playbooks, upstream 0.15.0 routing changes, and condensed reply rules are preserved.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -674,7 +662,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
-      "blob": "0fc01383d072ceaf72b697076953d7376f162256",
+      "blob": "8c5a55a44f5e95bba92f652da0ac87e941c49538",
       "target": "skills/poteto-mode/playbooks/authoring-a-skill.md",
       "mode": "100644",
       "adaptation": {
@@ -689,7 +677,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autonomous-run.md",
-      "blob": "bc68ad73435547747876a84d0283b62f8e51cdb9",
+      "blob": "12c3a7d84effcacf3550cb893be67498d7b28a4a",
       "target": "skills/poteto-mode/playbooks/autonomous-run.md",
       "mode": "100644",
       "adaptation": {
@@ -704,7 +692,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-full.md",
-      "blob": "56f3a6581f432ff9752de1cc27ce02bf866b76a7",
+      "blob": "4aa1bb858181100204e16b33c7505b9cc3a294bd",
       "target": "skills/poteto-mode/playbooks/autopilot-full.md",
       "mode": "100644",
       "adaptation": {
@@ -719,7 +707,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
-      "blob": "8599a482a7537d8e4fe6ce6cdb74f69bab719f7f",
+      "blob": "b65afb587a8281cd5029ee08787b86deae4fec58",
       "target": "skills/poteto-mode/playbooks/autopilot-stack.md",
       "mode": "100644",
       "adaptation": {
@@ -734,7 +722,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/babysit.md",
-      "blob": "5b162dd3145963138c25d30ba68b02d20250872c",
+      "blob": "73eddb732ad9d4a4c27c16e3cc6c41f78becc3e1",
       "target": "skills/poteto-mode/playbooks/babysit.md",
       "mode": "100644",
       "adaptation": {
@@ -749,7 +737,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/bug-fix.md",
-      "blob": "d0d05e4beef994deb65b5063a9255329b7f8b5e5",
+      "blob": "88307807e72f7c1087c3a8215b32418c87fd6dc3",
       "target": "skills/poteto-mode/playbooks/bug-fix.md",
       "mode": "100644",
       "adaptation": {
@@ -764,7 +752,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/eval.md",
-      "blob": "fe18dd589045fe7400e1af3385f3e6dbe0d6e63a",
+      "blob": "3dae34e2ef0cbdd9bafa5ab372da5ea143d48452",
       "target": "skills/poteto-mode/playbooks/eval.md",
       "mode": "100644",
       "adaptation": {
@@ -779,7 +767,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/feature.md",
-      "blob": "77dd564f1f7f4c9969a823449d4848434beaf92f",
+      "blob": "6cab21817e0f97e1c707d7c47ef82aa4f3ea99cd",
       "target": "skills/poteto-mode/playbooks/feature.md",
       "mode": "100644",
       "adaptation": {
@@ -794,7 +782,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/hillclimb.md",
-      "blob": "c6adf1f3261849f0511a8796613536b4ce20fc0d",
+      "blob": "bbbf05a67daa18aa9f7ad810cd3987b2a49e8b68",
       "target": "skills/poteto-mode/playbooks/hillclimb.md",
       "mode": "100644",
       "adaptation": {
@@ -809,17 +797,17 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/investigation.md",
-      "blob": "2f1e9ec991597c1263a842517754e75d4f09f671",
+      "blob": "cd119f04f23e0b7acb3f8cc5ba13ce4ab7aa6c7d",
       "target": "skills/poteto-mode/playbooks/investigation.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/multi-phase-plan.md",
-      "blob": "fb1d8b03f63b7c55d696780d96547bfeaae6332c",
+      "blob": "b7b19769f4b3913252b81b40bba1d1bb9c719d21",
       "target": "skills/poteto-mode/playbooks/multi-phase-plan.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Lane model wording changed from Cursor slug grok-4.6-fast-xhigh to the configured swarm workers role (both prose occurrences and the template Verify-live block), ten lanes and all lane requirements preserved. subagent_type translated to native task agent: poteto-agent. Cloud VM boot recipe translated to native task agent in its own worktree at the PR head. 30-minute audit tick armed via native /loop 30m. /deslop replaced by packaged reference. check-plan helper resolved via the documented PSTACK_ROOT installed-root resolver (README, running the pstack CLI after install) and invoked as the stable pstack check-plan subcommand. Plan skeleton, verification rule, review gates, and appendices preserved. Integration correction: 30-minute cadence uses native background timer sentinel; /loop 30m is a duration budget, not an interval.",
+        "reason": "Exploration uses pstack_agent role and kind resolution followed by native task with the returned prepared agent. Verification lanes use the configured swarm workers role instead of a fixed Cursor model. Isolated native task worktrees replace cloud VM boot instructions. The documented PSTACK_ROOT resolver invokes pstack check-plan, and deslop uses the packaged reference. A background timer sentinel supplies the 30-minute cadence because native /loop 30m bounds duration rather than tick interval. Plan skeleton, ten-lane verification, review gates, and appendices are preserved.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -831,11 +819,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
-      "blob": "10ab011f6e391178f5844df387907ae044a27154",
+      "blob": "a5c65a0959d0c37ebd12d5636710c4e0f91fba88",
       "target": "skills/poteto-mode/playbooks/opening-a-pr.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "cursor-team-kit /deslop replaced by packaged deslop reference; cloud-agent draft-default sentence translated to a tool-neutral draft:false rule. Forge resolution, title/description contract, stack rules, and no-babysit rule preserved.",
+        "reason": "Cursor deslop uses the packaged OMP reference and draft handling uses a tool-neutral draft:false rule. Forge resolution, PR briefing, stack rules, and no-babysit behavior are preserved. OMP worktree safety replaces destructive reset alternatives with a fresh isolated worktree while preserving the original checkout.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -846,7 +834,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/orchestrate.md",
-      "blob": "fcd5a3e15b6cf5d0a88197119a82b09c52ca0984",
+      "blob": "d5b6d008026ff0177f52e22a6fb4b2edae5c87e2",
       "target": "skills/poteto-mode/playbooks/orchestrate.md",
       "mode": "100644",
       "adaptation": {
@@ -861,7 +849,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/pause-safely.md",
-      "blob": "b125efb8072e35d34639835d5bffddfc823cbd0a",
+      "blob": "ad61122202763e96b59af9aae48afe3e242a751e",
       "target": "skills/poteto-mode/playbooks/pause-safely.md",
       "mode": "100644",
       "adaptation": {
@@ -876,7 +864,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/perf-issue.md",
-      "blob": "62f81bb2844f6211c07156143a27b590b69f414a",
+      "blob": "59246262ae562b15bd31b70a40559caae0f6371a",
       "target": "skills/poteto-mode/playbooks/perf-issue.md",
       "mode": "100644",
       "adaptation": {
@@ -891,13 +879,13 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/prototype.md",
-      "blob": "0f0a888396f2ff1da11a56bb694ee65eb51529f8",
+      "blob": "18bedc7e9249d180f9198d5b4b13e3817d41d281",
       "target": "skills/poteto-mode/playbooks/prototype.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/refactoring.md",
-      "blob": "70d74ac869d6a71bdbccfb0cfcbcfb086d9ed9e3",
+      "blob": "dfc5d480f450f1b28d70099650f0d12822ac4b6e",
       "target": "skills/poteto-mode/playbooks/refactoring.md",
       "mode": "100644",
       "adaptation": {
@@ -912,13 +900,13 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/runtime-forensics.md",
-      "blob": "76ebfb3a8c661fea4ab619968a1ac566797344d7",
+      "blob": "ba659bfe1c4c2f956f3285974bfdc941120f9948",
       "target": "skills/poteto-mode/playbooks/runtime-forensics.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/session-pickup.md",
-      "blob": "b75ce11a1fba2f5deff43c272e1d40303524bb09",
+      "blob": "9b2ed06e0ff8b01bf03b7a0d6a4cbb8ba3a46720",
       "target": "skills/poteto-mode/playbooks/session-pickup.md",
       "mode": "100644",
       "adaptation": {
@@ -933,7 +921,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/shipping.md",
-      "blob": "ac3fb6d0e11275319453af68ea19aafb6532145f",
+      "blob": "4c83fa3ef3b3457d55ce4b9b3bfd0dd6c12745cd",
       "target": "skills/poteto-mode/playbooks/shipping.md",
       "mode": "100644",
       "adaptation": {
@@ -948,19 +936,19 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/trace-forensics.md",
-      "blob": "10f8209e3d9c0e6b50056c92a28d89d56f5a31e6",
+      "blob": "48ed6b2f690215027eda96a1897ed98212bbd07a",
       "target": "skills/poteto-mode/playbooks/trace-forensics.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/visual-parity.md",
-      "blob": "ec4a449efdf4f1a3d4b81dc19797d7866545db95",
+      "blob": "248830ec74a593fc22143a842026388f92f1b9f4",
       "target": "skills/poteto-mode/playbooks/visual-parity.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/worktree-cleanup.md",
-      "blob": "9f6be47290b138c30ed8bb7338cf15173899147a",
+      "blob": "39c9ef9f368ac63b0e4245503302a4c174e846d6",
       "target": "skills/poteto-mode/playbooks/worktree-cleanup.md",
       "mode": "100644",
       "adaptation": {
@@ -1201,20 +1189,26 @@
       }
     },
     {
+      "source": "pstack/skills/principle-attack-the-premise/SKILL.md",
+      "target": "skills/principle-attack-the-premise/SKILL.md",
+      "mode": "100644",
+      "blob": "f9785ff9fdcf37d1c689e4468da7d611f3b76d4b"
+    },
+    {
       "source": "pstack/skills/principle-boundary-discipline/SKILL.md",
-      "blob": "84d526ce7ea45d207587e80015912d5a01714e21",
+      "blob": "dfe9a6fb0e5acd6ae43a41437ee0951adfe839cb",
       "target": "skills/principle-boundary-discipline/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-build-the-lever/SKILL.md",
-      "blob": "8ba6740bd3bd9b2e582080bce0917cc4a7293d2f",
+      "blob": "277189a10b00fddc7cbb63fcf2323c7341abb0df",
       "target": "skills/principle-build-the-lever/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-encode-lessons-in-structure/SKILL.md",
-      "blob": "86a22f21146d358fc18afb2a0186da61470c3241",
+      "blob": "df9cd5ff2fb3c18267349cc6aecd8121848ef834",
       "target": "skills/principle-encode-lessons-in-structure/SKILL.md",
       "mode": "100644"
     },
@@ -1226,31 +1220,31 @@
     },
     {
       "source": "pstack/skills/principle-experience-first/SKILL.md",
-      "blob": "be15f055d536721bbda859be3e3d202e78a2e001",
+      "blob": "5ea51741302cf3af4cc0b90ec70815bd3208dbf2",
       "target": "skills/principle-experience-first/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-fix-root-causes/SKILL.md",
-      "blob": "5b3b7916c961c231e7ce1430cd93541204ec0ec0",
+      "blob": "7e5a419aeec97b4076fa517865013677428a9fa3",
       "target": "skills/principle-fix-root-causes/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-foundational-thinking/SKILL.md",
-      "blob": "3fcc57b3a54dea965e245dad966cab423f768b11",
+      "blob": "19cc6c0eaa6fcbc2863fb73d1d25ca196c6a46e0",
       "target": "skills/principle-foundational-thinking/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-guard-the-context-window/SKILL.md",
-      "blob": "0862757bbb63e314f13f18528c25db85d0901078",
+      "blob": "eb2cecc40f9d830dc077009f93a467be69f195a2",
       "target": "skills/principle-guard-the-context-window/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-laziness-protocol/SKILL.md",
-      "blob": "16bbb97426d1bbcbf957c032f0629a96a4709753",
+      "blob": "e5bc77e62aa96ae13e482a84df61b3c711c5d828",
       "target": "skills/principle-laziness-protocol/SKILL.md",
       "mode": "100644"
     },
@@ -1262,25 +1256,25 @@
     },
     {
       "source": "pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
-      "blob": "a0c6e65e1eaf58278fa6bac1a01c23f998759f5c",
+      "blob": "06c7cfd87becc62d614d0af075b792f8ec6eb21d",
       "target": "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-minimize-reader-load/SKILL.md",
-      "blob": "1c5e18c332438ccd5e47f108ec28872e85e82501",
+      "blob": "64541d963123e344078d82fd3977e857e76129df",
       "target": "skills/principle-minimize-reader-load/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-model-the-domain/SKILL.md",
-      "blob": "b2f6449498505a866592493ff3f3a10cfdd8ce5c",
+      "blob": "e1d664a19243c90a84e5e7a816e9e05146c88720",
       "target": "skills/principle-model-the-domain/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-never-block-on-the-human/SKILL.md",
-      "blob": "0c55555f85d6636cc26429cc18016ffdafaff576",
+      "blob": "46d410715c0f36cc43f6774dac9f89b3404e9aa4",
       "target": "skills/principle-never-block-on-the-human/SKILL.md",
       "mode": "100644"
     },
@@ -1292,43 +1286,49 @@
     },
     {
       "source": "pstack/skills/principle-prove-it-works/SKILL.md",
-      "blob": "088c412cc38eb37442914a71d9e05bc6ee430a1b",
+      "blob": "4563023d4d9f22e10e33cbf0ae94da156be30618",
       "target": "skills/principle-prove-it-works/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-redesign-from-first-principles/SKILL.md",
-      "blob": "6a8cf256d69d0d5f2ce4b57795f2794c41c8e5a0",
+      "blob": "090a4325f43a96080cce3895f0e932b62c39146a",
       "target": "skills/principle-redesign-from-first-principles/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md",
-      "blob": "523591e0a1bda493598292358bd2142277fdbd19",
+      "blob": "ff93b4a2032c08e2232992a9a24f2891ee14e58f",
       "target": "skills/principle-separate-before-serializing-shared-state/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
-      "blob": "737480800564d634347afdcef25dd48851e9f2eb",
+      "blob": "dd008c371ee803decaa1964b72081a646d95d9b9",
       "target": "skills/principle-sequence-verifiable-units/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-subtract-before-you-add/SKILL.md",
-      "blob": "1666d2617dbc9cf107ecb52aac30b6ffbcc1159b",
+      "blob": "d28770cf47a5798d0250a25ad494aedfecad154e",
       "target": "skills/principle-subtract-before-you-add/SKILL.md",
       "mode": "100644"
     },
     {
+      "source": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+      "target": "skills/principle-test-behavior-not-implementation/SKILL.md",
+      "mode": "100644",
+      "blob": "42de6f8f7cab01b9f67aa28bd59b128f7574fbab"
+    },
+    {
       "source": "pstack/skills/principle-type-system-discipline/SKILL.md",
-      "blob": "192a1255709e105cd055543b058b9e1bf66d84e1",
+      "blob": "6030f171bee0d1902cf7ca91f06225e09f0f5433",
       "target": "skills/principle-type-system-discipline/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/recall/SKILL.md",
-      "blob": "7e3f26595160dac08bfc3287cef48d7e75b74dfa",
+      "blob": "a70062a3f89a8d68b3391bc71fc4c6cc2dfcf6a4",
       "target": "skills/recall/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1344,7 +1344,7 @@
     },
     {
       "source": "pstack/skills/reflect/SKILL.md",
-      "blob": "3e056e97eb55103db24b2d5f99e5f1edef9d38ef",
+      "blob": "d004951789602ea16430f9de5a542bf80b419cdb",
       "target": "skills/reflect/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1359,7 +1359,7 @@
     },
     {
       "source": "pstack/skills/reflect/references/divergent-reviewer.md",
-      "blob": "70cfdff377e793208f7daa581caf8a7fbdfb2dd1",
+      "blob": "73969d847dd97f2d714df20d27359ce98ad0f7cc",
       "target": "skills/reflect/references/divergent-reviewer.md",
       "mode": "100644",
       "adaptation": {
@@ -1374,7 +1374,7 @@
     },
     {
       "source": "pstack/skills/reflect/references/judgment-reviewer.md",
-      "blob": "76261f1690adc8b8f845113466dd9e80c40f7103",
+      "blob": "830213aedff81c5b27462988201663e1f0229a72",
       "target": "skills/reflect/references/judgment-reviewer.md",
       "mode": "100644",
       "adaptation": {
@@ -1389,13 +1389,13 @@
     },
     {
       "source": "pstack/skills/reflect/references/synthesizer.md",
-      "blob": "11040b0f4dc639517b569b55460f4a128f503e2a",
+      "blob": "d0e78195186c0dd6cfdc87ba19402ea8cd2aa385",
       "target": "skills/reflect/references/synthesizer.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/reflect/references/tooling-reviewer.md",
-      "blob": "19f4aa48775da3409116cc05a2162dc3d361c839",
+      "blob": "e7fcd9e669c5a10664f4a14d8856af6978f9e535",
       "target": "skills/reflect/references/tooling-reviewer.md",
       "mode": "100644",
       "adaptation": {
@@ -1410,11 +1410,11 @@
     },
     {
       "source": "pstack/skills/setup-pstack/SKILL.md",
-      "blob": "6dcaef578f2075558a8da57a21f97a62590d07f1",
+      "blob": "a1f79c0ccdf9e77ecae24bd73c6c68100bbe2be1",
       "target": "skills/setup-pstack/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Rule target changed from ~/.cursor/rules/pstack-models.mdc to the plugin-managed rule rules/pstack-models.md in the active OMP profile (getAgentDir()), written via pstack_models action save with roles mapping.; Detection now uses the authenticated model registry (ctx.models.list()); pstack_models validates against the same registry before saving.; AskQuestion (Cursor-only tool) replaced with a structured chat question; headless/non-interactive runs cancel and write nothing.; Step 5 documents atomic managed-body replacement, comment preservation outside the body, and error-not-reset on malformed existing content.; Line comment 'omit Task model' reworded to dispatch-without-model-override semantics; all 18 role labels and defaults byte-preserved. Flow reordered to pool-first: detect via pstack_models list, user selects an approved pool before any role-map recommendation, pstack recommends the role map with honest rationale from pool capabilities and user priorities, explicit panel count/diversity, confirmation, then save pool+roles. Hardcoded Cursor-slug defaults removed as the recommendation seed; unused pool members persisted; inherit-parent/auto permission explicit; unavailable model errors and proposes an approved replacement, never silent substitution.",
+        "reason": "The native pstack_models tool detects authenticated models, validates an explicitly approved pool, and atomically writes rules/pstack-models.md in the active OMP profile. The user approves the pool before role recommendations and confirms panel size and diversity. All 17 upstream 0.15.0 roles remain available without hardcoded model defaults. Unused pool members persist, aliases require explicit permission, and unavailable or out-of-pool choices fail closed. Managed writes preserve outside comments and reject malformed configuration rather than resetting it.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -1425,7 +1425,7 @@
     },
     {
       "source": "pstack/skills/show-me-your-work/SKILL.md",
-      "blob": "8a9c731acf5bb7ad789e10ec7c5af6970dce1176",
+      "blob": "6e98dd24e619a9097ddd51b2a58ffb8f92b62cbf",
       "target": "skills/show-me-your-work/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1453,7 +1453,7 @@
     },
     {
       "source": "pstack/skills/swarm/SKILL.md",
-      "blob": "b7e61ec7bc46629930582a50f12a6b9f1f28a368",
+      "blob": "5b465d3ba542703707871165b369406bbd90c7e9",
       "target": "skills/swarm/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1468,43 +1468,43 @@
     },
     {
       "source": "pstack/skills/tdd/SKILL.md",
-      "blob": "7d923bd705e4727b0bc9a378ca0928cc825035de",
+      "blob": "887a98b7f4ead1ec0d147ce6e5ad6844ef16ca5f",
       "target": "skills/tdd/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/teach/SKILL.md",
-      "blob": "beea0ffaa916e8fcf93f2bf13c632f2a9259d1e2",
+      "blob": "25369f3f554ed6b5826340ae3eee688fac0bda80",
       "target": "skills/teach/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/technical-writing/SKILL.md",
-      "blob": "d13baf98426a72764f94d18ab45d1549151a6c38",
+      "blob": "70a477e42fc5f37c35bf602d86ff89c0f5258ecf",
       "target": "skills/technical-writing/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/typescript-best-practices/SKILL.md",
-      "blob": "2912734bdb985ac217849e8581c7a7e0aa7383a5",
+      "blob": "2c0279d9a5f800192605e47b55cae4e75a17ec27",
       "target": "skills/typescript-best-practices/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/typescript-best-practices/references/patterns.md",
-      "blob": "15c3e1118055ca2f2d353b968004fc4a46491248",
+      "blob": "f44d22ffe9130c5340d55a2fa57028c6959479cb",
       "target": "skills/typescript-best-practices/references/patterns.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/unslop/SKILL.md",
-      "blob": "ccb0c5563ff0fe7a04e2f95f27bf681df86240a9",
+      "blob": "a3a7dc7baf0bed5fed4fe0f12ea7fcfe48d94c89",
       "target": "skills/unslop/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/SKILL.md",
-      "blob": "3aea3f7d3f51421f7860c00e775f00acc45a58cc",
+      "blob": "53045ddba6f52fa0eec44101fd8e363d47141832",
       "target": "skills/why/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1519,19 +1519,19 @@
     },
     {
       "source": "pstack/skills/why/references/epistemics.md",
-      "blob": "aca563ef9fe4ce27797a73027c6fb38b6d93e6f7",
+      "blob": "3732bf6881b60d1337fa3498574452a85d33ba30",
       "target": "skills/why/references/epistemics.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/investigator-prompt.md",
-      "blob": "1886b46deb20ef1f13d409a0ad7f6c3fb885eb6a",
+      "blob": "3b56af44c589833508f4605cfdd4432b39a16739",
       "target": "skills/why/references/investigator-prompt.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/source-playbook.md",
-      "blob": "bcf11e1315e7774651649dbf91b67213463c8073",
+      "blob": "aa3d877cd539763ff05e266ae0a02dd811441e2b",
       "target": "skills/why/references/source-playbook.md",
       "mode": "100644"
     },
@@ -1543,49 +1543,49 @@
     },
     {
       "source": "pstack/skills/why/references/sources/databricks.md",
-      "blob": "5e82b90536b81f395c74aa5f98c387bc0d5d5d79",
+      "blob": "2770763ff5d0d1ad004abcc9a0138c9537ad1978",
       "target": "skills/why/references/sources/databricks.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/sources/datadog.md",
-      "blob": "039330e8491430a34167005c55a0baa29f7eeb67",
+      "blob": "d8363b1c1d1c7eadb15d47abd83bf70537c39620",
       "target": "skills/why/references/sources/datadog.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/sources/incident-postmortem.md",
-      "blob": "e5afc3204ba7e2b15b01e5abc538d26d8b1b3b53",
+      "blob": "450d6e52f25b1b41f741cb3e9c93e1c74ef858b4",
       "target": "skills/why/references/sources/incident-postmortem.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/sources/linear.md",
-      "blob": "c000efd5aad749a4483e2563a63d460903eae124",
+      "blob": "899c643c078f322afe6ae0ef78a007f8ffd356c1",
       "target": "skills/why/references/sources/linear.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/sources/notion.md",
-      "blob": "ea6ab335c40834ba79e0085ae2d7a94950502f49",
+      "blob": "d16230a4105fd1dacf870da0950a38faeb9381e6",
       "target": "skills/why/references/sources/notion.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/sources/sentry.md",
-      "blob": "fe09d17254e7653a7c75f855cecc779d5512a02e",
+      "blob": "2b7cf6f3098ee868547dc4e69efacfe9c255246b",
       "target": "skills/why/references/sources/sentry.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/sources/slack.md",
-      "blob": "d4a5f23646053516bb1235f06dcf697b49acda23",
+      "blob": "863a527d60e4e055e680834ef8098ea04273a1ae",
       "target": "skills/why/references/sources/slack.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/synthesizer-prompt.md",
-      "blob": "dae7efc580f5bc8e63b2fd28a1462fe2b8445d07",
+      "blob": "9707dfcc2fc57ea126484a433c5cd9ee4d400ef3",
       "target": "skills/why/references/synthesizer-prompt.md",
       "mode": "100644"
     },

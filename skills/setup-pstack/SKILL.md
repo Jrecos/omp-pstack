@@ -1,6 +1,6 @@
 ---
 name: setup-pstack
-description: Configure which models pstack uses per role. Detects your available models, takes an approved pool first, then recommends the 18-role map and writes an always-applied rule. Use for /setup-pstack, "configure pstack models", or changing pstack's model choices.
+description: Configure which models pstack uses per role. Detects your available models, takes an approved pool first, then recommends the 17-role map and writes an always-applied rule. Use for /setup-pstack, "configure pstack models", or changing pstack's model choices.
 ---
 
 # Setup pstack
@@ -17,13 +17,13 @@ Enumerate the models authenticated in this session with `pstack_models` (`action
 
 Ask the user to choose the pool: the set of models pstack may dispatch. Present each detected model with its metadata (name, family, reasoning, efforts) so the choice is informed. Shape the pool from the user's real access and stated preferences (cost, speed, reasoning depth, per-family diversity); do not invent a brand set. `inherit-parent` and `auto` belong in the pool only if the user explicitly permits them, because an alias a role uses must itself be a pool member. Persist models the user approves even if no role will use them right now, so they can be routed to later without a re-run. A model outside the pool can never be assigned; dispatch fails closed rather than substituting another family.
 
-### 3. Recommend the 18-role map from the pool
+### 3. Recommend the 17-role map from the pool
 
-Using only pool members, propose a value for each of the 18 roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`, `judgment and prose`, `hardest tasks`, `how explorer`, `how explainer`, `how critics`, `why investigators`, `why synthesizer`, `reflect tooling`, `reflect judgment, divergent, synthesizer`, `arena runners`, `arena cross-judge pool`, `swarm workers`, `architect runners`, `interrogate reviewers`). For each role, state a short honest rationale drawn from recognisable capability (reasoning depth and efforts, family strengths, speed) and the user's stated preferences — never a fixed brand list. Use the `poteto` kind for code-writing roles, `general` for judgment roles, and `readonly` for review panels. A role left with no value is unconfigured and will not dispatch until setup assigns one. Do not silently fill an unconfigured role.
+Using only pool members, propose a value for each of the 17 roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`, `judgment and prose`, `hardest tasks`, `how explorer`, `how explainer`, `why investigators`, `why synthesizer`, `reflect tooling`, `reflect judgment, divergent, synthesizer`, `arena runners`, `arena cross-judge pool`, `swarm workers`, `architect runners`, `interrogate reviewers`). For each role, state a short honest rationale drawn from recognisable capability (reasoning depth and efforts, family strengths, speed) and the user's stated preferences — never a fixed brand list. Use the `poteto` kind for code-writing roles, `general` for judgment roles, and `readonly` for review panels. A role left with no value is unconfigured and will not dispatch until setup assigns one. Do not silently fill an unconfigured role.
 
 ### 4. Confirm panel count and diversity
 
-For panel roles (`how critics`, `arena runners`, `architect runners`, `interrogate reviewers`, `arena cross-judge pool`) the value is a list; one subagent runs per entry, so the list length sets the fan-out count, and the mix of entries sets the diversity. Show the proposed count and the family/model spread, then ask explicitly whether the count and diversity are right before proceeding. Ordered duplicate entries are allowed but count as separate members; never deduplicate or silently shrink the list.
+For panel roles (`arena runners`, `architect runners`, `interrogate reviewers`, `arena cross-judge pool`) the value is a list; one subagent runs per entry, so the list length sets the fan-out count, and the mix of entries sets the diversity. Show the proposed count and the family/model spread, then ask explicitly whether the count and diversity are right before proceeding. Ordered duplicate entries are allowed but count as separate members; never deduplicate or silently shrink the list.
 
 ### 5. Validate
 
@@ -51,7 +51,6 @@ judgment and prose: <provider/id>
 hardest tasks: <provider/id>
 how explorer: <provider/id>
 how explainer: <provider/id>
-how critics: <provider/id>, <provider/id>
 why investigators: <provider/id>
 why synthesizer: <provider/id>
 reflect tooling: <provider/id>

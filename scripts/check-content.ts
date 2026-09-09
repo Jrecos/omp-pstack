@@ -7,9 +7,9 @@ import { dirname, join, normalize } from "node:path";
 
 const EXPECTED_HEADER = {
   repository: "https://github.com/cursor/plugins",
-  commit: "93b00b89ef425a9c1bac0d0b317dfc49c930ac99",
-  version: "0.14.8",
-  subtree: "ae6fff5803260f38f075feb8c3b008ed68153fa0",
+  commit: "71ed0d1076fec562c1b74ee353121a8d00f75382",
+  version: "0.15.0",
+  subtree: "cf6f79b65a0608c77ab77ac8d4f22d440e96971a",
 };
 
 const DIRECT_SKILLS = [
@@ -22,11 +22,13 @@ const DIRECT_SKILLS = [
 
 const PRINCIPLES = [
   "laziness-protocol", "foundational-thinking", "redesign-from-first-principles",
+  "attack-the-premise",
   "subtract-before-you-add", "minimize-reader-load", "outcome-oriented-execution",
   "experience-first", "exhaust-the-design-space", "build-the-lever",
   "model-the-domain", "boundary-discipline", "type-system-discipline",
   "make-operations-idempotent", "migrate-callers-then-delete-legacy-apis",
   "separate-before-serializing-shared-state", "prove-it-works", "fix-root-causes",
+  "test-behavior-not-implementation",
   "sequence-verifiable-units", "guard-the-context-window", "never-block-on-the-human",
   "encode-lessons-in-structure",
 ].map((p) => `principle-${p}`);
@@ -546,7 +548,7 @@ async function checkSkillDirs(root: string, expectedSkills: string[]): Promise<v
     return;
   }
   for (const d of dirs) {
-    if (!expectedSkills.includes(d)) fail(`skills/${d}: unexpected skill directory (expected exactly the 45 pinned IDs)`);
+    if (!expectedSkills.includes(d)) fail(`skills/${d}: unexpected skill directory (expected exactly the ${expectedSkills.length} pinned IDs)`);
   }
   for (const d of expectedSkills) {
     if (!dirs.includes(d)) fail(`skills/${d}: expected skill directory is missing`);
@@ -865,7 +867,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "26298ca3ccb469f34b34d29b2be7c31be93513c97669fff16e5f734df7591954";
+    const pinnedDigest = "bc66abb6a4327f3fab7f55b8849093337e5a83c9725efb59d24cb9544a870c59";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

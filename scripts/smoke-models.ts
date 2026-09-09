@@ -56,7 +56,7 @@ try {
   refreshDirsFromEnv();
   const paths = resolvePaths();
   const roles: Record<string, string | string[]> = Object.fromEntries(ROLES.map((role) => [role, "inherit-parent"]));
-  roles["how critics"] = ["inherit-parent", "auto", secondName];
+  roles["interrogate reviewers"] = ["inherit-parent", "auto", secondName];
   // Approved pool: the concrete identities actually routed plus explicit alias
   // permission. gpt-6-astra is kept even though no role uses it concretely, so
   // the smoke also exercises unused-pool persistence.
@@ -77,15 +77,10 @@ try {
     if (typeof parameters?.toJsonSchema !== "function") throw new Error("pstack_agent did not publish a native tool schema");
     console.error(JSON.stringify({ lookupSchema: parameters.toJsonSchema() }));
     const setup = loaded.skills.find((skill) => skill.name === "setup-pstack")!;
-    // Real setup-recommendation evidence: drive /setup-pstack to COMPLETION on the
-    // fresh profile (no rule yet). The model detects the session's models, picks
-    // the approved pool, recommends the 18-role map from it, then saves. This is
-    // the skill's recommendation path — not the cancellation we test next and not
-    // the preconfigured dispatch after the reset.
     await session.promptCustomMessage({
       customType: "skill-prompt", attribution: "user", display: false,
       details: { name: "setup-pstack", path: setup.filePath },
-      content: `${(await readFile(setup.filePath, "utf8")).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")}\n\nComplete setup now; there is no human to confirm with, so proceed autonomously. Detect models with pstack_models list. The approved pool is EXACTLY: ${pool.join(", ")}. Persist all four members even though no role uses ${first.provider}/${first.id} concretely (it stays routed for later). Recommend a value for all 18 roles from that pool, then save with pstack_models (action "save", pool, and all 18 roles). Never use a model outside the pool. Do not ask questions; after saving, print a one-line confirmation.`,
+      content: `${(await readFile(setup.filePath, "utf8")).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")}\n\nComplete setup now; there is no human to confirm with, so proceed autonomously. Detect models with pstack_models list. The approved pool is EXACTLY: ${pool.join(", ")}. Persist all four members even though no role uses ${first.provider}/${first.id} concretely (it stays routed for later). Recommend a value for all 17 roles from that pool, then save with pstack_models (action "save", pool, and all 17 roles). Never use a model outside the pool. Do not ask questions; after saving, print a one-line confirmation.`,
     });
     const recommendedRule = await readFile(paths.rulePath, "utf8");
     const recommended = parseConfig(recommendedRule);
@@ -95,10 +90,7 @@ try {
     // save enforces pool membership, so a completed save already proves every
     // recommended selector is a pool member or a granted alias.
     const configuredCount = ROLES.filter((role) => (recommended.roles[role] ?? []).length > 0).length;
-    assert(configuredCount > 0, "completed setup must recommend at least one role");
-    // Deterministic baseline for the dispatch phases: reset the rule to a known
-    // shape (all inherit-parent plus the concrete how-critics third entry). This
-    // also re-verifies pool persistence after an agent-driven recommendation.
+    assert.equal(configuredCount, ROLES.length, "completed setup must configure every supported role");
     await saveRoles(roles, { list: () => modelRegistry.getAvailable(), current: () => first }, paths, cwd, pool);
     const savedRule = await readFile(paths.rulePath, "utf8");
     assert.match(savedRule, /^pool: /m);
@@ -112,7 +104,7 @@ try {
     assert.equal(await readFile(paths.rulePath, "utf8"), beforeCancel);
     const runPanel = async (label: string, expectedParent: string) => {
       const start = taskBatches.length;
-      await session.prompt(`Native generated-agent smoke ${label}. Call pstack_agent with exactly {"role":"how critics","index":1,"kind":null,"model":null}, then index 2, then index 3. Null means no override: use the saved role/index, not defaults remembered from setup. Then call native task exactly once with the three returned agent names, preserving both alias entries. Each task must say: "# Target\nReturn PSTACK_${label}_INDEX_N, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null." Use unique names ${label}One, ${label}Two, ${label}Three. Every task MUST set outputSchema to {"type":"object","properties":{"text":{"type":"string"}},"required":["text"],"additionalProperties":false} and schemaMode to "strict". Shared context: "# Goal\nObserve real native model selection.\n# Constraints\nNo filesystem changes or research tools; native yield completes the assignment.\n# Contract\nEach child returns its assigned literal in the text field." Wait for all three. Do not omit or deduplicate a member. Afterwards say PANEL_COMPLETE. Do not run anything else.`);
+      await session.prompt(`Native generated-agent smoke ${label}. Call pstack_agent with exactly {"role":"interrogate reviewers","index":1,"kind":null,"model":null}, then index 2, then index 3. Null means no override: use the saved role/index, not defaults remembered from setup. Then call native task exactly once with the three returned agent names, preserving both alias entries. Each task must say: "# Target\nReturn PSTACK_${label}_INDEX_N, replacing N with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null." Use unique names ${label}One, ${label}Two, ${label}Three. Every task MUST set outputSchema to {"type":"object","properties":{"text":{"type":"string"}},"required":["text"],"additionalProperties":false} and schemaMode to "strict". Shared context: "# Goal\nObserve real native model selection.\n# Constraints\nNo filesystem changes or research tools; native yield completes the assignment.\n# Contract\nEach child returns its assigned literal in the text field." Wait for all three. Do not omit or deduplicate a member. Afterwards say PANEL_COMPLETE. Do not run anything else.`);
       const results = taskBatches.slice(start).flatMap((batch) => batch.results);
       assert.equal(results.length, 3, `${label}: exactly three native tasks must settle`);
       for (const [index, result] of results.entries()) {
@@ -121,9 +113,6 @@ try {
         assert(result.resolvedModel === expected || result.resolvedModel?.startsWith(`${expected}:`), `${result.resolvedModel} must resolve to ${expected}`);
       }
     };
-    // architect runners is a poteto-kind panel role; dispatching it proves the
-    // poteto-kind resolution + native-task path that architect / the model-dispatch
-    // skill class relies on (not only the readonly how-critics panel).
     const runArchitect = async (label: string, expectedParent: string) => {
       const start = taskBatches.length;
       await session.prompt(`Native generated-agent smoke ${label}. Call pstack_agent with exactly {"role":"architect runners","index":1,"kind":null,"model":null}. Then call native task exactly once with the returned agent name. The task must say: "# Target\nReturn PSTACK_${label}_ARCH, replacing ARCH with this assigned index.\n# Change\nNo files, research, edits, or tests. Native completion through yield is permitted and required.\n# Acceptance\nFinish using the native yield tool with data {text: the assigned literal}, never null." Use unique name ${label}Architect. Every task MUST set output as a string.`);
