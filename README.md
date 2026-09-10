@@ -303,6 +303,26 @@ bun "$PSTACK_ROOT/src/cli.ts" benny sweep --config .omp/benny/configuration.yaml
 
 with `PSTACK_ROOT` resolved once per host as in [running the `pstack` CLI after install](#running-the-pstack-cli-after-install). the sweep never deletes evidence owned by queued or running runs, and it fails closed (deletes nothing) when run ownership cannot be established.
 
+## releases
+
+After checks pass, each pull request merged into `main` gets a GitHub release. [`.github/workflows/release.yml`](./.github/workflows/release.yml) handles merged pull requests, including fork contributions, and queues release runs. It runs type checking, release regression tests, and content integrity checks on trusted `main`, then passes the verified commit to [`scripts/release.ts`](./scripts/release.ts). If `main` changes before publication, the run fails rather than releasing unchecked code. The first release is `1.0.0`. Later releases use the pull request title and breaking-change footer:
+
+| pull request | bump |
+| --- | --- |
+| A title such as `feat!:` or `fix(cli)!:`, or a `BREAKING CHANGE:` or `BREAKING-CHANGE:` footer | major |
+| `feat:` or `feat(scope):` | minor |
+| everything else, including `docs:` and untyped titles | patch |
+
+The release commit updates `package.json` to match its `vX.Y.Z` tag. The annotated tag records the version, pull request, and release notes. A rerun uses that record instead of allocating another version. The script never moves or deletes tags, pushes the branch and tag atomically without force, and does not publish to npm. This project's version is independent of the upstream P Stack version recorded in `upstream.json`.
+
+To recover a failed or cancelled run, use `gh workflow run release.yml -f pr=<number>` from this repository, or select **Run workflow** in the Actions tab.
+
+- If `main` changed or the push was rejected, rerun after `main` is stable.
+- If the tag was pushed but release publication failed, a rerun publishes that tag without another version bump.
+- Before allocating a version, the script repairs missing releases for earlier managed tags.
+
+The token needs permission to write repository contents. Future branch rules must allow the release bot's version commits. The queue holds 100 pending runs. GitHub cancels overflow runs, which need manual recovery. Releases follow queue order rather than merge order. Each release is a cumulative snapshot of verified `main`, so it can include changes merged after the pull request that triggered it.
+
 ## credits and license
 
 Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.0`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
