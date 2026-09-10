@@ -14,10 +14,13 @@ import { MODE_ENTRY, replayMode } from "../src/mode.ts";
 const root = join(import.meta.dir, "..");
 const temporary = await mkdtemp(join(tmpdir(), "pstack-native-smoke-"));
 const loaded = await loadSkillsFromDir({ dir: join(root, "skills"), source: "omp-pstack:project" });
-assert.equal(loaded.skills.length, 45);
+assert.equal(loaded.skills.length, 47);
 assert(!loaded.skills.some((skill) => skill.filePath.includes("automations/benny")));
 const modeSkill = loaded.skills.find((skill) => skill.name === "poteto-mode")!;
 assert(modeSkill);
+for (const name of ["principle-attack-the-premise", "principle-test-behavior-not-implementation"]) {
+  assert(loaded.skills.some((skill) => skill.name === name), `${name} not discovered from the project skills dir`);
+}
 const authStorage = await discoverAuthStorage();
 const modelRegistry = new ModelRegistry(authStorage);
 await modelRegistry.refresh();

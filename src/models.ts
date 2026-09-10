@@ -16,7 +16,6 @@ export const ROLES = [
 	"hardest tasks",
 	"how explorer",
 	"how explainer",
-	"how critics",
 	"why investigators",
 	"why synthesizer",
 	"reflect tooling",
@@ -30,7 +29,6 @@ export const ROLES = [
 
 export type Role = (typeof ROLES)[number];
 export type PanelRole =
-	| "how critics"
 	| "arena runners"
 	| "arena cross-judge pool"
 	| "architect runners"
@@ -38,7 +36,6 @@ export type PanelRole =
 export type AgentKind = "poteto" | "general" | "readonly";
 
 export const PANEL_ROLES: readonly Role[] = [
-	"how critics",
 	"arena runners",
 	"arena cross-judge pool",
 	"architect runners",
@@ -65,7 +62,6 @@ const ROLE_KIND: Record<Role, AgentKind> = {
 	"hardest tasks": "poteto",
 	"how explorer": "general",
 	"how explainer": "general",
-	"how critics": "readonly",
 	"why investigators": "poteto",
 	"why synthesizer": "general",
 	"reflect tooling": "general",
@@ -929,7 +925,7 @@ export function registerModels(pi: ExtensionAPI): void {
 		name: "pstack_models",
 		label: "P Stack models",
 		description:
-			"Inspect authenticated model identities and configure all P Stack role mappings against an explicit approved pool. list: available models with selector/name/family/reasoning/efforts, the approved pool, per-role configuration and availability. show: raw rule and parsed roles. save: validate the full 18-role choice against an explicit pool, publish immutable native descriptors, then atomically publish the managed rule. prepare: extra concrete per-arm selectors constrained to the pool. Failed publication never points the role configuration at incomplete descriptors.",
+			"Inspect authenticated model identities and configure all P Stack role mappings against an explicit approved pool. list: available models with selector/name/family/reasoning/efforts, the approved pool, per-role configuration and availability. show: raw rule and parsed roles. save: validate the full 17-role choice against an explicit pool, publish immutable native descriptors, then atomically publish the managed rule. prepare: extra concrete per-arm selectors constrained to the pool. Failed publication never points the role configuration at incomplete descriptors.",
 		parameters: z.object({
 			action: z.enum(["list", "show", "save", "prepare"]),
 			roles: z.record(z.string(), z.union([z.string(), z.array(z.string())])).optional(),

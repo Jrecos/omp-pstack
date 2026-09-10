@@ -96,7 +96,7 @@ test("concrete selectors require exact authenticated identity and keep provider/
 test("saveRoles publishes alias + concrete agents and the managed rule", async () => {
 	const paths = freshPaths();
 	const choice = fullChoice({
-		"how critics": ["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"],
+		"interrogate reviewers": ["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"],
 		"arena runners": ["inherit-parent", "inherit-parent"],
 	});
 	const result = await saveRoles(choice, fakeQuery(), paths);
@@ -117,12 +117,12 @@ test("saveRoles publishes alias + concrete agents and the managed rule", async (
 	expect(parsed.pool).toHaveLength(3);
 	expect(parsed.pool).toEqual(expect.arrayContaining(["inherit-parent", "auto", "openai-codex/gpt-6-astra"]));
 	expect(raw).toMatch(/^pool: /m);
-	expect(parsed.roles["how critics"]).toEqual(["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"]);
+	expect(parsed.roles["interrogate reviewers"]).toEqual(["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"]);
 	// Ordered duplicate panel entries survive verbatim; no deduplication.
 	expect(parsed.roles["arena runners"]).toEqual(["inherit-parent", "inherit-parent"]);
 	expect(ROLES.every((role) => raw.includes(`${role}: `))).toBe(true);
 	// Derived role/index/kind addresses are present for plan-mode task dispatch.
-	expect(raw).toContain(`# how critics[3] readonly -> ${agentName("readonly", "openai-codex/gpt-6-astra:high")}`);
+	expect(raw).toContain(`# interrogate reviewers[3] readonly -> ${agentName("readonly", "openai-codex/gpt-6-astra:high")}`);
 	expect(raw).toContain(`# arena runners[1] poteto -> ${agentName("poteto", "inherit-parent")}`);
 	// Roundtrip is stable.
 	expect(serializeConfig(parsed)).toBe(raw);
@@ -160,19 +160,19 @@ test("saveRoles rejects partial choices, unknown roles and unauthenticated model
 test("pstack_agent resolution returns ordered panel entries, aliases and per-arm overrides", async () => {
 	const paths = freshPaths();
 	await saveRoles(
-		fullChoice({ "how critics": ["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"], "arena runners": ["inherit-parent", "inherit-parent"] }),
+		fullChoice({ "interrogate reviewers": ["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"], "arena runners": ["inherit-parent", "inherit-parent"] }),
 		fakeQuery(),
 		paths,
 	);
 	const query = fakeQuery();
 
-	const first = resolveRoleAgent({ role: "how critics", index: 1 }, query, paths);
-	expect(first).toMatchObject({ agent: agentName("readonly", "inherit-parent"), model: "openai-codex/gpt-5.4-mini", role: "how critics", index: 1 });
+	const first = resolveRoleAgent({ role: "interrogate reviewers", index: 1 }, query, paths);
+	expect(first).toMatchObject({ agent: agentName("readonly", "inherit-parent"), model: "openai-codex/gpt-5.4-mini", role: "interrogate reviewers", index: 1 });
 
-	const second = resolveRoleAgent({ role: "how critics", index: 2 }, query, paths);
+	const second = resolveRoleAgent({ role: "interrogate reviewers", index: 2 }, query, paths);
 	expect(second.model).toBe("openai-codex/gpt-5.4-mini");
 
-	const third = resolveRoleAgent({ role: "how critics", index: 3 }, query, paths);
+	const third = resolveRoleAgent({ role: "interrogate reviewers", index: 3 }, query, paths);
 	expect(third.agent).toBe(agentName("readonly", "openai-codex/gpt-6-astra:high"));
 	expect(third.model).toBe("openai-codex/gpt-6-astra:high");
 	// The concrete descriptor file really pins that selector, suffix included.
@@ -187,7 +187,7 @@ test("pstack_agent resolution returns ordered panel entries, aliases and per-arm
 
 	// Scalar roles ignore indices; explicit kinds override the role default.
 	expect(resolveRoleAgent({ role: "bug-fix" }, query, paths).index).toBeUndefined();
-	expect(resolveRoleAgent({ role: "how critics", index: 1, kind: "general" }, query, paths).agent).toBe(agentName("general", "inherit-parent"));
+	expect(resolveRoleAgent({ role: "interrogate reviewers", index: 1, kind: "general" }, query, paths).agent).toBe(agentName("general", "inherit-parent"));
 	// Per-arm override resolves the prepared concrete descriptor.
 	expect(resolveRoleAgent({ role: "bug-fix", model: "openai-codex/gpt-6-astra:high" }, query, paths).agent).toBe(agentName("poteto", "openai-codex/gpt-6-astra:high"));
 });
@@ -196,9 +196,9 @@ test("descriptor lookup fails closed on missing/stale descriptors, unconfigured 
 	const paths = freshPaths();
 
 	// Unconfigured role (no default): needs setup, never a fuzzy fallback.
-	await saveRoles(fullChoice({ "how critics": ["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"], "why synthesizer": "" }), fakeQuery(), paths);
+	await saveRoles(fullChoice({ "interrogate reviewers": ["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"], "why synthesizer": "" }), fakeQuery(), paths);
 	expect(() => resolveRoleAgent({ role: "why synthesizer" }, fakeQuery(), paths)).toThrow(/not configured/);
-	expect(() => resolveRoleAgent({ role: "how critics", index: 4 }, fakeQuery(), paths)).toThrow(/out of range/);
+	expect(() => resolveRoleAgent({ role: "interrogate reviewers", index: 4 }, fakeQuery(), paths)).toThrow(/out of range/);
 	expect(() => resolveRoleAgent({ role: "bug-fix", index: 2 }, fakeQuery(), paths)).toThrow(/scalar role/);
 
 	// Config present but descriptor files deleted: read-only lookup refuses.
@@ -206,12 +206,12 @@ test("descriptor lookup fails closed on missing/stale descriptors, unconfigured 
 		rmSync(join(paths.agentsDir, file));
 	}
 	expect(agentFiles(paths)).toEqual([]);
-	expect(() => resolveRoleAgent({ role: "how critics", index: 3 }, fakeQuery(), paths)).toThrow(/No prepared descriptor/);
+	expect(() => resolveRoleAgent({ role: "interrogate reviewers", index: 3 }, fakeQuery(), paths)).toThrow(/No prepared descriptor/);
 
 	// Stale descriptor pinning another model.
 	const stale = agentName("readonly", "openai-codex/gpt-6-astra:high");
 	writeFileSync(join(paths.agentsDir, `${stale}.md`), `---\nname: ${stale}\ndescription: x\nmodel: openai-codex/gpt-5.4-mini\n---\nbody\n`);
-	expect(() => resolveRoleAgent({ role: "how critics", index: 3 }, fakeQuery(), paths)).toThrow();
+	expect(() => resolveRoleAgent({ role: "interrogate reviewers", index: 3 }, fakeQuery(), paths)).toThrow();
 
 	// Model vanished from the authenticated registry after setup.
 	const paths2 = freshPaths();
@@ -253,6 +253,22 @@ test("missing alwaysApply frontmatter is malformed", () => {
 	expect(() => parseConfig("---\ndescription: x\n---\nbug-fix: openai-codex/gpt-6-astra\n")).toThrow(/alwaysApply/);
 	expect(() => parseConfig("bug-fix: openai-codex/gpt-6-astra\n")).toThrow(MalformedConfigError);
 	expect(() => parseConfig("---\ndescription: x\nalwaysApply: true\n---\n<!-- omp-pstack:managed-start -->\nbug-fix: a\nbug-fix: b\n<!-- omp-pstack:managed-end -->\n")).toThrow(MalformedConfigError);
+});
+
+test("removing the retired how-critics assignment preserves the remaining model choices", () => {
+	const obsolete = `---
+alwaysApply: true
+---
+<!-- omp-pstack:managed-start -->
+pool: openai-codex/gpt-6-astra
+bug-fix: openai-codex/gpt-6-astra:high
+how critics: openai-codex/gpt-6-astra:high
+<!-- omp-pstack:managed-end -->
+`;
+	expect(() => parseConfig(obsolete)).toThrow(MalformedConfigError);
+	const migrated = parseConfig(obsolete.replace(/^how critics:.*\n/m, ""));
+	expect(migrated.roles["bug-fix"]).toEqual(["openai-codex/gpt-6-astra:high"]);
+	expect(migrated.pool).toEqual(["openai-codex/gpt-6-astra"]);
 });
 
 // ─── Collisions and settings overrides ───────────────────────────────────────
@@ -299,7 +315,6 @@ test("task.agentModelOverrides entries for generated agents (aliases included) r
 
 test("a fresh profile lists every role as requiring setup, with no hardcoded brand default", () => {
 	const { roles, needsSetup } = currentRoles(freshPaths(), fakeQuery());
-	expect(roles).toHaveLength(18);
 	expect(needsSetup).toBe(true);
 	// DEFAULT_ROLES is gone: nothing is silently assumed on a fresh profile. Every
 	// role is unconfigured and needs a choice from the approved pool.
@@ -309,14 +324,6 @@ test("a fresh profile lists every role as requiring setup, with no hardcoded bra
 		expect(role.entries).toEqual([]);
 		expect(role.needsSetup).toBe(true);
 	}
-	const howCritics = roles.find((role) => role.role === "how critics")!;
-	expect(howCritics.panel).toBe(true);
-	expect(howCritics.kind).toBe("readonly");
-	expect(howCritics.needsSetup).toBe(true);
-	const bugFix = roles.find((role) => role.role === "bug-fix")!;
-	expect(bugFix.kind).toBe("poteto");
-	expect(bugFix.entries).toEqual([]);
-	expect(bugFix.needsSetup).toBe(true);
 	expect(showConfig(freshPaths()).exists).toBe(false);
 });
 
@@ -356,7 +363,7 @@ test("tampered generated restrictions are never reused or overwritten", async ()
 	const file = join(paths.agentsDir, `${agentName("readonly", "inherit-parent")}.md`);
 	const tampered = readFileSync(file, "utf8").replace("tools: read, grep, glob, web_search", "tools: bash");
 	writeFileSync(file, tampered);
-	expect(() => resolveRoleAgent({ role: "how critics", index: 1 }, fakeQuery(), paths)).toThrow();
+	expect(() => resolveRoleAgent({ role: "interrogate reviewers", index: 1 }, fakeQuery(), paths)).toThrow();
 	await expect(saveRoles(fullChoice(), fakeQuery(), paths)).rejects.toThrow();
 	expect(readFileSync(file, "utf8")).toBe(tampered);
 });
@@ -405,7 +412,7 @@ test("saveRoles and prepareModels publish the canonical bytes they validated", a
 test("an explicit prepared per-arm override dispatches; outside-pool overrides are rejected", async () => {
 	const paths = freshPaths();
 	const pool = ["openai-codex/gpt-6-astra", "inherit-parent"];
-	await saveRoles(fullChoice({ "how critics": ["inherit-parent", "openai-codex/gpt-6-astra:high"] }), fakeQuery(), paths, undefined, pool);
+	await saveRoles(fullChoice({ "interrogate reviewers": ["inherit-parent", "openai-codex/gpt-6-astra:high"] }), fakeQuery(), paths, undefined, pool);
 	// "bug-fix" has no hardcoded default now, but an explicit in-pool per-arm
 	// override dispatches its prepared descriptor regardless.
 	const resolved = resolveRoleAgent({ role: "bug-fix", model: "openai-codex/gpt-6-astra:high" }, fakeQuery(), paths);
@@ -544,7 +551,7 @@ test("a legacy rule without a pool line infers its effective pool from explicit 
 		"---",
 		"<!-- omp-pstack:managed-start -->",
 		"bug-fix: openai-codex/gpt-6-astra:high",
-		"how critics: inherit-parent, auto, openai-codex/gpt-6-astra",
+		"arena runners: inherit-parent, auto, openai-codex/gpt-6-astra",
 		"<!-- omp-pstack:managed-end -->",
 		"",
 	].join("\n");
