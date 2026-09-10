@@ -2,10 +2,13 @@
 
 The why skill spawns one investigator per available evidence category, each reading a single source-specific playbook below. The playbooks are concrete examples for common MCPs. Adapt them for a different MCP in the same category.
 
+Pick the row whose example MCP matches the MCP available in this session. Two rows share the issue / ticket tracker category because the two trackers need different tool contracts. Give a Plane MCP [`plane.md`](./sources/plane.md), a Linear MCP [`linear.md`](./sources/linear.md), and any other tracker MCP (Jira, GitHub Issues, Shortcut) the playbook closest to its API, adapted as usual.
+
 | Category | Playbook | Example MCP it documents |
 |---|---|---|
 | Source control history | [`code-archaeology.md`](./sources/code-archaeology.md) | git, `gh` |
-| Issue / ticket tracker | [`linear.md`](./sources/linear.md) | Linear (adapt for Jira, GitHub Issues, Plane, Shortcut) |
+| Issue / ticket tracker | [`linear.md`](./sources/linear.md) | Linear (adapt for Jira, GitHub Issues, Shortcut) |
+| Issue / ticket tracker | [`plane.md`](./sources/plane.md) | Plane (official `plane-mcp-server`; check the tool list before trusting any name) |
 | Long-form documents | [`notion.md`](./sources/notion.md) | Notion (adapt for Confluence, Google Docs, Coda) |
 | Real-time team chat | [`slack.md`](./sources/slack.md) | Slack (adapt for Discord, Microsoft Teams, Mattermost) |
 | Infrastructure observability | [`datadog.md`](./sources/datadog.md) | Datadog (adapt for New Relic, Honeycomb, Grafana, Splunk) |

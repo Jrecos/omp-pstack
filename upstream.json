@@ -1533,7 +1533,16 @@
       "source": "pstack/skills/why/references/source-playbook.md",
       "blob": "aa3d877cd539763ff05e266ae0a02dd811441e2b",
       "target": "skills/why/references/source-playbook.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Adds a Plane row and selection prose to the tracker category so a session whose tracker MCP is Plane receives sources/plane.md; upstream mentions Plane only as an adaptation hint inside the Linear row.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/why/references/sources/code-archaeology.md",
