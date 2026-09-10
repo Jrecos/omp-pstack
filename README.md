@@ -36,16 +36,22 @@ marketplace installs are listed under the canonical id `omp-pstack@omp-pstack`, 
 
 ### update
 
-marketplace installs update in place with the same id:
+Refresh the marketplace catalog before upgrading the installed plugin:
 
 ```bash
+omp plugin marketplace update omp-pstack
 omp plugin upgrade omp-pstack@omp-pstack
 ```
 
-if your omp version has no `plugin upgrade`, reinstall over the existing entry:
+Restart OMP after the upgrade to load the updated extension and skills. Check the installed version with `omp plugin list`.
+
+`plugin upgrade` and forced reinstalls can use a stale marketplace cache. Do not skip `marketplace update`, and do not add the marketplace again.
+
+If your OMP version has no `plugin upgrade`, refresh the catalog and force a reinstall:
 
 ```bash
-omp plugin install omp-pstack@omp-pstack
+omp plugin marketplace update omp-pstack
+omp plugin install omp-pstack@omp-pstack --force
 ```
 
 updating replaces the plugin code (skills, CLI, runtime) but keeps your configuration: the managed rule `rules/pstack-models.md`, your approved model pool, and the prepared agent profiles under `agents/` are regenerated on the next `/setup-pstack` save or `pstack prepare`, not by the update itself. after a breaking change to agent naming or profile layout, run `/setup-pstack` once and save to restage fresh profiles and sweep stale ones.
