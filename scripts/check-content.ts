@@ -245,6 +245,13 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     contract: "Reviewer scan-pattern translations are prose; honest claim is link health and inventory integrity. The reviewer dispatch itself is covered by the model-dispatch class.",
   },
   {
+    id: "why-source-registry-prose",
+    pattern: /^skills\/why\/references\/source-playbook\.md$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "The source-category registry is prose the why skill reads to pick one playbook per investigator, never executed as a unit; the honest claim is link health and inventory integrity for the added Plane row.",
+  },
+  {
     id: "watch-pr-mergeability-gate",
     pattern: /^skills\/poteto-mode\/scripts\/watch-pr\/(policy(?:\.test)?|render|types)\.ts$/,
     kind: "omp/cli scenario",
@@ -633,6 +640,28 @@ async function checkNoDiscoverySymlinks(root: string): Promise<void> {
   }
 }
 
+async function checkWhySourceRegistry(root: string): Promise<void> {
+  const registry = "skills/why/references/source-playbook.md";
+  const sourcesDir = "skills/why/references/sources";
+  if (!(await exists(join(root, registry))) || !(await exists(join(root, sourcesDir)))) {
+    fail(`${registry}: why source registry or its sources/ directory is missing, so no category playbook is reachable`);
+    return;
+  }
+  const linked = new Set<string>();
+  for (const { target } of markdownLinks(await readFile(join(root, registry), "utf8"))) {
+    const path = target.split("#")[0].split("?")[0];
+    if (!path || /^(https?:|mailto:|<)/i.test(path)) continue;
+    const resolved = normalize(join(dirname(registry), path));
+    if (resolved.startsWith(`${sourcesDir}/`)) linked.add(resolved);
+  }
+  const shipped = (await readdir(join(root, sourcesDir), { withFileTypes: true }))
+    .filter((d) => d.isFile() && d.name.endsWith(".md"))
+    .map((d) => `${sourcesDir}/${d.name}`);
+  for (const file of shipped) {
+    if (!linked.has(file)) fail(`${file}: source playbook is not linked from ${registry}, so no investigator can reach it; give it a row in the category table`);
+  }
+}
+
 async function checkLinks(root: string, inv: Inventory): Promise<void> {
   let placeholders = 0;
   for (const f of inv.files) {
@@ -867,7 +896,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "bc66abb6a4327f3fab7f55b8849093337e5a83c9725efb59d24cb9544a870c59";
+    const pinnedDigest = "cd27bfbcebc4470553989f0f2d1831dee03770c2476d2e08cafbcd7fd8504806";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }
@@ -884,6 +913,7 @@ async function main(): Promise<void> {
     checkBennyExclusion(inv);
     await checkBennyFiles(root, inv);
     await checkNoDiscoverySymlinks(root);
+    await checkWhySourceRegistry(root);
     await checkLinks(root, inv);
     for (const e of await checkVerificationMap(root)) fail(e);
     for (const e of await checkBennyFixtureProof(root)) fail(e);
