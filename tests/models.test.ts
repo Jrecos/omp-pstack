@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { refreshDirsFromEnv } from "@oh-my-pi/pi-utils";
 import {
+	PANEL_ROLES,
 	ROLES,
 	KINDS,
 	agentName,
@@ -190,6 +191,21 @@ test("pstack_agent resolution returns ordered panel entries, aliases and per-arm
 	expect(resolveRoleAgent({ role: "interrogate reviewers", index: 1, kind: "general" }, query, paths).agent).toBe(agentName("general", "inherit-parent"));
 	// Per-arm override resolves the prepared concrete descriptor.
 	expect(resolveRoleAgent({ role: "bug-fix", model: "openai-codex/gpt-6-astra:high" }, query, paths).agent).toBe(agentName("poteto", "openai-codex/gpt-6-astra:high"));
+	expect(resolveRoleAgent({ role: "why investigator", index: 2 }, query, paths).role).toBe("why investigators");
+	expect(resolveRoleAgent({ role: "How Explorer", index: 2 }, query, paths).role).toBe("how explorer");
+	expect(resolveRoleAgent({ role: "feature" }, query, paths).role).toBe("feature, refactoring");
+	expect(resolveRoleAgent({ role: "feature, refactoring;" }, query, paths).role).toBe("feature, refactoring");
+	expect(() => resolveRoleAgent({ role: "how" }, query, paths)).toThrow(/Unknown role "how"/);
+	expect(() => resolveRoleAgent({ role: "j" }, query, paths)).toThrow(/Unknown role "j"/);
+	expect(() => resolveRoleAgent({ role: "arena" }, query, paths)).toThrow(/Unknown role "arena"/);
+	expect(resolveRoleAgent({ role: "bug-fix", index: 2 }, query, paths).index).toBeUndefined();
+	for (const role of ROLES) {
+		const name = role.toLowerCase();
+		const forms = [name, `${name}s`, name.replace(/s$/, "")].map((f) => f.replace(/\s+/g, " ").trim());
+		for (const form of new Set([...forms, name.toUpperCase()])) {
+			expect(resolveRoleAgent({ role: form, index: PANEL_ROLES.includes(role) ? 1 : undefined }, query, paths).role).toBe(role);
+		}
+	}
 });
 
 test("descriptor lookup fails closed on missing/stale descriptors, unconfigured roles and vanished models", async () => {
@@ -199,7 +215,7 @@ test("descriptor lookup fails closed on missing/stale descriptors, unconfigured 
 	await saveRoles(fullChoice({ "interrogate reviewers": ["inherit-parent", "auto", "openai-codex/gpt-6-astra:high"], "why synthesizer": "" }), fakeQuery(), paths);
 	expect(() => resolveRoleAgent({ role: "why synthesizer" }, fakeQuery(), paths)).toThrow(/not configured/);
 	expect(() => resolveRoleAgent({ role: "interrogate reviewers", index: 4 }, fakeQuery(), paths)).toThrow(/out of range/);
-	expect(() => resolveRoleAgent({ role: "bug-fix", index: 2 }, fakeQuery(), paths)).toThrow(/scalar role/);
+
 
 	// Config present but descriptor files deleted: read-only lookup refuses.
 	for (const file of agentFiles(paths)) {
