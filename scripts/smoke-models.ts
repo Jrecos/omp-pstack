@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { AgentRegistry, createAgentSession, discoverAuthStorage, loadSkillsFromDir, ModelRegistry, SessionManager, Settings } from "@oh-my-pi/pi-coding-agent";
 import type { ExtensionAPI } from "@oh-my-pi/pi-coding-agent";
 import { initializeExtensions } from "@oh-my-pi/pi-coding-agent/modes/runtime-init";
-import type { TaskToolDetails } from "@oh-my-pi/pi-coding-agent/task/types";
+import type { TaskToolDetails } from "@oh-my-pi/pi-coding-agent/task";
 import { getAgentDir, getConfigAgentDirName, refreshDirsFromEnv } from "@oh-my-pi/pi-utils";
 import pstack from "../src/extension.ts";
 import { ROLES, parseConfig, resolvePaths, saveRoles } from "../src/models.ts";
@@ -30,7 +30,7 @@ const authStorage = await discoverAuthStorage(process.env.PSTACK_SMOKE_AUTH_DIR)
 const modelRegistry = new ModelRegistry(authStorage);
 await modelRegistry.refresh();
 const firstName = process.env.PSTACK_SMOKE_MODEL ?? "openai-codex/gpt-6-astra";
-const secondName = process.env.PSTACK_SMOKE_SECOND_MODEL ?? "openai-codex/gpt-5.4-mini";
+const secondName = process.env.PSTACK_SMOKE_SECOND_MODEL ?? "openai-codex/gpt-5.6-luna";
 const first = modelRegistry.getAvailable().find((model) => `${model.provider}/${model.id}` === firstName);
 const second = modelRegistry.getAvailable().find((model) => `${model.provider}/${model.id}` === secondName);
 assert(first && second && firstName !== secondName, "Two explicitly selected authenticated models are required.");

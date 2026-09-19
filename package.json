@@ -20,7 +20,11 @@
     "pstack:log": "bash skills/show-me-your-work/scripts/log.sh"
   },
   "dependencies": {
-    "@oh-my-pi/pi-coding-agent": "18.1.11",
+    "@oh-my-pi/pi-coding-agent": "18.2.6",
+    "@oh-my-pi/omptype": "18.2.6",
+    "@oh-my-pi/pi-ai": "18.2.6",
+    "@oh-my-pi/pi-tui": "18.2.6",
+    "@oh-my-pi/pi-utils": "18.2.6",
     "commander": "14.0.0"
   },
   "devDependencies": {
