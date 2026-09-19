@@ -15,7 +15,7 @@ import {
 	SessionManager,
 	Settings,
 } from "@oh-my-pi/pi-coding-agent";
-import { parseConfiguredThinkingLevel } from "@oh-my-pi/pi-coding-agent/thinking";
+import { parseConfiguredThinkingLevel } from "@oh-my-pi/pi-tui/thinking";
 import { initializeExtensions } from "@oh-my-pi/pi-coding-agent/modes/runtime-init";
 import { isSilentAbort } from "@oh-my-pi/pi-coding-agent/session/messages";
 import { validateConcreteSelector, type PstackModel } from "./models.ts";
