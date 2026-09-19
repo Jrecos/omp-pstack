@@ -42,6 +42,21 @@ export const PANEL_ROLES: readonly Role[] = [
 	"interrogate reviewers",
 ];
 
+function normalizeRole(input: string): Role | undefined {
+	const key = input.trim().toLowerCase().replace(/\s+/g, " ").replace(/[…;,.]+$/, "");
+	if (!key) return undefined;
+	const folded = ROLES.find((role) => {
+		const name = role.toLowerCase();
+		return name === key || name === `${key}s` || `${name}s` === key;
+	});
+	if (folded) return folded;
+	const prefixed = ROLES.filter((role) => {
+		const name = role.toLowerCase();
+		return name.startsWith(key) && (name.length === key.length || /[\s,;-]/.test(name[key.length]!));
+	});
+	return prefixed.length === 1 ? prefixed[0] : undefined;
+}
+
 export const ALIASES = ["inherit-parent", "auto"] as const;
 export const KINDS: readonly AgentKind[] = ["poteto", "general", "readonly"];
 
@@ -765,10 +780,11 @@ export function resolveRoleAgent(
 	query: ModelQuery,
 	paths: Paths,
 ): AgentDescriptor {
-	if (!(ROLES as readonly string[]).includes(params.role)) {
+	const matched = normalizeRole(params.role);
+	if (matched === undefined) {
 		throw new Error(`Unknown role "${params.role}". Roles: ${ROLES.join("; ")}.`);
 	}
-	const role = params.role as Role;
+	const role: Role = matched;
 	const kind = params.kind ?? ROLE_KIND[role];
 	const panel = PANEL_ROLES.includes(role);
 	const available = query.list();
@@ -799,7 +815,6 @@ export function resolveRoleAgent(
 			}
 			selector = entries[index! - 1]!;
 		} else {
-			if (params.index !== undefined && params.index !== 1) throw new Error(`Role "${role}" is a scalar role; it takes no index.`);
 			selector = entries[0]!;
 		}
 	}
