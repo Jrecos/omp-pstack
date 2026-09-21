@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { getAgentDir, Settings, type ExtensionAPI } from "@oh-my-pi/pi-coding-agent";
 import { resolveConfiguredModelPatterns } from "@oh-my-pi/pi-coding-agent/config/model-resolver";
 import { discoverAgents } from "@oh-my-pi/pi-coding-agent/task/discovery";
+import type { ConfiguredThinkingLevel } from "@oh-my-pi/pi-tui/render/render-utils";
 
 // ─── Role vocabulary (exact upstream setup-pstack step-5 table) ─────────────
 
@@ -135,7 +136,9 @@ export interface ModelQuery {
 
 // ─── Concrete selector validation ────────────────────────────────────────────
 
-const THINKING_LEVELS: Record<string, true> = {
+type ThinkingSuffix = Exclude<ConfiguredThinkingLevel, "inherit" | "off">;
+
+const THINKING_LEVELS: Readonly<Record<ThinkingSuffix, true>> = {
 	minimal: true,
 	low: true,
 	medium: true,
@@ -144,6 +147,10 @@ const THINKING_LEVELS: Record<string, true> = {
 	max: true,
 	auto: true,
 };
+
+function isThinkingSuffix(value: string): value is ThinkingSuffix {
+	return Object.hasOwn(THINKING_LEVELS, value);
+}
 
 /** Exact identity only — full `provider/id`, or a bare `id` that is unambiguous. No glob, no fuzzy. */
 function exactModel(spec: string, available: readonly PstackModel[]): PstackModel | undefined {
@@ -154,7 +161,7 @@ function exactModel(spec: string, available: readonly PstackModel[]): PstackMode
 }
 
 export type SelectorVerdict =
-	| { ok: true; selector: string; provider: string; id: string; thinking?: string }
+	| { ok: true; selector: string; provider: string; id: string; thinking?: ThinkingSuffix }
 	| { ok: false; error: string };
 
 /**
@@ -176,7 +183,7 @@ export function validateConcreteSelector(selector: string, available: readonly P
 	if (colon > 0) {
 		const suffix = trimmed.slice(colon + 1).toLowerCase();
 		const base = trimmed.slice(0, colon);
-		if (THINKING_LEVELS[suffix]) {
+		if (isThinkingSuffix(suffix)) {
 			const baseModel = exactModel(base, available);
 			if (baseModel) {
 				if (suffix === "auto") {
@@ -241,7 +248,7 @@ function baseIdentity(selector: string, thinking: string | undefined): string {
 /** Raw base identity for an unvalidated string: strip any recognized thinking suffix. */
 function baseIdentityRaw(selector: string): string {
 	const colon = selector.lastIndexOf(":");
-	if (colon > 0 && THINKING_LEVELS[selector.slice(colon + 1).toLowerCase()]) return selector.slice(0, colon);
+	if (colon > 0 && isThinkingSuffix(selector.slice(colon + 1).toLowerCase())) return selector.slice(0, colon);
 	return selector;
 }
 

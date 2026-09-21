@@ -15,15 +15,10 @@ import {
 	SessionManager,
 	Settings,
 } from "@oh-my-pi/pi-coding-agent";
-import { parseConfiguredThinkingLevel } from "@oh-my-pi/pi-tui/thinking";
 import { initializeExtensions } from "@oh-my-pi/pi-coding-agent/modes/runtime-init";
 import { isSilentAbort } from "@oh-my-pi/pi-coding-agent/session/messages";
 import { validateConcreteSelector, type PstackModel } from "./models.ts";
 import { pstackCommand } from "./cli-launch.ts";
-
-// validateConcreteSelector enforces the explicit thinking suffix against the
-// model's supported efforts; the parsed level feeds the run session directly.
-
 
 export const MAX_EVENT_ID = 128;
 export const MAX_BODY_BYTES = 1024 * 1024;
@@ -980,7 +975,7 @@ export class RoutineRunner {
 				sessionManager,
 				skills,
 				deadline: row.deadline_ms,
-				thinkingLevel: verdict.thinking ? parseConfiguredThinkingLevel(verdict.thinking) : undefined,
+				thinkingLevel: verdict.thinking,
 				agentRegistry: new AgentRegistry(),
 				...restrictedSessionOptions(snapshotTools),
 				additionalExtensionPaths: [join(import.meta.dir, "extension.ts")],
