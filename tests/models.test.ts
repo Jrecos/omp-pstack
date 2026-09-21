@@ -81,6 +81,7 @@ test("concrete selectors require exact authenticated identity and keep provider/
 	expect(validateConcreteSelector("gpt-5.4-mini", MODELS).ok).toBe(true);
 	expect(validateConcreteSelector("openai-codex/nope", MODELS).ok).toBe(false);
 	expect(validateConcreteSelector("moonshotai/glm-4.7:high", MODELS).ok).toBe(false);
+	expect(validateConcreteSelector("openai-codex/gpt-6-astra:constructor", MODELS).ok).toBe(false);
 
 	// Literal ids that end in a level word are ids, not thinking suffixes.
 	const literal = validateConcreteSelector("glm-4.7:max", MODELS);
