@@ -17,7 +17,7 @@ Classify the request before mining history.
 - Broad working conventions, preferences, or agent behavior produce a `<handle>-mode` skill. Continue with steps 1-6.
 - One task-specific workflow produces a regular skill. Run the workflow once when possible, then author it with the packaged guidance and **unslop**. Skip steps 1-3 and the mode-only fields in step 4. Do not stop after the live run or offer to write the skill later.
 
-Choose the skill root through the authoring guide's **Placement** section before searching for an existing skill. A missing `.omp/skills/` or `.agents/skills/` directory is a placement choice, not a reason to stop.
+Read the authoring guide and execute its **Placement** section before running the workflow or searching for an existing skill. When Placement requires a question, call the structured-question tool and wait for the answer. Never infer or silently select the recommended root. A missing `.omp/skills/` or `.agents/skills/` directory is a placement choice, not a reason to stop.
 
 For a mode skill, check `<skill-root>/*-mode/SKILL.md` and the active profile's `skills/*-mode/SKILL.md` for the user's handle. Skill directories are one level below their root. If one exists, ask one structured question unless the user already requested an update:
 
