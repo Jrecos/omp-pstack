@@ -1,7 +1,9 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import type { ExtensionAPI } from "@oh-my-pi/pi-coding-agent";
+import { readFileSync, realpathSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import type { ExtensionAPI, ExtensionContext } from "@oh-my-pi/pi-coding-agent";
+import { resolveInstallAnchor } from "./install.ts";
 import { registerMode } from "./mode.ts";
+import type { ModeAnchor } from "./mode.ts";
 import { registerHistory } from "./history.ts";
 import { registerModels } from "./models.ts";
 
@@ -85,16 +87,49 @@ export function syncSkillCommands(
   }
 }
 
+/**
+ * Bodies and the loaded skill identity are captured while this version still
+ * exists. Runtime-link paths are selected per factory from the session cwd.
+ */
+const loadedRoot = realpathSync(join(import.meta.dir, ".."));
+const skillBodies = DIRECT_SKILLS.map((id) => ({
+  id,
+  body: readFileSync(join(loadedRoot, "skills", id, "SKILL.md"), "utf8").replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, ""),
+}));
+const modeBody = skillBodies.find((skill) => skill.id === "poteto-mode")!.body;
+const loadedModeSkillPath = realpathSync(join(loadedRoot, "skills", "poteto-mode", "SKILL.md"));
+
+interface SessionAssets {
+  readonly cwd: string;
+  readonly stableRoot: string;
+  readonly skills: ReadonlyArray<{ readonly id: string; readonly path: string; readonly body: string }>;
+  readonly modeAnchor: ModeAnchor;
+}
+
 export default function pstack(pi: ExtensionAPI) {
   pi.setLabel("OMP P Stack");
-  const root = join(import.meta.dir, "..");
-  const skills = DIRECT_SKILLS.map((id) => {
-    const path = join(root, "skills", id, "SKILL.md");
-    const text = readFileSync(path, "utf8");
-    return { id, path, body: text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "") };
-  });
-  const modeSkill = skills.find((skill) => skill.id === "poteto-mode")!;
-  const mode = registerMode(pi, modeSkill.path, modeSkill.body);
+  let currentAssets: SessionAssets | null = null;
+  const assetsFor = (cwd: string): SessionAssets => {
+    const normalizedCwd = resolve(cwd);
+    const anchor = resolveInstallAnchor(loadedRoot, normalizedCwd);
+    if (currentAssets?.cwd === normalizedCwd && currentAssets.stableRoot === anchor.stableRoot) return currentAssets;
+    const skills = skillBodies.map((skill) => ({
+      ...skill,
+      path: join(anchor.stableRoot, "skills", skill.id, "SKILL.md"),
+    }));
+    currentAssets = {
+      cwd: normalizedCwd,
+      stableRoot: anchor.stableRoot,
+      skills,
+      modeAnchor: {
+        loadedSkillPath: loadedModeSkillPath,
+        stableSkillDir: dirname(skills.find((skill) => skill.id === "poteto-mode")!.path),
+        cacheIdentity: anchor.cacheIdentity,
+      },
+    };
+    return currentAssets;
+  };
+  const mode = registerMode(pi, (ctx) => assetsFor(ctx.cwd).modeAnchor, modeBody);
   registerHistory(pi);
   registerModels(pi);
 
@@ -104,11 +139,11 @@ export default function pstack(pi: ExtensionAPI) {
   // foreign extension's commands, so a pre-existing user/plugin /how would be
   // silently replaced. Snapshot first; leave every foreign owner intact and
   // report the namespaced /skill:<id> alternative.
-  const registerSkillCommand = (skill: { id: string; path: string; body: string }) => {
-    pi.registerCommand(skill.id, {
-      description: commandDescription(skill.id),
+  const registerSkillCommand = (id: string) => {
+    pi.registerCommand(id, {
+      description: commandDescription(id),
       async handler(args, ctx) {
-        if (skill.id === "poteto-mode") {
+        if (id === "poteto-mode") {
           if (args.trim() === "off" || args.trim() === "status") {
             const active = args.trim() === "off" ? mode.set(false, ctx) : mode.status(ctx);
             ctx.ui.notify(`Poteto mode ${active ? "active" : "inactive"}.`, "info");
@@ -116,22 +151,24 @@ export default function pstack(pi: ExtensionAPI) {
           }
           mode.set(true, ctx);
         }
-        pi.sendUserMessage(`<pstack-skill name=${JSON.stringify(skill.id)} source=${JSON.stringify(skill.path)}>\n${skill.body}\n</pstack-skill>\n\nUser arguments:\n${args}`);
+        const skill = assetsFor(ctx.cwd).skills.find((entry) => entry.id === id)!;
+        pi.sendUserMessage(`<pstack-skill name=${JSON.stringify(id)} source=${JSON.stringify(skill.path)}>\n${skill.body}\n</pstack-skill>\n\nUser arguments:\n${args}`);
       },
     });
   };
 
-  const syncCommands = (ui: ConflictReporter) => {
+  const syncCommands = (ctx: ExtensionContext) => {
+    const assets = assetsFor(ctx.cwd);
     syncSkillCommands(
       {
         getCommands: () => pi.getCommands(),
-        registerCommand: (name) => registerSkillCommand(skills.find((entry) => entry.id === name)!),
+        registerCommand: registerSkillCommand,
       },
-      skills,
-      ui,
+      assets.skills,
+      ctx.ui,
     );
   };
 
-  pi.on("session_start", (_event, ctx) => syncCommands(ctx.ui));
-  pi.on("session_switch", (_event, ctx) => syncCommands(ctx.ui));
+  pi.on("session_start", (_event, ctx) => syncCommands(ctx));
+  pi.on("session_switch", (_event, ctx) => syncCommands(ctx));
 }
