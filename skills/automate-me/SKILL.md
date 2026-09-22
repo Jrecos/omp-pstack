@@ -1,23 +1,28 @@
 ---
 name: automate-me
-description: "Use for \"automate me\", \"create/update/refresh my -mode skill\", \"turn/capture my preferences or working style into a skill\", or wanting agents to follow how the user works. Drafts or revises a personal -mode skill via the skill-authoring guidance + unslop, optionally pulling fresh evidence from recent chat history."
+description: "Use for \"automate me\", creating or refreshing a personal -mode skill, capturing working preferences, or turning one narrow workflow into a reusable skill. Routes mode requests through history mining and regular workflows through native OMP skill authoring."
 disable-model-invocation: true
 ---
 
 # Automate me
 
-A guided flow for turning the user's working conventions into a skill agents will follow. The output is one `-mode` skill tailored to them (e.g. `jay-mode`, `priya-mode`).
-
-This skill orchestrates three others: an inline mining pass (see step 1), the packaged OMP skill-authoring guidance (`skills/poteto-mode/references/omp-create-skill.md`; authoring), and the **unslop** skill (prose discipline). It sequences them; it doesn't replace them.
+Mode skills use the history-mining flow below. Every skill uses the packaged OMP authoring guidance (`skills/poteto-mode/references/omp-create-skill.md`) and the **unslop** skill.
 
 ## Flow
 
-### 0. Check for an existing skill
+### 0. Classify the skill and choose its root
 
-Look recursively for `-mode` skills matching the user's handle: project `.omp/skills/**/*-mode/SKILL.md` and profile `skills/**/*-mode/SKILL.md`. Mode skills can live in a personal category directory (`.omp/skills/<handle>/`), not only at the top level. If one exists, confirm intent with the user (a short structured question; skip only if they already said "update my skill" or similar):
+Classify the request before mining history.
 
-- Update the existing skill (default for repeat runs)
-- Start fresh (rare, ask why before doing it)
+- Broad working conventions, preferences, or agent behavior produce a `<handle>-mode` skill. Continue with steps 1-6.
+- One task-specific workflow produces a regular skill. Run the workflow once when possible, then author it with the packaged guidance and **unslop**. Skip steps 1-3 and the mode-only fields in step 4. Do not stop after the live run or offer to write the skill later.
+
+Read the authoring guide and execute its **Placement** section before running the workflow or searching for an existing skill. When Placement requires a question, call the structured-question tool and wait for the answer. Never infer or silently select the recommended root. A missing `.omp/skills/` or `.agents/skills/` directory is a placement choice, not a reason to stop.
+
+For a mode skill, check `<skill-root>/*-mode/SKILL.md` and the active profile's `skills/*-mode/SKILL.md` for the user's handle. Skill directories are one level below their root. If one exists, ask one structured question unless the user already requested an update:
+
+- Update the existing skill. This is the default for repeat runs.
+- Start fresh. Ask why before replacing it.
 
 Update mode changes the rest of the flow:
 - Step 1 mines only history since the skill was last edited (`git log -1 --format=%cI <path>`).
@@ -64,13 +69,12 @@ The **poteto-mode** skill shows the shape. Read it for granularity. Don't copy i
 
 ### 4. Draft the skill
 
-Follow the packaged OMP skill-authoring guidance (`skills/poteto-mode/references/omp-create-skill.md`) to author the skill. Placement:
+Follow the packaged OMP skill-authoring guidance (`skills/poteto-mode/references/omp-create-skill.md`) to author the skill. Use the root selected in step 0. A new mode lives at `<skill-root>/<handle>-mode/SKILL.md`. Preserve an existing mode's path when updating it.
 
-- Path: preserve an existing mode skill's category. For a new mode, use `.omp/skills/<handle>/<handle>-mode/SKILL.md` when the repo has an established personal category for that handle; otherwise default to `.omp/skills/<handle>-mode/SKILL.md` in the project (or the profile's `skills/<handle>-mode/` if the user prefers a personal skill). One level per skill directory, assets referenced relative to it.
 - Handle: the user's first name or chosen identifier.
 - Frontmatter `description`: trigger on their name + `/<handle>-mode` + "work in their style", not on generic keywords like "write code" or "review PR".
 - Frontmatter formatting: follow the authoring guidance's YAML rules. Keep `description` as one YAML scalar; quote it or use `description: >-` with indented continuation lines when punctuation or wrapping requires it.
-- Frontmatter `disable-model-invocation: true` by default. Mode skills are heavy and opinionated; they should only apply when the user explicitly invokes them (by name or slash command), not auto-trigger on description matching. Opt out only if the user explicitly wants their mode to apply on every turn.
+- Frontmatter `disable-model-invocation: true` by default. Mode skills are heavy and opinionated; they should only apply when the user explicitly invokes them by name or slash command. Opt out only if the user explicitly wants their mode to apply on every turn.
 
 ### 5. Iterate on prose
 
@@ -96,11 +100,6 @@ Work in a worktree off main. Commit and open a PR. Don't push to main directly.
 A `-mode` skill is subjective output. A test/iterate benchmark loop isn't useful here. Vibe-check with the user: does it read like them? Did it miss anything? Then ship.
 
 Run a description-optimization loop only if the skill's trigger accuracy turns out to be a problem in practice.
-
-## When not to use
-
-- User wants a task-specific skill (not working conventions): the authoring guidance alone, no mining required.
-- User wants to capture one narrow workflow (e.g. "how I write commit messages"): that's a regular skill, not a mode skill.
 
 ## Reference files
 
