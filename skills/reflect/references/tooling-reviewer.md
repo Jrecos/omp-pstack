@@ -32,7 +32,7 @@ Scan for:
 
 Findings must point to skills, tools, or MCPs invoked in this transcript. Speculative routings to skills the parent never opened do not count. To check whether a skill was used, scan the transcript for:
 
-- `Read` tool calls against any `SKILL.md` file (project `.omp/skills/`, user-level profile `skills/`, or plugin-installed packages)
+- `Read` tool calls against any `SKILL.md` file (project `.agents/skills/` or `.omp/skills/`, user-level profile `skills/`, or plugin-installed packages)
 - native `task` prompts that name a skill path
 - Tool calls (Shell, Grep, MCP, etc.) that match a skill's documented commands
 
