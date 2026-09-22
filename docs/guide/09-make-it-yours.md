@@ -8,7 +8,7 @@ poteto-mode is one person's style. The machinery underneath, playbooks, routing,
 /automate-me
 ```
 
-You don't describe your style, because [`/automate-me`](../../skills/automate-me/SKILL.md) reads it out of your history. It mines your recent chat history in the active workspace for repeated preferences, in how you like replies, delegation, verification, code, prose, and process, then asks you which patterns are really you. It drafts `.omp/skills/<your-name>-mode/SKILL.md` through the packaged skill-authoring guidance, runs the draft through [`/unslop`](../../skills/unslop/SKILL.md), and opens a PR from a worktree so you review it like any other change.
+You don't describe your style because [`/automate-me`](../../skills/automate-me/SKILL.md) reads it from your history. It mines recent conversations in the active workspace for repeated preferences in replies, delegation, verification, code, prose, and process. It asks which patterns are really yours. It uses the repository's existing `.agents/skills/` or `.omp/skills/` root, or asks which root to create. It drafts `<skill-root>/<your-name>-mode/SKILL.md`, applies [`/unslop`](../../skills/unslop/SKILL.md), and opens a PR from a worktree.
 
 Run it again whenever your habits drift:
 
