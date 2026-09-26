@@ -750,7 +750,7 @@
       "target": "skills/poteto-mode/playbooks/autopilot-full.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor cloud agent per PR translated to native background task agent per PR; deslop and control-surface references repointed to packaged omp references; 30-minute audit tick re-armed via native /loop 30m on the tick prompt (replacing monitored-shell sentinel and cloud-sleeper chains); trunk re-read path fixed from pstack/skills/... to skills/.... Forge/patch-id/swarm-verdict logic preserved verbatim. Integration correction: 30-minute cadence uses native background timer sentinel; /loop 30m is a duration budget, not an interval.",
+        "reason": "Cursor cloud agent per PR translated to native background task agent per PR; deslop and control-surface references repointed to packaged OMP references; 30-minute audit tick uses a native background timer sentinel because /loop 30m is a duration budget, not an interval; trunk re-read path fixed from pstack/skills/... to skills/.... Code-ready verification rounds, children.tsv tracking, merge-prep sequencing, and owner merge authorization are preserved.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -765,7 +765,7 @@
       "target": "skills/poteto-mode/playbooks/autopilot-stack.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Same translations as autopilot-full: native task agents, packaged deslop reference, native /loop 30m audit tick, corrected trunk re-read path. Owner loop, stack topology, and patch-id re-verification rules preserved verbatim. Integration correction: 30-minute cadence uses native background timer sentinel; /loop 30m is a duration budget, not an interval.",
+        "reason": "Same translations as autopilot-full: native task agents, packaged deslop reference, native background timer sentinel, and corrected trunk re-read path. Code-ready verification rounds, children.tsv tracking, stack topology, and patch-id re-verification are preserved.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -780,7 +780,7 @@
       "target": "skills/poteto-mode/playbooks/babysit.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor built-in babysit replacement clause generalized to any same-named host or user skill. watch-pr watcher resolved via the documented PSTACK_ROOT installed-root resolver (README, running the pstack CLI after install) and invoked as the stable pstack watch-pr subcommand. Cloud babysitter wording translated to background agent. Forge discrimination, frontier discipline, and untrusted-review-data rules preserved.",
+        "reason": "Cursor built-in babysit replacement clause generalized to any same-named host or user skill. watch-pr resolves through the documented PSTACK_ROOT installed-root resolver and runs as the stable pstack watch-pr subcommand. Cloud babysitter wording is translated to a background agent. The Autopilot-full owner and Autopilot-stack root exceptions resolve rebase ownership without weakening frontier discipline.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -861,7 +861,7 @@
       "target": "skills/poteto-mode/playbooks/multi-phase-plan.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Exploration uses pstack_agent role and kind resolution followed by native task with the returned prepared agent. Verification lanes use the configured swarm workers role instead of a fixed Cursor model. Isolated native task worktrees replace cloud VM boot instructions. The documented PSTACK_ROOT resolver invokes pstack check-plan, and deslop uses the packaged reference. A background timer sentinel supplies the 30-minute cadence because native /loop 30m bounds duration rather than tick interval. Plan skeleton, ten-lane verification, review gates, and appendices are preserved.",
+        "reason": "Exploration uses pstack_agent role and kind resolution followed by native task with the returned prepared agent. Verification lanes use the configured swarm workers role instead of a fixed Cursor model. Isolated native task worktrees replace cloud VM boot instructions. The documented PSTACK_ROOT resolver invokes pstack check-plan, and deslop uses the packaged reference. A background timer sentinel supplies the 30-minute cadence because native /loop 30m bounds duration rather than tick interval. Code-ready rounds, delta-only status updates, multi-lane review, and merge-prep sequencing are preserved.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -877,7 +877,7 @@
       "target": "skills/poteto-mode/playbooks/opening-a-pr.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor deslop uses the packaged OMP reference and draft handling uses a tool-neutral draft:false rule. Forge resolution, PR briefing, stack rules, and no-babysit behavior are preserved. OMP worktree safety replaces destructive reset alternatives with a fresh isolated worktree while preserving the original checkout.",
+        "reason": "Cursor deslop uses the packaged OMP reference and draft handling uses a tool-neutral draft:false rule. OMP worktree safety replaces destructive reset alternatives with a fresh isolated worktree. Autopilot owners may start their assigned babysit loop after the code-ready report; ordinary PR openers still return without babysitting.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -1528,7 +1528,7 @@
       "target": "skills/show-me-your-work/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Audit reads this run's own current-session JSONL instead of the Cursor agent-transcripts directory; cross-session/workspace glob prohibition preserved.; Cross-model reviewer translated to native task dispatch with a concrete family-difference selection against the live session model.",
+        "reason": "Audit reads this run's own current-session JSONL instead of the Cursor agent-transcripts directory; cross-session/workspace glob prohibition preserved. Cross-model review uses native task dispatch with a concrete family difference from the live session model. Upstream 0.15.5 multi-run start rows and append-only superseding audit semantics are preserved.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [

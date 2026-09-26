@@ -6,10 +6,6 @@ interface InventoryFile {
   blob: string;
   target: string;
   mode: string;
-  adaptation?: {
-    reason: string;
-    verification: { kind: string; artifacts: string[] };
-  };
 }
 
 interface Inventory {
@@ -19,23 +15,6 @@ interface Inventory {
   subtree: string;
   files: InventoryFile[];
 }
-
-const PRESERVED_0155_ADAPTATIONS: Record<string, string> = {
-  "skills/blast-radius/SKILL.md": "Retain the complete OMP instruction set instead of upstream 0.15.3 density cuts.",
-  "skills/figure-it-out/SKILL.md": "Retain the complete OMP workflow instead of upstream 0.15.3 density cuts.",
-  "skills/how/references/explorer-prompt.md": "Retain the explicit OMP exploration rubric instead of upstream 0.15.3 instruction cuts.",
-  "skills/interrogate/references/code-quality-review.md": "Retain the explicit OMP review rubric instead of upstream 0.15.3 instruction cuts.",
-  "skills/interrogate/references/reviewer-prompt.md": "Retain the explicit OMP reviewer contract instead of upstream 0.15.3 instruction cuts.",
-  "skills/interrogate/references/rubric.md": "Retain the complete OMP scoring rubric instead of upstream 0.15.3 instruction cuts.",
-  "skills/principle-guard-the-context-window/SKILL.md": "Retain the complete OMP principle guidance instead of upstream 0.15.3 density cuts.",
-  "skills/principle-never-block-on-the-human/SKILL.md": "Retain the complete OMP principle guidance instead of upstream 0.15.3 density cuts.",
-  "skills/principle-outcome-oriented-execution/SKILL.md": "Retain the complete OMP principle guidance instead of upstream 0.15.3 density cuts.",
-  "skills/principle-prove-it-works/SKILL.md": "Retain the complete OMP principle guidance instead of upstream 0.15.3 density cuts.",
-  "skills/principle-sequence-verifiable-units/SKILL.md": "Retain the complete OMP principle guidance instead of upstream 0.15.3 density cuts.",
-  "skills/tdd/SKILL.md": "Retain the complete OMP TDD workflow instead of upstream 0.15.3 instruction cuts.",
-  "skills/technical-writing/SKILL.md": "Retain the complete OMP writing workflow instead of upstream 0.15.3 instruction cuts.",
-  "skills/unslop/SKILL.md": "Retain the complete OMP prose rules instead of upstream 0.15.3 instruction cuts.",
-};
 
 const [checkoutArg, commitArg, version] = Bun.argv.slice(2);
 if (!checkoutArg || !commitArg || !version) {
@@ -68,16 +47,6 @@ for (const file of inventory.files) {
   if (!entry) throw new Error(`missing upstream source at ${commit}: ${file.source}`);
   file.mode = entry.mode;
   file.blob = entry.blob;
-  const reason = version === "0.15.5" ? PRESERVED_0155_ADAPTATIONS[file.target] : undefined;
-  if (reason && !file.adaptation) {
-    file.adaptation = {
-      reason,
-      verification: {
-        kind: "pinned-byte/link inspection",
-        artifacts: ["scripts/check-content.ts"],
-      },
-    };
-  }
 }
 const inventoried = new Set(inventory.files.map((file) => file.source));
 const omitted = [...entries.keys()].filter((source) => source.startsWith("pstack/") && !inventoried.has(source));
