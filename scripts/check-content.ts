@@ -7,9 +7,9 @@ import { dirname, join, normalize } from "node:path";
 
 const EXPECTED_HEADER = {
   repository: "https://github.com/cursor/plugins",
-  commit: "71ed0d1076fec562c1b74ee353121a8d00f75382",
-  version: "0.15.0",
-  subtree: "cf6f79b65a0608c77ab77ac8d4f22d440e96971a",
+  commit: "12d587dfb20741cafc376c42c696c5f6e2a64487",
+  version: "0.15.5",
+  subtree: "975600f2f90dc6f755d58cccdccee27f950edcd2",
 };
 
 const DIRECT_SKILLS = [
@@ -295,6 +295,27 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     artifacts: ["scripts/smoke-install.ts"],
     contract: "Bootstrap-installer removal proven by the native marketplace-install scenario succeeding without it.",
     authorizesAbsence: true,
+  },
+  {
+    id: "preserved-upstream-skill-prose",
+    pattern: /^skills\/(blast-radius|figure-it-out|tdd|technical-writing|unslop)\/SKILL\.md$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "Intentionally retained pre-0.15.3 instruction detail is verified as prose through inventory integrity and link health.",
+  },
+  {
+    id: "preserved-upstream-review-prose",
+    pattern: /^skills\/(how\/references\/explorer-prompt|interrogate\/references\/(code-quality-review|reviewer-prompt|rubric))\.md$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "Intentionally retained review and exploration detail is verified as prose through inventory integrity and link health.",
+  },
+  {
+    id: "preserved-upstream-principle-prose",
+    pattern: /^skills\/principle-(guard-the-context-window|never-block-on-the-human|outcome-oriented-execution|prove-it-works|sequence-verifiable-units)\/SKILL\.md$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "Intentionally retained principle detail is verified as prose through inventory integrity and link health.",
   },
 ];
 
@@ -896,7 +917,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "cd27bfbcebc4470553989f0f2d1831dee03770c2476d2e08cafbcd7fd8504806";
+    const pinnedDigest = "3a13c808ac3dd3c43b0e393f6c959daa7144363ecdb5c4673bdc93f15677fdd1";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }
