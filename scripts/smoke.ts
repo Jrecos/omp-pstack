@@ -118,7 +118,7 @@ try {
   await cp(join(root, "skills"), join(swapOld, "skills"), { recursive: true });
   await cp(join(root, "skills"), join(swapNew, "skills"), { recursive: true });
   await cp(join(root, "src", "extension.ts"), join(swapOld, "src", "extension.ts"));
-  for (const name of ["install.ts", "mode.ts", "history.ts", "models.ts"]) await symlink(join(root, "src", name), join(swapOld, "src", name));
+  for (const name of ["install.ts", "mode.ts", "history.ts", "models.ts", "speckit.ts"]) await symlink(join(root, "src", name), join(swapOld, "src", name));
   await symlink(swapOld, swapLink, "dir");
   const swappedFactory = (await import(`${swapLink}/src/extension.ts?pstack-swap=${Date.now()}`)).default;
   await unlink(swapLink);

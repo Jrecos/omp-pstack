@@ -6,6 +6,7 @@ import { registerMode } from "./mode.ts";
 import type { ModeAnchor } from "./mode.ts";
 import { registerHistory } from "./history.ts";
 import { registerModels } from "./models.ts";
+import { registerSpecKit } from "./speckit.ts";
 
 export const DIRECT_SKILLS = [
   "architect", "arena", "automate-me", "blast-radius", "bro", "create-verification-skill",
@@ -132,6 +133,7 @@ export default function pstack(pi: ExtensionAPI) {
   const mode = registerMode(pi, (ctx) => assetsFor(ctx.cwd).modeAnchor, modeBody);
   registerHistory(pi);
   registerModels(pi);
+  registerSpecKit(pi);
 
   // Bare commands register at session_start, the first moment the host exposes
   // the live command set. Registering during load is blind: extension command

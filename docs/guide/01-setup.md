@@ -47,4 +47,16 @@ Watch the todo list. Its first items are the matched playbook's steps copied in,
 
 From here you can type normal follow-ups. `/poteto-mode` is sticky. It stays on for the conversation until you opt out by saying so.
 
+## Opt into official Spec Kit for a Feature
+
+If you want official GitHub Spec Kit artifacts, install the pinned stable `specify-cli` version `1.0.12`. Create a separate Git worktree for one feature and initialize it from that worktree's root:
+
+```bash
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@v1.0.12
+specify init . --integration omp --non-interactive --ignore-agent-tools --script sh --force
+specify integration status --json
+```
+
+Check that status is `ok` with an empty `findings` array. Ask `/poteto-mode Build <feature> with official Spec Kit`. The Feature playbook keeps its eight steps. It chooses a new direct child of `specs/`, passes it to `pstack_speckit` as `featureDirectory` before the first writing phase, and checks official CLI-generated assets against plugin-owned hashes. Review the same bound directory after `specify`. Do not share a worktree or its `.specify/feature.json` between features. A failing check stops this opt-in run. Ordinary Feature requests do not enter the lane. See the [Spec Kit security limits and regeneration check](../../README.md#optional-official-spec-kit-feature-lane).
+
 Next: [Route work through `/poteto-mode`](./02-poteto-mode.md).

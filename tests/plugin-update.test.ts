@@ -53,7 +53,7 @@ test("a prepared extension factory survives its installed version being replaced
 		await cp(join(packageRoot, "skills"), join(oldRoot, "skills"), { recursive: true });
 		await cp(join(packageRoot, "skills"), join(newRoot, "skills"), { recursive: true });
 		await cp(join(packageRoot, "src", "extension.ts"), join(oldRoot, "src", "extension.ts"));
-		for (const name of ["install.ts", "mode.ts", "history.ts", "models.ts"]) {
+		for (const name of ["install.ts", "mode.ts", "history.ts", "models.ts", "speckit.ts"]) {
 			await symlink(join(packageRoot, "src", name), join(oldRoot, "src", name));
 		}
 		await symlink(oldRoot, runtimeLink, "dir");
