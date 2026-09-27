@@ -112,8 +112,12 @@ function restoreEnv(saved: Array<readonly [string, string | undefined]>): void {
 	}
 }
 
+interface OmpProfileIsolation {
+	restore(): void;
+}
+
 /** Redirect OMP's profile writes into a temp home so setupBenny's plugin install cannot touch the user profile. */
-function isolateOmpProfile(): { restore(): void } {
+function isolateOmpProfile(): OmpProfileIsolation {
 	const saved = saveEnv();
 	const home = mkdtempSync(join(tmpdir(), "benny-omp-home-"));
 	process.env.HOME = home;
@@ -524,6 +528,7 @@ test("benny enabled gate: default-disabled 0600 state, canary bound to exact con
 	const saved = saveEnv();
 	const shimDir = mkdtempSync(join(tmpdir(), "benny-shim-"));
 	const root = tempRoot("enable");
+	let isolation: OmpProfileIsolation | undefined;
 	try {
 		const target = join(root, "repo");
 		mkdirSync(join(target, ".omp", "benny"), { recursive: true });
@@ -538,13 +543,8 @@ test("benny enabled gate: default-disabled 0600 state, canary bound to exact con
 		writeFileSync(join(target, "tracker-adapter.ts"), 'export default { name: "test-adapter" };\n');
 		writeFileSync(join(target, "control-adapter.mjs"), "export default {};\n");
 
-		// Copy the real pack with OMP writes isolated from the user profile.
-		const isolation = isolateOmpProfile();
-		try {
-			await setupBenny(target);
-		} finally {
-			isolation.restore();
-		}
+		isolation = isolateOmpProfile();
+		await setupBenny(target);
 		commitAll(target, "init");
 
 		// Fake `docker` gate: preflight needs an inspectable workspace image
@@ -624,6 +624,7 @@ test("benny enabled gate: default-disabled 0600 state, canary bound to exact con
 		commitAll(target, "retighten poll");
 		await expect(setBennyEnabled(configPath, true, { registry: fakeRegistry() })).rejects.toThrow(/no passing canary/);
 	} finally {
+		isolation?.restore();
 		restoreEnv(saved);
 		rmSync(shimDir, { recursive: true, force: true });
 		rmSync(root, { recursive: true, force: true });
@@ -659,6 +660,7 @@ test("benny disable is unconditional: flips enabled state before any config load
 test("benny setup: preserves destination-only files, reports differing managed files, never enables", async () => {
 	const saved = saveEnv();
 	const root = tempRoot("setup");
+	let isolation: OmpProfileIsolation | undefined;
 	try {
 		const target = join(root, "repo");
 		mkdirSync(target, { recursive: true });
@@ -668,13 +670,8 @@ test("benny setup: preserves destination-only files, reports differing managed f
 		writeFileSync(join(dest, "README.md"), "# local destination override\n");
 		writeFileSync(join(dest, "EXTRA-local-only.md"), "destination-only file\n");
 
-		const isolation = isolateOmpProfile();
-		let result: SetupResult;
-		try {
-			result = await setupBenny(target);
-		} finally {
-			isolation.restore();
-		}
+		isolation = isolateOmpProfile();
+		const result: SetupResult = await setupBenny(target);
 
 		const packCount = countFiles(join(import.meta.dir, "..", "automations", "benny"));
 		expect(result.copied.length).toBe(packCount - 1);
@@ -694,6 +691,7 @@ test("benny setup: preserves destination-only files, reports differing managed f
 		// Setup never flips the private enabled state.
 		expect(readBennyState(target)).toBeUndefined();
 	} finally {
+		isolation?.restore();
 		restoreEnv(saved);
 		rmSync(root, { recursive: true, force: true });
 	}

@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { getAgentDir, Settings, type ExtensionAPI } from "@oh-my-pi/pi-coding-agent";
 import { resolveConfiguredModelPatterns } from "@oh-my-pi/pi-coding-agent/config/model-resolver";
 import { discoverAgents } from "@oh-my-pi/pi-coding-agent/task/discovery";
+import { cfgTaskAgentModelOverrides } from "@oh-my-pi/pi-coding-agent/task/settings";
 import type { ConfiguredThinkingLevel } from "@oh-my-pi/pi-tui/render/render-utils";
 
 // ─── Role vocabulary (exact upstream setup-pstack step-5 table) ─────────────
@@ -560,7 +561,7 @@ export function conflictingAgentModelOverrides(
 
 async function assertNoOverrides(paths: Paths, cwd: string | undefined, names: Iterable<string>): Promise<void> {
 	const settings = await Settings.loadReadOnly(cwd ? { cwd } : {});
-	const overrides = settings.get("task.agentModelOverrides");
+	const overrides = cfgTaskAgentModelOverrides.get(settings);
 	const conflict = conflictingAgentModelOverrides(overrides, names, settings);
 	if (conflict) {
 		throw new Error(`Settings task.agentModelOverrides["${conflict.agent}"] = "${conflict.value}" conflicts with the generated P Stack agent template. Remove that override (it would silently diverge from the role configuration), then save again.`);
