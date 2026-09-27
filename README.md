@@ -79,6 +79,24 @@ that's it. the other skills are situational; the mode skill uses them for you as
 
 use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) at the start of a task. it reads your request, picks from a set of playbooks, and runs the other skills as the steps need them.
 
+### optional official Spec Kit Feature lane
+
+Use this lane only for a Feature request that explicitly asks for official GitHub Spec Kit. Install the pinned stable `specify-cli` **1.0.12** release and initialize a fresh, separate Git worktree from its root:
+
+```bash
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@v1.0.12
+specify init . --integration omp --non-interactive --ignore-agent-tools --script sh --force
+specify integration status --json
+```
+
+The status must be `ok` with no findings. Then ask `/poteto-mode Build <feature> with official Spec Kit`. P Stack keeps its eight Feature steps and configured model roles. Its read-only `pstack_speckit` tool checks the installed CLI, OMP command source and rendered arguments, and plugin-owned SHA-256 pins for official commands, Bash scripts, and templates. It returns one phase's instructions without executing them. It does not register `/speckit.*` commands, run a workflow, or select a separate model. The feature spec, plan, quickstart, and tasks remain official CLI-generated OMP artifacts.
+
+The pin covers the files that supply phase instructions or executable shell behavior. `.specify/init-options.json`, `.specify/.gitignore`, and `.specify/workflows/` are not pinned because this lane supplies the feature directory explicitly, does not execute workflow YAML, and does not treat ignore rules as authority. Custom presets, template overrides, and extensions are rejected rather than trusted.
+
+The tool also refuses active or malformed `.specify/extensions.yml` hooks, unsafe feature paths, symlinks, status warnings, shared checkouts, and missing official assets. Choose a new direct child of `specs/` and pass it as `featureDirectory` even for the first `specify` phase. Do not put `SPECIFY_FEATURE_DIRECTORY` inside any phase argument. Keep one feature binding per worktree. Review `.specify/feature.json` against the original request and pass the same canonical directory to each later phase. The check does not sandbox another process that mutates files concurrently. If any gate fails, stop this opted-in run rather than switching to ordinary Feature.
+
+Run `bun run check:speckit-assets` when reviewing a CLI pin change. This regenerates a clean official fixture and checks immutable plugin-owned hashes without repinning them. Review upstream source before changing a pin. For completion, inspect `quickstart.md` before execution and observe a real product effect. Generated files and exit status alone do not prove the Feature works.
+
 ### just use [`/poteto-mode`](./skills/poteto-mode/SKILL.md)
 
 this skill is the main shortcut for rigorous engineering work. it comes with twenty-three playbooks:

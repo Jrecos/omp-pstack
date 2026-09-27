@@ -12,6 +12,7 @@
     "test": "bun test",
     "typecheck": "tsc --noEmit",
     "check:content": "bun scripts/check-content.ts",
+    "check:speckit-assets": "bun scripts/check-speckit-assets.ts",
     "smoke": "bun scripts/smoke.ts",
     "pstack:orch": "bun skills/poteto-mode/scripts/orch/orch.ts",
     "pstack:watch-pr": "bun skills/poteto-mode/scripts/watch-pr/watch-pr",

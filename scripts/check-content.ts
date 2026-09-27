@@ -231,8 +231,15 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     contract: "The Verify-live template wording this playbook ships is enforced by the check-plan suite; remaining prose is link/asset checked.",
   },
   {
+    id: "official-speckit-feature",
+    pattern: /^skills\/poteto-mode\/playbooks\/feature\.md$/,
+    kind: "omp/cli scenario",
+    artifacts: ["scripts/check-speckit-assets.ts", "tests/speckit.test.ts"],
+    contract: "The optional official Feature lane is checked against regenerated CLI assets and exercised through SDK-rendered phase handoffs and hostile repository fixtures. It does not claim a model-driven end-to-end Feature run.",
+  },
+  {
     id: "playbook-prose",
-    pattern: /^skills\/poteto-mode\/playbooks\/(?!multi-phase-plan\.md$)[a-z-]+\.md$/,
+    pattern: /^skills\/poteto-mode\/playbooks\/(?!(?:multi-phase-plan|feature)\.md$)[a-z-]+\.md$/,
     kind: "pinned-byte/link inspection",
     artifacts: ["scripts/check-content.ts"],
     contract: "Playbook host translations are instructions, never executed as a unit; the honest claim is link/asset health and inventory integrity.",
@@ -896,7 +903,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "cd27bfbcebc4470553989f0f2d1831dee03770c2476d2e08cafbcd7fd8504806";
+    const pinnedDigest = "aff14dd393cc6795f418c2a41e42469d966ad683cab15ea06c66bac7882a8f5d";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }
