@@ -329,7 +329,7 @@ function installedPackageIdentityCheck(target: string, packageRoot: string): Pre
 }
 
 function spawn(argv: string[], cwd: string): { ok: boolean; stdout: string; stderr: string } {
-	const proc = Bun.spawnSync(argv, { cwd, stdout: "pipe", stderr: "pipe" });
+	const proc = Bun.spawnSync(argv, { cwd, env: process.env, stdout: "pipe", stderr: "pipe" });
 	return {
 		ok: proc.exitCode === 0,
 		stdout: proc.stdout.toString().trim(),

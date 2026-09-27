@@ -23,6 +23,8 @@ omp plugin marketplace add https://github.com/Jrecos/omp-pstack
 omp plugin install omp-pstack@omp-pstack
 ```
 
+Use OMP 18.3.4 with this checkout. The pinned SDK uses the 18.3.4 settings registry for model-role dispatch.
+
 ### running the `pstack` CLI after install
 
 the helper commands (`orch`, `watch-pr`, `check-plan`, `worktree-audit`, `log`, plus the `routine` and `benny` commands documented below) live in the installed package. invoke them through the installed root, whatever scope you installed in:
