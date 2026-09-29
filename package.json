@@ -14,6 +14,7 @@
     "check:content": "bun scripts/check-content.ts",
     "check:speckit-assets": "bun scripts/check-speckit-assets.ts",
     "smoke": "bun scripts/smoke.ts",
+    "smoke:workflow": "bun scripts/smoke-workflow-guidance.ts",
     "pstack:orch": "bun skills/poteto-mode/scripts/orch/orch.ts",
     "pstack:watch-pr": "bun skills/poteto-mode/scripts/watch-pr/watch-pr",
     "pstack:check-plan": "bun skills/poteto-mode/scripts/check-plan.mjs",
