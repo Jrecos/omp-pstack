@@ -28,6 +28,6 @@ After these sections, attach videos or screenshots when they prove a claim. Do n
 
 **Readiness.** Open every PR ready, never as a draft. With Origin, pass `--status open`; with `gh`, omit `--draft`. Creation tools that default to draft get `draft: false` on every call. If a PR still opens as a draft, run `origin pr ready <number>` or `gh pr ready <number>` according to the resolved forge. Run `origin pr view <number>` or `gh pr view <number>` before you refer to PR status.
 
-**Babysit.** Opening a PR does not start a babysit. Post the URL and keep building. Finish the phase or stack first. Run a separate babysit pass only when the user asks for one after the whole stack exists. A babysit for each new PR stalls the build and spends checks on commits that later waves restart. Push back when feedback drifts from intent.
+**Babysit.** Opening a PR does not by itself start a babysit. Post the URL and keep building. Outside Autopilot, finish the phase or stack first and run a separate babysit pass only when the user asks for one after the whole stack exists. A babysit for each new PR stalls the build and spends checks on commits that later waves restart. Push back when feedback drifts from intent.
 
-A subagent that opens a PR runs `interrogate`, the packaged deslop checklist (`../references/omp-deslop.md`), and `/no-comments`. It returns the URL and does not babysit. Return to the parent.
+A subagent that opens a PR runs `interrogate`, the packaged deslop checklist (`../references/omp-deslop.md`), and `/no-comments`. It returns the URL without babysitting and returns to the parent. An Autopilot-full or Autopilot-stack owner instead reports code-ready and babysits its own PR as its owner brief requires.

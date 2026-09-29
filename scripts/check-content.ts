@@ -101,8 +101,8 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     id: "package-metadata",
     pattern: /^package\.json$/,
     kind: "omp/cli scenario",
-    artifacts: ["scripts/smoke-install.ts"],
-    contract: "Root OMP package metadata proven by a real marketplace install with native skill/agent discovery from the installed package.",
+    artifacts: ["scripts/smoke-install.ts", "scripts/smoke-workflow-guidance.ts"],
+    contract: "Root OMP package metadata is covered by marketplace installation and native discovery. The smoke:workflow command runs checkout-bound read-only OMP guidance sessions; it does not run live PRs.",
   },
   {
     id: "runtime-state-ignore",
@@ -197,10 +197,17 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
   },
   {
     id: "history-skill",
-    pattern: /^skills\/(automate-me|recall|show-me-your-work)\/SKILL\.md$/,
+    pattern: /^skills\/(automate-me|recall)\/SKILL\.md$/,
     kind: "omp/cli scenario",
     artifacts: ["tests/history.test.ts", "scripts/smoke-models.ts"],
     contract: "History-backed translations proven by the pstack_history workspace/window/exclusion/citation suite; reviewer-dispatch claims additionally by the resolved-model fan-out scenario.",
+  },
+  {
+    id: "decision-log-guidance",
+    pattern: /^skills\/show-me-your-work\/SKILL\.md$/,
+    kind: "omp/cli scenario",
+    artifacts: ["tests/history.test.ts", "scripts/smoke-models.ts", "scripts/smoke-workflow-guidance.ts"],
+    contract: "Existing history and reviewer-dispatch scenarios cover host translations. A checkout-bound read-only OMP session exercises the append-only decision and run-boundary guidance; it does not conduct a live transcript audit.",
   },
   {
     id: "routine-skill",
@@ -238,8 +245,15 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     contract: "The optional official Feature lane is checked against regenerated CLI assets and exercised through SDK-rendered phase handoffs and hostile repository fixtures. It does not claim a model-driven end-to-end Feature run.",
   },
   {
+    id: "autopilot-guidance",
+    pattern: /^skills\/poteto-mode\/playbooks\/(autopilot-full|autopilot-stack|babysit|opening-a-pr)\.md$/,
+    kind: "omp/cli scenario",
+    artifacts: ["scripts/check-content.ts", "scripts/smoke-workflow-guidance.ts"],
+    contract: "Checkout-bound read-only OMP sessions exercise code-ready verification rounds and the owner's babysit/rebase decisions. The content checker validates links; no live forge PR or merge is exercised.",
+  },
+  {
     id: "playbook-prose",
-    pattern: /^skills\/poteto-mode\/playbooks\/(?!(?:multi-phase-plan|feature)\.md$)[a-z-]+\.md$/,
+    pattern: /^skills\/poteto-mode\/playbooks\/(?!(?:multi-phase-plan|feature|autopilot-full|autopilot-stack|babysit|opening-a-pr)\.md$)[a-z-]+\.md$/,
     kind: "pinned-byte/link inspection",
     artifacts: ["scripts/check-content.ts"],
     contract: "Playbook host translations are instructions, never executed as a unit; the honest claim is link/asset health and inventory integrity.",
@@ -903,7 +917,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "aff14dd393cc6795f418c2a41e42469d966ad683cab15ea06c66bac7882a8f5d";
+    const pinnedDigest = "6dcb16397a7efca68fd3f849a3287235e6534103f69f3ead32e3432948bc9951";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }
