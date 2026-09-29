@@ -498,7 +498,7 @@ function stageAgent(paths: Paths, kind: AgentKind, selector: string | undefined,
 
 
 /** A hard link publishes complete bytes without replacing a concurrent writer. */
-function commitStaged(paths: Paths, staged: Map<string, string>): void {
+function commitStaged(paths: Paths, staged: Map<string, string>, prune: boolean): void {
 	mkdirSync(paths.agentsDir, { recursive: true });
 	for (const [name, content] of staged) {
 		const tmp = join(paths.agentsDir, `.${name}.${randomBytes(4).toString("hex")}.tmp`);
@@ -510,9 +510,7 @@ function commitStaged(paths: Paths, staged: Map<string, string>): void {
 			}
 		} finally { unlinkSync(tmp); }
 	}
-	// The staged map is the complete desired set; sweep profiles this plugin
-	// owns (prefix match) but no longer stages. Foreign agent files never match
-	// the prefix and are never touched.
+	if (!prune) return;
 	let stale: string[] = [];
 	try {
 		stale = readdirSync(paths.agentsDir).filter((name) => name.startsWith("omp-pstack-") && name.endsWith(".md"));
@@ -677,7 +675,7 @@ export async function saveRoles(
 	}
 
 	await assertNoOverrides(paths, cwd, names);
-	commitStaged(paths, staged);
+	commitStaged(paths, staged, true);
 	writeRuleAtomic(paths, serializeConfig({ exists: true, roles: canonicalRoles, pool: approvedPool, preamble: existing.preamble, postamble: existing.postamble }));
 	return { rulePath: paths.rulePath, agents, confirmed };
 }
@@ -709,7 +707,7 @@ export async function prepareModels(
 		}
 	}
 	await assertNoOverrides(paths, cwd, names);
-	commitStaged(paths, staged);
+	commitStaged(paths, staged, false);
 	return { agents };
 }
 
