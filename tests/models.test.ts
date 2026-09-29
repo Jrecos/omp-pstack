@@ -544,6 +544,16 @@ test("prepareModels enforces an existing pool but keeps the no-config explicit p
 	expect(third.agents.every((agent) => agent.status === "created")).toBe(true);
 });
 
+test("preparing one model preserves configured roles and earlier per-arm agents", async () => {
+	const paths = freshPaths();
+	const query = fakeQuery();
+	await saveRoles(allRoles("openai-codex/gpt-6-astra:high"), query, paths, undefined, ["openai-codex/gpt-6-astra", "openai-codex/gpt-5.4-mini"]);
+	await prepareModels(["openai-codex/gpt-5.4-mini"], query, paths);
+	expect(resolveRoleAgent({ role: "how explorer" }, query, paths).model).toBe("openai-codex/gpt-6-astra:high");
+	await prepareModels(["openai-codex/gpt-6-astra:high"], query, paths);
+	expect(resolveRoleAgent({ role: "bug-fix", model: "openai-codex/gpt-5.4-mini" }, query, paths).model).toBe("openai-codex/gpt-5.4-mini");
+});
+
 test("alias tokens are permitted only when the pool explicitly opts in", async () => {
 	const poolNoAlias = ["openai-codex/gpt-6-astra"];
 	const paths = freshPaths();
