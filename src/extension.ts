@@ -11,7 +11,7 @@ import { registerSpecKit } from "./speckit.ts";
 export const DIRECT_SKILLS = [
   "architect", "arena", "automate-me", "blast-radius", "bro", "create-verification-skill",
   "figure-it-out", "how", "interrogate", "maintain-verification-skill", "make-bot-ui", "no-comments",
-  "poteto-mode", "recall", "reflect", "setup-pstack", "show-me-your-work", "swarm", "tdd", "teach",
+  "poteto-mode", "recall", "reflect", "session-review", "setup-pstack", "show-me-your-work", "swarm", "tdd", "teach",
   "technical-writing", "typescript-best-practices", "unslop", "why",
 ] as const;
 
@@ -145,6 +145,10 @@ export default function pstack(pi: ExtensionAPI) {
     pi.registerCommand(id, {
       description: commandDescription(id),
       async handler(args, ctx) {
+        if (id === "session-review" && !/^(?:0*[1-9]\d*(?:\s+--plugin-report)?|--plugin-report(?:\s+0*[1-9]\d*)?)?$/.test(args.trim())) {
+          ctx.ui.notify("Usage: /session-review [positive integer] [--plugin-report]", "error");
+          return;
+        }
         if (id === "poteto-mode") {
           if (args.trim() === "off" || args.trim() === "status") {
             const active = args.trim() === "off" ? mode.set(false, ctx) : mode.status(ctx);
