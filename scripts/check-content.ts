@@ -16,7 +16,7 @@ const DIRECT_SKILLS = [
   "architect", "arena", "automate-me", "blast-radius", "bro",
   "create-verification-skill", "figure-it-out", "how", "interrogate",
   "maintain-verification-skill", "make-bot-ui", "no-comments", "poteto-mode",
-  "recall", "reflect", "setup-pstack", "show-me-your-work", "swarm", "tdd",
+  "recall", "reflect", "session-review", "setup-pstack", "show-me-your-work", "swarm", "tdd",
   "teach", "technical-writing", "typescript-best-practices", "unslop", "why",
 ];
 

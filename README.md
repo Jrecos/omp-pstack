@@ -176,6 +176,7 @@ the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/po
 | [`/how`](./skills/how/SKILL.md) | you want a walkthrough of how a subsystem works. |
 | [`/why`](./skills/why/SKILL.md) | you want to know why something was built this way. discovers available MCPs at run time and queries each evidence category in parallel (source control, issue tracker, long-form docs, real-time chat, infra observability, error tracking, analytics warehouse). |
 | [`/recall`](./skills/recall/SKILL.md) | you're starting or resuming work and want your recent context on a topic rebuilt from your own chat history and the shared record, handed back as a tight current-state brief. |
+| [`/session-review`](./skills/session-review/SKILL.md) | you want a read-only review of the last N workspace sessions to find supported navigation, setup, or documentation improvements. |
 | [`/blast-radius`](./skills/blast-radius/SKILL.md) | you have a small-looking change and want to know what else it could break, with the one fact it's safe because of proven by running code, not asserted. |
 | [`/architect`](./skills/architect/SKILL.md) | you're about to write code that crosses a function boundary and want the caller's usage, types, and module shape settled first. |
 | [`/arena`](./skills/arena/SKILL.md) | you want N parallel attempts at the same thing, then to grab the best parts of each. |
@@ -198,6 +199,12 @@ the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/po
 | [`/technical-writing`](./skills/technical-writing/SKILL.md) | layered doc standard (Diátaxis + Google developer style + STE + Global English) for docs, RFCs, readmes, PR descriptions, commit messages. |
 
 </details>
+
+`/session-review` reviews the last 10 sessions in the current workspace. Use `/session-review 25` to select the last 25, or `/session-review 25 --plugin-report` to add a separate, sanitized plugin-feedback section. The bare command rejects invalid counts and flags locally before dispatching a model turn. The `/skill:session-review` alternative is prompt-driven and has no host-side argument gate. The review uses the full available history window, not only the last seven days, and never edits the repository or sends a report elsewhere. Results appear in chat unless you explicitly request a private saved copy.
+
+The repository report names the selected sessions and cites entry IDs for supported findings, recoveries, and counterexamples. It checks relevant current files before suggesting a small change. Fewer available sessions, unreadable records, partial history, and uncertain causes stay visible in the coverage and limits. The optional plugin section is written to stand alone without session IDs, private paths, or transcript excerpts; inspect it yourself before sharing. History lives locally, but the configured model and provider process the selected content through your normal account. The history reader does not supply exact timing, cost, or full subagent traces.
+
+Maintainers can exercise the command with `PSTACK_SMOKE_MODEL=<authenticated-selector> bun scripts/smoke-session-review.ts`. The smoke uses synthetic sessions in a disposable profile and records the observed reports in `proofs/session-review.json`.
 
 
 
