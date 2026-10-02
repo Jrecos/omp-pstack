@@ -157,7 +157,7 @@ the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/po
 
 ## skills
 
-[`/poteto-mode`](./skills/poteto-mode/SKILL.md) runs most of these for you when a step needs them (`how`, `why`, `architect`, `arena`, `swarm`, `interrogate`, `unslop`, `no-comments`, `technical-writing`, `tdd`, and the principles). the table below is for when you want one directly:
+[`/poteto-mode`](./skills/poteto-mode/SKILL.md) runs most supporting skills for you when a step needs them. Invoke a direct workflow skill when you want that specific behavior:
 
 ```
 /how do we cancel runs? do we have an n+1 when we look up every run to cancel?
@@ -167,38 +167,7 @@ the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/po
 /interrogate review this pr.
 ```
 
-<details>
-<summary>all skills</summary>
-
-| skill | use it when |
-|---|---|
-| [`/poteto-mode`](./skills/poteto-mode/SKILL.md) | default entry point for any non-trivial task. |
-| [`/how`](./skills/how/SKILL.md) | you want a walkthrough of how a subsystem works. |
-| [`/why`](./skills/why/SKILL.md) | you want to know why something was built this way. discovers available MCPs at run time and queries each evidence category in parallel (source control, issue tracker, long-form docs, real-time chat, infra observability, error tracking, analytics warehouse). |
-| [`/recall`](./skills/recall/SKILL.md) | you're starting or resuming work and want your recent context on a topic rebuilt from your own chat history and the shared record, handed back as a tight current-state brief. |
-| [`/session-review`](./skills/session-review/SKILL.md) | you want a read-only review of the last N workspace sessions to find supported navigation, setup, or documentation improvements. |
-| [`/blast-radius`](./skills/blast-radius/SKILL.md) | you have a small-looking change and want to know what else it could break, with the one fact it's safe because of proven by running code, not asserted. |
-| [`/architect`](./skills/architect/SKILL.md) | you're about to write code that crosses a function boundary and want the caller's usage, types, and module shape settled first. |
-| [`/arena`](./skills/arena/SKILL.md) | you want N parallel attempts at the same thing, then to grab the best parts of each. |
-| [`/swarm`](./skills/swarm/SKILL.md) | you want N parallel workers across different slices or races, then one aggregated report. |
-| [`/interrogate`](./skills/interrogate/SKILL.md) | you have a diff and want several different models to try to break it, including a strict code-quality lens. |
-| [`/automate-me`](./skills/automate-me/SKILL.md) | you want your own `-mode` skill, drafted from how you've actually worked. |
-| [`/make-bot-ui`](./skills/make-bot-ui/SKILL.md) | you want a page or dashboard whose buttons wake a Grok Bot over a webhook, including the sender-key handoff and Tailscale. |
-| [`/setup-pstack`](./skills/setup-pstack/SKILL.md) | you want to pick which models pstack uses per role. detects your models, takes the approved pool, recommends the role map, and writes a config rule. |
-| [`/reflect`](./skills/reflect/SKILL.md) | a long task landed and you want the recipe captured as a skill edit. |
-| [`/teach`](./skills/teach/SKILL.md) | you want to actually understand a change or subsystem, not just have it summarized. runs how + why and weaves one plain explanation, built up diagram by diagram. |
-| [`/tdd`](./skills/tdd/SKILL.md) | you're fixing a bug and there's a cheap local test path. write the failing test first, then the fix. |
-| [`/no-comments`](./skills/no-comments/SKILL.md) | strip comments before review; spawns Comment Sicko, fixes accepted findings, offers encodings for claimed constraints. |
-| [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
-| [`/figure-it-out`](./skills/figure-it-out/SKILL.md) | no bundled playbook fits. designs a rigorous, auditable playbook for the task. |
-| [`/show-me-your-work`](./skills/show-me-your-work/SKILL.md) | you want a reviewable decision trail. logs decisions to a tsv you can commit. |
-| [`/create-verification-skill`](./skills/create-verification-skill/SKILL.md) | your project has no scripted way to prove app behavior. generates a project-local verify skill with a feature map, for any language or platform. |
-| [`/maintain-verification-skill`](./skills/maintain-verification-skill/SKILL.md) | your verify skill's feature map has drifted from the app. source wave + one live pass, at most one PR of proven corrections. |
-| [`/unslop`](./skills/unslop/SKILL.md) | you're cleaning up writing. removes AI tells. |
-| [`/bro`](./skills/bro/SKILL.md) | you want the last message restated in plain human language, no jargon. |
-| [`/technical-writing`](./skills/technical-writing/SKILL.md) | layered doc standard (Diátaxis + Google developer style + STE + Global English) for docs, RFCs, readmes, PR descriptions, commit messages. |
-
-</details>
+The [complete skills reference](./docs/guide/skills.md) lists all 48 discoverable skills with their purposes and source files. It separates 25 direct workflow skills from 23 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 48.
 
 `/session-review` reviews the last 10 sessions in the current workspace. Use `/session-review 25` to select the last 25, or `/session-review 25 --plugin-report` to add a separate, sanitized plugin-feedback section. The bare command rejects invalid counts and flags locally before dispatching a model turn. The `/skill:session-review` alternative is prompt-driven and has no host-side argument gate. The review uses the full available history window, not only the last seven days, and never edits the repository or sends a report elsewhere. Results appear in chat unless you explicitly request a private saved copy.
 
