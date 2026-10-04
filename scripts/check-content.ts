@@ -115,8 +115,8 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     id: "install-readme",
     pattern: /^README\.md$/,
     kind: "omp/cli scenario",
-    artifacts: ["scripts/smoke-install.ts"],
-    contract: "Translated install instructions proven by executing the actual marketplace add/install path they describe.",
+    artifacts: ["scripts/smoke-install.ts", "scripts/smoke-memory-context.ts"],
+    contract: "Translated install instructions proven by executing the actual marketplace add/install path they describe. README-documented memory consultation is exercised by the authenticated SDK smoke with controlled memories and primary fixture evidence.",
   },
   {
     id: "native-agent-dispatch",
@@ -185,8 +185,8 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     id: "mode-skill",
     pattern: /^skills\/poteto-mode\/SKILL\.md$/,
     kind: "omp/cli scenario",
-    artifacts: ["scripts/smoke.ts"],
-    contract: "Mode skill translation proven by the real SDK session scenario: injection exactly once, native skill-prompt activation, branch replay, compaction/resume retention, opt-out.",
+    artifacts: ["scripts/smoke.ts", "scripts/smoke-memory-context.ts"],
+    contract: "Mode skill translation proven by the real SDK session scenario: injection exactly once, native skill-prompt activation, branch replay, compaction/resume retention, opt-out. The authenticated memory-context smoke exercises consultation and corroboration against controlled primary fixture evidence.",
   },
   {
     id: "model-dispatch-skill",
@@ -917,7 +917,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "6dcb16397a7efca68fd3f849a3287235e6534103f69f3ead32e3432948bc9951";
+    const pinnedDigest = "80621e13a305f182de34c38d41e604acb4b7565f9957577903b069edb5487818";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

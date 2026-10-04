@@ -33,7 +33,7 @@ describe("check-content inventory target presence", () => {
 			const source = `pstack/${PRESENT_TARGET}`;
 			const found = await checkFileEntry(
 				root,
-				adaptedEntry(source, PRESENT_TARGET, { kind: "omp/cli scenario", artifacts: ["scripts/smoke.ts"] }),
+				adaptedEntry(source, PRESENT_TARGET, { kind: "omp/cli scenario", artifacts: ["scripts/smoke.ts", "scripts/smoke-memory-context.ts"] }),
 			);
 			expect(found).toEqual([
 				`${source}: upstream file missing at target ${PRESENT_TARGET} and no removal schema authorizes an adapted row's absence`,
@@ -60,15 +60,15 @@ describe("check-content inventory target presence", () => {
 	test("a present adapted target validates normally", async () => {
 		const root = await mkdtemp(join(tmpdir(), "check-content-present-"));
 		try {
-			// The target file and its canonical verification artifact both exist.
 			await mkdir(join(root, "skills", "poteto-mode"), { recursive: true });
 			await writeFile(join(root, PRESENT_TARGET), "# adapted\n");
 			await mkdir(join(root, "scripts"), { recursive: true });
-			await writeFile(join(root, "scripts", "smoke.ts"), "// scenario\n");
+			await writeFile(join(root, "scripts", "smoke.ts"), "");
+			await writeFile(join(root, "scripts", "smoke-memory-context.ts"), "");
 			const source = `pstack/${PRESENT_TARGET}`;
 			const found = await checkFileEntry(
 				root,
-				adaptedEntry(source, PRESENT_TARGET, { kind: "omp/cli scenario", artifacts: ["scripts/smoke.ts"] }),
+				adaptedEntry(source, PRESENT_TARGET, { kind: "omp/cli scenario", artifacts: ["scripts/smoke.ts", "scripts/smoke-memory-context.ts"] }),
 			);
 			expect(found).toEqual([]);
 		} finally {
