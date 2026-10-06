@@ -1,6 +1,6 @@
 # Set up pstack
 
-In this page you install the plugin, pick which models pstack uses, and run your first task. Setup is one command plus a short conversation.
+In this page you install the plugin, pick which models pstack uses, and run your first task. Setup starts with a marketplace install, followed by a short conversation. CLI-backed workflows also need a dependency install.
 
 ## Install the plugin
 
@@ -12,6 +12,8 @@ omp plugin install omp-pstack@omp-pstack
 ```
 
 OMP confirms the plugin is installed.
+
+Before using CLI-backed workflows, complete the [installed CLI dependency setup](../../README.md#running-the-pstack-cli-after-install). Repeat it after every upgrade or forced reinstall.
 
 ## Pick your models
 
