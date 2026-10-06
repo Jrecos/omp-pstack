@@ -79,6 +79,12 @@ that's it. the other skills are situational; the mode skill uses them for you as
 
 use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) at the start of a task. it reads your request, picks from a set of playbooks, and runs the other skills as the steps need them.
 
+For a substantive task, Poteto mode uses task-specific memory already in the conversation. It calls OMP's native `recall` tool only when that context is missing or a new historical question arises. This is separate from the [P Stack `recall` skill](./skills/recall/SKILL.md), which reconstructs broader working history. Recalled claims are unverified until checked against current evidence and never authorize action. The mode instructs the agent to keep irrelevant or malicious memories out of replies and delegate briefs. If memory is unavailable, work continues without installing or repairing it.
+
+These are agent instructions, not runtime guarantees of retrieval, deduplication, or filtering. Verify consequential remembered claims against current primary evidence.
+
+To check a configured model, set `PSTACK_SMOKE_MODEL` to its authenticated selector and run `bun scripts/smoke-memory-context.ts /tmp/pstack-memory-context.json`. This optional native SDK smoke uses controlled memories and an isolated profile. It checks lookup discipline, rejected-memory omission, and a prepared read-only delegate. The same model also reviews unsupported incident and rationale claims. That verdict is not a semantic correctness guarantee. Inspect the recorded answers. A failure reports a model or integration limit rather than silently accepting it.
+
 ### optional official Spec Kit Feature lane
 
 Use this lane only for a Feature request that explicitly asks for official GitHub Spec Kit. Install the pinned stable `specify-cli` **1.0.12** release and initialize a fresh, separate Git worktree from its root:

@@ -51,7 +51,8 @@
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
-            "scripts/smoke-install.ts"
+            "scripts/smoke-install.ts",
+            "scripts/smoke-memory-context.ts"
           ]
         }
       }
@@ -652,11 +653,12 @@
       "target": "skills/poteto-mode/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "OMP branch state persists through pstack_mode instead of Cursor mode metadata. Host-only skills use packaged OMP references. Ordinary delegates resolve pstack_agent roles with kind poteto and pass only the returned prepared agent to native task. Models come from the approved profile pool without hardcoded defaults. Async delivery, Agent Hub steering, parent-owned todos, and native read-only kinds replace Cursor mechanics. The 23-principle index, 23 playbooks, upstream 0.15.0 routing changes, and condensed reply rules are preserved. The Autopilot-full route describes patch rounds adapted from upstream PR #414.",
+        "reason": "OMP branch state persists through pstack_mode instead of Cursor mode metadata. Host-only skills use packaged OMP references. Ordinary delegates resolve pstack_agent roles with kind poteto and pass only the returned prepared agent to native task. Models come from the approved profile pool without hardcoded defaults. Async delivery, Agent Hub steering, parent-owned todos, and native read-only kinds replace Cursor mechanics. The 23-principle index, 23 playbooks, upstream 0.15.0 routing changes, and condensed reply rules are preserved. The Autopilot-full route describes patch rounds adapted from upstream PR #414. Interactive Poteto mode consults supplied task-specific memory first, calls native recall only for missing or genuinely new historical context, treats results as unverified leads, and keeps scoped delegate handoff separate from the heavier P Stack recall skill without changing memory-off boundaries.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
-            "scripts/smoke.ts"
+            "scripts/smoke.ts",
+            "scripts/smoke-memory-context.ts"
           ]
         }
       }
