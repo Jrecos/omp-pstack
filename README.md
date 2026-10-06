@@ -27,10 +27,13 @@ Use OMP 18.3.4 with this checkout. The pinned SDK uses the 18.3.4 settings regis
 
 ### running the `pstack` CLI after install
 
-the helper commands (`orch`, `watch-pr`, `check-plan`, `worktree-audit`, `log`, plus the `routine` and `benny` commands documented below) live in the installed package. invoke them through the installed root, whatever scope you installed in:
+the helper commands (`orch`, `watch-pr`, `check-plan`, `worktree-audit`, `log`, plus the `routine` and `benny` commands documented below) live in the installed package. invoke them through the installed root, whatever scope you installed in.
+
+the marketplace copies the plugin without installing npm dependencies. OMP can load the native extension, but the standalone CLI and CLI-backed skills need the package dependencies. install them before using those commands:
 
 ```bash
 PSTACK_ROOT="$(omp plugin list --json | bun -e 'const d=await Bun.stdin.json(); const m=(d.marketplace??[]).filter(p=>p.id==="omp-pstack@omp-pstack"&&!p.shadowedBy).flatMap(p=>p.entries??[]).find(e=>e.enabled!==false&&e.installPath); const n=(d.npm??[]).find(p=>p.name==="omp-pstack"&&p.enabled!==false); process.stdout.write(m?.installPath ?? n?.path ?? "")')"
+bun install --production --frozen-lockfile --cwd "${PSTACK_ROOT:?No active omp-pstack installation found}"
 bun "$PSTACK_ROOT/src/cli.ts" routine list
 ```
 
@@ -46,6 +49,8 @@ omp plugin upgrade omp-pstack@omp-pstack
 ```
 
 Restart OMP after the upgrade to load the updated extension and skills. Check the installed version with `omp plugin list`.
+
+After each upgrade or forced reinstall, repeat the [installed CLI dependency setup](#running-the-pstack-cli-after-install) before using CLI-backed skills.
 
 `plugin upgrade` and forced reinstalls can use a stale marketplace cache. Do not skip `marketplace update`, and do not add the marketplace again.
 
