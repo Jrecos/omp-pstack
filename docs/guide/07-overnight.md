@@ -1,8 +1,19 @@
 # Run work while you sleep
 
-This is the payoff for everything before it. An agent you can trust to verify its own work is an agent you can leave alone with a hard task. What makes that safe isn't hope. It's a checkable finish condition, an isolated worktree, and a decision log you audit in the morning.
+This is the payoff for everything before it. An agent you can trust to verify its own work is an agent you can leave alone with a hard task. What makes that safe isn't hope. It's a checkable finish condition, an isolated worktree or separately hosted background agent, and a decision log you audit in the morning.
 
 ![She waves goodnight from the door while robots keep the factory running, one updating a DECISION LOG wall board under a BUILD LOOP ACTIVE sign.](./images/overnight.jpg)
+
+## Earn the trust before the loop
+
+A loop you don't trust just produces unchecked work faster, and the mess compounds with every iteration. Before you leave one running, check that it has earned it:
+
+- You've done the task once by hand, or watched an agent do it, so you know what good looks like.
+- The agent has the tools and signals you'd use yourself: the verification skill, the profiler, the logs.
+- Every stage proves its work and can stop the line when the work misses the bar.
+- You've read a few transcripts and turned the repeated failures into tools, skills, or checks.
+
+Make the loop autonomous only after all four hold. Until then, run it while you watch.
 
 ## The overnight contract
 
@@ -12,7 +23,7 @@ A good handoff has the goal, the finish condition, permissions, and an escape ha
 /poteto-mode im going to bed. migrate every caller to the new parser in a fresh worktree off <base>.
 done means zero old callers, all parser fixtures pass, old api deleted.
 keep a decision log. don't ask me before committing.
-/loop until done. if you're truly stuck after a few hours, stop and write up why.
+/loop 8h keep working until done. if you're truly stuck after a few hours, stop and write up why.
 ```
 
 Walk through what each line buys you:
@@ -21,10 +32,12 @@ Walk through what each line buys you:
 - "done means..." turns the goal into checks every iteration can run.
 - "fresh worktree off `<base>`" keeps the run from colliding with anything else you have open.
 - "don't ask me before committing" pre-answers the permission the agent would otherwise block on.
-- `/loop` is omp's built-in wake mechanism (`/loop [count|duration] [prompt]`), not a pstack skill. The [Autonomous run playbook](../../skills/poteto-mode/playbooks/autonomous-run.md) uses it to re-check the finish condition on events or a heartbeat.
+- `/loop` is OMP's built-in wake mechanism, not a pstack skill. Its duration bounds the whole run. It does not set an interval between ticks. The [Autonomous run playbook](../../skills/poteto-mode/playbooks/autonomous-run.md) uses it to re-check the finish condition.
 - The escape hatch lets it stop at a genuine dead end and write up why, which beats eight hours of creative goal reinterpretation.
 
 Because you'll review this work after stepping away, `/poteto-mode` routes it through [`/figure-it-out`](../../skills/figure-it-out/SKILL.md), which designs the run's phases before any code and wires in the decision log.
+
+To stop a run on purpose, tell the agent to pause, or that you're about to go offline or restart the OMP session. The [Pause safely playbook](../../skills/poteto-mode/playbooks/pause-safely.md) finishes or backs out of the current step, commits a work-in-progress checkpoint, and writes a resume note. A fresh chat picks the work up from that note through the Session pickup playbook. Saying "keep going" never triggers a pause.
 
 ## What the loop does all night
 
@@ -58,7 +71,7 @@ Before the skill hands back its summary, it spawns a reviewer on a different mod
 
 The contract above drives one task to one finish condition. Some nights hold more, a queue of independent changes or a whole program. Three playbooks scale the same trust up.
 
-[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) runs a queue of independent PRs to merged. Each PR gets one owner agent that carries it from build through merge, and no owner merges on its own verdict. Fresh verifiers start at the code-ready head and again after each patch-changing push. Only a clean verdict matching the merge-ready patch authorizes a merge:
+[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) runs a queue of independent PRs to merged. Each PR gets one owner agent that carries it from build through merge, and no owner merges on its own verdict. A swarm of fresh verifiers starts a round at the owner's code-ready head and again after every patch-changing push. Only a clean verdict matching the merge-ready patch authorizes a merge:
 
 ```text
 /poteto-mode full autopilot on this queue. each item is independent. i want them merged by morning.
@@ -75,6 +88,34 @@ The contract above drives one task to one finish condition. Some nights hold mor
 ```text
 /poteto-mode orchestrate the store migration. own it until every package is converted and merged. i'll check in twice a day.
 ```
+
+## Run many projects in parallel
+
+Give each body of work a persistent OMP coordinator session. The coordinator does not write code. It directs native background task agents with isolated worktrees or separately hosted sessions. Work continues only while the hosting machine and OMP session remain running. This is the shape the Orchestrate playbook expects. Start the coordinator with `/poteto-mode`. Its prepared Poteto delegates read the same playbooks.
+
+A few habits help:
+
+- Give each feature, migration, perf push, or tech-debt cleanup its own coordinator session. Several can run side by side.
+- Give the coordinator pointers to related chat history, finished work, and decision logs. These records provide context for the agents it dispatches.
+- Give each PR a verification swarm before it merges, and let Autopilot-stack or Autopilot-full carry the queue.
+- Ask the coordinator for a plan backed by data, and have it answer open questions with prototypes before it asks you.
+
+One prompt can carry a whole project from research through execution:
+
+```text
+/poteto-mode refactor this repo so its architecture is more agent friendly. use /correct and /architect on past commits and review comments to find the mistakes agents make most here. use /recall for context from past chats. answer open questions with prototypes instead of asking me. come back with a plan backed by real data. once i approve it, run it with autopilot-stack or autopilot-full, and ask me which.
+```
+
+For hourly coordinator audits, resolve an ordinary delegate with `pstack_agent` and `kind: "poteto"`, then arm a native background task sentinel with only the returned `agent`. It waits for a supervised 3600-second timer, then returns the audit tick prompt. Re-arm it after each audit and cancel it when the coordinator stands down. A duration on `/loop` cannot set this cadence.
+
+## Let loops start themselves
+
+Every loop above still waits for you to start it. A scheduled or event-driven automation removes that step. Software maintenance splits into stages that suit this well: triage a report, reproduce it, fix it, verify the fix. Two rules keep such a line trustworthy:
+
+- Every stage can stop the line. Triage can decide the report is expected behavior, repro can fail to reproduce it, and the fixer can judge the change too risky. Each of those outcomes is useful, because it keeps bad work from reaching the next stage, where it costs more to undo.
+- Every stage hands over evidence. Repro attaches screenshots and video of the broken state, and the fix attaches before-and-after proof. A human can then check that the agent fixed the right thing before reading a line of code.
+
+pstack ships this as a dormant [automation pack](../../automations/benny/README.md) for Slack issue reports. One automation triages each report. The other reproduces confirmed bugs and may prepare a small draft fix. Point an agent at its [`FOR_AGENTS.md`](../../automations/benny/FOR_AGENTS.md) and name the target repository to set it up.
 
 **Pitfall:** a duration is not a finish condition. "work on this for 4 hours" gives the agent nothing to check, and you'll wake up to four hours of motion instead of a result. Give `/loop` a predicate that can pass or fail.
 

@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
 
+Each spawn uses its configured role in `rules/pstack-models.md`, managed by `pstack_models` through `/setup-pstack`. If the role is unset or its model is unavailable, run `/setup-pstack`. Never substitute another model. `inherit-parent` and `auto` resolve to the live parent model through the returned agent.
+
 ## Step 1. Assess Complexity
 
 If the scope is ambiguous, state your interpretation and explore. The user can redirect.

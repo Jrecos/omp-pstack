@@ -9,10 +9,11 @@ import { registerModels } from "./models.ts";
 import { registerSpecKit } from "./speckit.ts";
 
 export const DIRECT_SKILLS = [
-  "architect", "arena", "automate-me", "blast-radius", "bro", "create-verification-skill",
-  "figure-it-out", "how", "interrogate", "maintain-verification-skill", "make-bot-ui", "no-comments",
-  "poteto-mode", "recall", "reflect", "session-review", "setup-pstack", "show-me-your-work", "swarm", "tdd", "teach",
-  "technical-writing", "typescript-best-practices", "unslop", "why",
+  "architect", "arena", "automate-me", "benchmark-checklist", "blast-radius", "bro", "correct",
+  "create-verification-skill", "figure-it-out", "how", "interrogate", "maintain-verification-skill",
+  "make-bot-ui", "no-comments", "poteto-help", "poteto-mode", "recall", "reflect", "session-review",
+  "setup-pstack", "show-me-your-work", "swarm", "tdd", "teach", "technical-writing",
+  "typescript-best-practices", "unslop", "why",
 ] as const;
 
 /** Structural subset of the host's slash-command info; matches SlashCommandInfo. */

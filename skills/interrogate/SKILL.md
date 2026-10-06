@@ -33,14 +33,11 @@ Write one clear paragraph. If you're unsure about the intent, ask the user befor
 
 ## Step 3, Spawn Reviewers
 
-Launch all reviewers in a single message as native `task` calls. Use the `interrogate reviewers` list from the `pstack-models` profile rule (written by `/setup-pstack`; query it with `pstack_models` action `show`), one reviewer per entry, naming them Reviewer A, B, C, and so on up to the configured entry count. If the list is unset or any selected model is unavailable in this session, run `/setup-pstack` first — never substitute a model outside the approved pool.
+Launch all reviewers in one native `task` batch. Use the configured `interrogate reviewers` list in `rules/pstack-models.md`. Query it with `pstack_models` action `show`. Name one reviewer per entry, starting with Reviewer A and B and continuing to the configured count. If the list is unset or a selected model is unavailable, run `/setup-pstack` first. Never substitute another model.
 
-For each reviewer, get a descriptor from `pstack_agent` (`{role: "interrogate reviewers", index: <1-based entry number>, kind: "readonly"}`) and dispatch one native `task` call:
-- `agent`: the value `pstack_agent` returns for that entry
-- `model`: resolved metadata only. `pstack_agent` has already built the configured model into the prepared agent, so do not pass `model` to native `task`.
-- `readonly`: the `readonly` kind
+For each reviewer, resolve `pstack_agent` with `{role: "interrogate reviewers", index: <1-based entry number>, kind: "readonly"}`. Dispatch native `task` with the returned `agent`. The returned `model` is metadata, not a native `task` field.
 
-Ordered duplicate entries count as separate reviewers; never deduplicate or substitute a fallback array. If a configured concrete model fails to resolve at dispatch, the task fails naming the role — rerun `/setup-pstack` and pick a model that resolves. Do not silently substitute another model. If the configured value is `inherit-parent` or `auto`, pass the returned `agent`; those aliases resolve to the live parent model and are never treated as broken selectors.
+Ordered duplicate entries count as separate reviewers. Never deduplicate or replace the configured list with fallbacks. If a concrete model fails to resolve, name the failed role and rerun `/setup-pstack` to choose a model that resolves. `inherit-parent` and `auto` resolve to the live parent model through the returned agent. Do not treat aliases as rejected selectors.
 
 Read `references/reviewer-prompt.md` and fill in the template with:
 1. The stated intent

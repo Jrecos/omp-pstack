@@ -25,7 +25,7 @@ The N candidates will receive the same prompt, so the prompt is the contract.
 
 1. State the artifact each candidate is producing.
 2. Derive the rubric. State what success looks like for *this* task, then turn it into 3-6 concrete gradeable criteria. The rubric is the picker's tool in Phase D. Candidates only see the task.
-3. Pick the runners. Use the configured `arena runners` role (from the `pstack-models` profile rule written by `/setup-pstack`; query it with `pstack_models` action `show`) when present. If the role is unset or any selected model is unavailable in this session, run `/setup-pstack` first — never substitute a model outside the approved pool. Spawn more when the arena covers multiple design directions. Same model N times when the work is generation-bound rather than judgment-sensitive. Ordered duplicate entries count as separate runners.
+3. Pick the runners from the configured `arena runners` role in `rules/pstack-models.md`. Query it with `pstack_models` action `show`. If the role is unset or a selected model is unavailable, run `/setup-pstack` first. Never substitute another model. `inherit-parent` and `auto` entries resolve to the live parent model through the returned agent, including cross-judge entries. Spawn more when the arena covers multiple design directions. Use the same model N times when generation, rather than judgment, limits the work. Ordered duplicate entries count as separate runners.
 4. Assign output paths. Each candidate writes to its own location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill.
 
 ## Phase B: Fan out
@@ -38,7 +38,7 @@ If a candidate fails to produce output, proceed with N-1 and note the dropout in
 
 ## Phase C: Cross-judge
 
-After all Phase B candidates complete, get the judge descriptor from `pstack_agent` with the index omitted (`{role: "arena cross-judge pool", kind: "readonly"}`). The tool compares the configured pool against the live parent model family and returns the first family-different entry, or the first entry when none differs. Spawn one readonly judge subagent as a native `task` call with the returned `agent`. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with the parent's reading in Phase D, not with the candidates themselves. Don't spawn the judge while candidates are still writing.
+After all Phase B candidates complete, get the judge descriptor from `pstack_agent` with `{role: "arena cross-judge pool", kind: "readonly"}` and no index. The tool selects the first configured entry from a different family than the live parent's, or the first entry if none differs. If the role is unset or unavailable, run `/setup-pstack`. Spawn one readonly judge through native `task` with the returned `agent`. It reads the rubric and candidates by path label, scores every criterion, and recommends a base with rationale. It runs alongside the parent's Phase D reading, not alongside candidates. Do not spawn the judge while candidates are still writing.
 
 ## Phase D: Pick a base
 

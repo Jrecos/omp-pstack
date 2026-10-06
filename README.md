@@ -62,16 +62,18 @@ upgrading from a pre-0.15.0 config: the `how critics` role is retired and the 17
 
 repo maintainers can verify manifest completeness, recorded source blobs, and byte-exact unadapted files against the pinned upstream commit with `bun scripts/check-upstream.ts <cursor/plugins checkout>`.
 
+to move the pin, run `bun scripts/sync-upstream.ts <cursor/plugins checkout> <commit> <version>`. it copies unadapted files, three-way merges adapted files against the old upstream blob (conflicts land as `<<<<<<< omp` markers), adds new upstream files, and rewrites `upstream.json`. then resolve the markers, record new adaptations, and repin `EXPECTED_HEADER` and the inventory digest in `scripts/check-content.ts`.
+
 ## get started
 
 two steps:
 
-1. run [`/setup-pstack`](./skills/setup-pstack/SKILL.md) and choose which models you want.
+1. run [`/setup-pstack`](./skills/setup-pstack/SKILL.md), pick a reasoning budget, and choose which models you want.
 2. use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) whenever you're doing anything that requires rigor.
 
-new here? the [pstack guide](./docs/guide/README.md) walks you through a first real task, from setup and prompting through verification and overnight runs.
+new here? the [pstack guide](./docs/guide/README.md) walks you through a first real task, from setup and prompting through verification and overnight runs. stuck, or unsure which skill fits? ask [`/poteto-help`](./skills/poteto-help/SKILL.md).
 
-that's it. the other skills are situational; the mode skill uses them for you as needed. the mode dispatches each role on the model you configure with [`/setup-pstack`](./skills/setup-pstack/SKILL.md): you pick the approved pool first, it recommends the role map from that pool, and you confirm or adjust. no model is used that you didn't approve, and an unset role needs setup rather than falling back to a brand.
+that's it. the other skills are situational. the mode uses them as needed. [`/setup-pstack`](./skills/setup-pstack/SKILL.md) asks you to approve a model pool, choose a reasoning budget, and confirm the role map. no model is used without your approval. an unset role needs setup.
 
 ## usage
 [![Illustrated Jrecos routes OMP robot agents through bug-fix, feature, and investigation playbooks.](./assets/readme-routing.webp)](./docs/guide/02-poteto-mode.md)
@@ -137,7 +139,7 @@ morning.
 | [shipping](./skills/poteto-mode/playbooks/shipping.md) | independently verify a green stack, then land the contiguous verified run bottom-up through github by default or origin when available. |
 | [autonomous run](./skills/poteto-mode/playbooks/autonomous-run.md) | drive a long task to completion without stopping. |
 | [orchestrate](./skills/poteto-mode/playbooks/orchestrate.md) | a standing project handed to one coordinator chat: multi-day, many stacked prs, fleets of subagents. |
-| [autopilot-full](./skills/poteto-mode/playbooks/autopilot-full.md) | run independent prs to merged with one owner per pr and root verification at code-ready and after each patch-changing push. |
+| [autopilot-full](./skills/poteto-mode/playbooks/autopilot-full.md) | run independent prs to merged with one owner per pr and a root swarm verification round at code-ready and after each patch-changing push. |
 | [autopilot-stack](./skills/poteto-mode/playbooks/autopilot-stack.md) | build and verify one linear base-branch stack for the operator to review and land. |
 | [session pickup](./skills/poteto-mode/playbooks/session-pickup.md) | resume or take over a prior agent's in-flight work. |
 | [pause safely](./skills/poteto-mode/playbooks/pause-safely.md) | suspend in-flight work cleanly so it can be resumed later. |
@@ -157,7 +159,7 @@ when invoked it:
 
 the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/poteto-mode/SKILL.md).
 
-[`/poteto-mode`](./skills/poteto-mode/SKILL.md) is also a sticky mode: once entered it stays on across turns, applying itself when a playbook matches or the task needs rigor and staying out of the way otherwise. opt out any time by saying so.
+Invoking [`/poteto-mode`](./skills/poteto-mode/SKILL.md) turns on persistent mode for the current OMP session branch. The plugin keeps its rules in context on later turns. It applies when a playbook matches or the task needs rigor and stays out of the way otherwise. Say "stop poteto mode" or "normal mode" to turn it off.
 
 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) works extremely well with omp's built-in `/loop` command. you can make the agent work for many hours without sacrificing rigor.
 
@@ -173,7 +175,13 @@ the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/po
 /interrogate review this pr.
 ```
 
-The [complete skills reference](./docs/guide/skills.md) lists all 48 discoverable skills with their purposes and source files. It separates 25 direct workflow skills from 23 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 48.
+The [complete skills reference](./docs/guide/skills.md) lists all 52 discoverable skills with their purposes and source files. It separates 28 direct workflow skills from 24 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 52.
+
+| New skill | Use it when |
+|---|---|
+| [`/poteto-help`](./skills/poteto-help/SKILL.md) | Find the skill, playbook, or principle for your goal and get a prompt to send. It runs only when you invoke it and does not start the work. |
+| [`/correct`](./skills/correct/SKILL.md) | Fix repeated agent mistakes at the highest enforceable level, with architecture first and documentation last. Pair each rule with its enforcement. |
+| [`/benchmark-checklist`](./skills/benchmark-checklist/SKILL.md) | Vet a measured number for its limiter, tuning, errors, repeatability, end-to-end relevance, and whether the timed work ran. |
 
 `/session-review` reviews the last 10 sessions in the current workspace. Use `/session-review 25` to select the last 25, or `/session-review 25 --plugin-report` to add a separate, sanitized plugin-feedback section. The bare command rejects invalid counts and flags locally before dispatching a model turn. The `/skill:session-review` alternative is prompt-driven and has no host-side argument gate. The review uses the full available history window, not only the last seven days, and never edits the repository or sends a report elsewhere. Results appear in chat unless you explicitly request a private saved copy.
 
@@ -222,8 +230,10 @@ tdd:               /tdd implement
 unslop:            can we unslop and tighten the new changes?
 reflect:           /reflect that took too long. capture what we learned so the next run doesn't
                    repeat it.
+correct:           /correct
 show-me-your-work: /show-me-your-work keep a decision trail i can review when i'm back.
 automate-me:       /automate-me
+help:              /poteto-help which skill should i use to review this branch?
 ```
 
 </details>
@@ -240,10 +250,10 @@ pstack also ships [Comment Sicko](./agents/comment-sicko.md), a read-only commen
 [![Illustrated Jrecos supervises OMP robot agents verifying a real machine and capturing evidence.](./assets/readme-verification.webp)](./docs/guide/06-verify-and-ship.md)
 
 
-twenty-three short skills, one principle each. `poteto-mode` indexes them inline and reads that index at task start. the standalone files are there so other skills can reference a principle by name, and so the index can point at the full rule for each.
+twenty-four short skills, one principle each. `poteto-mode` indexes them inline and reads that index at task start. the standalone files are there so other skills can reference a principle by name, and so the index can point at the full rule for each.
 
 <details>
-<summary>all twenty-three principles</summary>
+<summary>all twenty-four principles</summary>
 
 | principle | group | rule |
 |---|---|---|
@@ -267,6 +277,7 @@ twenty-three short skills, one principle each. `poteto-mode` indexes them inline
 | [fix-root-causes](./skills/principle-fix-root-causes/SKILL.md) | verification | Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes. |
 | [sequence-verifiable-units](./skills/principle-sequence-verifiable-units/SKILL.md) | verification | Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer. |
 | [test-behavior-not-implementation](./skills/principle-test-behavior-not-implementation/SKILL.md) | verification | Apply when you write, change, or keep a test. Call the code the way its users do and assert the result they observe against a literal expected value. If the test would still pass when every imported function returns undefined, rewrite the assertion or delete the test. |
+| [explain-the-number](./skills/principle-explain-the-number/SKILL.md) | verification | Before trusting, reporting, or acting on a measured number, find what limits it. Rule out that it measured work other than the work you intended. |
 | [guard-the-context-window](./skills/principle-guard-the-context-window/SKILL.md) | delegation | Route bulk to subagents; keep summaries in the main thread, not raw payloads. |
 | [never-block-on-the-human](./skills/principle-never-block-on-the-human/SKILL.md) | delegation | Proceed, present the result, let the human course-correct after the fact; reserve confirmation for irreversible actions. |
 | [encode-lessons-in-structure](./skills/principle-encode-lessons-in-structure/SKILL.md) | meta | Encode the rule as a lint, metadata flag, runtime check, or script instead of more text. |
@@ -294,6 +305,8 @@ omp has native plan mode, which works well with pstack. planning is deliberately
 type [`/automate-me`](./skills/automate-me/SKILL.md). it mines your recent transcripts, drafts a `<your-name>-mode` skill from how you've actually worked, and routes through pstack underneath. you keep pstack as the base and end up with your own routing skill alongside `poteto-mode`.
 
 models are configurable too. type [`/setup-pstack`](./skills/setup-pstack/SKILL.md). it detects the models you have access to, takes the approved pool first, and writes a small always-applied rule mapping each role (code, judgment, the review panels) to a pool member. every skill reads that rule; there are no hardcoded defaults left, so a role that isn't configured needs setup, and dispatch fails closed rather than substituting a model you didn't approve.
+
+Rerunning setup keeps your approved pool and role identities unless you change them. It infers your current reasoning budget from saved effort suffixes. Removing a role line makes that role unconfigured. Run `/setup-pstack` to assign it again.
 
 ## automations
 [![Illustrated Jrecos supervises an autonomous plan, build, verify, review, and ship loop.](./assets/readme-automation.webp)](./docs/guide/07-overnight.md)
@@ -333,6 +346,6 @@ The token needs permission to write repository contents. Future branch rules mus
 
 ## credits and license
 
-Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.0`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
+Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.15`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
 
 Released under the [MIT License](./LICENSE). The original copyright notice is retained.

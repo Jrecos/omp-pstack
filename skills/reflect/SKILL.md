@@ -22,19 +22,21 @@ If no path resolves, write a tight digest of the session and pass that instead.
 
 ### 2. Spawn three reviewers in parallel
 
-One message, three native `task` calls. For each reviewer, get a descriptor from `pstack_agent` and dispatch `task` with the returned `agent` only. `pstack_agent` has already resolved the configured model into the prepared agent; its returned `model` is metadata, not a native `task` field. Use `kind: "general"` — reviewers need MCP access for context lookups (tickets, chat threads, observability traces referenced in the transcript); the `readonly` kind strips MCPs. The prompt forbids file writes; the parent applies edits.
+Spawn three reviewers in one native `task` batch. Resolve each descriptor through `pstack_agent` and pass only its returned `agent`. The returned `model` is metadata, not a native `task` field. Use `kind: "general"` because reviewers need MCP access for tickets, chat threads, and traces. The `readonly` kind strips MCPs. The prompt forbids file writes. The parent applies edits.
 
-| Lens | `model` | Prompt template | `pstack_agent` role |
-|---|---|---|---|
-| Judgment | your configured reflect-judgment model | `references/judgment-reviewer.md` | `role: "reflect judgment, divergent, synthesizer"` |
-| Tooling | your configured reflect-tooling model | `references/tooling-reviewer.md` | `role: "reflect tooling"` |
-| Divergent | your configured reflect-judgment model | `references/divergent-reviewer.md` | `role: "reflect judgment, divergent, synthesizer"` |
+Each reviewer and the synthesizer use the configured role in `rules/pstack-models.md`, managed by `pstack_models` through `/setup-pstack`. If a role is unset or its model is unavailable, run `/setup-pstack`. Never substitute another model. `inherit-parent` and `auto` resolve to the live parent model through the returned agent.
+
+| Lens | `pstack_agent` role | Prompt template |
+|---|---|---|
+| Judgment | `reflect judgment, divergent, synthesizer` | `references/judgment-reviewer.md` |
+| Tooling | `reflect tooling` | `references/tooling-reviewer.md` |
+| Divergent | `reflect judgment, divergent, synthesizer` | `references/divergent-reviewer.md` |
 
 Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in the `task` result.
 
 ### 3. Synthesize
 
-One more `task` call, using `pstack_agent` with `role: "reflect judgment, divergent, synthesizer"` and `kind: "general"` (your configured reflect-judgment model). The synthesizer's quality check includes spot-verifying citations, which can require MCP access; `readonly` strips MCPs. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+Resolve `pstack_agent` with `role: "reflect judgment, divergent, synthesizer"` and `kind: "general"`. Dispatch one native `task` with the returned `agent`. The synthesizer's citation spot-checks can need MCP access, which `readonly` strips. Use `references/synthesizer.md` verbatim with each reviewer's full output filled in. The synthesizer returns a structured Accepted / Rejected / Backlog list.
 
 ### 4. Structural enforcement check
 

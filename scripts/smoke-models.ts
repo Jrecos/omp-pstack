@@ -80,7 +80,7 @@ try {
     await session.promptCustomMessage({
       customType: "skill-prompt", attribution: "user", display: false,
       details: { name: "setup-pstack", path: setup.filePath },
-      content: `${(await readFile(setup.filePath, "utf8")).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")}\n\nComplete setup now; there is no human to confirm with, so proceed autonomously. Detect models with pstack_models list. The approved pool is EXACTLY: ${pool.join(", ")}. Persist all four members even though no role uses ${first.provider}/${first.id} concretely (it stays routed for later). Recommend a value for all 17 roles from that pool, then save with pstack_models (action "save", pool, and all 17 roles). Never use a model outside the pool. Do not ask questions; after saving, print a one-line confirmation.`,
+      content: `${(await readFile(setup.filePath, "utf8")).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")}\n\nComplete setup now; there is no human to confirm with, so proceed autonomously. Detect models with pstack_models list. The approved pool is EXACTLY: ${pool.join(", ")}. Persist all four members even though no role uses ${first.provider}/${first.id} concretely (it stays routed for later). The user chose the budget "medium — high reasoning". Recommend a value for all 17 roles from that pool, routing at least the judgment roles to concrete pool models, apply the budget, then save with pstack_models (action "save", pool, and all 17 roles). Never use a model outside the pool. Do not ask questions; after saving, print a one-line confirmation.`,
     });
     const recommendedRule = await readFile(paths.rulePath, "utf8");
     const recommended = parseConfig(recommendedRule);
@@ -91,6 +91,9 @@ try {
     // recommended selector is a pool member or a granted alias.
     const configuredCount = ROLES.filter((role) => (recommended.roles[role] ?? []).length > 0).length;
     assert.equal(configuredCount, ROLES.length, "completed setup must configure every supported role");
+    const concrete = ROLES.flatMap((role) => recommended.roles[role] ?? []).filter((entry) => entry !== "inherit-parent" && entry !== "auto");
+    assert(concrete.length > 0, "setup must route at least one role to a concrete pool model");
+    for (const entry of concrete) assert.match(entry, /:high$/, `medium budget must set :high on concrete selector ${entry}`);
     await saveRoles(roles, { list: () => modelRegistry.getAvailable(), current: () => first }, paths, cwd, pool);
     const savedRule = await readFile(paths.rulePath, "utf8");
     assert.match(savedRule, /^pool: /m);

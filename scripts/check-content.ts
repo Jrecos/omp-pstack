@@ -7,15 +7,15 @@ import { dirname, join, normalize } from "node:path";
 
 const EXPECTED_HEADER = {
   repository: "https://github.com/cursor/plugins",
-  commit: "71ed0d1076fec562c1b74ee353121a8d00f75382",
-  version: "0.15.0",
-  subtree: "cf6f79b65a0608c77ab77ac8d4f22d440e96971a",
+  commit: "df581122cde17e6e27686b5a448bde23e4ad4318",
+  version: "0.15.15",
+  subtree: "9d9cb20f79203a97c925de402c66183d0fa26c42",
 };
 
 const DIRECT_SKILLS = [
-  "architect", "arena", "automate-me", "blast-radius", "bro",
-  "create-verification-skill", "figure-it-out", "how", "interrogate",
-  "maintain-verification-skill", "make-bot-ui", "no-comments", "poteto-mode",
+  "architect", "arena", "automate-me", "benchmark-checklist", "blast-radius", "bro",
+  "correct", "create-verification-skill", "figure-it-out", "how", "interrogate",
+  "maintain-verification-skill", "make-bot-ui", "no-comments", "poteto-help", "poteto-mode",
   "recall", "reflect", "session-review", "setup-pstack", "show-me-your-work", "swarm", "tdd",
   "teach", "technical-writing", "typescript-best-practices", "unslop", "why",
 ];
@@ -28,7 +28,7 @@ const PRINCIPLES = [
   "model-the-domain", "boundary-discipline", "type-system-discipline",
   "make-operations-idempotent", "migrate-callers-then-delete-legacy-apis",
   "separate-before-serializing-shared-state", "prove-it-works", "fix-root-causes",
-  "test-behavior-not-implementation",
+  "test-behavior-not-implementation", "explain-the-number",
   "sequence-verifiable-units", "guard-the-context-window", "never-block-on-the-human",
   "encode-lessons-in-structure",
 ].map((p) => `principle-${p}`);
@@ -176,7 +176,7 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
   },
   {
     id: "guide-prose",
-    pattern: /^docs\/guide\/\d[^/]*\.md$/,
+    pattern: /^docs\/guide\/(\d[^/]*|README)\.md$/,
     kind: "pinned-byte/link inspection",
     artifacts: ["scripts/check-content.ts"],
     contract: "Guide path/command translations are prose; the honest claim is link/asset health and inventory integrity, not a behavioral scenario.",
@@ -222,6 +222,13 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     kind: "pinned-byte/link inspection",
     artifacts: ["scripts/check-content.ts"],
     contract: "Generated-skill path translations are prose; honest claim is link health and inventory integrity.",
+  },
+  {
+    id: "help-skill-prose",
+    pattern: /^skills\/poteto-help\/(SKILL|references\/(prompting|recipes))\.md$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "Help-router host translations are prose the agent reads to answer questions, never executed as a unit; the honest claim is link health and inventory integrity.",
   },
   {
     id: "control-reference-prose",
@@ -917,7 +924,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "80621e13a305f182de34c38d41e604acb4b7565f9957577903b069edb5487818";
+    const pinnedDigest = "4e62beee7f74bb49fddf57545290586aeda33bf9a7bdeb6102d70cf243483548";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

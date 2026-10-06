@@ -1,12 +1,12 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "commit": "71ed0d1076fec562c1b74ee353121a8d00f75382",
-  "version": "0.15.0",
-  "subtree": "cf6f79b65a0608c77ab77ac8d4f22d440e96971a",
+  "commit": "df581122cde17e6e27686b5a448bde23e4ad4318",
+  "version": "0.15.15",
+  "subtree": "9d9cb20f79203a97c925de402c66183d0fa26c42",
   "files": [
     {
       "source": "pstack/.cursor-plugin/plugin.json",
-      "blob": "e6c54aee6d3c70bacb43754ef5eb85839c38766d",
+      "blob": "68cc4443afd6b6f4881ab572b779f39d47854d42",
       "target": "package.json",
       "mode": "100644",
       "adaptation": {
@@ -43,7 +43,7 @@
     },
     {
       "source": "pstack/README.md",
-      "blob": "c29f91cb6ada31cf10850a41cb20c02192422f44",
+      "blob": "7227da33bb709bf8744dbde5f3da38016a19350d",
       "target": "README.md",
       "mode": "100644",
       "adaptation": {
@@ -75,7 +75,7 @@
     },
     {
       "source": "pstack/agents/poteto-agent.md",
-      "blob": "91d53b85918f842c703758e66352b956ee80feb7",
+      "blob": "f9d79a75560520cbb2f939c587ce00fa7e33037a",
       "target": "agents/poteto-agent.md",
       "mode": "100644",
       "adaptation": {
@@ -275,7 +275,7 @@
     },
     {
       "source": "pstack/docs/guide/01-setup.md",
-      "blob": "21dc4a4fc837ec2ee29c8edb94c9169008fe886f",
+      "blob": "62420df8255f5f3de03f3977e64bc0f34dbdc073",
       "target": "docs/guide/01-setup.md",
       "mode": "100644",
       "adaptation": {
@@ -290,25 +290,34 @@
     },
     {
       "source": "pstack/docs/guide/02-poteto-mode.md",
-      "blob": "403cbe8cc9dbc5204c6f9399abcced228f8e76f7",
+      "blob": "8341604aebe418077003b10a894ebcaff2a9ce0d",
       "target": "docs/guide/02-poteto-mode.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Replace Cursor Custom Mode and cloud-VM parallelism claims with native session-branch mode persistence and isolated worktrees or separate OMP sessions.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/docs/guide/03-understand.md",
-      "blob": "af985988c2ac9babbabf6e9b4447c2f22a346ee7",
+      "blob": "e15bea0520eff6e03df789a22cd4224daee04bd6",
       "target": "docs/guide/03-understand.md",
       "mode": "100644"
     },
     {
       "source": "pstack/docs/guide/04-design.md",
-      "blob": "681d39cff22438b4feb3d40a8d97017af026bc3d",
+      "blob": "61d5bbb591c93e432fafe77259cd62a7aaf1cce8",
       "target": "docs/guide/04-design.md",
       "mode": "100644"
     },
     {
       "source": "pstack/docs/guide/05-build-and-clean.md",
-      "blob": "c38bc44a39fe5e6ace2cd228f631c7eb57ecccf3",
+      "blob": "fc48a46df4f3e7f980522d40571367d4b809733b",
       "target": "docs/guide/05-build-and-clean.md",
       "mode": "100644",
       "adaptation": {
@@ -323,7 +332,7 @@
     },
     {
       "source": "pstack/docs/guide/06-verify-and-ship.md",
-      "blob": "d96c76612c647bfd33270d510440991946c508ed",
+      "blob": "007ea2cab45724e48e0ab8f52e52bf7957f694f2",
       "target": "docs/guide/06-verify-and-ship.md",
       "mode": "100644",
       "adaptation": {
@@ -338,7 +347,7 @@
     },
     {
       "source": "pstack/docs/guide/07-overnight.md",
-      "blob": "43c46529c0a468065854dd9c65bb57f1c0334705",
+      "blob": "cbad0672355927da4aa86547c5e5e108b354a4e2",
       "target": "docs/guide/07-overnight.md",
       "mode": "100644",
       "adaptation": {
@@ -353,13 +362,13 @@
     },
     {
       "source": "pstack/docs/guide/08-principles.md",
-      "blob": "be1102d678a9748b396f829e29fb3dfdd60ba205",
+      "blob": "0aaec930c3e6ca6a014087194d519048dd52b764",
       "target": "docs/guide/08-principles.md",
       "mode": "100644"
     },
     {
       "source": "pstack/docs/guide/09-make-it-yours.md",
-      "blob": "6723069b5108f586575fe5353272ee6567a49b02",
+      "blob": "321caaf9169aba31c69996fcf0de9c9423b24188",
       "target": "docs/guide/09-make-it-yours.md",
       "mode": "100644",
       "adaptation": {
@@ -374,15 +383,33 @@
     },
     {
       "source": "pstack/docs/guide/10-recipes-and-pitfalls.md",
-      "blob": "da0af5e6f7984d24818ef1cd28f518d0014da788",
+      "blob": "68751e7c02bde6e7b0620b9469c0e10b5e022168",
       "target": "docs/guide/10-recipes-and-pitfalls.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Replace cloud-agent isolation and omit-model dispatch advice with isolated native task worktrees and pstack_agent resolution.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/docs/guide/README.md",
-      "blob": "b8b1b079456d6f2b2c536937d21180ba5c21f733",
+      "blob": "627bfb222f5a6b0f544809de2ef43ec056ee684f",
       "target": "docs/guide/README.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Replace the Cursor Projects summary with OMP coordinator sessions and automations.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/docs/guide/images/design.jpg",
@@ -422,7 +449,7 @@
     },
     {
       "source": "pstack/skills/architect/SKILL.md",
-      "blob": "923ffc55e8f3f760c80b7ff8a9992fd848c56614",
+      "blob": "c9c0726f57556f4c26bd7e7df5314ba15b3f1ac9",
       "target": "skills/architect/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -437,7 +464,7 @@
     },
     {
       "source": "pstack/skills/architect/references/design-red-flags.md",
-      "blob": "32cb24083f308fd67ab4c431b44e1d7d3563435a",
+      "blob": "f8503c9595b289c607ff5088f82b21197edf94ec",
       "target": "skills/architect/references/design-red-flags.md",
       "mode": "100644"
     },
@@ -449,13 +476,13 @@
     },
     {
       "source": "pstack/skills/architect/references/runner-prompt.md",
-      "blob": "580ec47a5df4259a6a9ace5c452e33092053bb90",
+      "blob": "b1ad21aef22e80d718c361787190b599eb359d6c",
       "target": "skills/architect/references/runner-prompt.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/arena/SKILL.md",
-      "blob": "d1aec509a2b3aeee58b88c25eb6933db57d4a029",
+      "blob": "bd260a064d6e07a06073df6841e3d180d643372a",
       "target": "skills/arena/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -486,7 +513,7 @@
     },
     {
       "source": "pstack/skills/blast-radius/SKILL.md",
-      "blob": "298d030cb606b051ca57e89c7b39a12f7fad75a0",
+      "blob": "b296cce0d746260a53c16e3671cb05bacfe82daf",
       "target": "skills/blast-radius/SKILL.md",
       "mode": "100644"
     },
@@ -531,13 +558,13 @@
     },
     {
       "source": "pstack/skills/figure-it-out/SKILL.md",
-      "blob": "aa6967aa4bba8a51ada469310e356df02d47916e",
+      "blob": "fbf3fb122cab127d71d3c41e84711e61cc5dec4c",
       "target": "skills/figure-it-out/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/how/SKILL.md",
-      "blob": "7d4627c3bec8a6a994a3cf9bb5686ab33c39ac8f",
+      "blob": "139cac5e4dce5d5889daaf77faa8d5f81dd87318",
       "target": "skills/how/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -558,13 +585,13 @@
     },
     {
       "source": "pstack/skills/how/references/explorer-prompt.md",
-      "blob": "8b898d9e729e5d5fa41e95720e44f23a4204de43",
+      "blob": "9b4b0594bfd779015616e9d280369aba939583b4",
       "target": "skills/how/references/explorer-prompt.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/interrogate/SKILL.md",
-      "blob": "b59dff74c3f665cf82fabd9d197d814df8115531",
+      "blob": "bac0049e40b624343537d12fb8e13a974a5f376a",
       "target": "skills/interrogate/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -579,7 +606,7 @@
     },
     {
       "source": "pstack/skills/interrogate/references/code-quality-review.md",
-      "blob": "50230358f9b6138caf66065b1084be595d453d81",
+      "blob": "16581250d81044c7e80fe234c4970a3f7b7fc98a",
       "target": "skills/interrogate/references/code-quality-review.md",
       "mode": "100644"
     },
@@ -591,13 +618,13 @@
     },
     {
       "source": "pstack/skills/interrogate/references/reviewer-prompt.md",
-      "blob": "53ffa747ff6af72ed24cc00e2622b2c14dd564a9",
+      "blob": "13a252b2c3cd18522d4c8dc39a7030477037b249",
       "target": "skills/interrogate/references/reviewer-prompt.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/interrogate/references/rubric.md",
-      "blob": "04bd4ca6d31a17694071c415c349128a3b404006",
+      "blob": "2d92f1b83e13be03fb10f20cba12639a1406a2da",
       "target": "skills/interrogate/references/rubric.md",
       "mode": "100644"
     },
@@ -649,7 +676,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/SKILL.md",
-      "blob": "22d8b0509c01b3bbbd2de90cae5765f970940726",
+      "blob": "de51c56164ff3da8f958437e207d14cec7d7fe99",
       "target": "skills/poteto-mode/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -695,11 +722,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-full.md",
-      "blob": "4aa1bb858181100204e16b33c7505b9cc3a294bd",
+      "blob": "d5a68c339e25ac016ffad9c51d858f0f6c37937a",
       "target": "skills/poteto-mode/playbooks/autopilot-full.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor cloud agent per PR translated to native background task agent per PR; deslop and control-surface references repointed to packaged OMP references; 30-minute cadence uses a native background timer sentinel because /loop 30m limits duration, not interval; trunk re-read path fixed from pstack/skills/... to skills/.... Code-ready and patch-changing verification rounds adapted from upstream PR #414. Own-branch rebase safety adapted from upstream PR #422 while preserving the OMP control references and patch-id gate.",
+        "reason": "Cursor cloud agent per PR translated to native background task agent per PR; deslop and control-surface references repointed to packaged OMP references; hourly audit cadence uses a native background 3600-second timer sentinel because /loop limits total duration, not tick interval; trunk re-read path fixed from pstack/skills/... to skills/.... Code-ready and patch-changing verification rounds adapted from upstream PR #414. Own-branch rebase safety adapted from upstream PR #422 while preserving the OMP control references and patch-id gate.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -711,7 +738,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
-      "blob": "b65afb587a8281cd5029ee08787b86deae4fec58",
+      "blob": "750a7547235ae8eb340285684b9be7c36dff323a",
       "target": "skills/poteto-mode/playbooks/autopilot-stack.md",
       "mode": "100644",
       "adaptation": {
@@ -727,7 +754,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/babysit.md",
-      "blob": "73eddb732ad9d4a4c27c16e3cc6c41f78becc3e1",
+      "blob": "683cf0ba889789cbe2d880fce667c75349f9ed12",
       "target": "skills/poteto-mode/playbooks/babysit.md",
       "mode": "100644",
       "adaptation": {
@@ -743,7 +770,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/bug-fix.md",
-      "blob": "88307807e72f7c1087c3a8215b32418c87fd6dc3",
+      "blob": "eeebc42b7477d435d8ac61d631d84822f908f59c",
       "target": "skills/poteto-mode/playbooks/bug-fix.md",
       "mode": "100644",
       "adaptation": {
@@ -773,7 +800,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/feature.md",
-      "blob": "6cab21817e0f97e1c707d7c47ef82aa4f3ea99cd",
+      "blob": "79a6bbbe0ce61c3b5ef9af1ee8e3ccdb0557edc6",
       "target": "skills/poteto-mode/playbooks/feature.md",
       "mode": "100644",
       "adaptation": {
@@ -789,7 +816,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/hillclimb.md",
-      "blob": "bbbf05a67daa18aa9f7ad810cd3987b2a49e8b68",
+      "blob": "c6441b92d30a71489d88eae5bfa8dc457da55cb1",
       "target": "skills/poteto-mode/playbooks/hillclimb.md",
       "mode": "100644",
       "adaptation": {
@@ -810,11 +837,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/multi-phase-plan.md",
-      "blob": "b7b19769f4b3913252b81b40bba1d1bb9c719d21",
+      "blob": "f8ed78a6533cc5d738d3a3ec106bf2577d3f98ca",
       "target": "skills/poteto-mode/playbooks/multi-phase-plan.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Exploration uses pstack_agent role and kind resolution followed by native task with the returned prepared agent. Verification lanes use the configured swarm workers role instead of a fixed Cursor model. Isolated native task worktrees replace cloud VM boot instructions. The documented PSTACK_ROOT resolver invokes pstack check-plan, and deslop uses the packaged reference. A background timer sentinel supplies the 30-minute cadence because native /loop 30m bounds duration rather than tick interval. Plan skeleton, ten-lane verification, review gates, and appendices are preserved. Autopilot plans verify at code-ready and after patch-changing pushes per upstream PR #414.",
+        "reason": "Exploration uses pstack_agent role and kind resolution followed by native task with the returned prepared agent. Verification lanes use the configured swarm workers role instead of a fixed Cursor model. Isolated native task worktrees replace cloud VM boot instructions. The documented PSTACK_ROOT resolver invokes pstack check-plan, and deslop uses the packaged reference. A background 3600-second timer sentinel supplies the hourly audit cadence because native /loop bounds total duration rather than tick interval. Plan skeleton, ten-lane verification, review gates, and appendices are preserved. Autopilot plans verify at code-ready and after patch-changing pushes per upstream PR #414.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -826,7 +853,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
-      "blob": "a5c65a0959d0c37ebd12d5636710c4e0f91fba88",
+      "blob": "4e25989729174580e48ce36e265f298231c6de7f",
       "target": "skills/poteto-mode/playbooks/opening-a-pr.md",
       "mode": "100644",
       "adaptation": {
@@ -857,22 +884,13 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/pause-safely.md",
-      "blob": "ad61122202763e96b59af9aae48afe3e242a751e",
+      "blob": "9d1c5f8303976fff40de099f7f28185909430c11",
       "target": "skills/poteto-mode/playbooks/pause-safely.md",
-      "mode": "100644",
-      "adaptation": {
-        "reason": "restart Cursor trigger wording translated to restart the OMP session. Checkpoint and resume-note contract preserved verbatim.",
-        "verification": {
-          "kind": "pinned-byte/link inspection",
-          "artifacts": [
-            "scripts/check-content.ts"
-          ]
-        }
-      }
+      "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/perf-issue.md",
-      "blob": "59246262ae562b15bd31b70a40559caae0f6371a",
+      "blob": "405c7a4362bedbd4194a5ef234553adf0dff78c9",
       "target": "skills/poteto-mode/playbooks/perf-issue.md",
       "mode": "100644",
       "adaptation": {
@@ -893,7 +911,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/refactoring.md",
-      "blob": "dfc5d480f450f1b28d70099650f0d12822ac4b6e",
+      "blob": "df2a863b531906c64f92b9f9d8feb62f8c7a8665",
       "target": "skills/poteto-mode/playbooks/refactoring.md",
       "mode": "100644",
       "adaptation": {
@@ -929,7 +947,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/shipping.md",
-      "blob": "4c83fa3ef3b3457d55ce4b9b3bfd0dd6c12745cd",
+      "blob": "0f1d41f189222b991734015926a3b22607e1b92f",
       "target": "skills/poteto-mode/playbooks/shipping.md",
       "mode": "100644",
       "adaptation": {
@@ -1008,7 +1026,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
-      "blob": "21d350ac155928bbcf8d29dce193a97974f12748",
+      "blob": "d242f28eb801e781ccc2f2ba93b700b263a77816",
       "target": "skills/poteto-mode/scripts/check-plan.mjs",
       "mode": "100755",
       "adaptation": {
@@ -1023,7 +1041,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
-      "blob": "9c234de724991083b4644e906a5f1358f8ef8dcc",
+      "blob": "538775e37f3ac6fd2dd128883b7f7fe51c1316d5",
       "target": "skills/poteto-mode/scripts/orch/orch.test.ts",
       "mode": "100644"
     },
@@ -1246,7 +1264,7 @@
     },
     {
       "source": "pstack/skills/principle-guard-the-context-window/SKILL.md",
-      "blob": "eb2cecc40f9d830dc077009f93a467be69f195a2",
+      "blob": "c4db544909b26981c45eed9caa6591d32885f841",
       "target": "skills/principle-guard-the-context-window/SKILL.md",
       "mode": "100644"
     },
@@ -1282,19 +1300,19 @@
     },
     {
       "source": "pstack/skills/principle-never-block-on-the-human/SKILL.md",
-      "blob": "46d410715c0f36cc43f6774dac9f89b3404e9aa4",
+      "blob": "11f08b6ef1fd93a3b3e47c57eb84716dc9acbff9",
       "target": "skills/principle-never-block-on-the-human/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-outcome-oriented-execution/SKILL.md",
-      "blob": "4c2ed4695b4ca15ea5a98468c13bfe5de97f16df",
+      "blob": "c49be0bc74783f0dee013101365ae09b2abb48a2",
       "target": "skills/principle-outcome-oriented-execution/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-prove-it-works/SKILL.md",
-      "blob": "4563023d4d9f22e10e33cbf0ae94da156be30618",
+      "blob": "5dc14a3b06f9d579e5c17cd8a7242f432ddb3125",
       "target": "skills/principle-prove-it-works/SKILL.md",
       "mode": "100644"
     },
@@ -1312,7 +1330,7 @@
     },
     {
       "source": "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
-      "blob": "dd008c371ee803decaa1964b72081a646d95d9b9",
+      "blob": "986371260ebccd9a5a6818c9561e88c1d270d0ee",
       "target": "skills/principle-sequence-verifiable-units/SKILL.md",
       "mode": "100644"
     },
@@ -1352,7 +1370,7 @@
     },
     {
       "source": "pstack/skills/reflect/SKILL.md",
-      "blob": "d004951789602ea16430f9de5a542bf80b419cdb",
+      "blob": "5ac697a2cc4cd4d066772b76855848a49a8b33c6",
       "target": "skills/reflect/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1367,7 +1385,7 @@
     },
     {
       "source": "pstack/skills/reflect/references/divergent-reviewer.md",
-      "blob": "73969d847dd97f2d714df20d27359ce98ad0f7cc",
+      "blob": "de95be3b9cc9c11052596249336dcc328473eb26",
       "target": "skills/reflect/references/divergent-reviewer.md",
       "mode": "100644",
       "adaptation": {
@@ -1382,7 +1400,7 @@
     },
     {
       "source": "pstack/skills/reflect/references/judgment-reviewer.md",
-      "blob": "830213aedff81c5b27462988201663e1f0229a72",
+      "blob": "222f02b1c3c6eb3e700fa09a71bad108807d3485",
       "target": "skills/reflect/references/judgment-reviewer.md",
       "mode": "100644",
       "adaptation": {
@@ -1403,7 +1421,7 @@
     },
     {
       "source": "pstack/skills/reflect/references/tooling-reviewer.md",
-      "blob": "e7fcd9e669c5a10664f4a14d8856af6978f9e535",
+      "blob": "a37e2009d6ef08f535df87e020e52426c6a5fa33",
       "target": "skills/reflect/references/tooling-reviewer.md",
       "mode": "100644",
       "adaptation": {
@@ -1418,7 +1436,7 @@
     },
     {
       "source": "pstack/skills/setup-pstack/SKILL.md",
-      "blob": "a1f79c0ccdf9e77ecae24bd73c6c68100bbe2be1",
+      "blob": "90a9e575397fb59f4d9a47e6157c2106f4b4a5e2",
       "target": "skills/setup-pstack/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1433,7 +1451,7 @@
     },
     {
       "source": "pstack/skills/show-me-your-work/SKILL.md",
-      "blob": "6e98dd24e619a9097ddd51b2a58ffb8f92b62cbf",
+      "blob": "d350a150c36ca16382b4aa6d4196b39e67454ad1",
       "target": "skills/show-me-your-work/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1456,13 +1474,13 @@
     },
     {
       "source": "pstack/skills/show-me-your-work/scripts/log.sh",
-      "blob": "523e2a74ee15bfe6528c795a347827f04ecc5e95",
+      "blob": "052e53b7e1090579eaec1d3d59f7a1cd2f2e452a",
       "target": "skills/show-me-your-work/scripts/log.sh",
       "mode": "100755"
     },
     {
       "source": "pstack/skills/swarm/SKILL.md",
-      "blob": "5b465d3ba542703707871165b369406bbd90c7e9",
+      "blob": "db22b8787966abc61216052d9f3142018404cab8",
       "target": "skills/swarm/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1477,7 +1495,7 @@
     },
     {
       "source": "pstack/skills/tdd/SKILL.md",
-      "blob": "887a98b7f4ead1ec0d147ce6e5ad6844ef16ca5f",
+      "blob": "ca6f24c963001d9d518db2936dfe3d12f29b4e94",
       "target": "skills/tdd/SKILL.md",
       "mode": "100644"
     },
@@ -1489,7 +1507,7 @@
     },
     {
       "source": "pstack/skills/technical-writing/SKILL.md",
-      "blob": "70a477e42fc5f37c35bf602d86ff89c0f5258ecf",
+      "blob": "5eef4fc494a059eb740cb621dadb4a7a81af23e4",
       "target": "skills/technical-writing/SKILL.md",
       "mode": "100644"
     },
@@ -1501,19 +1519,19 @@
     },
     {
       "source": "pstack/skills/typescript-best-practices/references/patterns.md",
-      "blob": "f44d22ffe9130c5340d55a2fa57028c6959479cb",
+      "blob": "c21d876b71b9c7afa897f2f6d982ead07db8f104",
       "target": "skills/typescript-best-practices/references/patterns.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/unslop/SKILL.md",
-      "blob": "a3a7dc7baf0bed5fed4fe0f12ea7fcfe48d94c89",
+      "blob": "229a090708710c36caa0017f8d33e90880dc6846",
       "target": "skills/unslop/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/SKILL.md",
-      "blob": "53045ddba6f52fa0eec44101fd8e363d47141832",
+      "blob": "a78076f9d492dbdb8b87136cf9d657a1b97659f7",
       "target": "skills/why/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1651,6 +1669,69 @@
           ]
         }
       }
+    },
+    {
+      "source": "pstack/skills/benchmark-checklist/SKILL.md",
+      "blob": "c02adb78929d0c1218fba554a31c423d65deb24d",
+      "target": "skills/benchmark-checklist/SKILL.md",
+      "mode": "100644"
+    },
+    {
+      "source": "pstack/skills/correct/SKILL.md",
+      "blob": "c09f486e32935a154dd98daa13aa8187856600fe",
+      "target": "skills/correct/SKILL.md",
+      "mode": "100644"
+    },
+    {
+      "source": "pstack/skills/poteto-help/SKILL.md",
+      "blob": "a97ecddf8953b92bda7d8a8cc070faf1d68abc79",
+      "target": "skills/poteto-help/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Describe this OMP adaptation: marketplace install, session-branch mode persistence, pool-first /setup-pstack via pstack_models with no default models, native task agents, OMP /loop semantics, and repository links.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "pstack/skills/poteto-help/references/prompting.md",
+      "blob": "6b72b2e6081fdb78a3261bd77cf7334596d1ee20",
+      "target": "skills/poteto-help/references/prompting.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Translate Cursor mode, model-default, and /loop guidance to OMP session mode, configured roles, and native /loop semantics.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "pstack/skills/poteto-help/references/recipes.md",
+      "blob": "73118e2a2d2d025938d7b53b541b37cb1fe9c449",
+      "target": "skills/poteto-help/references/recipes.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Translate Cursor-specific recipe mechanics to OMP session mode, native task agents, and native /loop semantics.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "pstack/skills/principle-explain-the-number/SKILL.md",
+      "blob": "9c22351d1fbe1ffcf277e61aef9fdb7816306fa7",
+      "target": "skills/principle-explain-the-number/SKILL.md",
+      "mode": "100644"
     }
   ]
 }

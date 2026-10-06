@@ -1,6 +1,6 @@
 ---
 name: poteto-agent
-description: Routing target for `/poteto-mode` and any request for poteto's style. Steer or revive a running poteto agent from the Agent Hub (Alt+A) rather than spawning a duplicate. Reads the `poteto-mode` skill's `SKILL.md` in full before any work, including its inline Principles index. Substituting the generic `task` agent skips that read and drifts.
+description: Routing target for `/poteto-mode` and any request for poteto's style. Dispatch a fresh native task agent for each new task through `pstack_agent` with `kind: "poteto"`. Steer or revive an existing agent from the Agent Hub (Alt+A) only in the strict cases that poteto-mode's Subagents section names. Reads the `poteto-mode` skill's `SKILL.md` in full before any work, including its inline Principles index. Substituting the generic `task` agent skips that read and drifts.
 autoloadSkills: poteto-mode
 read-summarize: false
 spawns: "*"
