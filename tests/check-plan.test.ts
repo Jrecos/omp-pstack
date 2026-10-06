@@ -36,7 +36,7 @@ One PR, one program.
 
 ### Arm the program
 
-- [x] /goal is posted with the 30-minute status message cadence
+- [x] Arm a native background task sentinel that waits for a supervised 3600-second timer and returns the tick prompt. Re-arm after each audit. Cancel on stand-down.
 - [x] Baseline captured with git show origin/main:
 
 ### Spawn owners
@@ -120,6 +120,14 @@ describe("check-plan.mjs", () => {
 		const result = runPlan(plan(RULE));
 		expect(result.exitCode).toBe(1);
 		expect(result.stderr).toContain(`Verify, live lacks "${LANES}"`);
+	});
+
+	test("audit tick requires the native sentinel lifecycle", () => {
+		for (const marker of ["native background task sentinel", "supervised 3600-second timer", "Re-arm after each audit", "Cancel on stand-down"]) {
+			const result = runPlan(plan(`${RULE} ${LANES}`).replace(marker, "missing"));
+			expect(result.exitCode).toBe(1);
+			expect(result.stderr).toContain(`Program checklist lacks "${marker}"`);
+		}
 	});
 });
 

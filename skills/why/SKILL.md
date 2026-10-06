@@ -10,6 +10,8 @@ Investigate the motivation and intent behind code.
 
 Companion to the `how` skill. `how` answers what the code does and how it works. `why` answers what forces led to its shape.
 
+Each spawn uses its configured role in `rules/pstack-models.md`, managed by `pstack_models` through `/setup-pstack`. If the role is unset or its model is unavailable, run `/setup-pstack`. Never substitute another model. `inherit-parent` and `auto` resolve to the live parent model through the returned agent.
+
 ## Operating Posture
 
 Operate as a **careful, cautious, and precise investigator**. Be honest about what you know vs what you're inferring. Read `references/epistemics.md` for the full confidence framework and phrasing guide. The synthesizer must follow it.
@@ -78,9 +80,9 @@ Aim for a complete **coverage map**, not a minimal one. Document the null, don't
 Launch all matching investigators in a single message so they run concurrently. Don't ask one agent to cover multiple MCPs.
 
 Subagent config (each):
-- Dispatch: get each investigator's descriptor from `pstack_agent` (`{role: "why investigators", kind: "general"}`) and run one native `task` call with the returned `agent` only. `pstack_agent` has already resolved the configured model into the prepared agent; its returned `model` is metadata, not a native `task` field.
-- Model selection: your configured why-investigators model (configured via `/setup-pstack`; if unset or unavailable, run setup first)
-- `kind`: `general`, **not** `readonly`. The `readonly` kind strips MCP access, which disables MCP-backed investigators entirely. The source control investigator would be safe in readonly, but keep kinds uniform. Investigators still shouldn't write anything. That's a posture, not a sandbox.
+- Get each investigator's descriptor from `pstack_agent` with `{role: "why investigators", kind: "general"}`. Dispatch native `task` with only the returned `agent`. The returned `model` is metadata, not a native `task` field.
+- Use the configured `why investigators` role. If unset or unavailable, run `/setup-pstack` first.
+- Use `general`, not `readonly`. The `readonly` kind strips MCP access and disables MCP-backed investigators. Keep kinds uniform even for source control. Investigators must not write anything. This is a prompt restriction, not a sandbox.
 
 Each investigator gets:
 1. The base prompt from `references/investigator-prompt.md`
@@ -122,7 +124,7 @@ If your scope assessment suggests a single-commit trivial target where the PR de
 
 Spawn one synthesizer subagent:
 
-Get the descriptor from `pstack_agent` (`{role: "why synthesizer", kind: "general"}`) and spawn one synthesizer subagent as a native `task` call with the returned `agent` (your configured why-synthesizer model; if unset or unavailable, run setup first). Use `general`, not the `readonly` kind: the synthesizer's quality check spot-verifies citations, which can require MCP access, and `readonly` strips MCPs and defeats that.
+Get the descriptor from `pstack_agent` with `{role: "why synthesizer", kind: "general"}`. Spawn one synthesizer as a native `task` call with the returned `agent`. Use the configured `why synthesizer` role. If unset or unavailable, run `/setup-pstack` first. Use `general`, not `readonly`. Citation spot-checks can need MCP access, which `readonly` strips.
 
 The synthesizer gets:
 1. The investigator findings, including any null results and any categories skipped with justification

@@ -21,7 +21,7 @@ Copy `references/decision-log-template.tsv` (the header row) to start a clean lo
 - **evidence.** A link or path that proves it: commit SHA, PR number, `file:line`, or an artifact, trace, or screenshot path. Never a paragraph.
 - **result.** The outcome or predicate state: `tests green`, `reverted`, `pixel-diff 0`, `INCONCLUSIVE`, `open`.
 
-An example, plain-spoken so a reviewer reads it at a glance. This is illustration only. Don't copy these rows into a real log.
+An example, plain-spoken so a reviewer reads it at a glance.
 
 ```
 ts	phase	decision	why	evidence	result
@@ -35,11 +35,11 @@ ts	phase	decision	why	evidence	result
 
 Write each entry the way you'd tell a teammate what you did. Plain words, concrete actions, no AI speak or abstract jargon (the **unslop** skill applies to log text too).
 
-Use the helper so rows stay well-formed: run the stable `log` subcommand through the installed root — resolve `PSTACK_ROOT` once with the documented install resolver (README, *running the `pstack` CLI after install*; inside the pstack checkout, just `PSTACK_ROOT="$(pwd)"`) — as `bun "$PSTACK_ROOT/src/cli.ts" log <logfile> <phase> <decision> <why> <evidence> <result>`. It stamps `ts`, writes the header on first use, strips stray tabs/newlines, and prefixes any cell starting with `=`, `+`, `-`, or `@` with a single quote so a reviewer opening the log in a spreadsheet doesn't trigger formula execution. A bare `printf` appending a row works too, but mind those same bytes if cells come from generated or user-supplied text.
+Use the stable `log` subcommand so rows stay well-formed. Resolve `PSTACK_ROOT` once with the install resolver documented in the README section on running the `pstack` CLI after install. Inside the checkout, use `PSTACK_ROOT="$(pwd)"`. Run `bun "$PSTACK_ROOT/src/cli.ts" log <logfile> <phase> <decision> <why> <evidence> <result>`. It stamps `ts`, writes the header on first use, and strips stray tabs and newlines. It prefixes any cell starting with `=`, `+`, `-`, or `@` with a single quote to prevent spreadsheet formula execution. A bare `printf` appending a row works too. Apply the same safeguards to generated or user-supplied cells.
 
 Log decision points and checkpoints, not every action: a fork chosen, a unit completed with its verification result, a pivot or revert with its trigger, a blocker surfaced, a gate fixed. For loop runs, one row per iteration. Skip the trivial and self-evident.
 
-A run is one agent conversation, including later turns. A pickup, replacement, or new chat starts another run. Before appending to a log that already has rows, write a `start` row that names this run in its evidence cell. If another run has written since this run's last row, write another `start` row before resuming. Each `start` row names the preceding rows' timestamp range in its decision cell. Reserve `start` for this boundary.
+A run is one agent conversation, including later turns and summaries. A pickup, replacement agent, or new chat starts another run. Before appending to a log that already has rows, write a `start` row that names this run in its evidence cell. On a later turn, read the log's last rows. If another run has written since this run's last row, write another `start` row before resuming. Each `start` row names the preceding rows' timestamp range that this run did not write in its decision cell. Reserve `start` for this boundary.
 
 ## Where it lives
 
@@ -49,19 +49,18 @@ Commit it only when the work is ambitious enough that a reviewer needs the trail
 
 ## Rules
 
-- One row is one decision or checkpoint.
 - Append-only. A wrong call gets a new row that supersedes it. Never edit or delete history.
 - Prefer evidence produced by committed scripts over hand-made one-offs (the **encode-lessons-in-structure** principle skill).
 
 ## Audit the log against the transcript
 
-At the end of the run, read this run's own session transcript in the session directory. Don't glob across other sessions or workspaces; that reads unrelated private chats. Audit only this run's rows, from its `start` row until another run's `start` row, or from the header if this run created the log:
+At the end of the run, before handing back, check that the log told the truth. Read this run's own transcript, the current session's JSONL file in the session directory. Do not glob across other sessions or workspaces. That reads unrelated private chats. Walk only this run's rows against what happened. Each stretch begins at this run's `start` row, or at the first row if this run created the log. It ends at the next `start` row from another run:
 
-- Check that each row records a real decision or action and that its evidence supports the claim.
-- Add a row for any fork, pivot, or abandoned approach that shaped the work but is missing.
-- For an invented, padded, or otherwise wrong row, append a row that supersedes it with what actually happened and a resolving evidence pointer. Never edit or delete a row during the audit.
+- Check that every row maps to a real decision or action.
+- Check that each row's evidence resolves and shows what the row claims.
+- A fork, pivot, or abandoned approach that shaped the work but isn't logged is a gap. Add it.
 
-Correct the log, not the story. Do not infer that a prior run's row is false from this run's transcript.
+Correct the log, not the story. Never edit or delete a row during the audit. For an invented, padded, or otherwise wrong row, append a row that supersedes it with what actually happened and a resolving evidence pointer. Audit only this run's stretches. Do not infer that a prior run's row is false solely from this run's transcript. If this run's own work disproves a prior row, supersede it like any wrong call.
 
 ## Cross-model review of the trail
 

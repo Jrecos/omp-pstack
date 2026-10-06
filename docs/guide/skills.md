@@ -1,18 +1,20 @@
 # Skills reference
 
-The plugin ships 48 discoverable skills under `skills/`. The 25 direct workflow skills have bare `/<name>` commands. The 23 supporting `principle-*` skills do not have bare commands. OMP also exposes all 48 through `/skill:<name>`.
+The plugin ships 52 discoverable skills under `skills/`. The 28 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 52 through `/skill:<name>`.
 
 A foreign command or an OMP built-in can own a bare name. In that case, use `/skill:<name>` for the plugin skill. Workflows that dispatch agents require configured model roles. `/setup-pstack` selects an approved model pool and saves the role map. An unset or unavailable role blocks dispatch rather than choosing another model.
 
-## Direct workflow skills (25)
+## Direct workflow skills (28)
 
 | Skill | Purpose and use case |
 |---|---|
 | [`architect`](../../skills/architect/SKILL.md) | Settle caller usage, types, and module shape before code crosses a function boundary. |
 | [`arena`](../../skills/arena/SKILL.md) | Compare parallel solutions to one task, select a base, and graft in stronger parts from other candidates. |
 | [`automate-me`](../../skills/automate-me/SKILL.md) | Draft or refresh a personal `-mode` skill from your work history. |
+| [`/benchmark-checklist`](../../skills/benchmark-checklist/SKILL.md) | Vet a measured number for its limiter, tuning, errors, repeatability, end-to-end relevance, and whether the timed work ran. |
 | [`blast-radius`](../../skills/blast-radius/SKILL.md) | Trace what a change could break outside the diff and prove a safety claim with running code. |
 | [`bro`](../../skills/bro/SKILL.md) | Restate the last message in plain language without jargon. |
+| [`/correct`](../../skills/correct/SKILL.md) | Group repeated agent mistakes from history and fix each at the highest enforceable level. Pair each rule with its enforcement and prove the new check fails on a past mistake. |
 | [`create-verification-skill`](../../skills/create-verification-skill/SKILL.md) | Create a project-local verification skill and feature map when behavior lacks a repeatable check. |
 | [`figure-it-out`](../../skills/figure-it-out/SKILL.md) | Design an auditable playbook when no bundled playbook fits a task. |
 | [`how`](../../skills/how/SKILL.md) | Explain a subsystem's code path, ownership, and runtime behavior. |
@@ -20,6 +22,7 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 | [`maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md) | Compare a verification skill and its feature map with current source and one live pass, then correct proven drift. |
 | [`make-bot-ui`](../../skills/make-bot-ui/SKILL.md) | Build a bot interface whose buttons wake an agent routine through a webhook, with sender-key and Tailscale access. |
 | [`no-comments`](../../skills/no-comments/SKILL.md) | Have Comment Sicko challenge comments before review and fix accepted findings. |
+| [`/poteto-help`](../../skills/poteto-help/SKILL.md) | Find the skill, playbook, or principle for your goal and return a prompt to send. It runs only when invoked and does not start the work. |
 | [`poteto-mode`](../../skills/poteto-mode/SKILL.md) | Route a nontrivial task through a matching playbook and supporting skills. The mode stays active until disabled. |
 | [`recall`](../../skills/recall/SKILL.md) | Rebuild recent working context from chat history and the shared record into a current-state brief. |
 | [`reflect`](../../skills/reflect/SKILL.md) | Review the active transcript with parallel reviewers and propose concrete skill edits from durable lessons. |
@@ -36,7 +39,7 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 
 `/session-review [N] [--plugin-report]` reads the last N session files in the current workspace. N defaults to 10. The review is read-only and reports its evidence, recoveries, and limits in chat. `--plugin-report` explicitly adds a separate sanitized plugin-feedback section for you to inspect before sharing. The bare command rejects invalid arguments before a model turn. `/skill:session-review` does not have that host-side argument gate. A private saved copy requires an explicit request. Local history storage does not mean local-only processing. Your configured model and provider process the selected session content through your normal account.
 
-## Supporting principles (23)
+## Supporting principles (24)
 
 These skills guide decisions within workflows, especially `/poteto-mode`. They have no bare `/principle-*` aliases. Use their names to steer a workflow or invoke a specific skill through `/skill:principle-<name>`.
 
@@ -48,6 +51,7 @@ These skills guide decisions within workflows, especially `/poteto-mode`. They h
 | [`principle-encode-lessons-in-structure`](../../skills/principle-encode-lessons-in-structure/SKILL.md) | Turn repeated guidance into a check, script, or metadata rule. |
 | [`principle-exhaust-the-design-space`](../../skills/principle-exhaust-the-design-space/SKILL.md) | Compare two or three prototypes for a novel design without precedent. |
 | [`principle-experience-first`](../../skills/principle-experience-first/SKILL.md) | Choose the user's result over implementation convenience in product tradeoffs. |
+| [`principle-explain-the-number`](../../skills/principle-explain-the-number/SKILL.md) | Name what limits a measured number and rule out that it measured different work before trusting, reporting, or acting on it. |
 | [`principle-fix-root-causes`](../../skills/principle-fix-root-causes/SKILL.md) | Reproduce a defect and trace its cause before editing. |
 | [`principle-foundational-thinking`](../../skills/principle-foundational-thinking/SKILL.md) | Choose core types and data structures before writing dependent logic. |
 | [`principle-guard-the-context-window`](../../skills/principle-guard-the-context-window/SKILL.md) | Send bulk reading to subagents and keep only findings in the main conversation. |
@@ -71,3 +75,9 @@ These skills guide decisions within workflows, especially `/poteto-mode`. They h
 The [23 playbooks](../../skills/poteto-mode/playbooks/) are files routed by `poteto-mode`, not separately discoverable skills or slash commands. Nested `references/` files support skill bodies; they are not skills. The `pstack_models`, `pstack_agent`, and `pstack_history` tools are tools, not slash commands. The `poteto-agent` and `Comment Sicko` agents are dispatched through the native task tool. The Benny operational skills under `automations/benny/skills/` are read by their automation runner. They are outside the plugin's skill discovery root and do not have `/skill:<name>` entries here.
 
 `bun run check:content` verifies the shipped skill set and reports its count.
+
+Regenerate the counts from the discovery root:
+
+```bash
+bun -e 'const files = Array.from(new Bun.Glob("skills/*/SKILL.md").scanSync(".")); const principles = files.filter(p => p.startsWith("skills/principle-")).length; console.log({total: files.length, workflows: files.length - principles, principles});'
+```
