@@ -726,7 +726,7 @@
       "target": "skills/poteto-mode/playbooks/autopilot-full.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor cloud agent per PR translated to native background task agent per PR; deslop and control-surface references repointed to packaged OMP references; 30-minute cadence uses a native background timer sentinel because /loop 30m limits duration, not interval; trunk re-read path fixed from pstack/skills/... to skills/.... Code-ready and patch-changing verification rounds adapted from upstream PR #414. Own-branch rebase safety adapted from upstream PR #422 while preserving the OMP control references and patch-id gate.",
+        "reason": "Cursor cloud agent per PR translated to native background task agent per PR; deslop and control-surface references repointed to packaged OMP references; hourly audit cadence uses a native background 3600-second timer sentinel because /loop limits total duration, not tick interval; trunk re-read path fixed from pstack/skills/... to skills/.... Code-ready and patch-changing verification rounds adapted from upstream PR #414. Own-branch rebase safety adapted from upstream PR #422 while preserving the OMP control references and patch-id gate.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -841,7 +841,7 @@
       "target": "skills/poteto-mode/playbooks/multi-phase-plan.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Exploration uses pstack_agent role and kind resolution followed by native task with the returned prepared agent. Verification lanes use the configured swarm workers role instead of a fixed Cursor model. Isolated native task worktrees replace cloud VM boot instructions. The documented PSTACK_ROOT resolver invokes pstack check-plan, and deslop uses the packaged reference. A background timer sentinel supplies the 30-minute cadence because native /loop 30m bounds duration rather than tick interval. Plan skeleton, ten-lane verification, review gates, and appendices are preserved. Autopilot plans verify at code-ready and after patch-changing pushes per upstream PR #414.",
+        "reason": "Exploration uses pstack_agent role and kind resolution followed by native task with the returned prepared agent. Verification lanes use the configured swarm workers role instead of a fixed Cursor model. Isolated native task worktrees replace cloud VM boot instructions. The documented PSTACK_ROOT resolver invokes pstack check-plan, and deslop uses the packaged reference. A background 3600-second timer sentinel supplies the hourly audit cadence because native /loop bounds total duration rather than tick interval. Plan skeleton, ten-lane verification, review gates, and appendices are preserved. Autopilot plans verify at code-ready and after patch-changing pushes per upstream PR #414.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [

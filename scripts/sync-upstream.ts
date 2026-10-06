@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
+import { chmod, mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
@@ -34,10 +34,14 @@ try {
       report.removed.push(file.source);
       continue;
     }
-    if (next.blob === file.blob) continue;
+    if (next.blob === file.blob && next.mode === file.mode) continue;
     const target = join(root, file.target);
-    if (!file.adaptation) {
+    if (next.blob === file.blob) {
+      await chmod(target, Number.parseInt(next.mode.slice(-3), 8));
+      report.copied.push(file.target);
+    } else if (!file.adaptation) {
       await writeFile(target, git("cat-file", "blob", next.blob));
+      await chmod(target, Number.parseInt(next.mode.slice(-3), 8));
       report.copied.push(file.target);
     } else {
       // Three-way merge keeps the OMP adaptation and replays only the upstream delta.
@@ -58,6 +62,7 @@ try {
     const target = source.slice("pstack/".length);
     await mkdir(dirname(join(root, target)), { recursive: true });
     await writeFile(join(root, target), git("cat-file", "blob", next.blob));
+    await chmod(join(root, target), Number.parseInt(next.mode.slice(-3), 8));
     inventory.files.push({ source, blob: next.blob, target, mode: next.mode });
     report.added.push(target);
   }
