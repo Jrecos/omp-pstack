@@ -8,19 +8,13 @@ disable-model-invocation: true
 
 Mine the current conversation for durable learnings, then route them into skill edits.
 
-## When to invoke
-
 Invoke when the user says "reflect" or "/reflect". Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.
 
-## Process
+## 1. Locate the active transcript
 
-### 1. Locate the active transcript
+Before fanning out, the parent resolves this conversation's JSONL transcript in the current session directory. Pass its absolute path to every reviewer. Do not glob across other sessions or workspaces. That reads private chats unrelated to this session. If no path resolves, pass a tight digest of the session instead.
 
-The parent resolves its own transcript before fanning out: the current session's JSONL file in the session directory. Pass its absolute path to every reviewer. Do not glob across other sessions or workspaces; that reads private chats unrelated to this session.
-
-If no path resolves, write a tight digest of the session and pass that instead.
-
-### 2. Spawn three reviewers in parallel
+## 2. Spawn three reviewers in parallel
 
 Spawn three reviewers in one native `task` batch. Resolve each descriptor through `pstack_agent` and pass only its returned `agent`. The returned `model` is metadata, not a native `task` field. Use `kind: "general"` because reviewers need MCP access for tickets, chat threads, and traces. The `readonly` kind strips MCPs. The prompt forbids file writes. The parent applies edits.
 
@@ -34,30 +28,30 @@ Each reviewer and the synthesizer use the configured role in `rules/pstack-model
 
 Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in the `task` result.
 
-### 3. Synthesize
+## 3. Synthesize
 
-Resolve `pstack_agent` with `role: "reflect judgment, divergent, synthesizer"` and `kind: "general"`. Dispatch one native `task` with the returned `agent`. The synthesizer's citation spot-checks can need MCP access, which `readonly` strips. Use `references/synthesizer.md` verbatim with each reviewer's full output filled in. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+Resolve `pstack_agent` with `role: "reflect judgment, divergent, synthesizer"` and `kind: "general"`. Dispatch one native `task` with the returned `agent`. The synthesizer's citation spot-checks can need MCP access, which `readonly` strips. Pass `references/synthesizer.md` verbatim, with each reviewer's full output filled in. It returns an Accepted / Rejected / Backlog list.
 
-### 4. Structural enforcement check
+## 4. Structural enforcement check
 
-Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. See the **encode-lessons-in-structure** principle skill.
+Move any Accepted item that a lint rule, script, metadata flag, or runtime check would enforce more reliably to Backlog. See the **encode-lessons-in-structure** principle skill.
 
-### 5. Apply
+## 5. Apply
 
-Before applying any Accepted edit, present the synthesizer's full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
+Present the synthesizer's full Accepted / Rejected / Backlog output and wait for explicit approval before applying any Accepted edit. The user picks the subset and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
 
-Backlog items file to whatever devex / backlog tracker your team uses automatically. Only the Accepted list waits for approval.
+File each Backlog item to your team's devex or backlog tracker without waiting. Only the Accepted list waits for approval.
 
-For each approved Accepted item, follow the Routing field exactly:
+Follow each approved row's Routing exactly:
 
-- Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): parent does directly.
+- Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): the parent does it directly.
 - Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to the packaged OMP skill-authoring guidance (`skills/poteto-mode/references/omp-create-skill.md`) and run its draft / test / iterate loop.
-- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to that same guidance and run its description-optimization loop.
+- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to that guidance and run its description-optimization loop.
 - `new skill via create-skill: <kebab-name>`: hand creation to that guidance. Do not invent the shape ad hoc.
 
-If your environment ships a SKILL.md validator, run it on every touched skill before declaring done. Skip this step if it doesn't.
+If your environment ships a SKILL.md validator, run it on every touched skill before declaring done.
 
-### 6. Summarize for the user
+## 6. Summarize for the user
 
 Short list, no preamble:
 

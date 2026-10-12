@@ -46,11 +46,11 @@ This plugin adapts P Stack for OMP. Its skills use the Agent Skills format, so o
 
 ## Start a task with `/poteto-mode`
 
-`/poteto-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](../../docs/guide/02-poteto-mode.md) has examples.
+`/poteto-mode` runs in the chat that receives it. That chat owns the playbook, the todo list, and every subagent spawn. It matches the task to a playbook, copies its steps into the todo list, and runs other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it is done. It does not list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](../../docs/guide/02-poteto-mode.md) has examples.
 
 `/poteto-mode` stays active in the current OMP session branch after invocation. Casual conversation does not need a playbook and does not disable it. A clear request such as "stop poteto mode" makes the agent call `pstack_mode` with `action: "off"`. Invoke `/poteto-mode` again to reactivate it, or to start it in a new session branch.
 
-Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` resolves ordinary delegates through `pstack_agent` with `kind: "poteto"`. To get the same style from a subagent of your own, resolve the configured role that way and pass only the returned `agent` to native `task`. The returned `model` is metadata, not a `task` field. Steer or revive an existing agent from the Agent Hub (Alt+A), or message it with `write agent://<id>`.
+Mid-chat, "new task" makes the mode match a fresh playbook. `/poteto-mode` resolves ordinary delegates through `pstack_agent` with `kind: "poteto"`. To get the same style from a subagent of your own, resolve the configured role that way and pass only the returned `agent` to native `task`. The returned `model` is metadata, not a `task` field. Do not spawn `poteto-agent` to run the playbook itself. Steer or revive an existing agent from the Agent Hub (Alt+A), or message it with `write agent://<id>`, only in the cases the mode's Subagents section permits.
 
 ## Pick a skill
 
@@ -63,6 +63,7 @@ The default answer is `/poteto-mode`, which runs most of the others when its ste
 | Know why code is shaped this way, or where a number came from | [`/why`](../why/SKILL.md) |
 | Understand a change or subsystem, explained plainly | [`/teach`](../teach/SKILL.md) |
 | Catch up on their own recent work on a topic | [`/recall`](../recall/SKILL.md) |
+| Catch up on everything in this chat since their last message, with enough context to decide each action item | [`/ketchup`](../ketchup/SKILL.md) |
 | Know what a small diff could break outside itself | [`/blast-radius`](../blast-radius/SKILL.md) |
 | Settle types and module shape before code that crosses a function boundary | [`/architect`](../architect/SKILL.md) |
 | Get several attempts at one brief, merged into the best one | [`/arena`](../arena/SKILL.md) |
@@ -94,7 +95,7 @@ Close calls:
 - `/arena` gives every worker the same brief and merges the best parts. `/swarm` splits work into slices or a race and returns one report.
 - `/architect` implements right after it settles the design. Add "with checkpoint" to review the design before it writes code.
 - `/interrogate` reviews the diff. `/blast-radius` looks for breakage outside the diff and proves the one fact that makes the change safe.
-- `/recall` rebuilds context across recent chats. Resuming one specific chat or branch is the Session pickup playbook.
+- `/recall` rebuilds context across recent chats. `/ketchup` covers only this chat since the user's last message. Resuming one specific chat or branch is the Session pickup playbook.
 - `/figure-it-out` designs one rigorous run. The Orchestrate playbook runs a program that spans days and many PRs. The Autonomous run playbook drives one task to a finish condition.
 
 Packaged references and host commands:

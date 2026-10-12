@@ -1,20 +1,20 @@
 #!/usr/bin/env bun
 // Verifies the pinned upstream inventory, imported content integrity, skill/agent/
 // playbook discovery surface, and Markdown link health. Nonzero exit on any violation.
-import { readdir, readFile, stat } from "node:fs/promises";
+import { readdir, readFile, realpath, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { dirname, join, normalize } from "node:path";
+import { dirname, isAbsolute, join, normalize, relative, sep } from "node:path";
 
 const EXPECTED_HEADER = {
   repository: "https://github.com/cursor/plugins",
-  commit: "df581122cde17e6e27686b5a448bde23e4ad4318",
-  version: "0.15.15",
-  subtree: "9d9cb20f79203a97c925de402c66183d0fa26c42",
+  commit: "1b6d44ff26d4e242f4e8f68c391e6d2f7ca16def",
+  version: "0.15.20",
+  subtree: "1dbec20ada6e40cb12774b8893960a558319fd6b",
 };
 
 const DIRECT_SKILLS = [
   "architect", "arena", "automate-me", "benchmark-checklist", "blast-radius", "bro",
-  "correct", "create-verification-skill", "figure-it-out", "how", "interrogate",
+  "correct", "create-verification-skill", "figure-it-out", "how", "interrogate", "ketchup",
   "maintain-verification-skill", "make-bot-ui", "no-comments", "poteto-help", "poteto-mode",
   "recall", "reflect", "session-review", "setup-pstack", "show-me-your-work", "swarm", "tdd",
   "teach", "technical-writing", "typescript-best-practices", "unslop", "why",
@@ -33,7 +33,7 @@ const PRINCIPLES = [
   "encode-lessons-in-structure",
 ].map((p) => `principle-${p}`);
 
-const EXPECTED_AGENTS = ["poteto-agent", "Comment Sicko"];
+const EXPECTED_AGENTS = ["poteto-agent", "comment-sicko"];
 
 const PLAYBOOKS = [
   "investigation", "bug-fix", "perf-issue", "hillclimb", "runtime-forensics",
@@ -103,6 +103,14 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     kind: "omp/cli scenario",
     artifacts: ["scripts/smoke-install.ts", "scripts/smoke-workflow-guidance.ts"],
     contract: "Root OMP package metadata is covered by marketplace installation and native discovery. The smoke:workflow command runs checkout-bound read-only OMP guidance sessions; it does not run live PRs.",
+  },
+  {
+    id: "native-root-manifest",
+    pattern: /^plugin\.json$/,
+    kind: "omp/cli scenario",
+    artifacts: ["scripts/smoke-install.ts"],
+    contract: "The upstream Agent Plugins manifest is omitted in favor of the single OMP package identity verified by native marketplace installation.",
+    authorizesAbsence: true,
   },
   {
     id: "runtime-state-ignore",
@@ -307,6 +315,13 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     kind: "omp/cli scenario",
     artifacts: ["tests/check-plan.test.ts"],
     contract: "check-plan wording adaptation proven by its focused suite: complete plan passes, missing ten-lane swarm-workers sentence fails.",
+  },
+  {
+    id: "helper-check-plan-fixture",
+    pattern: /^skills\/poteto-mode\/scripts\/check-plan\.test\.ts$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "The upstream fence regression fixture uses Bun and the native plan vocabulary. This class verifies fixture provenance and links, not a model-driven workflow.",
   },
   {
     id: "helper-worktree-audit",
@@ -910,6 +925,117 @@ export async function checkBennyFixtureProof(root: string): Promise<string[]> {
   }
   return found;
 }
+// Listed-input freshness is recomputable metadata, not authenticated execution evidence.
+export async function checkNativeFixtureProofs(root: string): Promise<string[]> {
+  const found: string[] = [];
+  const sdkPackages = ["pi-coding-agent", "pi-agent-core", "pi-ai", "pi-catalog", "pi-tui", "pi-utils", "pi-natives"];
+  for (const name of ["capabilities", "models"] as const) {
+    const label = `proofs/native-${name}.json`;
+    const required = ["package.json", "bun.lock", name === "models" ? "scripts/smoke-models.ts" : "scripts/smoke-native-capabilities.ts"];
+    if (name === "models") required.push("src/extension.ts", "src/models.ts", "src/mode.ts");
+    const start = found.length;
+    let proof: unknown;
+    try {
+      proof = JSON.parse(await readFile(join(root, label), "utf8"));
+    } catch (e) {
+      found.push(`${label}: [shape] missing or invalid JSON (${e})`);
+      continue;
+    }
+    if (typeof proof !== "object" || proof === null || Array.isArray(proof)) {
+      found.push(`${label}: [shape] proof must be a JSON object`);
+      continue;
+    }
+    const p = proof as Record<string, unknown>;
+    if (p.ok !== true || p.fixtureOnly !== true) {
+      found.push(`${label}: [status] ok and fixtureOnly must both be true`);
+    }
+    const inputs: { path: string; sha256: string }[] = [];
+    const raw = p.producerInputs;
+    if (name === "capabilities") {
+      if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
+        found.push(`${label}: [inputs] producerInputs must be a path-to-SHA256 object`);
+      } else {
+        for (const [path, sha256] of Object.entries(raw)) {
+          if (typeof sha256 !== "string") found.push(`${label}: [inputs] ${path} must have a SHA256 string`);
+          else inputs.push({ path, sha256 });
+        }
+      }
+    } else if (!Array.isArray(raw)) {
+      found.push(`${label}: [inputs] producerInputs must be an array of {path,sha256}`);
+    } else {
+      for (const entry of raw) {
+        if (typeof entry !== "object" || entry === null || Array.isArray(entry)) {
+          found.push(`${label}: [inputs] each producer input must be an object`);
+          continue;
+        }
+        const item = entry as Record<string, unknown>;
+        if (typeof item.path !== "string" || typeof item.sha256 !== "string") {
+          found.push(`${label}: [inputs] each producer input needs path and sha256 strings`);
+        } else inputs.push({ path: item.path, sha256: item.sha256 });
+      }
+    }
+    const seen = new Set<string>();
+    for (const input of inputs) {
+      if (seen.has(input.path)) found.push(`${label}: [inputs] duplicate producer input ${input.path}`);
+      seen.add(input.path);
+      if (!/^[a-f0-9]{64}$/.test(input.sha256)) found.push(`${label}: [inputs] malformed SHA256 for ${input.path}`);
+      const parts = input.path.split("/");
+      const sdkSource = parts.slice(2).join("/");
+      const safeSdk =
+        parts[0] === "sdk" && sdkPackages.includes(parts[1] ?? "") &&
+        parts.length >= 3 && parts.every(part => /^[A-Za-z0-9_.-]+$/.test(part) && part !== "." && part !== "..") &&
+        (sdkSource === "package.json" || /\.(ts|js)$/.test(sdkSource));
+      if (!required.includes(input.path) && !safeSdk) {
+        found.push(`${label}: [path] producer input is outside the allowed sources (${input.path})`);
+      }
+    }
+    for (const path of required) {
+      if (!seen.has(path)) found.push(`${label}: [inputs] missing required producer input ${path}`);
+    }
+    if (found.length !== start) continue;
+
+    const resolved: { path: string; sha256: string; file: string }[] = [];
+    for (const input of inputs) {
+      const parts = input.path.split("/");
+      const sdk = parts[0] === "sdk";
+      const base = sdk ? join(root, "node_modules", "@oh-my-pi", parts[1]!) : root;
+      const file = sdk ? join(base, ...parts.slice(2)) : join(root, input.path);
+      try {
+        const [baseReal, fileReal] = await Promise.all([realpath(base), realpath(file)]);
+        const rel = relative(baseReal, fileReal);
+        if (rel === ".." || rel.startsWith(`..${sep}`) || isAbsolute(rel)) {
+          found.push(`${label}: [path] producer input resolves outside its source root (${input.path})`);
+        } else resolved.push({ ...input, file: fileReal });
+      } catch (e) {
+        found.push(`${label}: [input] cannot resolve ${input.path} (${e})`);
+      }
+    }
+    if (found.length !== start) continue;
+    try {
+      const metadata: unknown = JSON.parse(await readFile(resolved.find(input => input.path === "package.json")!.file, "utf8"));
+      const dependencies = typeof metadata === "object" && metadata !== null && !Array.isArray(metadata) && "dependencies" in metadata
+        ? metadata.dependencies : undefined;
+      const pin = typeof dependencies === "object" && dependencies !== null && !Array.isArray(dependencies) && "@oh-my-pi/pi-coding-agent" in dependencies
+        ? dependencies["@oh-my-pi/pi-coding-agent"] : undefined;
+      const version = name === "models" ? p.sdkVersion : p.expectedVersion;
+      if (typeof pin !== "string" || !/^\d+\.\d+\.\d+$/.test(pin) || version !== pin) {
+        found.push(`${label}: [version] recorded SDK version must match the exact package.json pin`);
+      }
+    } catch (e) {
+      found.push(`${label}: [version] cannot read the package.json SDK pin (${e})`);
+    }
+    for (const input of resolved) {
+      try {
+        const actual = createHash("sha256").update(await readFile(input.file)).digest("hex");
+        if (actual !== input.sha256) found.push(`${label}: [hash] stale producer input ${input.path}; rerun its fixture producer`);
+      } catch (e) {
+        found.push(`${label}: [input] cannot read ${input.path} (${e})`);
+      }
+    }
+  }
+  return found;
+}
+
 async function main(): Promise<void> {
   const root = process.cwd();
 
@@ -924,7 +1050,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "4e62beee7f74bb49fddf57545290586aeda33bf9a7bdeb6102d70cf243483548";
+    const pinnedDigest = "931827b56242057584f7e61cf2e9dda40283428498fc7f06b9379796f9598a82";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }
@@ -945,6 +1071,7 @@ async function main(): Promise<void> {
     await checkLinks(root, inv);
     for (const e of await checkVerificationMap(root)) fail(e);
     for (const e of await checkBennyFixtureProof(root)) fail(e);
+    for (const e of await checkNativeFixtureProofs(root)) fail(e);
     console.log(`check-content: ${inv.files.length} inventory files, ${expectedSkills.length} expected skills, ${agentNames.length} agents, ${playbooks.length} playbooks`);
   }
 

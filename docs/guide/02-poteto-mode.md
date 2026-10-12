@@ -96,7 +96,7 @@ A long chat accumulates context from the last task. When you change subjects, sa
 
 ## Give parallel work its own machine
 
-Several agents working in one checkout can fight over files, ports, and build output. Separate machines provide the strongest isolation when you have them. OMP's native background tasks do not provision a VM or branch. Give each code-writing task its own worktree or checkout, reserve its ports, and put build output in that task's directory. A separately hosted OMP session can install dependencies, run the app, and record evidence without touching your local checkout.
+Several agents working in one checkout can fight over files, ports, and build output. Separate machines provide the strongest isolation when you have them. For writable coding, reuse an appropriate isolated checkout or create an explicit native worktree with `omp worktree add -b <branch> <path> <base>`. Check the resolved base, branch, and actual session cwd before editing. Check dependencies and environment files after a clone fallback. Reserve each task's ports and build output.
 
 When the work has to stay local, ask for a worktree up front:
 
@@ -104,7 +104,9 @@ When the work has to stay local, ask for a worktree up front:
 /poteto-mode new task. branch off <base> in a fresh worktree, then port the parser change there.
 ```
 
-Each task in its own branch and worktree means no agent stomps another's files. Worktrees cost disk and machine resources, so a laptop runs only a handful at once. The [Opening a PR playbook](../../skills/poteto-mode/playbooks/opening-a-pr.md) already works from a worktree for code changes, so mostly you only say this when a specific base or location matters.
+A main-session worktree isolates your checkout from the original. It does not separate sibling workers. On OMP 18.10.2, use per-item `isolated: true` only when the native task schema advertises it. The field requires enabled task isolation and disabled plan mode. With one integration owner, use controlled `task.isolation.apply=false` so that owner reviews retained patches or branches. Otherwise, prepare distinct checkouts or worktrees and name each path in its brief. Recheck private enablement in each checkout.
+
+Automatic main-session startup is optional. Keep `worktree.onStart=ask`, `worktree.onExit=keep`, and `worktree.cleanSource=false` if you opt in locally. Startup creates from HEAD, not source WIP. A creation failure warns and continues in the original checkout, so verify cwd rather than assume isolation. This interactive path is source-assessed, not live-UI verified. Do not change global settings. A transcript fork shares cwd, and neither a fork nor a worktree replaces Benny's Docker boundary. [Native capabilities and evidence](./native-capabilities.md) separates these choices.
 
 Worktrees accumulate. When disk gets tight, ask:
 

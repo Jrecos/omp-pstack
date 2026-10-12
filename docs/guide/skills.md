@@ -1,10 +1,10 @@
 # Skills reference
 
-The plugin ships 52 discoverable skills under `skills/`. The 28 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 52 through `/skill:<name>`.
+The plugin ships 53 discoverable skills under `skills/`. The 29 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 53 through `/skill:<name>`.
 
 A foreign command or an OMP built-in can own a bare name. In that case, use `/skill:<name>` for the plugin skill. Workflows that dispatch agents require configured model roles. `/setup-pstack` selects an approved model pool and saves the role map. An unset or unavailable role blocks dispatch rather than choosing another model.
 
-## Direct workflow skills (28)
+## Direct workflow skills (29)
 
 | Skill | Purpose and use case |
 |---|---|
@@ -19,6 +19,7 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 | [`figure-it-out`](../../skills/figure-it-out/SKILL.md) | Design an auditable playbook when no bundled playbook fits a task. |
 | [`how`](../../skills/how/SKILL.md) | Explain a subsystem's code path, ownership, and runtime behavior. |
 | [`interrogate`](../../skills/interrogate/SKILL.md) | Have independent models challenge a diff from different review angles. |
+| [`/ketchup`](../../skills/ketchup/SKILL.md) | Catch up on the current chat and distinguish user decisions from work the agent can finish. |
 | [`maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md) | Compare a verification skill and its feature map with current source and one live pass, then correct proven drift. |
 | [`make-bot-ui`](../../skills/make-bot-ui/SKILL.md) | Build a bot interface whose buttons wake an agent routine through a webhook, with sender-key and Tailscale access. |
 | [`no-comments`](../../skills/no-comments/SKILL.md) | Have Comment Sicko challenge comments before review and fix accepted findings. |
@@ -72,7 +73,7 @@ These skills guide decisions within workflows, especially `/poteto-mode`. They h
 
 ## Other packaged material
 
-The [23 playbooks](../../skills/poteto-mode/playbooks/) are files routed by `poteto-mode`, not separately discoverable skills or slash commands. Nested `references/` files support skill bodies; they are not skills. The `pstack_models`, `pstack_agent`, and `pstack_history` tools are tools, not slash commands. The `poteto-agent` and `Comment Sicko` agents are dispatched through the native task tool. The Benny operational skills under `automations/benny/skills/` are read by their automation runner. They are outside the plugin's skill discovery root and do not have `/skill:<name>` entries here.
+The [23 playbooks](../../skills/poteto-mode/playbooks/) are files routed by `poteto-mode`, not separately discoverable skills or slash commands. Nested `references/` files support skill bodies; they are not skills. The `pstack_models`, `pstack_agent`, and `pstack_history` tools are tools, not slash commands. The `poteto-agent` and `comment-sicko` agents are dispatched through the native task tool. The Benny operational skills under `automations/benny/skills/` are read by their automation runner. They are outside the plugin's skill discovery root and do not have `/skill:<name>` entries here.
 
 `bun run check:content` verifies the shipped skill set and reports its count.
 

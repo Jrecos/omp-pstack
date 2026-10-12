@@ -5,7 +5,7 @@ description: Packaged OMP adaptation of cursor-team-kit's control-ui skill. Buil
 
 # Control UI
 
-> Adapted from `cursor-team-kit/skills/control-ui/SKILL.md` at `cursor/plugins` commit `93b00b89ef425a9c1bac0d0b317dfc49c930ac99` (source SHA-1 `334b2ca415e3848729aad8c2bb8609875a9459b2`). Cursor-specific tool references are translated to native OMP mechanics; the harness patterns and guardrails are preserved.
+> Adapted from `cursor-team-kit/skills/control-ui/SKILL.md` at `cursor/plugins` commit `1b6d44ff26d4e242f4e8f68c391e6d2f7ca16def` (source SHA-1 `68484fd5418cc893a6bf40e0db45b3001dcf5947`). Cursor-specific tool references are translated to native OMP mechanics; the harness patterns and guardrails are preserved.
 
 Use local browser automation to verify UI behavior with evidence. First reuse the repo's own Playwright, browser, or Electron harness if it exists; otherwise assemble a temporary local harness around the app's dev server or Chromium debug port.
 
@@ -36,6 +36,10 @@ In an OMP session the built-in browser is the first-class harness: `browser.open
 - Close tabs you opened with `browser.close` when done.
 
 Prefer the native browser over a bespoke Playwright script for a single probe. Reach for a checked-in Playwright/Cypress harness or raw CDP when the repo's own suite, a persistent multi-page flow, or a profile capture needs it.
+
+On OMP 18.10.2, native `action: "targets"` is available only through Tern or relay. Select an existing page with explicit `app.target` URL or title criteria. Verify a stable app marker after selection. Ordinary local or headless browser mode does not support target enumeration. Tern and relay target success remain unexercised in the native proof. Do not close user-owned tabs.
+
+The SDK accepts anchored text and diff notes through `ctx.annotations.submit` without UI when `deliver: "none"`. Quote and raw-diff-line mismatches reject. The native proof covers two valid anchors and two rejections, not overlay collection or composer delivery. No current plugin consumer needs another review tool. Defer custom annotation integration and live overlay claims until a concrete caller and a supported TUI are available.
 
 ## Generic Web Harness
 

@@ -27,9 +27,11 @@ Open a todolist with one entry per phase before launching anything.
 
 ## Phase B: Fan out
 
-Get each worker's descriptor from `pstack_agent` with `{role: "swarm workers", kind: "general"}`. Include the arm-specific `model` override for a race. Spawn all N workers in one native `task` batch using only each returned `agent`. The returned `model` is metadata, not a native `task` field. Workers run as native background task agents. Give each writer its own checkout or `/tmp/swarm-<slug>/worker-<n>/`, never a shared working tree. Pass `context` with the shared goal so workers coordinate cancellation through the native job/hub.
+Get each worker's descriptor from `pstack_agent` with `{role: "swarm workers", kind: "general"}`. Include the arm-specific `model` override for a race. Spawn all N workers in one native `task` batch using only each returned `agent`. The returned `model` is metadata, not a native `task` field. Ordinary tasks return final text by default, not `yield`. Eval `agent()` and `workpool` remain structured. Give each writer a distinct checkout or output directory. If the native schema advertises per-item `isolated`, use it only with isolation enabled and plan mode off. With one integration owner, use controlled `task.isolation.apply=false` and review retained patch or branch artifacts. Otherwise use the existing distinct-checkout fallback. Pass shared goal pointers in `context`. Use native owner-scoped job or Agent Hub controls for cancellation.
 
 When a worker needs a non-default pushed branch, prepare its isolated checkout from that exact branch before dispatch and include the checkout path in its brief.
+
+Never let sibling writers share a working tree. Verify each coding checkout's base, branch, and cwd. Check dependencies and environment files after clone fallback, and recheck private enablement. Do not change global settings. A main-session worktree or transcript fork does not isolate sibling workers, and native isolation does not replace Docker.
 
 Every brief stands alone. Include the goal, scope, exact slice or race arm, how to verify, and what to report. Reports use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect reports `ISSUES` and lists every issue it can prove, not only the first.
 
