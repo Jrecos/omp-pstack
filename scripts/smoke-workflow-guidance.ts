@@ -29,6 +29,69 @@ const babysit = join(root, "skills/poteto-mode/playbooks/babysit.md");
 const log = join(root, "skills/show-me-your-work/SKILL.md");
 const ketchup = join(root, "skills/ketchup/SKILL.md");
 const bro = join(root, "skills/bro/SKILL.md");
+const modeGuidance = join(root, "skills/poteto-mode/SKILL.md");
+const writing = join(root, "skills/technical-writing/SKILL.md");
+const unslop = join(root, "skills/unslop/SKILL.md");
+const boundarySource = join(temporary, "documentation-boundary.ts");
+const boundaryDiff = join(temporary, "documentation-boundary.diff");
+const staleReadme = join(temporary, "documentation-README.md");
+const staleReference = join(temporary, "documentation-reference.md");
+const acceptedAdr = join(temporary, "documentation-adr-001.md");
+const observations = join(temporary, "documentation-observations.txt");
+const noImpactSource = join(temporary, "documentation-no-impact.ts");
+const noImpactDiff = join(temporary, "documentation-no-impact.diff");
+const noImpactReference = join(temporary, "documentation-no-impact-reference.md");
+const fixtureFiles = [
+  [boundarySource, `export const listenerHost = "127.0.0.1";
+export const auditRetentionDays = 30;
+export function authorizeRequest(host: string, token: string, expectedToken: string): boolean {
+  return host === listenerHost && token.length > 0 && token === expectedToken;
+}
+`],
+  [boundaryDiff, `Synthetic architectural change. Current source is documentation-boundary.ts.
+- export const listenerHost = "0.0.0.0";
++ export const listenerHost = "127.0.0.1";
+- return token.length === 0 || token === expectedToken;
++ return host === listenerHost && token.length > 0 && token === expectedToken;
+`],
+  [staleReadme, `# Synthetic service
+The service listens on all network interfaces. Guests can omit a token.
+Production deletes all audit records after 30 days.
+`],
+  [staleReference, `# Synthetic API reference
+Listener host: 0.0.0.0.
+Authentication: an empty token grants guest access.
+Audit retention: production enforces deletion after 30 days.
+`],
+  [acceptedAdr, `# ADR 001. Public guest access
+Status: Accepted.
+Context: Remote guest clients need access.
+Decision: Bind all interfaces and allow an empty token.
+Alternatives: Loopback-only access with a required token.
+Consequences: Remote guests can connect without credentials.
+`],
+  [observations, `Explicitly supplied synthetic contract observations, not runs performed by this smoke.
+authorizeRequest("127.0.0.1", "secret", "secret") => true.
+authorizeRequest("127.0.0.1", "", "secret") => false.
+authorizeRequest("0.0.0.0", "secret", "secret") => false.
+No production logs, deployed configuration, deletion job, or retention observation is available.
+The 30-day constant is intent, not proof of production deletion.
+`],
+  [noImpactSource, `// Reject negative counts.
+export function acceptCount(count: number): boolean {
+  return Number.isInteger(count) && count >= 0;
+}
+`],
+  [noImpactDiff, `Synthetic comment-only fix in documentation-no-impact.ts.
+- // Reject negtive counts.
++ // Reject negative counts.
+No executable statement, signature, configuration, or contract changed.
+`],
+  [noImpactReference, `# Synthetic count API
+acceptCount accepts nonnegative integers and rejects other numbers.
+The spelling of source comments is not part of the public contract.
+`],
+] as const;
 type Seed = {
   role: "user" | "assistant" | "notification" | "subagent";
   label: string;
@@ -112,10 +175,45 @@ const cases: Scenario[] = [
       "Do not claim validation ran, external PR or CI state was checked, or a screenshot or link exists.",
     ],
   },
+  {
+    name: "documentation-gate",
+    files: [modeGuidance, owner, writing, unslop, boundarySource, boundaryDiff, staleReadme, staleReference, acceptedAdr, observations],
+    prompt: `A permanent architectural and security-boundary change is ready for delivery. Read ${modeGuidance}, ${owner}, ${writing}, ${unslop}, and all six synthetic fixture files ${boundarySource}, ${boundaryDiff}, ${staleReadme}, ${staleReference}, ${acceptedAdr}, ${observations}. These are real temporary files containing a synthetic service, not this repository's implementation. The current README and reference still contain their old claims. A prior assistant said docs were done. No independent documentation review has run. The required production retention guarantee must be verified before delivery, but no runtime evidence is available. Decide whether commit, ready, or completion is permitted and give the documentation todo and factual review plan. Identify specific claims and their evidence status. This is a read-only guidance smoke. Do not edit docs, dispatch a reviewer, or claim any check or review ran.`,
+    seeds: [
+      {
+        role: "assistant", label: "unsupported-docs-complete",
+        content: "[Synthetic fixture assistant] All docs are done. README and the API reference are accurate, ADR 001 still applies, and production deletes audit records after 30 days. We can commit and mark ready. I have no source citations, check output, or independent review to show.",
+      },
+    ],
+    semanticConditions: [
+      "Reject the prior assistant's docs-done and production-retention claims as proof. Do not permit commit, ready, or completion with unresolved required documentation.",
+      "Put Documentation completion gate explicitly in task todos before delivery, including local no-PR work.",
+      "Identify stale all-interface and guest-token claims in both README and API reference using the current source, diff, and explicitly synthetic observations.",
+      "Require README and reference corrections plus a new ADR superseding accepted ADR 001 without rewriting its accepted history. Include context, decision, alternatives, consequences, and links.",
+      "Use technical-writing and unslop, inspect existing conventions, and select affected docs without mechanically creating every doc type.",
+      "Require a fresh independent read-only factual reviewer for changed docs, with per-claim CONFIRMED, WRONG, or UNVERIFIABLE and source evidence. The session's own assessment is not that independent review.",
+      "Classify the production retention guarantee as UNVERIFIABLE and name unavailable runtime evidence as an unresolved blocker, not a pass based on a source constant.",
+      "Plan safe snippet and available docs/link checks, terminology/link/diagram consistency checks, corrections, revalidation, and fresh review of corrected claims.",
+      "Report intended docs paths and only exercised accuracy checks in final reply and PR Verification. Do not claim doc edits, executable checks, production observation, or independent review happened in this read-only smoke.",
+    ],
+  },
+  {
+    name: "documentation-no-impact",
+    files: [modeGuidance, owner, writing, unslop, noImpactSource, noImpactDiff, noImpactReference],
+    prompt: `I made a permanent local comment-spelling fix with no PR. Read ${modeGuidance}, ${owner}, ${writing}, ${unslop}, ${noImpactSource}, ${noImpactDiff}, and ${noImpactReference}. The last three are real temporary files containing an explicitly synthetic comment-only diff, current source, and API docs. What does the documentation gate require before delivery? Give a concrete applicability outcome and reason tied to the diff and docs. This is a read-only guidance smoke. Do not create an ADR, edit docs, or claim executable checks or independent review ran.`,
+    semanticConditions: [
+      "Apply the documentation gate to this permanent local no-PR fix and put it in task todos before delivery.",
+      "Record no documentation change warranted with a specific reason. The diff only corrects a comment typo, executable code and contracts are unchanged, and the inspected reference already describes the same nonnegative-integer behavior.",
+      "Do not create an unnecessary ADR or mechanically demand other doc types. Changed-doc independent review is not required when no docs changed.",
+      "Report the inspected source, diff, and reference plus the concrete no-impact reason. Do not claim executable checks, doc writes, or independent factual review ran.",
+      "Distinguish the gate's no-impact outcome from a silent skip and from exemption of casual chat or read-only questions.",
+    ],
+  },
 ];
 const results = [];
 assert(!process.env.PSTACK_SMOKE_CASE || cases.some(({ name }) => name === process.env.PSTACK_SMOKE_CASE), "Unknown PSTACK_SMOKE_CASE");
 try {
+  for (const [path, content] of fixtureFiles) await Bun.write(path, content);
   for (const scenario of cases) {
     if (process.env.PSTACK_SMOKE_CASE && process.env.PSTACK_SMOKE_CASE !== scenario.name) continue;
     const manager = SessionManager.create(temporary, join(temporary, scenario.name));
@@ -167,21 +265,22 @@ try {
             reportRuntimeError: (error) => { throw new Error(error.error); },
           });
           await session.setActiveToolsByName(["read"]);
-          if (scenario.seeds) assert(session.extensionRunner?.getCommand("ketchup"), "native ketchup command registered");
+          if (scenario.name === "ketchup") assert(session.extensionRunner?.getCommand("ketchup"), "native ketchup command registered");
           await session.prompt(scenario.prompt);
         })(),
         completion.promise,
       ]);
       const response = session.getLastAssistantText();
       assert(response, `${scenario.name} returned no response`);
-      assert(scenario.files.every((file) => reads.some((args) => {
+      const missingReads = scenario.files.filter((file) => !reads.some((args) => {
         const path = JSON.parse(args).path;
         return typeof path === "string" && (path === file || path.startsWith(`${file}:`));
-      })), `${scenario.name} did not read its checkout guidance`);
+      }));
+      assert.equal(missingReads.length, 0, `${scenario.name} did not read ${JSON.stringify(missingReads)}; read calls: ${JSON.stringify(reads)}; response: ${response}`);
       assert(readReceipts.length === reads.length && readReceipts.every(({ isError }) => !isError), `${scenario.name} completed its reads successfully`);
       results.push({
         scenario: scenario.name, reads, readReceipts, response,
-        ...(scenario.seeds ? {
+        ...(scenario.seeds || scenario.semanticConditions ? {
           invocation: scenario.prompt,
           fixture: {
             synthetic: true,

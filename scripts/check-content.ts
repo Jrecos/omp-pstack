@@ -193,8 +193,8 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     id: "mode-skill",
     pattern: /^skills\/poteto-mode\/SKILL\.md$/,
     kind: "omp/cli scenario",
-    artifacts: ["scripts/smoke.ts", "scripts/smoke-memory-context.ts"],
-    contract: "Mode skill translation proven by the real SDK session scenario: injection exactly once, native skill-prompt activation, branch replay, compaction/resume retention, opt-out. The authenticated memory-context smoke exercises consultation and corroboration against controlled primary fixture evidence.",
+    artifacts: ["scripts/smoke.ts", "scripts/smoke-memory-context.ts", "scripts/smoke-workflow-guidance.ts"],
+    contract: "Mode skill translation proven by the real SDK session scenario: injection exactly once, native skill-prompt activation, branch replay, compaction/resume retention, opt-out. The authenticated memory-context smoke exercises consultation and corroboration against controlled primary fixture evidence. Read-only workflow sessions exercise documentation-gate guidance against synthetic source and doc fixtures, not end-to-end doc writing or independent factual review. Recorded semantic conditions require review beyond read receipts.",
   },
   {
     id: "model-dispatch-skill",
@@ -264,7 +264,7 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     pattern: /^skills\/poteto-mode\/playbooks\/(autopilot-full|autopilot-stack|babysit|opening-a-pr)\.md$/,
     kind: "omp/cli scenario",
     artifacts: ["scripts/check-content.ts", "scripts/smoke-workflow-guidance.ts"],
-    contract: "Checkout-bound read-only OMP sessions exercise code-ready verification rounds and the owner's babysit/rebase decisions. The content checker validates links; no live forge PR or merge is exercised.",
+    contract: "Checkout-bound read-only OMP sessions exercise code-ready verification rounds, the owner's babysit/rebase decisions, and documentation completion guidance against synthetic fixtures. The content checker validates links. No live forge PR, merge, doc writing, or independent factual review is exercised. Recorded semantic conditions require review beyond read receipts.",
   },
   {
     id: "playbook-prose",
@@ -1050,7 +1050,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "931827b56242057584f7e61cf2e9dda40283428498fc7f06b9379796f9598a82";
+    const pinnedDigest = "c9d87da1c7cf1f6e49892d5b61265b86e12cc36a6cceb92c1d7354918faf169b";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

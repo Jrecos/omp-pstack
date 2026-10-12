@@ -685,7 +685,8 @@
           "kind": "omp/cli scenario",
           "artifacts": [
             "scripts/smoke.ts",
-            "scripts/smoke-memory-context.ts"
+            "scripts/smoke-memory-context.ts",
+            "scripts/smoke-workflow-guidance.ts"
           ]
         }
       }

@@ -33,7 +33,7 @@ describe("check-content inventory target presence", () => {
 			const source = `pstack/${PRESENT_TARGET}`;
 			const found = await checkFileEntry(
 				root,
-				adaptedEntry(source, PRESENT_TARGET, { kind: "omp/cli scenario", artifacts: ["scripts/smoke.ts", "scripts/smoke-memory-context.ts"] }),
+				adaptedEntry(source, PRESENT_TARGET, { kind: "omp/cli scenario", artifacts: ["scripts/smoke.ts", "scripts/smoke-memory-context.ts", "scripts/smoke-workflow-guidance.ts"] }),
 			);
 			expect(found).toEqual([
 				`${source}: upstream file missing at target ${PRESENT_TARGET} and no removal schema authorizes an adapted row's absence`,
@@ -65,10 +65,11 @@ describe("check-content inventory target presence", () => {
 			await mkdir(join(root, "scripts"), { recursive: true });
 			await writeFile(join(root, "scripts", "smoke.ts"), "");
 			await writeFile(join(root, "scripts", "smoke-memory-context.ts"), "");
+			await writeFile(join(root, "scripts", "smoke-workflow-guidance.ts"), "");
 			const source = `pstack/${PRESENT_TARGET}`;
 			const found = await checkFileEntry(
 				root,
-				adaptedEntry(source, PRESENT_TARGET, { kind: "omp/cli scenario", artifacts: ["scripts/smoke.ts", "scripts/smoke-memory-context.ts"] }),
+				adaptedEntry(source, PRESENT_TARGET, { kind: "omp/cli scenario", artifacts: ["scripts/smoke.ts", "scripts/smoke-memory-context.ts", "scripts/smoke-workflow-guidance.ts"] }),
 			);
 			expect(found).toEqual([]);
 		} finally {
