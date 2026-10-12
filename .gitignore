@@ -4,3 +4,4 @@ node_modules/
 .omp/pstack/state/
 .omp/pstack/secrets/
 *.tsbuildinfo
+proofs/native-models-failure.json

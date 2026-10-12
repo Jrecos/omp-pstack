@@ -23,7 +23,7 @@ omp plugin marketplace add https://github.com/Jrecos/omp-pstack
 omp plugin install omp-pstack@omp-pstack
 ```
 
-Use OMP 18.3.4 with this checkout. The pinned SDK uses the 18.3.4 settings registry for model-role dispatch.
+Use OMP 18.10.2 with this checkout. The SDK is pinned to 18.10.2. Native task completion uses final text, and writable workers can use schema-gated isolation.
 
 ### running the `pstack` CLI after install
 
@@ -77,6 +77,8 @@ two steps:
 2. use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) whenever you're doing anything that requires rigor.
 
 new here? the [pstack guide](./docs/guide/README.md) walks you through a first real task, from setup and prompting through verification and overnight runs. stuck, or unsure which skill fits? ask [`/poteto-help`](./skills/poteto-help/SKILL.md).
+
+The [native capability assessment](./docs/guide/native-capabilities.md) explains which host features fit P Stack, their measured effects, and the limits. Worktrees, worker isolation, and Benny's Docker boundary solve different problems.
 
 that's it. the other skills are situational. the mode uses them as needed. [`/setup-pstack`](./skills/setup-pstack/SKILL.md) asks you to approve a model pool, choose a reasoning budget, and confirm the role map. no model is used without your approval. an unset role needs setup.
 
@@ -180,11 +182,12 @@ Invoking [`/poteto-mode`](./skills/poteto-mode/SKILL.md) turns on persistent mod
 /interrogate review this pr.
 ```
 
-The [complete skills reference](./docs/guide/skills.md) lists all 52 discoverable skills with their purposes and source files. It separates 28 direct workflow skills from 24 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 52.
+The [complete skills reference](./docs/guide/skills.md) lists all 53 discoverable skills with their purposes and source files. It separates 29 direct workflow skills from 24 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 53.
 
 | New skill | Use it when |
 |---|---|
 | [`/poteto-help`](./skills/poteto-help/SKILL.md) | Find the skill, playbook, or principle for your goal and get a prompt to send. It runs only when you invoke it and does not start the work. |
+| [`/ketchup`](./skills/ketchup/SKILL.md) | Catch up on this chat since your last message, in plain words, with enough context to decide each action item. |
 | [`/correct`](./skills/correct/SKILL.md) | Fix repeated agent mistakes at the highest enforceable level, with architecture first and documentation last. Pair each rule with its enforcement. |
 | [`/benchmark-checklist`](./skills/benchmark-checklist/SKILL.md) | Vet a measured number for its limiter, tuning, errors, repeatability, end-to-end relevance, and whether the timed work ran. |
 
@@ -245,11 +248,13 @@ help:              /poteto-help which skill should i use to review this branch?
 
 ## the `poteto-agent` and Comment Sicko subagents
 
-pstack ships the [`poteto-agent`](./agents/poteto-agent.md) wrapper to run poteto's style end to end. for role-based dispatch, call `pstack_agent` with the configured role and `kind: "poteto"`, then pass its returned `agent` to native `task`. the prepared agent pins your approved model and reads `poteto-mode` in full, including its principles index, before doing any work.
+[`/poteto-mode`](./skills/poteto-mode/SKILL.md) runs in the chat that receives it. That chat owns the playbook, the todo list, and every subagent spawn.
+
+pstack ships the [`poteto-agent`](./agents/poteto-agent.md) wrapper for delegates spawned during a run. Resolve the configured role through `pstack_agent` with `kind: "poteto"`, then pass its returned `agent` to native `task`. The prepared agent pins your approved model and reads `poteto-mode` in full, including its inline principles index, before doing any work. Substituting the generic `task` agent skips that read and drifts. Do not spawn `poteto-agent` to run the playbook itself.
 
 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) and prepared Poteto agents use the same style instructions.
 
-pstack also ships [Comment Sicko](./agents/comment-sicko.md), a read-only comment reviewer shipped as a native agent. dispatch it with a native `task` call and `agent` set to `Comment Sicko`. usually invoke it through [`/no-comments`](./skills/no-comments/SKILL.md), not directly.
+pstack ships [Comment Sicko](./agents/comment-sicko.md), a read-only comment reviewer available as the native `comment-sicko` agent. Dispatch native `task` with `agent: "comment-sicko"`. Usually invoke it through [`/no-comments`](./skills/no-comments/SKILL.md), not directly.
 
 ## principles
 [![Illustrated Jrecos supervises OMP robot agents verifying a real machine and capturing evidence.](./assets/readme-verification.webp)](./docs/guide/06-verify-and-ship.md)
@@ -351,6 +356,6 @@ The token needs permission to write repository contents. Future branch rules mus
 
 ## credits and license
 
-Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.15`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
+Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.20`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
 
 Released under the [MIT License](./LICENSE). The original copyright notice is retained.

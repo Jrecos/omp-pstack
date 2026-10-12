@@ -1,0 +1,1504 @@
+{
+  "version": 1,
+  "capturedAt": "2026-10-12T19:40:55.556Z",
+  "fixtureOnly": true,
+  "expectedVersion": "18.10.2",
+  "host": {
+    "resolvedBinary": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+    "expectedVersion": "18.10.2",
+    "versionCommand": {
+      "argv": [
+        "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+        "--version"
+      ],
+      "cwd": "/tmp/pstack-native-capabilities-sz5XVR",
+      "code": 0,
+      "signal": null,
+      "timedOut": false,
+      "overflow": false,
+      "stdout": "omp/18.10.2\n",
+      "stderr": "",
+      "durationMs": 593.672907
+    },
+    "binarySha256": "df9f273cb0120795940f918f94a22aa8d7c667f2fd97ec21e74f841c2c878f3e",
+    "actualVersion": "18.10.2"
+  },
+  "sdkPackages": {
+    "pi-coding-agent": {
+      "version": "18.10.2",
+      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/src/index.ts",
+      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/package.json"
+    },
+    "pi-agent-core": {
+      "version": "18.10.2",
+      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-agent-core/src/index.ts",
+      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-agent-core/package.json"
+    },
+    "pi-ai": {
+      "version": "18.10.2",
+      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-ai/src/index.ts",
+      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-ai/package.json"
+    },
+    "pi-catalog": {
+      "version": "18.10.2",
+      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-catalog/src/index.ts",
+      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-catalog/package.json"
+    },
+    "pi-tui": {
+      "version": "18.10.2",
+      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-tui/src/index.ts",
+      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-tui/package.json"
+    },
+    "pi-utils": {
+      "version": "18.10.2",
+      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-utils/src/index.ts",
+      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-utils/package.json"
+    },
+    "pi-natives": {
+      "version": "18.10.2",
+      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-natives/native/index.js",
+      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-natives/package.json"
+    }
+  },
+  "runtime": {
+    "bun": "1.3.14",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "producerInputs": {
+    "bun.lock": "c832a5b24d7dd36e6e37a3b6cd3ec78a196f0f86f5e2dc4537bd151becea3a02",
+    "package.json": "06bec20e0c32d1ead5ffc1b1f5c59c67787154981678e9d5a303dc62f053c3c3",
+    "scripts/smoke-native-capabilities.ts": "359f33efb0e895819a7de173fe29889ddf0a0df85fecd5722d2739a294b83131",
+    "sdk/pi-agent-core/package.json": "0c383715195b2fc01accea38ed83cfb1febd8a54229f937d9078532dcd8bba3a",
+    "sdk/pi-ai/package.json": "72c73936572581a7a843cc49d99a22150eb78dda86d8322813c961d84b56b41a",
+    "sdk/pi-catalog/package.json": "bd48518e6f6aa6ac8358040471eb87b14070ac51eb9e3314743770213aca4581",
+    "sdk/pi-coding-agent/package.json": "f503589a065ac66872784a8ee3ccf0d2c25f48b71f6372c32093f0d35b509d12",
+    "sdk/pi-coding-agent/src/async/job-manager.ts": "e6afaa2f4acfb2832577b32b0059abf14414ab03ac59e656a565f6a9760f89c1",
+    "sdk/pi-coding-agent/src/cli/anonymize-cli.ts": "96d931b12a44ce034dc774ad755cef60bde611a1a4377d6dcae26d2d60099922",
+    "sdk/pi-coding-agent/src/cli/worktree-cli.ts": "6e9e5ad05c2bc8c588fb803977e56584d3e97ec322d6a1623fce9becd58a5af4",
+    "sdk/pi-coding-agent/src/commands/session.ts": "ef5d8608508f8372d655260d8f060d92081e5f6b03a49d35f1df3267d83d0922",
+    "sdk/pi-coding-agent/src/exec/bash-executor.ts": "43fa154c1d92fba24e5dab518d07117c997aaa1e59acd3255cf293806aaa1972",
+    "sdk/pi-coding-agent/src/extensibility/custom-commands/bundled/annotate/api.ts": "4bb3bf2a3a06cda59cff20432a78662c678630628feda7e44e752f714748fbc9",
+    "sdk/pi-coding-agent/src/extensibility/extensions/runner.ts": "66eb6af97dc83ec1489073da3858c19d03746e9eb070f4d92f46f94810c0db0a",
+    "sdk/pi-coding-agent/src/modes/runtime-init.ts": "eab4b6a00d52f036f654f9a331cea0239f2e6a2e060b11879b812a19485a54ae",
+    "sdk/pi-coding-agent/src/sdk.ts": "c5163ce3511d7dd535660ce383bb0fb7fe4eda50f24715ba286453e2ef13f862",
+    "sdk/pi-coding-agent/src/session/agent-session.ts": "fe78e49d5d5251066213fba7ee8cdc68b3202e60a3d8c4329a8ef75c3e6004db",
+    "sdk/pi-coding-agent/src/session/session-anonymizer.ts": "b32a3fc92ba729f6d01464bba1ec626ef87cc8c4a0703c07bd8db93e06aa45bc",
+    "sdk/pi-coding-agent/src/session/session-loader.ts": "3f19286eaba9c9e009fc91580666dec093f0e4e934b8a00f4fdee4ad825f13e3",
+    "sdk/pi-coding-agent/src/session/session-manager.ts": "6ea1265b55a945b5ea9c9031497252b839960c37237e1f8c7c7284ddc2df6135",
+    "sdk/pi-coding-agent/src/session/session-transfer.ts": "4d109833d0dbaef51ebb9eec530894880ae28c34477e5192b63d9585a743a002",
+    "sdk/pi-coding-agent/src/session/sub-sessions.ts": "eb750046dd76902385a86efd40259f77ba340ab00bdc4236f6327750d9382e91",
+    "sdk/pi-coding-agent/src/task/index.ts": "307b1972662ebe5e1188fc805d801cb480b1294bc4cec4587382f44621cd1a06",
+    "sdk/pi-coding-agent/src/task/settings.ts": "23af21be86dae11b249e1f0d5c6ecda49dc028a1a54e78cc0628670e220b2828",
+    "sdk/pi-coding-agent/src/task/types.ts": "4a02862fc37eecf52981681a3756210330982531151005008b1698d5ce9585c1",
+    "sdk/pi-coding-agent/src/tools/bash.ts": "353460d1c3fb753a1497f2c809ea8d1dbfec70fe0f5086cfe88b4f6e5ba17882",
+    "sdk/pi-natives/package.json": "065d31d84029dddc2b56122bb40625e7ae9a9f279b305a53f10433ede3f9c267",
+    "sdk/pi-tui/package.json": "76d555ecfd301420a196620340ac843e06e7053431daa48d78be65e2836d311c",
+    "sdk/pi-utils/package.json": "ea1a6e8fc11f91865e8d1ca05f21b7d7e9a043b46345b31b1a1839a8fb2011d1"
+  },
+  "producerDigest": "d50686c6729df12e422a37c1ef9101e0d6b1e6becd8de213599806dd18a3bd5f",
+  "privacy": {
+    "realHistoriesRead": false,
+    "authImportedOrExported": false,
+    "isolatedChildHome": true
+  },
+  "requestGuards": {
+    "attemptedModelDispatches": 0,
+    "credentialRequests": 0,
+    "blockedFetches": 0,
+    "blockedPreconnects": 2
+  },
+  "checks": {
+    "hostVersion": true,
+    "sdkVersion": true,
+    "noModelDispatch": true,
+    "noHttpFetchAttempt": true,
+    "sdkResourcesDisposed": true
+  },
+  "errors": [],
+  "cleanupErrors": [],
+  "proposals": [
+    {
+      "id": 1,
+      "name": "Main-session worktrees",
+      "status": "deferred",
+      "subcapabilities": [
+        {
+          "name": "explicit CLI worktree creation",
+          "evidence": "native-cli",
+          "raw": {
+            "command": {
+              "argv": [
+                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "worktree",
+                "add",
+                "-b",
+                "native-proof",
+                "/tmp/pstack-native-capabilities-sz5XVR/worktree",
+                "HEAD"
+              ],
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "code": 0,
+              "signal": null,
+              "timedOut": false,
+              "overflow": false,
+              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at c04d65b fixture\n",
+              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-sz5XVR/repository/tracked.txt -> /tmp/pstack-native-capabilities-sz5XVR/worktree/tracked.txt: Operation not supported (os error 95)\n",
+              "durationMs": 754.8338330000001
+            },
+            "before": {
+              "tracked": "365bbc197309687a64ee63ff74d06a4d2704240d00545096ad359c5a8c0192ab",
+              "artifact": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27",
+              "head": "c04d65b53a5b5f1e86c428b73d4cd66aad14e3f5"
+            },
+            "settings": {
+              "worktree": {
+                "clone": true
+              },
+              "isolation": {
+                "backend": "reflink"
+              },
+              "startup": {
+                "checkUpdate": false,
+                "setupWizard": false
+              },
+              "memory": {
+                "backend": "off"
+              },
+              "autolearn": {
+                "enabled": false
+              }
+            },
+            "branch": "native-proof",
+            "initialChildSha256": "cc2e4bb51f522b77c0c3ad04f7a87386a7e06d4fa287c004b6c066410c5c24dc",
+            "childSha256": "b1bc5d359a36df977e1338dbbcc1cf516b34b9417c88367159d9041f3084bbd8",
+            "sourceAfterChildEdit": "365bbc197309687a64ee63ff74d06a4d2704240d00545096ad359c5a8c0192ab",
+            "sourceHead": "c04d65b53a5b5f1e86c428b73d4cd66aad14e3f5"
+          },
+          "checks": {
+            "branchCreated": true,
+            "trackedEditIndependent": true,
+            "originalTrackedFileUnchanged": true,
+            "originalHeadUnchanged": true,
+            "originalIgnoredArtifactUnchanged": true
+          },
+          "errors": [],
+          "limits": [
+            "This is omp worktree add, not automatic interactive main-session startup.",
+            "Checkout separation is not a process, network, or Docker security boundary."
+          ],
+          "status": "passed"
+        },
+        {
+          "name": "ignored artifact preservation",
+          "evidence": "native-cli",
+          "raw": {
+            "command": {
+              "argv": [
+                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "worktree",
+                "add",
+                "-b",
+                "native-proof",
+                "/tmp/pstack-native-capabilities-sz5XVR/worktree",
+                "HEAD"
+              ],
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "code": 0,
+              "signal": null,
+              "timedOut": false,
+              "overflow": false,
+              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at c04d65b fixture\n",
+              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-sz5XVR/repository/tracked.txt -> /tmp/pstack-native-capabilities-sz5XVR/worktree/tracked.txt: Operation not supported (os error 95)\n",
+              "durationMs": 754.8338330000001
+            },
+            "sourceSha256": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27",
+            "settings": {
+              "worktree": {
+                "clone": true
+              },
+              "isolation": {
+                "backend": "reflink"
+              },
+              "startup": {
+                "checkUpdate": false,
+                "setupWizard": false
+              },
+              "memory": {
+                "backend": "off"
+              },
+              "autolearn": {
+                "enabled": false
+              }
+            },
+            "ignoredArtifactPresent": false,
+            "ignoredArtifactPreserved": false,
+            "childArtifactSha256": null,
+            "cloneReported": false,
+            "fallbackReported": true,
+            "ficloneMentioned": true
+          },
+          "checks": {
+            "cloneOutcomeReported": true,
+            "clonedArtifactMatches": true,
+            "presentArtifactMatches": true
+          },
+          "errors": [],
+          "limits": [
+            "A documented plain-checkout fallback can omit ignored build artifacts.",
+            "Availability is measured on this filesystem. No cloning speedup is inferred."
+          ],
+          "unavailable": "Native clone fallback was observed. The required ignored artifact is absent from the plain checkout, so artifact preservation is unavailable on this run.",
+          "status": "unavailable"
+        },
+        {
+          "name": "automatic main-session worktree",
+          "evidence": "unexercised",
+          "reason": "Requires a fresh interactive launch with worktree.onStart create, plus resume and linked-worktree negative cases.",
+          "limits": [
+            "No runtime success is claimed."
+          ],
+          "status": "deferred"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Isolated task workers",
+      "status": "deferred",
+      "subcapabilities": [
+        {
+          "name": "session-bound TaskTool isolation gates",
+          "evidence": "native-sdk-schema",
+          "raw": {
+            "rows": [
+              {
+                "isolationEnabled": false,
+                "planMode": false,
+                "isolatedPresent": false,
+                "outputSchemaPresent": false,
+                "schemaModePresent": false,
+                "modelOverridePresent": false,
+                "solutionSpaceRequired": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "context": {
+                      "type": "string"
+                    },
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "task": {
+                            "type": "string"
+                          },
+                          "solutionSpace": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "agent": {
+                            "type": "string",
+                            "default": "task"
+                          },
+                          "tools": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "task",
+                          "solutionSpace"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "context",
+                    "tasks"
+                  ]
+                }
+              },
+              {
+                "isolationEnabled": false,
+                "planMode": true,
+                "isolatedPresent": false,
+                "outputSchemaPresent": false,
+                "schemaModePresent": false,
+                "modelOverridePresent": false,
+                "solutionSpaceRequired": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "context": {
+                      "type": "string"
+                    },
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "task": {
+                            "type": "string"
+                          },
+                          "solutionSpace": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "agent": {
+                            "type": "string",
+                            "default": "task"
+                          },
+                          "tools": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "task",
+                          "solutionSpace"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "context",
+                    "tasks"
+                  ]
+                }
+              },
+              {
+                "isolationEnabled": true,
+                "planMode": false,
+                "isolatedPresent": true,
+                "outputSchemaPresent": false,
+                "schemaModePresent": false,
+                "modelOverridePresent": false,
+                "solutionSpaceRequired": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "context": {
+                      "type": "string"
+                    },
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "task": {
+                            "type": "string"
+                          },
+                          "solutionSpace": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "agent": {
+                            "type": "string",
+                            "default": "task"
+                          },
+                          "tools": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "isolated": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "task",
+                          "solutionSpace"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "context",
+                    "tasks"
+                  ]
+                }
+              },
+              {
+                "isolationEnabled": true,
+                "planMode": true,
+                "isolatedPresent": false,
+                "outputSchemaPresent": false,
+                "schemaModePresent": false,
+                "modelOverridePresent": false,
+                "solutionSpaceRequired": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "context": {
+                      "type": "string"
+                    },
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "task": {
+                            "type": "string"
+                          },
+                          "solutionSpace": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "agent": {
+                            "type": "string",
+                            "default": "task"
+                          },
+                          "tools": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "task",
+                          "solutionSpace"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "context",
+                    "tasks"
+                  ]
+                }
+              }
+            ],
+            "actualModelMetadata": "anthropic/claude-sonnet-4-5",
+            "observedModelDispatches": 0
+          },
+          "checks": {
+            "fourSessionBoundGates": true,
+            "isolatedOnlyEnabledNormal": true,
+            "solutionSpaceRequired": true,
+            "noPerCallModelOverride": true
+          },
+          "errors": [],
+          "limits": [
+            "Schema observations do not exercise a worker, its filesystem, or integration of its changes."
+          ],
+          "status": "passed"
+        },
+        {
+          "name": "actual isolated worker execution",
+          "evidence": "unexercised",
+          "reason": "Requires an authenticated generated worker, with separate apply-off and apply-on filesystem observations.",
+          "limits": [
+            "No runtime success is claimed."
+          ],
+          "status": "deferred"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Plain task results",
+      "status": "deferred",
+      "subcapabilities": [
+        {
+          "name": "default plain task schema",
+          "evidence": "native-sdk-schema",
+          "raw": {
+            "rows": [
+              {
+                "isolationEnabled": false,
+                "planMode": false,
+                "isolatedPresent": false,
+                "outputSchemaPresent": false,
+                "schemaModePresent": false,
+                "modelOverridePresent": false,
+                "solutionSpaceRequired": true,
+                "schemaSha256": "7e078013d10040982a9a6c92f2056e5826258457c2ece6ac2e73e45afa8785b1"
+              },
+              {
+                "isolationEnabled": false,
+                "planMode": true,
+                "isolatedPresent": false,
+                "outputSchemaPresent": false,
+                "schemaModePresent": false,
+                "modelOverridePresent": false,
+                "solutionSpaceRequired": true,
+                "schemaSha256": "7e078013d10040982a9a6c92f2056e5826258457c2ece6ac2e73e45afa8785b1"
+              },
+              {
+                "isolationEnabled": true,
+                "planMode": false,
+                "isolatedPresent": true,
+                "outputSchemaPresent": false,
+                "schemaModePresent": false,
+                "modelOverridePresent": false,
+                "solutionSpaceRequired": true,
+                "schemaSha256": "3f87561a3d20952972fb60ee9b456ace8362350df73b12bb295664141cd7d4a3"
+              },
+              {
+                "isolationEnabled": true,
+                "planMode": true,
+                "isolatedPresent": false,
+                "outputSchemaPresent": false,
+                "schemaModePresent": false,
+                "modelOverridePresent": false,
+                "solutionSpaceRequired": true,
+                "schemaSha256": "7e078013d10040982a9a6c92f2056e5826258457c2ece6ac2e73e45afa8785b1"
+              }
+            ],
+            "taskStructuredExplicitlyOverridden": false
+          },
+          "checks": {
+            "fourNativeSchemas": true,
+            "noStructuredFieldsByDefault": true
+          },
+          "errors": [],
+          "limits": [
+            "No generated agent is dispatched here. Plain completion behavior needs fresh smoke-models evidence."
+          ],
+          "status": "passed"
+        },
+        {
+          "name": "generated-agent plain completion",
+          "evidence": "unexercised",
+          "reason": "Parent-owned scripts/smoke-models.ts must produce fresh literal-output and native task receipts after the SDK migration. No historical result is imported.",
+          "limits": [
+            "No runtime success is claimed."
+          ],
+          "status": "deferred"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Forks and terminal launch",
+      "status": "deferred",
+      "subcapabilities": [
+        {
+          "name": "persisted transcript fork",
+          "evidence": "native-sdk-runtime",
+          "raw": {
+            "oldFile": "/tmp/pstack-native-capabilities-sz5XVR/transfer-source/2026-10-12T19-40-52-110Z_01a131a1-d60e-7000-bb3f-e445e2dd016a.jsonl",
+            "newFile": "/tmp/pstack-native-capabilities-sz5XVR/transfer-source/2026-10-12T19-40-52-114Z_01a131a1-d612-7000-8ca6-1617f449f663.jsonl",
+            "oldId": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
+            "newId": "01a131a1-d612-7000-8ca6-1617f449f663",
+            "oldCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+            "newCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+            "parentSession": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
+            "sourceSha256Before": "6cbd7507014396b4aacab85e46b1ee93a211fa9f6d77d5b028a535340edbeb25",
+            "sourceSha256After": "6cbd7507014396b4aacab85e46b1ee93a211fa9f6d77d5b028a535340edbeb25"
+          },
+          "checks": {
+            "newIdentity": true,
+            "newFile": true,
+            "cwdUnchanged": true,
+            "parentIdentityRecorded": true,
+            "originalBytesUnchanged": true
+          },
+          "errors": [],
+          "limits": [
+            "SessionManager.fork is exercised headlessly. The /fork command and terminal launch are not.",
+            "A transcript fork retains its cwd and provides no checkout isolation."
+          ],
+          "status": "passed"
+        },
+        {
+          "name": "terminal fork and openTerminal",
+          "evidence": "unexercised",
+          "reason": "Requires a persisted interactive session and a supported live multiplexer. Verify parent usability, child session identity and shared cwd.",
+          "limits": [
+            "No runtime success is claimed."
+          ],
+          "status": "deferred"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Job metadata and cancellation",
+      "status": "passed",
+      "subcapabilities": [
+        {
+          "name": "native bash job inspection and cancellation",
+          "evidence": "native-sdk-runtime",
+          "raw": {
+            "start": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Backgrounded as job bg_1 (killed once it has run 20s in total; `timeout: 0` disables the deadline); its output is injected into the conversation as a follow-up the moment it finishes. Do NOT poll for it (no `sleep`, `ps`, `pgrep`, `top`, `pidwait`, log tailing): every poll is a wasted turn. Do other work, or end your reply and wait to be woken."
+                }
+              ],
+              "details": {
+                "async": {
+                  "state": "running",
+                  "jobId": "bg_1",
+                  "type": "bash"
+                },
+                "timeoutSeconds": 20
+              }
+            },
+            "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
+            "jobId": "bg_1",
+            "pid": 3094109,
+            "readyMs": 28.834187000000384,
+            "cancelToSettlementMs": 28.332086000000345,
+            "snapshot": {
+              "running": [
+                {
+                  "id": "bg_1",
+                  "type": "bash",
+                  "status": "running",
+                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid...",
+                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
+                  "startTime": 1791834055487
+                }
+              ],
+              "recent": [],
+              "delivery": {
+                "queued": 0,
+                "delivering": false,
+                "pendingJobIds": []
+              }
+            },
+            "inspection": {
+              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "pids": [
+                3094109
+              ],
+              "output": "NATIVE_JOB_READY\n"
+            },
+            "foreignInspection": null,
+            "foreignCancellation": false,
+            "accepted": true,
+            "settled": {
+              "running": [],
+              "recent": [
+                {
+                  "id": "bg_1",
+                  "type": "bash",
+                  "status": "cancelled",
+                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid...",
+                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
+                  "startTime": 1791834055487,
+                  "endTime": 1791834055517
+                }
+              ],
+              "delivery": {
+                "queued": 0,
+                "delivering": false,
+                "pendingJobIds": []
+              }
+            },
+            "terminal": {
+              "id": "bg_1",
+              "type": "bash",
+              "status": "cancelled",
+              "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid...",
+              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
+              "startTime": 1791834055487,
+              "endTime": 1791834055517
+            },
+            "finalInspection": {
+              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "pids": [],
+              "output": "[Command cancelled]\nNATIVE_JOB_READY\n"
+            },
+            "pidAliveAfter": false,
+            "completionMarkerPresent": false
+          },
+          "checks": {
+            "runningMetadata": true,
+            "inspectCommandAndCwd": true,
+            "foreignRootCannotInspectOrCancel": true,
+            "cancellationAccepted": true,
+            "cancellationSettled": true,
+            "processExited": true,
+            "completionMarkerAbsent": true
+          },
+          "errors": [],
+          "limits": [
+            "An independent SDK root is used for the foreign-job check. Shared-manager subagent ownership is not exercised.",
+            "Rendered job cards and human cancellation controls are not exercised."
+          ],
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Browser target adoption",
+      "status": "deferred",
+      "subcapabilities": [
+        {
+          "name": "Tern or relay targets",
+          "evidence": "unexercised",
+          "reason": "Requires an attached Tern pane or omp browser relay with two known pages. Ordinary headless browser availability is not target-adoption proof.",
+          "limits": [
+            "No runtime success is claimed."
+          ],
+          "status": "deferred"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Diagnostic anonymization",
+      "status": "passed",
+      "subcapabilities": [
+        {
+          "name": "fixture transcript anonymization and refusals",
+          "evidence": "native-cli",
+          "raw": {
+            "command": {
+              "argv": [
+                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "anonymize",
+                "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl",
+                "--out",
+                "/tmp/pstack-native-capabilities-sz5XVR/anonymized"
+              ],
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "code": 0,
+              "signal": null,
+              "timedOut": false,
+              "overflow": false,
+              "stdout": "Anonymized 2 transcripts → /tmp/pstack-native-capabilities-sz5XVR/anonymized\nSkipped 1 malformed record in subagents/seg6.jsonl\nNot exported (no readable session header): subagents/seg5.jsonl\nTurn contents and error text are redacted and paths/literals replaced; metadata such as model names is kept — review before sharing.\n",
+              "stderr": "",
+              "durationMs": 717.8983210000001
+            },
+            "syntheticFixture": true,
+            "exportedMembers": [
+              "session.jsonl",
+              "subagents/seg6.jsonl"
+            ],
+            "seededLeaks": [
+              {
+                "seed": 1,
+                "occurrences": 0
+              },
+              {
+                "seed": 2,
+                "occurrences": 0
+              },
+              {
+                "seed": 3,
+                "occurrences": 0
+              }
+            ],
+            "sourceMetadata": [
+              {
+                "id": "01a131a1-cb43-7000-be6e-eb170cc6982d",
+                "type": "session"
+              },
+              {
+                "id": "e4d4da45",
+                "type": "message",
+                "role": "user"
+              },
+              {
+                "id": "fb88e214",
+                "type": "custom"
+              }
+            ],
+            "exportMetadata": [
+              {
+                "id": "01a131a1-cb43-7000-be6e-eb170cc6982d",
+                "type": "session"
+              },
+              {
+                "id": "e4d4da45",
+                "type": "message",
+                "role": "user"
+              },
+              {
+                "id": "fb88e214",
+                "type": "custom"
+              }
+            ],
+            "sourceChildMetadata": [
+              {
+                "id": "01a131a1-cb47-7000-a997-cf2edb48326c",
+                "type": "session"
+              },
+              {
+                "id": "61605160",
+                "type": "message",
+                "role": "user"
+              },
+              {
+                "id": "9c9091f0",
+                "type": "custom"
+              }
+            ],
+            "exportChildMetadata": [
+              {
+                "id": "01a131a1-cb47-7000-a997-cf2edb48326c",
+                "type": "session"
+              },
+              {
+                "id": "61605160",
+                "type": "message",
+                "role": "user"
+              },
+              {
+                "id": "9c9091f0",
+                "type": "custom"
+              }
+            ],
+            "sourceHashesBefore": {
+              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl": "db1ddf06f38a24a015e1561b01f849dabfccdeb215886e325987a85ae462f1ab",
+              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d/2026-10-12T19-40-49-351Z_01a131a1-cb47-7000-a997-cf2edb48326c.jsonl": "7ad80e1030a35748748666909f4eb7db7f9d0978f104caa7c23839105c757d7d",
+              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
+            },
+            "sourceHashesAfter": {
+              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl": "db1ddf06f38a24a015e1561b01f849dabfccdeb215886e325987a85ae462f1ab",
+              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d/2026-10-12T19-40-49-351Z_01a131a1-cb47-7000-a997-cf2edb48326c.jsonl": "7ad80e1030a35748748666909f4eb7db7f9d0978f104caa7c23839105c757d7d",
+              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
+            },
+            "refusals": [
+              {
+                "argv": [
+                  "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                  "anonymize",
+                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl",
+                  "--out",
+                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source"
+                ],
+                "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+                "code": 2,
+                "signal": null,
+                "timedOut": false,
+                "overflow": false,
+                "stdout": "",
+                "stderr": "Error: --out /tmp/pstack-native-capabilities-sz5XVR/anonymous-source would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
+                "durationMs": 684.6839550000004
+              },
+              {
+                "argv": [
+                  "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                  "anonymize",
+                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl",
+                  "--out",
+                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d"
+                ],
+                "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+                "code": 2,
+                "signal": null,
+                "timedOut": false,
+                "overflow": false,
+                "stdout": "",
+                "stderr": "Error: --out /tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
+                "durationMs": 662.5987910000003
+              },
+              {
+                "argv": [
+                  "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                  "anonymize",
+                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl",
+                  "--out",
+                  "/tmp/pstack-native-capabilities-sz5XVR/nonempty-export"
+                ],
+                "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+                "code": 2,
+                "signal": null,
+                "timedOut": false,
+                "overflow": false,
+                "stdout": "",
+                "stderr": "Error: --out /tmp/pstack-native-capabilities-sz5XVR/nonempty-export is not empty; choose a new or empty directory\nRun `omp --help` for available flags.\n",
+                "durationMs": 684.2832200000003
+              }
+            ]
+          },
+          "checks": {
+            "parentAndChildExported": true,
+            "noSeededLeaks": true,
+            "eventIdsTypesAndRolesRetained": true,
+            "childEventIdsTypesAndRolesRetained": true,
+            "malformedRecordReported": true,
+            "unreadableChildReported": true,
+            "rawDirectoryRefused": true,
+            "childDirectoryRefused": true,
+            "nonemptyDirectoryRefused": true,
+            "sourceBytesUnchanged": true,
+            "sourceMemberSetUnchanged": true,
+            "refusalContentsUnchanged": true
+          },
+          "errors": [],
+          "limits": [
+            "Seeded-canary absence is not general anonymization accuracy. Manually review any diagnostic export before sharing.",
+            "Only generated private fixtures are opened. No real session history is read."
+          ],
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Session transfer",
+      "status": "passed",
+      "subcapabilities": [
+        {
+          "name": "session pack, unpack, divergence and moved marker",
+          "evidence": "native-cli",
+          "raw": {
+            "pack": {
+              "argv": [
+                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "session",
+                "pack",
+                "/tmp/pstack-native-capabilities-sz5XVR/transfer-source/2026-10-12T19-40-52-110Z_01a131a1-d60e-7000-bb3f-e445e2dd016a.jsonl",
+                "/tmp/pstack-native-capabilities-sz5XVR/transfer.tar"
+              ],
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "code": 0,
+              "signal": null,
+              "timedOut": false,
+              "overflow": false,
+              "stdout": "/tmp/pstack-native-capabilities-sz5XVR/transfer.tar\n",
+              "stderr": "",
+              "durationMs": 681.0294819999999
+            },
+            "unpack": {
+              "argv": [
+                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "session",
+                "unpack",
+                "/tmp/pstack-native-capabilities-sz5XVR/transfer.tar",
+                "--cwd",
+                "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout"
+              ],
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout",
+              "code": 0,
+              "signal": null,
+              "timedOut": false,
+              "overflow": false,
+              "stdout": "/tmp/pstack-native-capabilities-sz5XVR/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-sz5XVR-receiver-checkout--/2026-10-12T19-40-52-110Z_01a131a1-d60e-7000-bb3f-e445e2dd016a.jsonl\n",
+              "stderr": "Unpacked session (01a131a1-d60e-7000-bb3f-e445e2dd016a).\n",
+              "durationMs": 721.4140529999995
+            },
+            "divergentUnpack": {
+              "argv": [
+                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "session",
+                "unpack",
+                "/tmp/pstack-native-capabilities-sz5XVR/transfer.tar",
+                "--cwd",
+                "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout"
+              ],
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout",
+              "code": 0,
+              "signal": null,
+              "timedOut": false,
+              "overflow": false,
+              "stdout": "/tmp/pstack-native-capabilities-sz5XVR/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-sz5XVR-receiver-checkout--/2026-10-12T19-40-54-198Z_01a131a1-de36-7000-aefc-1d98bc4b68d9.jsonl\n",
+              "stderr": "The local copy of this session diverged; unpacked as a fork (01a131a1-de36-7000-aefc-1d98bc4b68d9).\n",
+              "durationMs": 689.6515300000001
+            },
+            "moved": {
+              "argv": [
+                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "session",
+                "moved",
+                "/tmp/pstack-native-capabilities-sz5XVR/moved-copy.jsonl",
+                "--to",
+                "fixture-recipient"
+              ],
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "code": 0,
+              "signal": null,
+              "timedOut": false,
+              "overflow": false,
+              "stdout": "",
+              "stderr": "",
+              "durationMs": 705.8286189999999
+            },
+            "syntheticFixture": true,
+            "manifest": {
+              "version": 1,
+              "id": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "omp": "18.10.2"
+            },
+            "archiveMembers": [
+              "artifacts/payload.txt",
+              "manifest.json",
+              "session.jsonl"
+            ],
+            "archiveSha256": "05c5c83212ac9f27eff2919f354926ffeb1dfdc049df15b61ff32961098a5c80",
+            "before": {
+              "transcript": "6cbd7507014396b4aacab85e46b1ee93a211fa9f6d77d5b028a535340edbeb25",
+              "artifact": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27"
+            },
+            "after": {
+              "transcript": "6cbd7507014396b4aacab85e46b1ee93a211fa9f6d77d5b028a535340edbeb25",
+              "artifact": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27"
+            },
+            "sourceId": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
+            "sourceCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+            "receivedId": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
+            "receivedCwd": "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout",
+            "receivedArtifactSha256": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27",
+            "arrived": {
+              "kind": "arrived",
+              "fromCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout"
+            },
+            "divergentId": "01a131a1-de36-7000-aefc-1d98bc4b68d9",
+            "divergentParent": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
+            "divergentOriginalSha256Before": "778449f1fce6ffda342d25238f83e6ec9ca11cc38c045b4651cc05cc232a257d",
+            "divergentOriginalSha256After": "778449f1fce6ffda342d25238f83e6ec9ca11cc38c045b4651cc05cc232a257d",
+            "departed": {
+              "kind": "departed",
+              "to": "fixture-recipient"
+            },
+            "originalEntryIds": [
+              "7af74bcd",
+              "7cc63e13"
+            ],
+            "receivedOriginalEntryIds": [
+              "7af74bcd",
+              "7cc63e13"
+            ],
+            "movedId": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
+            "movedCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository"
+          },
+          "checks": {
+            "packedIdCwdAndHost": true,
+            "packedOriginalBytes": true,
+            "packedArtifactHash": true,
+            "onlySessionAndArtifactMembers": true,
+            "unpackedIdentityRetained": true,
+            "unpackedCwdRewritten": true,
+            "unpackedOriginalEntriesRetained": true,
+            "unpackedArtifactRetained": true,
+            "arrivalRecorded": true,
+            "divergenceForks": true,
+            "divergentCopyUnchanged": true,
+            "divergentArtifactRetained": true,
+            "movedMarkerRecorded": true,
+            "movedIdentityAndCwdRetained": true,
+            "movedOriginalEntriesRetained": true,
+            "movedChangesOnlyTheCopy": true
+          },
+          "errors": [],
+          "limits": [
+            "The two machines are simulated by disjoint private profiles and working directories.",
+            "No credentials, checkout, external referenced files, or model-generated handoff summary are transferred."
+          ],
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Annotations",
+      "status": "deferred",
+      "subcapabilities": [
+        {
+          "name": "initialized extension annotation submission",
+          "evidence": "native-sdk-runtime",
+          "raw": {
+            "mode": "print",
+            "hasUI": false,
+            "text": {
+              "kind": "text",
+              "text": "# Feedback on fixture.txt\n\n## Source\n\n```text\nfirst\nsecond\n\n```\n## 1. Feedback on:\n\"second\"\nKeep this line.",
+              "delivered": "none",
+              "review": false,
+              "annotations": [
+                {
+                  "scope": "line",
+                  "line": 2,
+                  "quote": "second",
+                  "note": "Keep this line."
+                }
+              ]
+            },
+            "diff": {
+              "kind": "diff",
+              "text": "## Code Review Annotations\n\nUse these annotations as review notes; they are not independently validated findings.\n### fixture.txt — new 1\nPath: `fixture.txt`\nOld path: `fixture.txt`\nNew path: `fixture.txt`\nOccurrence: `1`\n\nHunk: `@@ -1 +1 @@`\n\n```diff\n+after\n```\nReview this addition.",
+              "delivered": "none",
+              "review": false,
+              "annotations": [
+                {
+                  "path": "fixture.txt",
+                  "oldPath": "fixture.txt",
+                  "newPath": "fixture.txt",
+                  "occurrence": 1,
+                  "note": "Review this addition.",
+                  "scope": "line",
+                  "hunkHeader": "@@ -1 +1 @@",
+                  "newLine": 1,
+                  "rawLine": "+after"
+                }
+              ]
+            },
+            "textMismatch": "Annotation 1: line 2 of fixture.txt no longer matches its quote (expected \"wrong\", found \"second\").",
+            "diffMismatch": "Annotation 1: new line 1 of fixture.txt no longer matches its rawLine (expected \"+wrong\", found \"+after\").",
+            "beforeEntries": 2,
+            "afterEntries": 2
+          },
+          "checks": {
+            "headlessContext": true,
+            "textNormalized": true,
+            "diffNormalized": true,
+            "textMismatchRejected": true,
+            "diffMismatchRejected": true,
+            "noTranscriptDelivery": true
+          },
+          "errors": [],
+          "limits": [
+            "Only explicit text and diff sources with deliver none are exercised. No annotation overlay or composer interaction is claimed."
+          ],
+          "status": "passed"
+        },
+        {
+          "name": "annotation overlay",
+          "evidence": "unexercised",
+          "reason": "Requires live TUI collection and paste observation. Headless submit is not UI proof.",
+          "limits": [
+            "No runtime success is claimed."
+          ],
+          "status": "deferred"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "gitGuard",
+      "status": "passed",
+      "subcapabilities": [
+        {
+          "name": "native BashTool gitGuard on and off",
+          "evidence": "native-sdk-runtime",
+          "raw": {
+            "samples": [
+              {
+                "enabled": false,
+                "command": "git stash push -m native-proof",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Saved working directory and index state On main: native-proof\n\n\nWall time: 0.05 seconds"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 52.373539999998684
+                  }
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "cc2e4bb51f522b77c0c3ad04f7a87386a7e06d4fa287c004b6c066410c5c24dc",
+                "rejected": false,
+                "nativeGuardDiagnostic": false
+              },
+              {
+                "enabled": false,
+                "command": "git reset --hard HEAD",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "HEAD is now at c04d65b fixture\n\n\nWall time: 0.01 seconds"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 7.117238000000725
+                  }
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "cc2e4bb51f522b77c0c3ad04f7a87386a7e06d4fa287c004b6c066410c5c24dc",
+                "rejected": false,
+                "nativeGuardDiagnostic": false
+              },
+              {
+                "enabled": false,
+                "command": "git restore tracked.txt",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "(no output)\n\nWall time: 0.00 seconds"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 3.7160170000006474
+                  }
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "cc2e4bb51f522b77c0c3ad04f7a87386a7e06d4fa287c004b6c066410c5c24dc",
+                "rejected": false,
+                "nativeGuardDiagnostic": false
+              },
+              {
+                "enabled": false,
+                "command": "f() { git reset --hard HEAD; }; f",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "HEAD is now at c04d65b fixture\n\n\nWall time: 0.00 seconds"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 3.650314000000435
+                  }
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "cc2e4bb51f522b77c0c3ad04f7a87386a7e06d4fa287c004b6c066410c5c24dc",
+                "rejected": false,
+                "nativeGuardDiagnostic": false
+              },
+              {
+                "enabled": false,
+                "command": "result=$(git reset --hard HEAD)",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "(no output)\n\nWall time: 0.01 seconds"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 6.1212089999989985
+                  }
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "cc2e4bb51f522b77c0c3ad04f7a87386a7e06d4fa287c004b6c066410c5c24dc",
+                "rejected": false,
+                "nativeGuardDiagnostic": false
+              },
+              {
+                "enabled": false,
+                "command": "cd ..; cd repository; git reset --hard HEAD",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "HEAD is now at c04d65b fixture\n\n\nWall time: 0.02 seconds"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 21.89213600000039
+                  }
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "cc2e4bb51f522b77c0c3ad04f7a87386a7e06d4fa287c004b6c066410c5c24dc",
+                "rejected": false,
+                "nativeGuardDiagnostic": false
+              },
+              {
+                "enabled": true,
+                "command": "git stash push -m native-proof",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "git stash is blocked by workspace policy — do not work around it.\nThis is a SHARED workspace; stash mutates the tree/index other concurrent agents rely on, silently trashing their work. You cannot stash with unmerged paths anyway — resolve conflicts in place. Read-only `git stash list` and `git stash show` remain available.\n\n\nWall time: 0.00 seconds\n\nCommand exited with code 1"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 3.719993999999133,
+                    "exitCode": 1
+                  },
+                  "isError": true
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "rejected": true,
+                "nativeGuardDiagnostic": true
+              },
+              {
+                "enabled": true,
+                "command": "git reset --hard HEAD",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "git reset is blocked: this form (--hard / --force / --discard-changes, or a whole-tree pathspec like `.`, `:/`, `*`) discards the working tree/index wholesale and would destroy other agents' uncommitted work — being mid-conflict does not make it safe.\nResolve conflicts with targeted forms instead: git checkout/restore --ours|--theirs <path>. Unstage with git reset <path> or git restore --staged <path>.\n\n\nWall time: 0.00 seconds\n\nCommand exited with code 1"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 0.9591589999999997,
+                    "exitCode": 1
+                  },
+                  "isError": true
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "rejected": true,
+                "nativeGuardDiagnostic": true
+              },
+              {
+                "enabled": true,
+                "command": "git restore tracked.txt",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "git restore is blocked by workspace policy — do not work around it.\nThis is a SHARED workspace; overwriting working-tree files or switching branches discards or strands uncommitted changes other concurrent agents rely on. It is exempt only while a merge/rebase conflict is being resolved, and the repository is not in one.\nUnstaging is always allowed: git reset [<path>] / git restore --staged <path>. To undo working-tree edits, edit forward; inspect history read-only with git diff/log/show.\n\n\nWall time: 0.00 seconds\n\nCommand exited with code 1"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 1.6264379999993253,
+                    "exitCode": 1
+                  },
+                  "isError": true
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "rejected": true,
+                "nativeGuardDiagnostic": true
+              },
+              {
+                "enabled": true,
+                "command": "f() { git reset --hard HEAD; }; f",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "git reset is blocked: this form (--hard / --force / --discard-changes, or a whole-tree pathspec like `.`, `:/`, `*`) discards the working tree/index wholesale and would destroy other agents' uncommitted work — being mid-conflict does not make it safe.\nResolve conflicts with targeted forms instead: git checkout/restore --ours|--theirs <path>. Unstage with git reset <path> or git restore --staged <path>.\n\n\nWall time: 0.00 seconds\n\nCommand exited with code 1"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 0.49870499999997264,
+                    "exitCode": 1
+                  },
+                  "isError": true
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "rejected": true,
+                "nativeGuardDiagnostic": true
+              },
+              {
+                "enabled": true,
+                "command": "result=$(git reset --hard HEAD)",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "git reset is blocked: this form (--hard / --force / --discard-changes, or a whole-tree pathspec like `.`, `:/`, `*`) discards the working tree/index wholesale and would destroy other agents' uncommitted work — being mid-conflict does not make it safe.\nResolve conflicts with targeted forms instead: git checkout/restore --ours|--theirs <path>. Unstage with git reset <path> or git restore --staged <path>.\n\n\nWall time: 0.00 seconds\n\nCommand exited with code 1"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 0.5239020000008168,
+                    "exitCode": 1
+                  },
+                  "isError": true
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "rejected": true,
+                "nativeGuardDiagnostic": true
+              },
+              {
+                "enabled": true,
+                "command": "cd ..; cd repository; git reset --hard HEAD",
+                "result": {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "git reset is blocked: this form (--hard / --force / --discard-changes, or a whole-tree pathspec like `.`, `:/`, `*`) discards the working tree/index wholesale and would destroy other agents' uncommitted work — being mid-conflict does not make it safe.\nResolve conflicts with targeted forms instead: git checkout/restore --ours|--theirs <path>. Unstage with git reset <path> or git restore --staged <path>.\n\n\nWall time: 0.00 seconds\n\nCommand exited with code 1"
+                    }
+                  ],
+                  "details": {
+                    "timeoutSeconds": 5,
+                    "wallTimeMs": 0.6619290000016917,
+                    "exitCode": 1
+                  },
+                  "isError": true
+                },
+                "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "after": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
+                "rejected": true,
+                "nativeGuardDiagnostic": true
+              }
+            ],
+            "unstage": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "(no output)\n\nWall time: 0.00 seconds"
+                }
+              ],
+              "details": {
+                "timeoutSeconds": 5,
+                "wallTimeMs": 3.6969610000014654
+              }
+            },
+            "cached": {
+              "argv": [
+                "git",
+                "diff",
+                "--cached",
+                "--name-only"
+              ],
+              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "code": 0,
+              "signal": null,
+              "timedOut": false,
+              "overflow": false,
+              "stdout": "",
+              "stderr": "",
+              "durationMs": 2.3692769999997836
+            },
+            "beforeUnstage": "fff2ec3d159fa985cabaf62319c6576e2950301e7865386094063b079c3ab6cb",
+            "afterUnstage": "fff2ec3d159fa985cabaf62319c6576e2950301e7865386094063b079c3ab6cb"
+          },
+          "checks": {
+            "onOffPairsExercised": true,
+            "guardOnRefusesAndPreserves": true,
+            "guardOffExecutesAndChanges": true,
+            "safeUnstageAllowed": true
+          },
+          "errors": [],
+          "limits": [
+            "The embedded-shell git builtin is exercised. External shells, absolute git paths, and arbitrary processes bypass this guard.",
+            "This does not replace the existing destructive-command prohibition or Docker sandbox."
+          ],
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "These source hashes cover the listed producer and SDK inputs, not a complete transitive-source release gate.",
+    "The content gate recomputes the listed input hashes and checks the exact SDK pin. producerDigest, SDK package metadata and host binary details are captured observations, not separately authenticated fields.",
+    "No external model, automatic worktree startup, terminal fork UI, browser target, or annotation-overlay request is made.",
+    "SDK session creation emits best-effort preconnect hints even with cache warming off. The producer blocks and counts those hints separately from HTTP fetches.",
+    "The HTTP guard and empty credential store are not an OS-level network sandbox.",
+    "Raw fixture contents are excluded. Known private canaries are replaced in unexpected error output before publication.",
+    "The supervising process bounds the run at 240 seconds, kills its process group, and removes both private profiles and all fixture files."
+  ],
+  "ok": true
+}

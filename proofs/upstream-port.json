@@ -1,0 +1,184 @@
+{
+  "original": {
+    "beforeCommit": "df581122cde17e6e27686b5a448bde23e4ad4318",
+    "afterCommit": "1b6d44ff26d4e242f4e8f68c391e6d2f7ca16def",
+    "beforeVersion": "0.15.15",
+    "afterVersion": "0.15.20",
+    "commits": 13,
+    "changedFiles": 62,
+    "promptContentBefore": {
+      "markdownFiles": 108,
+      "bytes": 434373
+    },
+    "promptContentAfter": {
+      "markdownFiles": 109,
+      "bytes": 408274
+    },
+    "offlineTokenBundle": {
+      "encoding": "o200k_base",
+      "beforeTokens": 97813,
+      "afterTokens": 92179,
+      "reductionPercent": 5.759970556061055,
+      "method": "Concatenate every original pstack skills/agents Markdown file with a single newline separator, then omp toks <file> --json. This measures the entire content inventory, not any single session prompt or general accuracy."
+    }
+  },
+  "scope": "Original source inventory and observed integration measurements. Tokenization scope is explicit; no general quality improvement is inferred.",
+  "integrationBase": "0e0edd5",
+  "baseline": {
+    "typecheck": "passed",
+    "contentGate": "passed",
+    "helperTests": {
+      "passed": 61,
+      "failed": 0,
+      "files": 6
+    }
+  },
+  "sdkProbe": {
+    "version": "18.10.2",
+    "typecheck": "passed",
+    "firstSuite": {
+      "passed": 395,
+      "failed": 4,
+      "validCompatibilityVerdict": false,
+      "reason": "Isolated test HOME had no Git author/committer identity. Git fixture commits failed, including the simulated base-race setup. The corrected harness result follows below."
+    },
+    "correctedSuite": {
+      "passed": 399,
+      "failed": 0,
+      "files": 23,
+      "expectCalls": 2237,
+      "elapsedSeconds": 476.31,
+      "harness": "Fresh HOME and PI_CODING_AGENT_DIR, explicit Git author/committer identity, Docker available."
+    }
+  },
+  "limitations": [
+    "Offline token counts cover the entire original Markdown content bundle, not any single session prompt.",
+    "No model accuracy improvement is inferred from shorter content."
+  ],
+  "integrationModePrompt": {
+    "before": {
+      "bytes": 23094,
+      "o200kTokens": 5137
+    },
+    "after": {
+      "bytes": 22027,
+      "o200kTokens": 4856
+    },
+    "scope": "The exact poteto-mode body injected by src/extension.ts, without frontmatter. No general accuracy improvement is inferred.",
+    "baselineCommit": "0e0edd5",
+    "reductionPercent": 5.47011874635001
+  },
+  "originalPortUnit": {
+    "sdkVersion": "18.3.4",
+    "helperTests": {
+      "passed": 91,
+      "failed": 0,
+      "files": 7,
+      "expectCalls": 496
+    },
+    "marketplaceInstallation": {
+      "skills": 53,
+      "agents": 2,
+      "productionDependencies": true
+    },
+    "bennyFixture": "passed before native SDK migration",
+    "contentGate": "passed before native SDK migration"
+  },
+  "auditBehaviorRegression": {
+    "failingBefore": {
+      "passed": 7,
+      "failed": 12,
+      "scope": "19 explicit-base CLI cases on pre-port helper with SDK18.10.2"
+    },
+    "passingAfter": "41 combined checker/fence/audit consumer cases; four incidental diagnostic formatting assertions removed without validator changes"
+  },
+  "nativeSdkUnit": {
+    "sdkVersion": "18.10.2",
+    "generatedTasks": {
+      "passed": 10,
+      "failed": 0,
+      "plainResults": 8,
+      "isolatedWrites": 2
+    },
+    "ketchupScenario": {
+      "passed": 1,
+      "manualSemanticConditionsPassed": 8
+    },
+    "nativeFreshnessTests": {
+      "passed": 24,
+      "failed": 0
+    },
+    "typecheck": "passed"
+  },
+  "finalVerification": {
+    "typecheck": "passed",
+    "suite": {
+      "passed": 453,
+      "failed": 0,
+      "files": 25,
+      "expectCalls": 2516,
+      "elapsedSeconds": 513.76
+    },
+    "marketplaceInstallation": {
+      "sdk": "18.10.2",
+      "passed": true,
+      "skills": 53,
+      "agents": 2,
+      "productionDependencies": true,
+      "unrelatedDestinationFileAndLogPreserved": true
+    },
+    "modeSmoke": {
+      "passed": true,
+      "model": "openai-codex/gpt-6.1-sol",
+      "branchReplay": true,
+      "compaction": true,
+      "resume": true,
+      "optOut": true,
+      "independentSession": true,
+      "factorySwapStableSource": true
+    },
+    "routineSmoke": {
+      "passed": true,
+      "realSdkSession": true,
+      "model": "openai-codex/gpt-6.1-sol"
+    },
+    "bennyFixture": {
+      "passed": true,
+      "actualModel": "openai-codex/gpt-6-astra:high",
+      "triageAndReproduce": true,
+      "liveExternalReadback": false
+    },
+    "contentGate": "passed",
+    "sourceParity": {
+      "passed": true,
+      "upstreamFiles": 167,
+      "inventoryFiles": 170,
+      "exactFiles": 89,
+      "adaptedFiles": 81
+    }
+  },
+  "releaseBoundary": {
+    "implementedSdk": "18.10.2",
+    "installedHostMovedTo": "18.10.3",
+    "frozenNativeCli": "18.10.2 via explicit PSTACK_NATIVE_PROOF_OMP",
+    "mismatchedHostRun": "rejected before CLI fixtures",
+    "pinnedCliRerun": "passed with all content hashes and exact pin",
+    "globalHostModifiedByThisTask": false,
+    "new18_10_3Controls": "named-agent budgets and crash restore source-assessed and deferred; host tokenizer/cache/compaction changes need no plugin wrapper"
+  },
+  "independentReview": {
+    "models": [
+      "litellm/glm-5.3:max",
+      "litellm/glm5.3-flash:max",
+      "litellm/deepseek-v4-flash:high"
+    ],
+    "sourceVerdict": "No remaining reachable source defect after stale-failure artifact fix",
+    "gateVerdict": "No reachable bug in listed-input path/hash/version validation",
+    "trailVerdict": "Runtime claims substantiated from corrected own-run transcript; remaining durable-pointer hygiene cleared by append-only rows",
+    "ketchupIndependentConditions": {
+      "passed": 8,
+      "failed": 0,
+      "scope": "One prompt-primed synthetic stored response, not general accuracy"
+    }
+  }
+}

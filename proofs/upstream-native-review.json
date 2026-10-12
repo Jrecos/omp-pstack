@@ -1,0 +1,47 @@
+{
+  "intent": "Port original P Stack0.15.20 and adopt measured native OMP18.10.2 capabilities without custom managers or private account metadata.",
+  "reviewers": [
+    {"model": "litellm/glm-5.3:max", "scope": "Stable source delta, current SDK and observed receipts", "verdict": "no findings"},
+    {"model": "litellm/glm5.3-flash:max", "scope": "Stable source delta and observed receipts", "verdict": "no findings"},
+    {"model": "litellm/deepseek-v4-flash:high", "scope": "Stable source delta, supplemental freshness guard, decision trail and corrected own-run transcript", "verdict": "No reachable source bug remains. Runtime claims substantiated after append-only corrections."}
+  ],
+  "leadJudgment": {
+    "actedOn": [
+      "Remove stale native-model failure receipts on success, use a common failure object header and ignore future raw diagnostic artifacts.",
+      "Project model receipts to provider/id/api, result effects, schema presence flags and patch hashes. Do not publish account identifiers or transient paths.",
+      "Bind listed native input hashes and exact SDK pin without claiming a complete transitive or authenticated-execution gate.",
+      "Clarify that ketchup runs a real registered command over prompt-primed synthetic history, not real-user history. The parent and independent Deepseek reviewer each inspected eight conditions.",
+      "Correct the raw Main transcript pointer after history caption identified another session. Report the tool mismatch and re-audit only the verified own-run JSONL.",
+      "Append final six-package453-test and whole content-gate outcomes separately from the five-package399-test scratch baseline.",
+      "Select the frozen18.10.2 native CLI explicitly after the installed host moved to18.10.3. Keep the exact version assertion and assess new patch-release controls separately."
+    ],
+    "dismissed": [
+      {"finding": "Duplicate base flag should have different diagnostic wording.", "reason": "Duplicate flags are correctly rejected. No consumer-visible classification or safety defect justifies wording churn."},
+      {"finding": "Restore four incidental diagnostic formatting assertions.", "reason": "The validator was not weakened. Accepted/rejected plan and input-bound behaviors remain checked. The upstream source-parity inventory includes the colocated fence suite, not the native-authored root test file.41focused cases and the453-test integration suite passed."},
+      {"finding": "Unchanged schema-removal comments should be deleted.", "reason": "Outside the newly authored delta. Security, ownership and recovery rationale remains intact."},
+      {"finding": "Benny probe399-test outcome proves final integration.", "reason": "False equivalence. It is explicitly a scratch baseline. The final six-package SDK and native changes passed453tests."}
+    ]
+  },
+  "independentKetchupSemanticReview": {
+    "model": "litellm/deepseek-v4-flash:high",
+    "passedConditions": 8,
+    "failedConditions": 0,
+    "scope": "One stored Sol response on a prompt-primed synthetic fixture. Scenario consistency only, not general accuracy, real-user history or live external status."
+  },
+  "audit": {
+    "ownSessionId": "01a1308a-e107-7573-9ca3-5c3ab0241c4e",
+    "reviewedTrailLines": "1-29 before final pointer-clearing rows",
+    "appendOnly": true,
+    "correctedCriticalClaims": true,
+    "remainingAttention": [
+      "Read later superseding rows for the original synthetic-history wording and historical unit pointers. Old rows remain unchanged by the append-only policy.",
+      "Automatic worktree startup, live terminal launch, Tern/relay target adoption, annotation UI,18.10.3 budget controls and crash restoration remain source-assessed or deferred."
+    ]
+  },
+  "limits": [
+    "Independent reviewers were read-only and did not rerun commands.",
+    "Source/input freshness checks are recomputable metadata, not execution authentication.",
+    "Benny uses Docker and loopback fixtures. It does not prove live Slack, tracker or GitHub deployment readback.",
+    "No merge, release, deploy or global configuration change is armed."
+  ]
+}

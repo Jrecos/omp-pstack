@@ -71,7 +71,7 @@ try {
     assert(skill.filePath.startsWith(temporary), `${skill.name} did not resolve from the isolated project installation`);
     assert(!skill.filePath.includes("automations/benny"));
   }
-  for (const name of ["poteto-agent", "Comment Sicko"]) {
+  for (const name of ["poteto-agent", "comment-sicko"]) {
     const agent = discovered.agents.find((entry: { name: string }) => entry.name === name);
     assert(agent?.filePath.startsWith(temporary), `${name} missing from project installation`);
   }

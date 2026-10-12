@@ -99,8 +99,21 @@ beforeAll(() => {
 		printf 'GIT ARGS: %s\\n' "$*" >> ${shimLog}
 		printf 'GIT LOCKS: %s\\n' "\${GIT_OPTIONAL_LOCKS-unset}" >> ${shimLog}
 for a in "$@"; do
+	if [ "$a" = ls-remote ]; then
+		if [ -f ${join(root, "remote-head")} ]; then cat ${join(root, "remote-head")}; exit 0; fi
+		exit 93
+	fi
 	if [ "$a" = fetch ]; then
 		printf 'GIT FETCH ENV: HOME=%s XDG=%s GH_TOKEN=%s GITHUB_TOKEN=%s GIT_ASKPASS=%s\\n' "$HOME" "\${XDG_CONFIG_HOME-unset}" "$([ -n "$GH_TOKEN" ] && echo set || echo no)" "$([ -n "$GITHUB_TOKEN" ] && echo set || echo no)" "$([ -n "$GIT_ASKPASS" ] && echo set || echo no)" >> ${shimLog}
+		if [ -f ${join(root, "fetch-fixture")} ]; then
+			dir=
+			prev=
+			for arg in "$@"; do
+				if [ "$prev" = -C ]; then dir="$arg"; fi
+				prev="$arg"
+			done
+			exec ${realGit} -c protocol.file.allow=always -C "$dir" fetch --quiet "$(cat ${join(root, "fetch-fixture")})" "$prev"
+		fi
 		exit 93
 	fi
 done
@@ -320,7 +333,6 @@ describe("worktree-audit", () => {
 		for (const row of rows) expect(row.pr).toBe("-");
 	});
 
-	/** Overwrite the gh shim with one failing/malformed behavior; tests restore the healthy echo. */
 
 	test("every git invocation, target repository and scratch alike, runs with GIT_OPTIONAL_LOCKS=0", () => {
 		rmSync(shimLog, { force: true });
@@ -334,13 +346,13 @@ describe("worktree-audit", () => {
 		chmodSync(join(shimDir, "gh"), 0o700);
 	}
 
-	test("gh failure, malformed output and timeout render PR inventory unknown and never safe", () => {
+	test("gh failure, malformed output and signal termination render PR inventory unknown and never safe", () => {
 		git(["remote", "set-url", "origin", "https://github.com/octo/repo.git"]);
 		const cases: Array<[string, string]> = [
 			["exit 1", "exit 1"],
 			["non-array JSON", "echo '{\"oops\": true}'"],
 			["malformed JSON", "echo '{oops'"],
-			["timeout kill", "kill -TERM $$"],
+			["signal termination", "kill -TERM $$"],
 		];
 		try {
 			for (const [, script] of cases) {
@@ -418,5 +430,246 @@ describe("worktree-audit", () => {
 			expect(row.size).toMatch(/^[\d.?]+[KMG]?$/);
 			expect(row.pr).toBe("-"); // gh unavailable/unauthenticated stays best-effort
 		}
+	});
+});
+
+const CLI = join(import.meta.dir, "..", "src", "cli.ts");
+
+function auditFixture(branch: string): { repo: string; worktree: string } {
+	const directory = mkdtempSync(join(root, "base-case-"));
+	const fixtureRepo = join(directory, "repo");
+	const worktree = join(directory, "worktree");
+	mkdirSync(fixtureRepo);
+	git(["init", "-q", "-b", branch], fixtureRepo);
+	git(["config", "user.email", "t@t"], fixtureRepo);
+	git(["config", "user.name", "t"], fixtureRepo);
+	writeFileSync(join(fixtureRepo, "f"), "one\n");
+	git(["add", "f"], fixtureRepo);
+	git(["commit", "-qm", "init"], fixtureRepo);
+	git(["worktree", "add", "-q", "-b", "feature", worktree], fixtureRepo);
+	return { repo: fixtureRepo, worktree };
+}
+
+function repositoryBytes(directory: string): Array<[string, string]> {
+	return Array.from(new Bun.Glob("**/*").scanSync({ cwd: directory, dot: true, onlyFiles: true }))
+		.sort().map((path): [string, string] => [path, readFileSync(join(directory, path)).toString("base64")]);
+}
+
+function runAuditCli(args: string[], cwd: string, extraEnv: Record<string, string> = {}) {
+	const before = repositoryBytes(cwd);
+	const worktree = join(cwd, "..", "worktree");
+	const worktreeBefore = existsSync(worktree) ? repositoryBytes(worktree) : undefined;
+	const child = Bun.spawnSync([process.execPath, CLI, "worktree-audit", ...args], {
+		cwd,
+		env: { ...process.env, PATH: `${shimDir}:${process.env.PATH}`, PSTACK_SESSIONS_DIR: sessions, ...extraEnv },
+		stdout: "pipe",
+		stderr: "pipe",
+		timeout: 10_000,
+	});
+	expect(repositoryBytes(cwd)).toEqual(before);
+	if (worktreeBefore) expect(repositoryBytes(worktree)).toEqual(worktreeBefore);
+	return { code: child.exitCode, stdout: child.stdout.toString(), stderr: child.stderr.toString() };
+}
+
+function worktreeColumns(stdout: string, worktree: string): string[] {
+	const lines = stdout.trim().split("\n");
+	expect(lines.filter((line) => line.endsWith(`\t${worktree}`))).toHaveLength(1);
+	return lines.find((line) => line.endsWith(`\t${worktree}`))!.split("\t");
+}
+
+describe("worktree-audit CLI base selection", () => {
+	test("main and master fallback select only existing refs", () => {
+		for (const branch of ["main", "master"]) {
+			const fixture = auditFixture(branch);
+			git(["update-ref", `refs/remotes/origin/${branch}`, "HEAD"], fixture.repo);
+			const result = runAuditCli([fixture.repo], fixture.repo);
+			expect(result.code).toBe(0);
+			expect(result.stdout.split("\n")[0]).toBe(`BASE\torigin/${branch}`);
+			expect(result.stderr).toContain(`could not fetch origin/${branch}`);
+			expect(worktreeColumns(result.stdout, fixture.worktree)[2]).toBe("YES");
+		}
+	});
+
+	test("origin HEAD selects a custom default before main", () => {
+		const fixture = auditFixture("release/stable");
+		git(["update-ref", "refs/remotes/origin/release/stable", "HEAD"], fixture.repo);
+		git(["update-ref", "refs/remotes/origin/main", "HEAD"], fixture.repo);
+		git(["symbolic-ref", "refs/remotes/origin/HEAD", "refs/remotes/origin/release/stable"], fixture.repo);
+		const result = runAuditCli([], fixture.repo);
+		expect(result.code).toBe(0);
+		expect(result.stdout.split("\n")[0]).toBe("BASE\torigin/release/stable");
+		expect(worktreeColumns(result.stdout, fixture.worktree)[2]).toBe("YES");
+	});
+
+	test("explicit base flags and local commit-ish refs reach the real CLI", () => {
+		const fixture = auditFixture("topic");
+		const initial = git(["rev-parse", "HEAD"], fixture.repo).trim();
+		writeFileSync(join(fixture.worktree, "f"), "two\n");
+		git(["commit", "-qam", "feature"], fixture.worktree);
+		git(["branch", "selected", "feature"], fixture.repo);
+		git(["update-ref", "refs/remotes/origin/selected", "feature"], fixture.repo);
+		for (const [flag, base, merged] of [
+			["-b", "selected", "YES"],
+			["--base", "refs/heads/selected", "YES"],
+			["-b", "refs/remotes/origin/selected", "YES"],
+			["--base", initial, "no"],
+			["-b", "selected~1", "no"],
+		]) {
+			const result = runAuditCli([fixture.repo, flag, base], fixture.repo);
+			expect(result.code).toBe(0);
+			expect(result.stdout.split("\n")[0]).toBe(`BASE\t${base}`);
+			expect(worktreeColumns(result.stdout, fixture.worktree)[2]).toBe(merged);
+		}
+	}, 20_000);
+
+	test("unknown implicit base stays unknown and cannot be safe", () => {
+		const fixture = auditFixture("topic");
+		const result = runAuditCli([fixture.repo], fixture.repo);
+		expect(result.code).toBe(0);
+		expect(result.stdout.split("\n")[0]).toBe("BASE\tunknown");
+		const row = worktreeColumns(result.stdout, fixture.worktree);
+		expect(row[2]).toBe("unknown");
+		expect(row[7]).toBe("review");
+		expect(result.stderr).toContain("base is unknown");
+	});
+
+	for (const args of [
+		["-b"], ["--base", "--help"], ["--wat"], ["-b", "missing"],
+		["--base", "origin/bad..ref"], ["-b", "topic\nHEAD"],
+		["-b", "topic", "--base", "topic"],
+	]) {
+		test(`invalid arguments ${JSON.stringify(args)} fail without a report`, () => {
+			const fixture = auditFixture("topic");
+			const result = runAuditCli(args, fixture.repo);
+			expect(result.code).toBe(1);
+			expect(result.stdout).toBe("");
+		});
+	}
+
+	test("multiple repository paths fail without a report", () => {
+		const fixture = auditFixture("topic");
+		const result = runAuditCli([fixture.repo, fixture.repo], fixture.repo);
+		expect(result.code).toBe(1);
+		expect(result.stdout).toBe("");
+	});
+
+	test("a non-repository fails without a report", () => {
+		const nonRepo = mkdtempSync(join(root, "non-repo-"));
+		const result = runAuditCli([nonRepo], nonRepo);
+		expect(result.code).toBe(1);
+		expect(result.stdout).toBe("");
+	});
+
+	test("help forwards through pstack without repository or network access", () => {
+		const directory = mkdtempSync(join(root, "help-"));
+		for (const flag of ["-h", "--help"]) {
+			rmSync(shimLog, { force: true });
+			const result = runAuditCli([flag], directory);
+			expect(result.code).toBe(0);
+			expect(result.stdout).toContain("--base <ref>");
+			expect(result.stderr).toBe("");
+			expect(logLines()).toEqual([]);
+		}
+	});
+
+	test("canonical symref discovery fetches a custom default without mutating the audited repo", () => {
+		const fixture = auditFixture("release/stable");
+		git(["remote", "add", "origin", "https://github.com/octo/repo.git"], fixture.repo);
+		writeFileSync(join(root, "remote-head"), "ref: refs/heads/release/stable\tHEAD\n");
+		writeFileSync(join(root, "fetch-fixture"), fixture.repo);
+		rmSync(shimLog, { force: true });
+		try {
+			const result = runAuditCli([fixture.repo], fixture.repo);
+			expect(result.code).toBe(0);
+			expect(result.stdout.split("\n")[0]).toBe("BASE\torigin/release/stable");
+			expect(result.stderr).toBe("");
+			expect(worktreeColumns(result.stdout, fixture.worktree)[2]).toBe("YES");
+			const discovery = logLines().find((line) => line.includes(" ls-remote "));
+			expect(discovery).toContain("--symref --upload-pack=git-upload-pack https://github.com/octo/repo HEAD");
+			expect(discovery).toContain("protocol.allow=never");
+			expect(discovery).toContain("protocol.https.allow=always");
+			expect(fetchArgLines()).toHaveLength(1);
+			expect(fetchArgLines()[0]).toEndWith("refs/heads/release/stable");
+		} finally {
+			rmSync(join(root, "remote-head"), { force: true });
+			rmSync(join(root, "fetch-fixture"), { force: true });
+		}
+	});
+
+	test("fresh selected remote tip overrides stale local ancestry", () => {
+		const fixture = auditFixture("main");
+		git(["update-ref", "refs/remotes/origin/main", "HEAD"], fixture.repo);
+		writeFileSync(join(fixture.worktree, "f"), "two\n");
+		git(["commit", "-qam", "new tip"], fixture.worktree);
+		git(["update-ref", "refs/heads/main", "feature"], fixture.repo);
+		git(["remote", "add", "origin", "https://github.com/octo/repo.git"], fixture.repo);
+		writeFileSync(join(root, "fetch-fixture"), fixture.repo);
+		try {
+			const result = runAuditCli(["-b", "origin/main", fixture.repo], fixture.repo);
+			expect(result.code).toBe(0);
+			expect(worktreeColumns(result.stdout, fixture.worktree)[2]).toBe("YES");
+			expect(result.stderr).toBe("");
+		} finally {
+			rmSync(join(root, "fetch-fixture"), { force: true });
+		}
+		const stale = runAuditCli(["--base", "origin/main", fixture.repo], fixture.repo);
+		expect(stale.code).toBe(0);
+		expect(worktreeColumns(stale.stdout, fixture.worktree)[2]).toBe("no");
+		expect(stale.stderr).toContain("merged column may be stale");
+	});
+
+	test("invalid canonical branch data never reaches fetch or merge-safe output", () => {
+		const fixture = auditFixture("topic");
+		git(["remote", "add", "origin", "https://github.com/octo/repo.git"], fixture.repo);
+		try {
+			for (const ref of ["refs/tags/topic", "refs/heads/bad..ref", "refs/heads/bad name"]) {
+				writeFileSync(join(root, "remote-head"), `ref: ${ref}\tHEAD\n`);
+				rmSync(shimLog, { force: true });
+				const result = runAuditCli([fixture.repo], fixture.repo);
+				expect(result.code).toBe(0);
+				expect(result.stdout.split("\n")[0]).toBe("BASE\tunknown");
+				expect(worktreeColumns(result.stdout, fixture.worktree)[7]).toBe("review");
+				expect(fetchArgLines()).toHaveLength(0);
+			}
+		} finally {
+			rmSync(join(root, "remote-head"), { force: true });
+		}
+	});
+
+	test("user config cannot supply a remote or redirect default branch discovery", () => {
+		const fixture = auditFixture("main");
+		const home = join(root, "global-only-origin");
+		const xdg = join(root, "global-only-xdg");
+		mkdirSync(home);
+		mkdirSync(join(xdg, "git"), { recursive: true });
+		const config = '[remote "origin"]\n\turl = https://github.com/attacker/redirect.git\n';
+		writeFileSync(join(home, ".gitconfig"), config);
+		writeFileSync(join(xdg, "git", "config"), config);
+		rmSync(shimLog, { force: true });
+		const result = runAuditCli([fixture.repo], fixture.repo, { HOME: home, XDG_CONFIG_HOME: xdg });
+		expect(result.code).toBe(0);
+		expect(result.stdout.split("\n")[0]).toBe("BASE\tmain");
+		expect(worktreeColumns(result.stdout, fixture.worktree)[2]).toBe("YES");
+		expect(fetchArgLines()).toHaveLength(0);
+		expect(logLines().some((line) => line.includes(" ls-remote ") || line.startsWith("GH ARGS:"))).toBe(false);
+	});
+
+	test("native session resolver honors the active profile without a test override", () => {
+		const fixture = auditFixture("main");
+		const profile = join(root, "native-profile");
+		const storage = join(profile, "sessions", "fixture");
+		mkdirSync(storage, { recursive: true });
+		writeFileSync(join(storage, "recent.jsonl"), JSON.stringify({ cwd: fixture.worktree }));
+		const before = repositoryBytes(fixture.repo);
+		const child = Bun.spawnSync([process.execPath, CLI, "worktree-audit", "-b", "main", fixture.repo], {
+			cwd: fixture.repo,
+			env: { ...process.env, PATH: `${shimDir}:${process.env.PATH}`, PI_CODING_AGENT_DIR: profile, PI_PROFILE: undefined, PSTACK_SESSIONS_DIR: undefined },
+			stdout: "pipe", stderr: "pipe",
+		});
+		expect(child.exitCode).toBe(0);
+		const row = worktreeColumns(child.stdout.toString(), fixture.worktree);
+		expect(row[6]).not.toBe("-");
+		expect(row[7]).toBe("verify-recent-chat");
+		expect(repositoryBytes(fixture.repo)).toEqual(before);
 	});
 });

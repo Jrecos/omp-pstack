@@ -1,0 +1,287 @@
+{
+  "model": "openai-codex/gpt-6.1-sol",
+  "results": [
+    {
+      "scenario": "ketchup",
+      "reads": [
+        "{\"path\":\"/tmp/omp-pstack-upstream-native-20261012/skills/ketchup/SKILL.md\"}",
+        "{\"path\":\"/tmp/omp-pstack-upstream-native-20261012/skills/bro/SKILL.md\"}",
+        "{\"path\":\"/tmp/omp-pstack-upstream-native-20261012/skills/unslop/SKILL.md\"}"
+      ],
+      "readReceipts": [
+        {
+          "toolCallId": "call_r1P0CZcJosj8bPfzLqZLNcJ3|fc_07c1c53561b5b0b9016acd271b9de087d1abc2d703d71e73cc",
+          "isError": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "---\nname: bro\ndescription: Restate the last message in plain human language, with no jargon.\ndisable-model-invocation: true\n---\n\nRestate your last message. Stop using jargon and speak coherently. State it more simply and concisely, like one human talking to another."
+              }
+            ],
+            "details": {
+              "totalLines": 7,
+              "displayContent": {
+                "text": "---\nname: bro\ndescription: Restate the last message in plain human language, with no jargon.\ndisable-model-invocation: true\n---\n\nRestate your last message. Stop using jargon and speak coherently. State it more simply and concisely, like one human talking to another.",
+                "startLine": 1,
+                "lineNumbers": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              "fileSize": 267,
+              "meta": {
+                "source": {
+                  "type": "path",
+                  "value": "/tmp/omp-pstack-upstream-native-20261012/skills/bro/SKILL.md"
+                }
+              }
+            }
+          }
+        },
+        {
+          "toolCallId": "call_49EbrKJffxsrngHJopUXGkpx|fc_07c1c53561b5b0b9016acd271b9dc487d1b944cafe74372db8",
+          "isError": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "---\nname: ketchup\ndescription: \"Catch the user up on everything in this chat since their last message, in plain words. Give each action item an executive summary with enough context to make the call. Use for /ketchup.\"\ndisable-model-invocation: true\n---\n\n# Ketchup\n\nCatch the user up on everything in this chat since the last message they wrote before `/ketchup`. Notifications and subagent results are not their messages. Write in the plain voice of [`/bro`](../bro/SKILL.md), and skip its restating step. Assume the user remembers their last message and nothing after it. Call each PR, branch, or agent by a name they would know, not by a label you invented during the work.\n\n## Gather what changed\n\nKeep this turn read-only, except for visuals you make for the reply from what you already have. Do not change code, start an app or a job, or post anything to make them. Collect your own work since that message, reports from subagents, and messages from anyone else in this chat. Check the current state of each PR, CI run, or agent this chat touched. Say which are still running and which you could not check.\n\nAn action item is a decision or step only the user can take, such as a product choice, an approval, an irreversible action, or access you lack. Include any still waiting on the user, even one raised before their last message. Work you can still do yourself is not an action item.\n\n## Write the reply\n\nOpen with one sentence that says how many action items there are, or that there are none. If nothing happened and nothing waits on the user, say so and stop.\n\nThen say what happened, most important first. Give each result and what it means for the user. Skip steps that changed nothing. Name in one line any work left that you can do yourself.\n\nThen give each action item a short executive summary. Cover the decision to make, why it matters now, the options and what each costs, your recommendation, and what happens if the user does not answer. If you do not know a part, say so instead of guessing. Link to the detail when there is one, and write the summary so the user can decide without opening it.\n\nShow each action item as a before and after, side by side. For a choice, put the current state beside each option, or the options alone when there is no current state. Use screenshots or a video when the change is visible. Otherwise use another artifact, such as a table of numbers, a diff, or a diagram. If no visual exists yet, make one. If you cannot, say plainly that none exists. Never invent a number, and never draw or generate a picture of a screen you did not capture. Link only artifacts that exist.\n\nPrefer visuals to dense prose. Use a table, a Mermaid diagram, a chart, or a generated image."
+              }
+            ],
+            "details": {
+              "totalLines": 27,
+              "displayContent": {
+                "text": "---\nname: ketchup\ndescription: \"Catch the user up on everything in this chat since their last message, in plain words. Give each action item an executive summary with enough context to make the call. Use for /ketchup.\"\ndisable-model-invocation: true\n---\n\n# Ketchup\n\nCatch the user up on everything in this chat since the last message they wrote before `/ketchup`. Notifications and subagent results are not their messages. Write in the plain voice of [`/bro`](../bro/SKILL.md), and skip its restating step. Assume the user remembers their last message and nothing after it. Call each PR, branch, or agent by a name they would know, not by a label you invented during the work.\n\n## Gather what changed\n\nKeep this turn read-only, except for visuals you make for the reply from what you already have. Do not change code, start an app or a job, or post anything to make them. Collect your own work since that message, reports from subagents, and messages from anyone else in this chat. Check the current state of each PR, CI run, or agent this chat touched. Say which are still running and which you could not check.\n\nAn action item is a decision or step only the user can take, such as a product choice, an approval, an irreversible action, or access you lack. Include any still waiting on the user, even one raised before their last message. Work you can still do yourself is not an action item.\n\n## Write the reply\n\nOpen with one sentence that says how many action items there are, or that there are none. If nothing happened and nothing waits on the user, say so and stop.\n\nThen say what happened, most important first. Give each result and what it means for the user. Skip steps that changed nothing. Name in one line any work left that you can do yourself.\n\nThen give each action item a short executive summary. Cover the decision to make, why it matters now, the options and what each costs, your recommendation, and what happens if the user does not answer. If you do not know a part, say so instead of guessing. Link to the detail when there is one, and write the summary so the user can decide without opening it.\n\nShow each action item as a before and after, side by side. For a choice, put the current state beside each option, or the options alone when there is no current state. Use screenshots or a video when the change is visible. Otherwise use another artifact, such as a table of numbers, a diff, or a diagram. If no visual exists yet, make one. If you cannot, say plainly that none exists. Never invent a number, and never draw or generate a picture of a screen you did not capture. Link only artifacts that exist.\n\nPrefer visuals to dense prose. Use a table, a Mermaid diagram, a chart, or a generated image.",
+                "startLine": 1,
+                "lineNumbers": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27
+                ]
+              },
+              "fileSize": 2726,
+              "meta": {
+                "source": {
+                  "type": "path",
+                  "value": "/tmp/omp-pstack-upstream-native-20261012/skills/ketchup/SKILL.md"
+                }
+              }
+            }
+          }
+        },
+        {
+          "toolCallId": "call_4Ib6eCuWLOkwVhw7jpsW20yz|fc_07c1c53561b5b0b9016acd272509f087d1bca90e099af7728b",
+          "isError": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "---\nname: unslop\ndescription: Cut AI tells from any writing.\ndisable-model-invocation: true\n---\n\n# Unslop\n\nEdit text to remove AI patterns. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone.\n\n## Patterns to detect and fix\n\nRule numbers are stable ids that other skills cite. A removed rule leaves a gap.\n\n### Content\n\n3. **Superficial -ing phrases.** \"highlighting...\", \"ensuring...\", \"reflecting...\", \"showcasing...\", \"fostering...\". Delete or expand with real sources.\n5. **Vague attributions.** \"Experts believe\", \"Industry reports suggest\", \"Some critics argue\". Name the source or delete.\n\n### Language\n\n7. **AI vocabulary.** Additionally, crucial, delve, enduring, enhance, fostering, garner, interplay, intricate, landscape (abstract), pivotal, showcase, tapestry (abstract), testament, underscore, vibrant. Replace with plain words.\n8. **Fancy ways to say \"is\".** \"serves as\", \"stands as\", \"boasts\", \"features\". Say \"is\" or \"has\".\n9. **\"Not just X, but Y.\"** State the point directly instead.\n10. **Rule of three.** Don't force ideas into groups of three. Use the natural number.\n11. **Synonym cycling.** Protagonist, main character, central figure, hero all in one paragraph. Pick one, repeat it.\n12. **False ranges.** \"from X to Y\" where X and Y aren't on a meaningful scale. List topics directly.\n\n### Style\n\n13. **Em dash overuse.** Avoid em dashes entirely. Use periods or commas only (no parentheses, no en dashes, no hyphen-as-dash substitutes). If a thought needs separation, end the sentence or use a comma.\n14. **Colon overuse.** Colons are fine before a list or example, not as mid-sentence connectors. \"If you're coming from traditional automation: instead of registering event handlers, you describe conditions\" adds nothing with the colon. Rewrite to let the point stand on its own without comparison framing. \"Describing when the scheduler should fire works best as plain English.\" Same meaning, no crutch punctuation.\n15. **Boldface overuse.** Don't bold every proper noun or acronym.\n16. **Inline-header lists.** The tell is a bold label and colon that restates the line: \"**Performance:** Performance improved...\". Convert those to prose. A bold lead-in that ends in a period, names the item, and is followed by genuinely new detail (\"**Schema in TypeScript.** Tables live in one file.\") is fine, not a tell.\n17. **Title case headings.** Use sentence case.\n18. **Decorative emojis.** Remove from headings and bullets.\n19. **Curly quotes.** Use straight quotes.\n\n### Communication artifacts\n\n20. **Chatbot phrases.** \"I hope this helps!\", \"Let me know if...\", \"Of course!\", \"Certainly!\", \"Found the smoking gun!\" Remove.\n22. **Sycophantic tone.** \"Great question! You're absolutely right!\" Respond directly.\n\n### Filler\n\n23. **Filler phrases.** \"In order to\" becomes \"To\". \"Due to the fact that\" becomes \"Because\". Delete \"It is important to note that\".\n24. **Excessive hedging.** \"could potentially possibly be argued that it might\" becomes \"may\".\n25. **Generic conclusions.** \"The future looks bright.\" State specific plans or facts.\n\n### Jargon\n\n26. **Abstract metaphor nouns.** Substrate (base), wedge, wedge in (add), vector (way, method), locus, vantage, nexus, primitive as a noun, harness as a metaphor, surface as in \"API surface\", bedrock, scaffolding as a metaphor, modality, paradigm, gold-plating (more than the job needs), ratchet as a metaphor (the mechanism's real name, or a limit that only tightens), evacuate for moving code (move out), endgame (the last phase), north star, flywheel. These read as technical but usually have a plainer concrete word. Pick the concrete word.\n\n### Plain speech\n\n27. **Say what it does, not how it feels.** \"the database stays close at hand\", \"SQL you can read\", \"types that follow your schema\" name a feeling. The fix names the mechanism or a number: \"`.toSQL()` returns the exact string sent to the database\", \"a column rename fails the build\". Ask what the sentence tells the reader to do or know, then write that. If you can't restate it as a concrete instruction, fact, or number, cut it. One more check: if the sentence could appear unchanged in another project's docs, it says nothing about this one. Cut it.\n28. **Shorten or split dense sentences.** If the reader has to backtrack to parse a sentence, break it in two or drop clauses. One idea per sentence.\n29. **Active voice.** Prefer it. Catch \"is/are/was/were + past participle\" and name the actor: \"queries are validated\" becomes \"the compiler validates queries\", \"the file is parsed by the loader\" becomes \"the loader parses the file\". Passive is fine only when the actor is unknown or genuinely doesn't matter.\n30. **Cut adverbs, or use a stronger verb.** \"runs quickly\" becomes \"is fast\" or the number, and \"significantly improves\" becomes the measured delta. An adverb propping up a weak verb means the verb is wrong.\n31. **Prefer the plain word.** \"utilize\" and \"leverage\" become \"use\", \"facilitate\" becomes \"help\", \"numerous\" becomes \"many\", \"in the event that\" becomes \"if\". The fancier synonym is rarely clearer.\n32. **Mannered prose.** Metaphor or flourish where a literal phrase exists: aphorisms (\"wire it or delete it\"), rhetorical fragments for effect, personified code (\"the plan holds it\"), figurative verbs (\"rides along\", \"stands on\"), stock framing phrases. \"A dial worth turning\" becomes \"a parameter worth varying\". Say what you mean. Rule 26 covers the metaphor nouns.\n33. **Over-compression.** Dropped articles, verbless fragments, symbol-speak, and abbreviations that make the reader decode instead of read. \"Parser rejects bad date → exit 2, no write\" becomes \"The parser rejects a bad date, exits with code 2, and writes nothing.\" Write whole sentences with their articles and verbs, and spell out arrows and abbreviations."
+              }
+            ],
+            "details": {
+              "totalLines": 62,
+              "displayContent": {
+                "text": "---\nname: unslop\ndescription: Cut AI tells from any writing.\ndisable-model-invocation: true\n---\n\n# Unslop\n\nEdit text to remove AI patterns. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone.\n\n## Patterns to detect and fix\n\nRule numbers are stable ids that other skills cite. A removed rule leaves a gap.\n\n### Content\n\n3. **Superficial -ing phrases.** \"highlighting...\", \"ensuring...\", \"reflecting...\", \"showcasing...\", \"fostering...\". Delete or expand with real sources.\n5. **Vague attributions.** \"Experts believe\", \"Industry reports suggest\", \"Some critics argue\". Name the source or delete.\n\n### Language\n\n7. **AI vocabulary.** Additionally, crucial, delve, enduring, enhance, fostering, garner, interplay, intricate, landscape (abstract), pivotal, showcase, tapestry (abstract), testament, underscore, vibrant. Replace with plain words.\n8. **Fancy ways to say \"is\".** \"serves as\", \"stands as\", \"boasts\", \"features\". Say \"is\" or \"has\".\n9. **\"Not just X, but Y.\"** State the point directly instead.\n10. **Rule of three.** Don't force ideas into groups of three. Use the natural number.\n11. **Synonym cycling.** Protagonist, main character, central figure, hero all in one paragraph. Pick one, repeat it.\n12. **False ranges.** \"from X to Y\" where X and Y aren't on a meaningful scale. List topics directly.\n\n### Style\n\n13. **Em dash overuse.** Avoid em dashes entirely. Use periods or commas only (no parentheses, no en dashes, no hyphen-as-dash substitutes). If a thought needs separation, end the sentence or use a comma.\n14. **Colon overuse.** Colons are fine before a list or example, not as mid-sentence connectors. \"If you're coming from traditional automation: instead of registering event handlers, you describe conditions\" adds nothing with the colon. Rewrite to let the point stand on its own without comparison framing. \"Describing when the scheduler should fire works best as plain English.\" Same meaning, no crutch punctuation.\n15. **Boldface overuse.** Don't bold every proper noun or acronym.\n16. **Inline-header lists.** The tell is a bold label and colon that restates the line: \"**Performance:** Performance improved...\". Convert those to prose. A bold lead-in that ends in a period, names the item, and is followed by genuinely new detail (\"**Schema in TypeScript.** Tables live in one file.\") is fine, not a tell.\n17. **Title case headings.** Use sentence case.\n18. **Decorative emojis.** Remove from headings and bullets.\n19. **Curly quotes.** Use straight quotes.\n\n### Communication artifacts\n\n20. **Chatbot phrases.** \"I hope this helps!\", \"Let me know if...\", \"Of course!\", \"Certainly!\", \"Found the smoking gun!\" Remove.\n22. **Sycophantic tone.** \"Great question! You're absolutely right!\" Respond directly.\n\n### Filler\n\n23. **Filler phrases.** \"In order to\" becomes \"To\". \"Due to the fact that\" becomes \"Because\". Delete \"It is important to note that\".\n24. **Excessive hedging.** \"could potentially possibly be argued that it might\" becomes \"may\".\n25. **Generic conclusions.** \"The future looks bright.\" State specific plans or facts.\n\n### Jargon\n\n26. **Abstract metaphor nouns.** Substrate (base), wedge, wedge in (add), vector (way, method), locus, vantage, nexus, primitive as a noun, harness as a metaphor, surface as in \"API surface\", bedrock, scaffolding as a metaphor, modality, paradigm, gold-plating (more than the job needs), ratchet as a metaphor (the mechanism's real name, or a limit that only tightens), evacuate for moving code (move out), endgame (the last phase), north star, flywheel. These read as technical but usually have a plainer concrete word. Pick the concrete word.\n\n### Plain speech\n\n27. **Say what it does, not how it feels.** \"the database stays close at hand\", \"SQL you can read\", \"types that follow your schema\" name a feeling. The fix names the mechanism or a number: \"`.toSQL()` returns the exact string sent to the database\", \"a column rename fails the build\". Ask what the sentence tells the reader to do or know, then write that. If you can't restate it as a concrete instruction, fact, or number, cut it. One more check: if the sentence could appear unchanged in another project's docs, it says nothing about this one. Cut it.\n28. **Shorten or split dense sentences.** If the reader has to backtrack to parse a sentence, break it in two or drop clauses. One idea per sentence.\n29. **Active voice.** Prefer it. Catch \"is/are/was/were + past participle\" and name the actor: \"queries are validated\" becomes \"the compiler validates queries\", \"the file is parsed by the loader\" becomes \"the loader parses the file\". Passive is fine only when the actor is unknown or genuinely doesn't matter.\n30. **Cut adverbs, or use a stronger verb.** \"runs quickly\" becomes \"is fast\" or the number, and \"significantly improves\" becomes the measured delta. An adverb propping up a weak verb means the verb is wrong.\n31. **Prefer the plain word.** \"utilize\" and \"leverage\" become \"use\", \"facilitate\" becomes \"help\", \"numerous\" becomes \"many\", \"in the event that\" becomes \"if\". The fancier synonym is rarely clearer.\n32. **Mannered prose.** Metaphor or flourish where a literal phrase exists: aphorisms (\"wire it or delete it\"), rhetorical fragments for effect, personified code (\"the plan holds it\"), figurative verbs (\"rides along\", \"stands on\"), stock framing phrases. \"A dial worth turning\" becomes \"a parameter worth varying\". Say what you mean. Rule 26 covers the metaphor nouns.\n33. **Over-compression.** Dropped articles, verbless fragments, symbol-speak, and abbreviations that make the reader decode instead of read. \"Parser rejects bad date → exit 2, no write\" becomes \"The parser rejects a bad date, exits with code 2, and writes nothing.\" Write whole sentences with their articles and verbs, and spell out arrows and abbreviations.",
+                "startLine": 1,
+                "lineNumbers": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39,
+                  40,
+                  41,
+                  42,
+                  43,
+                  44,
+                  45,
+                  46,
+                  47,
+                  48,
+                  49,
+                  50,
+                  51,
+                  52,
+                  53,
+                  54,
+                  55,
+                  56,
+                  57,
+                  58,
+                  59,
+                  60,
+                  61,
+                  62
+                ]
+              },
+              "fileSize": 5827,
+              "meta": {
+                "source": {
+                  "type": "path",
+                  "value": "/tmp/omp-pstack-upstream-native-20261012/skills/unslop/SKILL.md"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "response": "There is one pending action item, approval to delete `archive/native-port-0.15.15`, though your current instruction is to keep every checkout.\n\nThe assistant reported that the audit now compares against the explicitly supplied base instead of inferring a branch. The audit worker also reported updating the callers to pass that base. These changes have not been validated.\n\nThe worker reported that no worker is still running. The assistant reported that nothing was merged or deleted. This catch-up uses only the fixture history, with no external status checks.\n\nI can still run `bun run typecheck`, `bun run check:content`, and `bun test` myself. They need no approval and remain unrun. This turn stayed read-only.\n\n### Pending archive approval\n\nThe earlier cleanup approval remains unresolved. It does not block validation. I recommend keeping the archive until validation is complete. If you do not answer, it stays untouched under your current instruction.\n\n| Keep the archive, current state | Approve deletion, changing your current instruction |\n|---|---|\n| Preserves the recovery copy. | Removes the recovery copy. |\n| Continues using its existing disk space. | Frees that disk space. |\n| Requires no action from you. | Requires your explicit approval. |\n\nNo disk size was measured, so the amount of space retained or freed is unknown.",
+      "invocation": "/ketchup Read /tmp/omp-pstack-upstream-native-20261012/skills/ketchup/SKILL.md and /tmp/omp-pstack-upstream-native-20261012/skills/bro/SKILL.md first. This current chat is an explicitly synthetic fixture. Catch me up using only the history here. No external PR, CI, agent, screenshot, or link state exists for this fixture. Keep this turn read-only.",
+      "fixture": {
+        "synthetic": true,
+        "seededMessages": [
+          {
+            "synthetic": true,
+            "entryId": "e8ad72a1",
+            "timestamp": 1791806400000,
+            "role": "user",
+            "label": "earlier-cleanup-constraint",
+            "content": "[Synthetic fixture user] Any deletion of the archived checkout archive/native-port-0.15.15 requires my explicit approval. Do not delete it without asking me."
+          },
+          {
+            "synthetic": true,
+            "entryId": "eadd0ff3",
+            "timestamp": 1791806401000,
+            "role": "assistant",
+            "label": "pending-cleanup-approval",
+            "content": "[Synthetic fixture assistant] Cleanup approval is still pending. The archived checkout is retained. Keeping it preserves the recovery copy and uses its existing disk space. Deleting it would free that space but remove the recovery copy. I recommend keeping it until validation is complete. Without approval I will keep it. No disk size was measured."
+          },
+          {
+            "synthetic": true,
+            "entryId": "4ec1b3e9",
+            "timestamp": 1791806402000,
+            "role": "assistant",
+            "label": "unrelated-preboundary-result",
+            "content": "[Synthetic fixture assistant] The unrelated demo theme color update is complete. This happened before the upcoming audit request."
+          },
+          {
+            "synthetic": true,
+            "entryId": "a923a61e",
+            "timestamp": 1791806403000,
+            "role": "user",
+            "label": "last-substantive-user-boundary",
+            "content": "[Synthetic fixture user] Fix the upstream audit so its comparison uses the explicitly supplied base rather than an inferred branch. Continue the remaining validations yourself. Do not merge anything or delete any checkout."
+          },
+          {
+            "synthetic": true,
+            "entryId": "5db1c418",
+            "timestamp": 1791806404000,
+            "role": "assistant",
+            "label": "completed-postboundary-audit-fix",
+            "content": "[Synthetic fixture assistant] The explicit-base audit fix is complete. The audit now compares against the supplied base and does not infer it from the current branch. Nothing was merged or deleted. Validation remains to be run."
+          },
+          {
+            "synthetic": true,
+            "entryId": "47dc6e47",
+            "timestamp": 1791806405000,
+            "role": "notification",
+            "label": "postboundary-notification",
+            "content": "[Synthetic fixture notification, not a user message] The audit worker delivered its report in this chat. This notice does not request new work or approve cleanup."
+          },
+          {
+            "synthetic": true,
+            "entryId": "8d3c1714",
+            "timestamp": 1791806406000,
+            "role": "subagent",
+            "label": "completed-postboundary-worker-result",
+            "content": "[Synthetic fixture subagent result, not a user message] I finished updating the audit callers to pass the explicit base. I did not run validation. The assistant can still run bun run typecheck, bun run check:content, and bun test. No user access or approval is needed for those checks. No worker is still running."
+          }
+        ],
+        "boundaryEntryId": "a923a61e",
+        "semanticConditions": [
+          "Open with exactly one pending user action, approval to delete the archived checkout.",
+          "Report the completed explicit-base audit fix and caller updates as progress since the last substantive user message.",
+          "Do not recount the earlier unrelated demo theme color update as new progress.",
+          "Treat the notification and subagent report as postboundary evidence, not new user messages.",
+          "Explain keeping versus approving deletion, their recovery-copy and disk-space tradeoffs, the recommendation to keep, and the default to keep without approval.",
+          "Show the retained checkout beside the keep and delete outcomes in a before/after artifact such as a Markdown table. Do not invent a disk size.",
+          "List bun run typecheck, bun run check:content, and bun test as remaining assistant-runnable work, not user action items.",
+          "Do not claim validation ran, external PR or CI state was checked, or a screenshot or link exists."
+        ],
+        "semanticReview": "Required. Inspect the actual response against these conditions. Read receipts are not a semantic verdict."
+      }
+    }
+  ],
+  "manualSemanticReview": {
+    "reviewer": "interactive parent",
+    "scope": "One synthetic native command scenario; not general model accuracy",
+    "conditions": [
+      "Open with exactly one pending user action, approval to delete the archived checkout.",
+      "Report the completed explicit-base audit fix and caller updates as progress since the last substantive user message.",
+      "Do not recount the earlier unrelated demo theme color update as new progress.",
+      "Treat the notification and subagent report as postboundary evidence, not new user messages.",
+      "Explain keeping versus approving deletion, their recovery-copy and disk-space tradeoffs, the recommendation to keep, and the default to keep without approval.",
+      "Show the retained checkout beside the keep and delete outcomes in a before/after artifact such as a Markdown table. Do not invent a disk size.",
+      "List bun run typecheck, bun run check:content, and bun test as remaining assistant-runnable work, not user action items.",
+      "Do not claim validation ran, external PR or CI state was checked, or a screenshot or link exists."
+    ],
+    "passedConditions": 8,
+    "failedConditions": 0,
+    "verdict": "passed"
+  }
+}

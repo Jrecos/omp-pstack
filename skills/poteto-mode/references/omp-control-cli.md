@@ -5,7 +5,7 @@ description: Packaged OMP adaptation of cursor-team-kit's control-cli skill. Bui
 
 # Control CLI
 
-> Adapted from `cursor-team-kit/skills/control-cli/SKILL.md` at `cursor/plugins` commit `93b00b89ef425a9c1bac0d0b317dfc49c930ac99` (source SHA-1 `048d2b2f859339a38f0124fecf8648be67eed756`). Cursor-specific tool references are translated to native OMP mechanics; the harness patterns and guardrails are preserved.
+> Adapted from `cursor-team-kit/skills/control-cli/SKILL.md` at `cursor/plugins` commit `1b6d44ff26d4e242f4e8f68c391e6d2f7ca16def` (source SHA-1 `69289ac517e8a28380c8eca5c6692e8a601fa62c`). Cursor-specific tool references are translated to native OMP mechanics; the harness patterns and guardrails are preserved.
 
 Use a repeatable local harness to exercise an interactive CLI instead of poking at it manually. First reuse the repo's own test/demo harness if it exists; otherwise assemble a temporary harness from standard local tools.
 
@@ -33,9 +33,19 @@ Use a repeatable local harness to exercise an interactive CLI instead of poking 
 - Repo-native harness: prefer checked-in scripts because they know the app's startup, env, and prompts.
 - `tmux`: managed sessions, `capture-pane`, `send-keys`, attach/detach.
 - PTY probe: use a short Python, Node, or Expect script when tmux is unavailable.
-- OMP supervised process: in a live OMP session, start a long-running CLI under process control (`start` with a readiness regex or port) and drive it over stdin; read its output with the log-follow command. This gives deterministic waits without a hand-rolled loop. Keep the session bounded and stop it when done.
+- OMP supervised process. Start a bounded native bash job with a unique name and a readiness regex or port. Drive its stdin through native process control. Use native job inspection and cancellation instead of a second job registry. SDK consumers use `getAsyncJobSnapshot()`, `inspectAsyncJob(id)`, and `cancelAsyncJob(id)`. Inspect the owning session's jobs and await native completion delivery. Do not poll.
 - Runtime inspector: use Node or Bun inspector for CPU profiles, heap snapshots, and live evaluation.
 - Terminal recorder: use repo-local demo tools or asciinema-compatible tools when the user asks for a demo.
+
+## OMP 18.10.2 boundaries
+
+For coding probes, prefer `omp worktree add -b <branch> <path> <base>` or reuse an appropriate isolated checkout. Verify the base, branch, and actual cwd before writing. Check dependencies and environment files if cloning falls back to a plain checkout. Keep private enablement scoped to that checkout.
+
+Use `/fork pane`, `/fork window`, or optional `ctx.ui.openTerminal` only when the host exposes the required terminal support. A fork branches the transcript and shares the parent cwd. It does not isolate files. Headless transcript forking is verified, but multiplexer launches and `openTerminal` success remain unexercised.
+
+For diagnostic exports, use `omp anonymize <session.jsonl> --out <new-or-empty-directory>`. Preserve the original transcript and decision ledger. Review the export manually before sharing. Seeded-canary checks do not guarantee anonymization of arbitrary histories.
+
+Optional `bash.gitGuard=true` adds embedded-shell protection against destructive Git commands. It is off by default and does not constrain external shells or arbitrary processes. Keep the existing destructive-command rules and Docker boundary. Do not change global settings to enable it.
 
 ## Minimal tmux Harness
 

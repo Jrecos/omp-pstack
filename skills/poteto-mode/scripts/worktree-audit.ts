@@ -5,24 +5,25 @@
 // tab-separated table sorted by size with a suggested bucket. Never deletes
 // anything and never writes into the audited repository; deletion stays a
 // human-gated step in the playbook.
-// Usage: worktree-audit.ts [repo-path]   (defaults to the current repo)
+// Usage: worktree-audit.ts [-b <base-ref>] [repo-path]
 //
-// Recent-chat source is OMP session storage (~/.omp/agent/sessions, override
-// with PSTACK_SESSIONS_DIR for tests). A chat counts for a worktree when its
+// Recent-chat source is native OMP session storage, overridden by
+// PSTACK_SESSIONS_DIR for tests. A chat counts for a worktree when its
 // session file references the worktree path followed by "/" or a quote, so
 // glint-482 does not match glint-482-r37.
 //
 // Hostile-repository isolation: every Git invocation runs with default-deny
 // transports, a scrubbed environment and an empty scratch HOME, and
-// origin/main is refreshed by fetching the canonical GitHub HTTPS URL inside
-// a throwaway repository with a pinned upload-pack — the audited repo's
+// the selected remote base is refreshed from canonical GitHub HTTPS inside
+// a throwaway repository with a pinned upload-pack. The audited repo's
 // remote configuration (named remotes, uploadpack overrides, insteadOf
 // rewrites, local/ext transports) is never consulted, so nothing planted
 // there can execute or redirect the fetch.
 
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { homedir, tmpdir } from "node:os";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { getSessionsDir } from "@oh-my-pi/pi-utils";
 
 export interface PrRecord {
 	number: number;
@@ -33,7 +34,7 @@ export interface PrRecord {
 export interface AuditRow {
 	readonly size: string;
 	readonly age: string;
-	readonly merged: "YES" | "no";
+	readonly merged: "YES" | "no" | "unknown";
 	readonly dirty: string;
 	readonly remote: string;
 	readonly pr: string;
@@ -46,11 +47,13 @@ export interface AuditRow {
 
 export interface AuditOptions {
 	readonly repo: string;
+	readonly base?: string;
 	readonly sessionsDir?: string;
 	readonly now?: number;
 }
 
 export interface AuditReport {
+	readonly base: string | null;
 	readonly rows: readonly AuditRow[];
 	readonly warnings: readonly string[];
 }
@@ -229,26 +232,61 @@ function fetchPrs(repo: string, gitE: Record<string, string>, ghE: Record<string
 	return prs;
 }
 
-/**
- * Fetch main from the canonical GitHub HTTPS URL inside a throwaway repo
- * with default-denied transports (only https re-allowed) and a fixed
- * upload-pack, in the scrubbed Git environment. The audited repository's
- * remote configuration is never read, and nothing planted there can execute
- * or redirect. Returns the fetched tip SHA (format-validated before it is
- * consumed by the alternates-based ancestry check) or undefined on any
- * failure. Bounded in time per network command.
- */
-function fetchOriginMain(slug: string, scratch: string, env: Record<string, string>): string | undefined {
+type SelectedBase = { name: string; tip: string | undefined; remoteRef: string | undefined };
+
+function commitTip(ref: string, repo: string, env: Record<string, string>): string | undefined {
+	const result = git(["rev-parse", "--verify", "--end-of-options", `${ref}^{commit}`], repo, env);
+	const sha = result.stdout.trim();
+	return result.code === 0 && /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/.test(sha) ? sha : undefined;
+}
+
+function validBranch(ref: string, repo: string, env: Record<string, string>): boolean {
+	return ref.startsWith("refs/heads/") && git(["check-ref-format", ref], repo, env).code === 0;
+}
+
+function selectBase(explicit: string | undefined, repo: string, slug: string | undefined, scratch: string, env: Record<string, string>): SelectedBase | undefined {
 	const dir = join(scratch, "fetch");
-	const init = Bun.spawnSync(["git", ...AUDIT_GIT_ARGS, "init", "-q", dir], { cwd: scratch, env, stdout: "ignore", stderr: "ignore" });
-	if ((init.exitCode ?? 1) !== 0) return undefined;
+	if (slug) git(["init", "-q", dir], scratch, env);
+	const originHead = git(["symbolic-ref", "--quiet", "refs/remotes/origin/HEAD"], repo, env).stdout.trim();
+	let name = explicit;
+	if (explicit !== undefined && (!explicit || explicit.startsWith("-") || /[\s\x00-\x1f\x7f]/.test(explicit))) {
+		throw new Error(`invalid base ref ${JSON.stringify(explicit)}`);
+	}
+	if (!name || name === "origin/HEAD" || name === "refs/remotes/origin/HEAD") {
+		if (originHead.startsWith("refs/remotes/origin/") && validBranch(`refs/heads/${originHead.slice("refs/remotes/origin/".length)}`, repo, env)) {
+			name = originHead.replace("refs/remotes/", "");
+		} else if (slug) {
+			const result = Bun.spawnSync(
+				["git", ...FETCH_GIT_ARGS, "-C", dir, "ls-remote", "--symref", "--upload-pack=git-upload-pack", `https://github.com/${slug}`, "HEAD"],
+				{ cwd: scratch, env, stdout: "pipe", stderr: "ignore", timeout: 60_000 },
+			);
+			const ref = result.exitCode === 0 ? /^ref: (refs\/heads\/[^\t\n]+)\tHEAD$/m.exec(result.stdout.toString())?.[1] : undefined;
+			if (ref && validBranch(ref, repo, env)) name = `origin/${ref.slice("refs/heads/".length)}`;
+		}
+		if (!name && explicit === undefined) {
+			name = ["origin/main", "origin/master", "main", "master"].find((ref) => commitTip(ref, repo, env));
+		}
+	}
+	if (!name) return undefined;
+	const remoteBranch = name.startsWith("refs/remotes/origin/") ? name.slice("refs/remotes/origin/".length)
+		: name.startsWith("origin/") ? name.slice("origin/".length) : undefined;
+	const remoteRef = remoteBranch === undefined ? undefined : `refs/heads/${remoteBranch}`;
+	if (remoteRef && !validBranch(remoteRef, repo, env)) throw new Error(`invalid base ref ${JSON.stringify(name)}`);
+	const tip = commitTip(name, repo, env);
+	if (!tip && !(remoteRef && slug)) {
+		if (explicit !== undefined) throw new Error(`cannot resolve base ref ${JSON.stringify(explicit)}`);
+		return undefined;
+	}
+	return { name, tip, remoteRef };
+}
+
+function fetchBase(slug: string, ref: string, scratch: string, env: Record<string, string>): string | undefined {
+	const dir = join(scratch, "fetch");
 	const fetch = Bun.spawnSync(
-		["git", ...FETCH_GIT_ARGS, "-C", dir, "fetch", "--quiet", "--upload-pack=git-upload-pack", `https://github.com/${slug}`, "main"],
+		["git", ...FETCH_GIT_ARGS, "-C", dir, "fetch", "--quiet", "--upload-pack=git-upload-pack", `https://github.com/${slug}`, ref],
 		{ cwd: scratch, env, stdout: "ignore", stderr: "ignore", timeout: 60_000 },
 	);
-	if ((fetch.exitCode ?? 1) !== 0) return undefined;
-	const sha = Bun.spawnSync(["git", ...AUDIT_GIT_ARGS, "-C", dir, "rev-parse", "FETCH_HEAD"], { cwd: scratch, env, stdout: "pipe", stderr: "ignore" }).stdout.toString().trim();
-	return /^[0-9a-f]{40}$/.test(sha) || /^[0-9a-f]{64}$/.test(sha) ? sha : undefined;
+	return fetch.exitCode === 0 ? commitTip("FETCH_HEAD", dir, env) : undefined;
 }
 
 /** Most recent OMP session mtime (ms) per worktree whose file references its path. */
@@ -298,7 +336,7 @@ function localDate(ms: number): string {
 export function auditWorktrees(options: AuditOptions): AuditReport {
 	const { repo } = options;
 	const now = options.now ?? Date.now();
-	const sessionsDir = options.sessionsDir ?? process.env.PSTACK_SESSIONS_DIR ?? `${homedir()}/.omp/agent/sessions`;
+	const sessionsDir = options.sessionsDir ?? process.env.PSTACK_SESSIONS_DIR ?? getSessionsDir();
 	// One scratch dir per audit: empty HOME for Git and gh, and the host of
 	// the throwaway fetch repository. Everything inside is discarded.
 	const scratch = mkdtempSync(join(tmpdir(), "pstack-audit-env-"));
@@ -306,6 +344,7 @@ export function auditWorktrees(options: AuditOptions): AuditReport {
 		const gitE = gitEnv(scratch);
 		const ghE = ghEnv(scratch);
 		const warnings: string[] = [];
+		if (git(["rev-parse", "--git-dir"], repo, gitE).code !== 0) throw new Error("not in a git repo; pass a repo path");
 
 		// First entry is the main worktree; everything else is a candidate.
 		const worktrees = listWorktrees(repo, gitE).slice(1);
@@ -316,27 +355,31 @@ export function auditWorktrees(options: AuditOptions): AuditReport {
 		if (prs === null) warnings.push("warn: gh PR inventory unavailable; PR column is unknown and no worktree is marked safe");
 		const url = remoteOriginUrl(repo, gitE);
 		const slug = url ? parseGithubSlug(url) : undefined;
-		let mainTip = slug ? fetchOriginMain(slug, scratch, gitE) : undefined;
+		const selected = selectBase(options.base, repo, slug, scratch, gitE);
+		let fetchedTip = selected?.remoteRef && slug ? fetchBase(slug, selected.remoteRef, scratch, gitE) : undefined;
 		let mergeCwd = repo;
-		let mergeTarget = "origin/main";
-		if (mainTip) {
+		let mergeTarget = selected?.tip;
+		if (fetchedTip) {
 			const objectsDir = git(["rev-parse", "--path-format=absolute", "--git-path", "objects"], repo, gitE).stdout.trim();
 			try {
 				if (objectsDir && !objectsDir.includes("\n")) {
 					mkdirSync(join(scratch, "fetch", ".git", "objects", "info"), { recursive: true });
 					writeFileSync(join(scratch, "fetch", ".git", "objects", "info", "alternates"), `${objectsDir}\n`);
 					mergeCwd = join(scratch, "fetch");
-					mergeTarget = mainTip;
+					mergeTarget = fetchedTip;
 				} else {
-					mainTip = undefined;
+					fetchedTip = undefined;
 				}
 			} catch {
-				mainTip = undefined;
+				fetchedTip = undefined;
 			}
 		}
-		if (!mainTip) {
-			warnings.push("warn: could not fetch origin/main; merged column may be stale");
+		if (!selected) {
+			warnings.push("warn: base is unknown; no worktree is marked merge-safe");
+		} else if (selected.remoteRef && !fetchedTip) {
+			warnings.push(`warn: could not fetch ${selected.name}; merged column ${mergeTarget ? "may be stale" : "is unknown"}`);
 		}
+		if (options.base !== undefined && !mergeTarget) throw new Error(`cannot resolve base ref ${JSON.stringify(options.base)}`);
 
 		const chats = lastChatTimestamps(worktrees, sessionsDir);
 		const rows: AuditRow[] = worktrees.map((wt) => {
@@ -344,9 +387,9 @@ export function auditWorktrees(options: AuditOptions): AuditReport {
 			const headTs = Number(git(["-C", wt, "log", "-1", "--format=%ct", "HEAD"], repo, gitE).stdout.trim()) * 1000;
 			const age = headTs > 0 ? `${Math.floor((now - headTs) / DAY_MS)}d` : "?";
 
-			// Squash-merged branches are not ancestors of main, so PR state is the
-			// real signal; merge-base only catches fast-forward/rebase merges.
-			const merged: AuditRow["merged"] = head && git(["merge-base", "--is-ancestor", head, mergeTarget], mergeCwd, gitE).code === 0 ? "YES" : "no";
+			// PR state also covers squash merges, which ancestry cannot establish.
+			const merged: AuditRow["merged"] = !mergeTarget ? "unknown"
+				: head && git(["merge-base", "--is-ancestor", head, mergeTarget], mergeCwd, gitE).code === 0 ? "YES" : "no";
 
 			// Distinguish real WIP (tracked edits) from disposable untracked scratch.
 			const entries = git(["-C", wt, "status", "--porcelain=v1", "-z"], repo, gitE).stdout.split("\0").filter(Boolean);
@@ -381,7 +424,7 @@ export function auditWorktrees(options: AuditOptions): AuditReport {
 			else if (pr.includes("OPEN")) bucket = "hold-open-pr";
 			else if (recent) bucket = "verify-recent-chat";
 			// Unknown PR inventory can never be safe/prunable: the human reviews.
-			else if (pr === "unknown") bucket = "review";
+			else if (pr === "unknown" || merged === "unknown") bucket = "review";
 			else if (merged === "YES" || pr !== "-") bucket = "safe";
 			else bucket = "review";
 
@@ -405,7 +448,7 @@ export function auditWorktrees(options: AuditOptions): AuditReport {
 		});
 
 		rows.sort((a, b) => b.sizeBytes - a.sizeBytes);
-		return { rows, warnings };
+		return { base: selected?.name ?? null, rows, warnings };
 	} finally {
 		rmSync(scratch, { recursive: true, force: true });
 	}
@@ -418,20 +461,44 @@ export function formatRow(row: AuditRow): string {
 }
 
 if (import.meta.main) {
-	const repoArg = process.argv[2];
 	const scratch = mkdtempSync(join(tmpdir(), "pstack-audit-env-"));
 	try {
-		const repo =
-			repoArg ||
-			Bun.spawnSync(["git", ...AUDIT_GIT_ARGS, "rev-parse", "--show-toplevel"], { env: gitEnv(scratch), stdout: "pipe", stderr: "ignore" }).stdout.toString().trim();
-		if (!repo) {
-			console.error("not in a git repo; pass a repo path");
-			process.exit(1);
+		let base: string | undefined;
+		let repoArg: string | undefined;
+		let help = false;
+		const args = process.argv.slice(2);
+		for (let i = 0; i < args.length; i++) {
+			const arg = args[i];
+			if (arg === "-h" || arg === "--help") {
+				console.log("Usage: worktree-audit [-b <base-ref>] [repo-path]\n\n-b, --base <ref>  Compare against an explicit base ref.\n-h, --help        Show this help.\n\nDefault base uses origin/HEAD, canonical remote HEAD, then existing main/master refs.\nUnknown bases never authorize pruning. The audited repository is never modified.");
+				help = true;
+				break;
+			}
+			if (arg === "-b" || arg === "--base") {
+				if (base !== undefined || !args[i + 1] || args[i + 1].startsWith("-")) throw new Error(`${arg} requires one base ref`);
+				base = args[++i];
+			} else if (arg === "--") {
+				if (repoArg !== undefined || args.length !== i + 2) throw new Error("expected one repo path after --");
+				repoArg = args[++i];
+			} else if (arg.startsWith("-")) {
+				throw new Error(`unknown option ${arg}`);
+			} else {
+				if (repoArg !== undefined) throw new Error("expected at most one repo path");
+				repoArg = arg;
+			}
 		}
-		const { rows, warnings } = auditWorktrees({ repo });
-		console.log(HEADER);
-		for (const row of rows) console.log(formatRow(row));
-		for (const warning of warnings) console.error(warning);
+		if (!help) {
+			const repo = repoArg || git(["rev-parse", "--show-toplevel"], process.cwd(), gitEnv(scratch)).stdout.trim();
+			if (!repo) throw new Error("not in a git repo; pass a repo path");
+			const { base: selectedBase, rows, warnings } = auditWorktrees({ repo, base });
+			console.log(`BASE\t${selectedBase ?? "unknown"}`);
+			console.log(HEADER);
+			for (const row of rows) console.log(formatRow(row));
+			for (const warning of warnings) console.error(warning);
+		}
+	} catch (error) {
+		console.error(error instanceof Error ? error.message : String(error));
+		process.exitCode = 1;
 	} finally {
 		rmSync(scratch, { recursive: true, force: true });
 	}

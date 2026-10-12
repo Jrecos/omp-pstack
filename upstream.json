@@ -1,12 +1,12 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "commit": "df581122cde17e6e27686b5a448bde23e4ad4318",
-  "version": "0.15.15",
-  "subtree": "9d9cb20f79203a97c925de402c66183d0fa26c42",
+  "commit": "1b6d44ff26d4e242f4e8f68c391e6d2f7ca16def",
+  "version": "0.15.20",
+  "subtree": "1dbec20ada6e40cb12774b8893960a558319fd6b",
   "files": [
     {
       "source": "pstack/.cursor-plugin/plugin.json",
-      "blob": "68cc4443afd6b6f4881ab572b779f39d47854d42",
+      "blob": "879440be129f60eb112cca5d6a6ef8d9689ffffc",
       "target": "package.json",
       "mode": "100644",
       "adaptation": {
@@ -43,11 +43,11 @@
     },
     {
       "source": "pstack/README.md",
-      "blob": "7227da33bb709bf8744dbde5f3da38016a19350d",
+      "blob": "5e34dbff924bd4204eb2436c3357950d33718964",
       "target": "README.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "README identity, editorial voice, credits, and presentation distinguish this independently maintained OMP plugin adaptation from upstream P Stack by Lauren Tan (poteto), link the original source, retain its MIT notice, attribute poteto-mode's style to its creator, point to pinned provenance in upstream.json, and feature original Astra-generated watercolor artwork of Jrecos and OMP robot agents instead of upstream character art.; Install section: /add-plugin pstack replaced with omp plugin marketplace add https://github.com/Jrecos/omp-pstack + omp plugin install omp-pstack@omp-pstack.; 'turns cursor into'/'cursor gives you' reworded to agent/omp; cursor's /loop attributed to omp's built-in /loop.; poteto-agent and Comment Sicko spawn recipes translated to native task agent names; 'substituting generalPurpose' reworded.; 'not shipped here' (cursor-team-kit, /create-skill, /babysit) replaced by a host-adaptations section naming the packaged references omp-deslop.md, omp-control-cli.md, omp-control-ui.md, omp-create-skill.md.; Plan-mode section references omp native plan mode; benny setup path .cursor/automations/benny/ changed to .omp/automations/benny/ and 'point cursor' to 'point the agent'.; Added explicit optional official Spec Kit Feature setup, pinned provenance, and security limits.",
+        "reason": "README identity, editorial voice, credits, and presentation distinguish this independently maintained OMP plugin adaptation from upstream P Stack by Lauren Tan (poteto), link the original source, retain its MIT notice, attribute poteto-mode's style to its creator, point to pinned provenance in upstream.json, and feature original Astra-generated watercolor artwork of Jrecos and OMP robot agents instead of upstream character art.; Install section: /add-plugin pstack replaced with omp plugin marketplace add https://github.com/Jrecos/omp-pstack + omp plugin install omp-pstack@omp-pstack.; 'turns cursor into'/'cursor gives you' reworded to agent/omp; cursor's /loop attributed to omp's built-in /loop.; poteto-agent and Comment Sicko spawn recipes translated to native task agent names; 'substituting generalPurpose' reworded.; 'not shipped here' (cursor-team-kit, /create-skill, /babysit) replaced by a host-adaptations section naming the packaged references omp-deslop.md, omp-control-cli.md, omp-control-ui.md, omp-create-skill.md.; Plan-mode section references omp native plan mode; benny setup path .cursor/automations/benny/ changed to .omp/automations/benny/ and 'point cursor' to 'point the agent'.; Added explicit optional official Spec Kit Feature setup, pinned provenance, and security limits. Pin OMP18.10.2 and link the measured native-capability assessment while preserving original attribution and native installation.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -59,7 +59,7 @@
     },
     {
       "source": "pstack/agents/comment-sicko.md",
-      "blob": "9a688b8c5b5734ee80f782d4616a78c4c59b0946",
+      "blob": "209e3704dfa75022060c936bd3f3362fa3bbe254",
       "target": "agents/comment-sicko.md",
       "mode": "100644",
       "adaptation": {
@@ -75,11 +75,11 @@
     },
     {
       "source": "pstack/agents/poteto-agent.md",
-      "blob": "f9d79a75560520cbb2f939c587ce00fa7e33037a",
+      "blob": "41a39ed4035f91af53ed3ecc776184749198ca22",
       "target": "agents/poteto-agent.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Replaced Cursor frontmatter (is_background) with native OMP task-agent frontmatter: autoloadSkills: poteto-mode, read-summarize: false, spawns: \"*\". Body now states the child cannot own the parent todo and must report the ordered checklist per step in its result (done/skip reason/blocked) for the parent to apply. Resume wording translated to Agent Hub steering/revival. Skill-read requirement and Principles-index behavior preserved.",
+        "reason": "Replaced Cursor frontmatter (is_background) with native OMP task-agent frontmatter: autoloadSkills: poteto-mode, read-summarize: false, spawns: \"*\". Body now states the child cannot own the parent todo and must report the ordered checklist per step in its result (done/skip reason/blocked) for the parent to apply. Resume wording translated to Agent Hub steering/revival. Skill-read requirement and Principles-index behavior preserved. The receiving chat owns playbook execution and its todo list; prepared native agents are delegates only.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -449,7 +449,7 @@
     },
     {
       "source": "pstack/skills/architect/SKILL.md",
-      "blob": "c9c0726f57556f4c26bd7e7df5314ba15b3f1ac9",
+      "blob": "88e23ca105b89e67f4085d0e676c40d4b170a623",
       "target": "skills/architect/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -482,11 +482,11 @@
     },
     {
       "source": "pstack/skills/arena/SKILL.md",
-      "blob": "bd260a064d6e07a06073df6841e3d180d643372a",
+      "blob": "58ae9d9a3f8812429091515f2a7ce2f91cf14ef9",
       "target": "skills/arena/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "run_in_background fan-out replaced with native async task batch + hub wait; runner descriptors via pstack_agent role arena runners.; Cross-judge pool selection made concrete against the live parent (first family-different entry, else first entry) per plan; judge dispatched via pstack_agent role arena cross-judge pool, kind readonly.; Config source changed from ~/.cursor/rules/pstack-models.mdc to the pstack-models profile rule. Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution).",
+        "reason": "run_in_background fan-out replaced with native async task batch + hub wait; runner descriptors via pstack_agent role arena runners.; Cross-judge pool selection made concrete against the live parent (first family-different entry, else first entry) per plan; judge dispatched via pstack_agent role arena cross-judge pool, kind readonly.; Config source changed from ~/.cursor/rules/pstack-models.mdc to the pstack-models profile rule. Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution). Use schema-gated isolated candidate checkouts with one integration owner and plain native task completion while preserving approved descriptors and independent judging.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -525,7 +525,7 @@
     },
     {
       "source": "pstack/skills/create-verification-skill/SKILL.md",
-      "blob": "f869e26122991252373d5b8f6357e5b9ff195a00",
+      "blob": "140d033a001e8d27acd14b06004506c43053b199",
       "target": "skills/create-verification-skill/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -558,13 +558,13 @@
     },
     {
       "source": "pstack/skills/figure-it-out/SKILL.md",
-      "blob": "fbf3fb122cab127d71d3c41e84711e61cc5dec4c",
+      "blob": "195f50b83d0f643758a2b92e432374fbb5ef7635",
       "target": "skills/figure-it-out/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/how/SKILL.md",
-      "blob": "139cac5e4dce5d5889daaf77faa8d5f81dd87318",
+      "blob": "775d292f8d5d369200502eabe3136d8f56666239",
       "target": "skills/how/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -585,13 +585,13 @@
     },
     {
       "source": "pstack/skills/how/references/explorer-prompt.md",
-      "blob": "9b4b0594bfd779015616e9d280369aba939583b4",
+      "blob": "724bacfc7df759865c0c29705bfee641e4c1aeca",
       "target": "skills/how/references/explorer-prompt.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/interrogate/SKILL.md",
-      "blob": "bac0049e40b624343537d12fb8e13a974a5f376a",
+      "blob": "9e3b99a19bf22623220b42412bbabd1d67d02f05",
       "target": "skills/interrogate/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -618,13 +618,13 @@
     },
     {
       "source": "pstack/skills/interrogate/references/reviewer-prompt.md",
-      "blob": "13a252b2c3cd18522d4c8dc39a7030477037b249",
+      "blob": "ef7bff3d77c35a0af2a9947187ccee15465657f4",
       "target": "skills/interrogate/references/reviewer-prompt.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/interrogate/references/rubric.md",
-      "blob": "2d92f1b83e13be03fb10f20cba12639a1406a2da",
+      "blob": "8dab195ab840554bfe5e74e9b5ca0d9edbe9b496",
       "target": "skills/interrogate/references/rubric.md",
       "mode": "100644"
     },
@@ -660,11 +660,11 @@
     },
     {
       "source": "pstack/skills/no-comments/SKILL.md",
-      "blob": "3b3e76295a7ad66806dcc683e4de92fb25690f8b",
+      "blob": "4b608af0cb5323d7364011aa9e3d6a88b6e93ab5",
       "target": "skills/no-comments/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Task subagent_type 'Comment Sicko' translated to native task with the shipped Comment Sicko agent (tools read/grep/glob/web_search, no spawns); parent supplies the scoped diff/source and performs deeper how/why itself.",
+        "reason": "Dispatch the renamed native comment-sicko agent, preserving parent-owned investigations and OMP read-only review constraints.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -676,11 +676,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/SKILL.md",
-      "blob": "de51c56164ff3da8f958437e207d14cec7d7fe99",
+      "blob": "ddf2c4513a22ff41a4824029801c1ba864a04801",
       "target": "skills/poteto-mode/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "OMP branch state persists through pstack_mode instead of Cursor mode metadata. Host-only skills use packaged OMP references. Ordinary delegates resolve pstack_agent roles with kind poteto and pass only the returned prepared agent to native task. Models come from the approved profile pool without hardcoded defaults. Async delivery, Agent Hub steering, parent-owned todos, and native read-only kinds replace Cursor mechanics. The 23-principle index, 23 playbooks, upstream 0.15.0 routing changes, and condensed reply rules are preserved. The Autopilot-full route describes patch rounds adapted from upstream PR #414. Interactive Poteto mode consults supplied task-specific memory first, calls native recall only for missing or genuinely new historical context, treats results as unverified leads, and keeps scoped delegate handoff separate from the heavier P Stack recall skill without changing memory-off boundaries.",
+        "reason": "OMP branch state persists through pstack_mode instead of Cursor mode metadata. Host-only skills use packaged OMP references. Ordinary delegates resolve pstack_agent roles with kind poteto and pass only the returned prepared agent to native task. Models come from the approved profile pool without hardcoded defaults. Async delivery, Agent Hub steering, parent-owned todos, and native read-only kinds replace Cursor mechanics. The 23-principle index, 23 playbooks, upstream 0.15.0 routing changes, and condensed reply rules are preserved. The Autopilot-full route describes patch rounds adapted from upstream PR #414. Interactive Poteto mode consults supplied task-specific memory first, calls native recall only for missing or genuinely new historical context, treats results as unverified leads, and keeps scoped delegate handoff separate from the heavier P Stack recall skill without changing memory-off boundaries. The receiving chat owns playbook execution and its todo list; prepared native agents are delegates only.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -754,7 +754,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/babysit.md",
-      "blob": "683cf0ba889789cbe2d880fce667c75349f9ed12",
+      "blob": "51549ab2da11e5905342bbb3aadb93685c8ac348",
       "target": "skills/poteto-mode/playbooks/babysit.md",
       "mode": "100644",
       "adaptation": {
@@ -804,7 +804,7 @@
       "target": "skills/poteto-mode/playbooks/feature.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Configured P Stack feature delegation remains mandatory. Explicit official GitHub Spec Kit opt-in adds pinned OMP phase handoffs within all eight original Feature steps, with isolated feature binding and real-surface verification. The ordinary Feature route is unchanged.",
+        "reason": "Configured P Stack feature delegation remains mandatory. Explicit official GitHub Spec Kit opt-in adds pinned OMP phase handoffs within all eight original Feature steps, with isolated feature binding and real-surface verification. The ordinary Feature route is unchanged. Adopt verified native checkout and worker isolation with controlled integration, plain task completion and unchanged explicit official Spec Kit boundaries.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -853,11 +853,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
-      "blob": "4e25989729174580e48ce36e265f298231c6de7f",
+      "blob": "fcd00527c6b9fb592aecfc3b1512e3b838146de3",
       "target": "skills/poteto-mode/playbooks/opening-a-pr.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor deslop uses the packaged OMP reference and draft handling uses a tool-neutral draft:false rule. Forge resolution, PR briefing, and stack rules are preserved. The Autopilot owner exception to the default no-babysit rule is adapted from upstream PR #422. OMP worktree safety replaces destructive reset alternatives with a fresh isolated worktree while preserving the original checkout.",
+        "reason": "Cursor deslop uses the packaged OMP reference and draft handling uses a tool-neutral draft:false rule. Forge resolution, PR briefing, and stack rules are preserved. The Autopilot owner exception to the default no-babysit rule is adapted from upstream PR #422. OMP worktree safety replaces destructive reset alternatives with a fresh isolated worktree while preserving the original checkout. Use the intended native worktree base and verified cwd, keep optional startup non-destructive, and retain ready-PR and irreversible-action gates.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -873,7 +873,7 @@
       "target": "skills/poteto-mode/playbooks/orchestrate.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Task tool translated to native task + Agent Hub (spawn, drain, steer, revive). Nested-spawn claim corrected to the native recursion cap (two nested levels by default); Task environment field dropped. Cloud-environment default translated to isolated native task agents with own worktrees, omp control references, and pstack_history for local evidence. Standing-orders paste rule simplified to spawn-by-path/verbatim-on-resume. Frontier watcher armed via native /loop. Liveness probe and OMP-restart recovery translated to Agent Hub and branch/PR reattachment. orch helper resolved via the documented PSTACK_ROOT installed-root resolver (README, running the pstack CLI after install) and invoked as the stable pstack orch subcommand. Store layout, brief contract, ledger/frontier semantics, drain discipline, and escalation gates preserved verbatim.",
+        "reason": "Task tool translated to native task + Agent Hub (spawn, drain, steer, revive). Nested-spawn claim corrected to the native recursion cap (two nested levels by default); Task environment field dropped. Cloud-environment default translated to isolated native task agents with own worktrees, omp control references, and pstack_history for local evidence. Standing-orders paste rule simplified to spawn-by-path/verbatim-on-resume. Frontier watcher armed via native /loop. Liveness probe and OMP-restart recovery translated to Agent Hub and branch/PR reattachment. orch helper resolved via the documented PSTACK_ROOT installed-root resolver (README, running the pstack CLI after install) and invoked as the stable pstack orch subcommand. Store layout, brief contract, ledger/frontier semantics, drain discipline, and escalation gates preserved verbatim. Separate native writer isolation from Docker, reuse native job controls and optionally anonymize diagnostics without changing approved-pool or publishing authority.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -886,7 +886,16 @@
       "source": "pstack/skills/poteto-mode/playbooks/pause-safely.md",
       "blob": "9d1c5f8303976fff40de099f7f28185909430c11",
       "target": "skills/poteto-mode/playbooks/pause-safely.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Reuse owner-scoped native job controls and optional session transfer without replacing the ledger, repository, credentials or readiness checks.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/perf-issue.md",
@@ -936,7 +945,7 @@
       "target": "skills/poteto-mode/playbooks/session-pickup.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Prior-trail location translated to native pstack_history (list/read, default seven-day workspace window, all:true for older same-workspace sessions); ~/.cursor/projects glob warning translated to agent-profile session dirs. Bias-check, state reconstruction, and routing steps preserved.",
+        "reason": "Prior-trail location translated to native pstack_history (list/read, default seven-day workspace window, all:true for older same-workspace sessions); ~/.cursor/projects glob warning translated to agent-profile session dirs. Bias-check, state reconstruction, and routing steps preserved. Use optional native session unpack and verify the destination while retaining repository, private authority and resume-note checks.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -962,7 +971,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/trace-forensics.md",
-      "blob": "48ed6b2f690215027eda96a1897ed98212bbd07a",
+      "blob": "ee54a2391b69d1d2a9ad7d3ee06266120c5e054e",
       "target": "skills/poteto-mode/playbooks/trace-forensics.md",
       "mode": "100644"
     },
@@ -974,11 +983,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/worktree-cleanup.md",
-      "blob": "39c9ef9f368ac63b0e4245503302a4c174e846d6",
+      "blob": "c767ac09ab584070fe3a76ddd754966b0cdf452f",
       "target": "skills/poteto-mode/playbooks/worktree-cleanup.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Audit helper (the skills/poteto-mode/scripts/worktree-audit.ts port; shell entrypoint removed by helper owner per plan) resolved via the documented PSTACK_ROOT installed-root resolver (README, running the pstack CLI after install) and invoked as the stable pstack worktree-audit subcommand. .cursor/worktrees example path translated to .omp/worktrees. Editor-profile disk targets generalized to the OMP agent profile (~/.omp/agent) plus leftover editor profiles. Bucket advice, pinned-chat precedence, wip/scratch gates, and simulator recipes preserved verbatim.",
+        "reason": "Audit helper (the skills/poteto-mode/scripts/worktree-audit.ts port; shell entrypoint removed by helper owner per plan) resolved via the documented PSTACK_ROOT installed-root resolver (README, running the pstack CLI after install) and invoked as the stable pstack worktree-audit subcommand. .cursor/worktrees example path translated to .omp/worktrees. Editor-profile disk targets generalized to the OMP agent profile (~/.omp/agent) plus leftover editor profiles. Bucket advice, pinned-chat precedence, wip/scratch gates, and simulator recipes preserved verbatim. Keep the manual native audit authoritative rather than relying on destructive automatic exit cleanup.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -1026,7 +1035,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
-      "blob": "d242f28eb801e781ccc2f2ba93b700b263a77816",
+      "blob": "c8626766cee4cc4a2736fe438a1aea5c1f1b28ce",
       "target": "skills/poteto-mode/scripts/check-plan.mjs",
       "mode": "100755",
       "adaptation": {
@@ -1068,7 +1077,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/package.json",
-      "blob": "8a3dfe27c2d0221a786e1ce61963d51c55260725",
+      "blob": "d8abe49ad0eafd10d302e8c6a9a0a95c5e6fb0ef",
       "target": "skills/poteto-mode/scripts/package.json",
       "mode": "100644",
       "adaptation": {
@@ -1096,25 +1105,25 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
-      "blob": "2312522cd7399334115a5f39fd6438aab7fc5aa5",
+      "blob": "84ccf596b01e03e7fb77e73ea82ec3b1738026ad",
       "target": "skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.test.ts",
-      "blob": "87f4048f08a63a54975c4ef2de8065375e751683",
+      "blob": "4ef39d2a1d2981e205e948b1707f7db96b750280",
       "target": "skills/poteto-mode/scripts/watch-pr/github.test.ts",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
-      "blob": "79bc06fb682c5d99de7d48338b0a6ecd27a518da",
+      "blob": "cfc3764a03d35fd5ed6c79818b076329bcd08437",
       "target": "skills/poteto-mode/scripts/watch-pr/github.ts",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
-      "blob": "0620ddedde46da8e763ab2a55ebceaad2aa6d0a7",
+      "blob": "6dae16da71800fb06eb37a7e3b296a8d27275b08",
       "target": "skills/poteto-mode/scripts/watch-pr/policy.test.ts",
       "mode": "100644",
       "adaptation": {
@@ -1129,7 +1138,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
-      "blob": "4665be37e8f9afff1c9e1f5dd60d98e0d70c8c6c",
+      "blob": "cabadb9bf96f4d8c4c0426d77d0cbdab80fbe3e5",
       "target": "skills/poteto-mode/scripts/watch-pr/policy.ts",
       "mode": "100644",
       "adaptation": {
@@ -1171,7 +1180,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/types.ts",
-      "blob": "b67144e0d757e0b61ff079f981ced0a98555ea9d",
+      "blob": "6c94e0a687f8e48f91acffd21f725320dd66e659",
       "target": "skills/poteto-mode/scripts/watch-pr/types.ts",
       "mode": "100644",
       "adaptation": {
@@ -1201,7 +1210,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/worktree-audit.sh",
-      "blob": "b9af08160032aeb17143248f2a3648e98f5a75b3",
+      "blob": "b2d1192187c0a1504366e591318129ac3d2879aa",
       "target": "skills/poteto-mode/scripts/worktree-audit.sh",
       "mode": "100755",
       "adaptation": {
@@ -1228,19 +1237,19 @@
     },
     {
       "source": "pstack/skills/principle-build-the-lever/SKILL.md",
-      "blob": "277189a10b00fddc7cbb63fcf2323c7341abb0df",
+      "blob": "cbf003850489d95fea78e64198fd972c35b1aad3",
       "target": "skills/principle-build-the-lever/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-encode-lessons-in-structure/SKILL.md",
-      "blob": "df9cd5ff2fb3c18267349cc6aecd8121848ef834",
+      "blob": "4a96f77fe70e36cb030f9c5efa142f66877bf58a",
       "target": "skills/principle-encode-lessons-in-structure/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-exhaust-the-design-space/SKILL.md",
-      "blob": "85dd16f1312f3427e2dddcfc8e7deb89e2555bb3",
+      "blob": "395a0839126bb231430a9c9da02ebab5422557d5",
       "target": "skills/principle-exhaust-the-design-space/SKILL.md",
       "mode": "100644"
     },
@@ -1264,13 +1273,13 @@
     },
     {
       "source": "pstack/skills/principle-guard-the-context-window/SKILL.md",
-      "blob": "c4db544909b26981c45eed9caa6591d32885f841",
+      "blob": "0a1d3cfcf4539fe048887174000fecbf2fa40e81",
       "target": "skills/principle-guard-the-context-window/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-laziness-protocol/SKILL.md",
-      "blob": "e5bc77e62aa96ae13e482a84df61b3c711c5d828",
+      "blob": "016c3c7c8dfffd995c1a02135a62248e6625879b",
       "target": "skills/principle-laziness-protocol/SKILL.md",
       "mode": "100644"
     },
@@ -1288,19 +1297,19 @@
     },
     {
       "source": "pstack/skills/principle-minimize-reader-load/SKILL.md",
-      "blob": "64541d963123e344078d82fd3977e857e76129df",
+      "blob": "628999088c5d05c1c546b3a3ca89da553cd3f3b2",
       "target": "skills/principle-minimize-reader-load/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-model-the-domain/SKILL.md",
-      "blob": "e1d664a19243c90a84e5e7a816e9e05146c88720",
+      "blob": "09b7c739955facf03f08f66e1e329745d2f8880e",
       "target": "skills/principle-model-the-domain/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-never-block-on-the-human/SKILL.md",
-      "blob": "11f08b6ef1fd93a3b3e47c57eb84716dc9acbff9",
+      "blob": "4f59bdc69f79d536b30b0014a563ed3be05b8b62",
       "target": "skills/principle-never-block-on-the-human/SKILL.md",
       "mode": "100644"
     },
@@ -1318,7 +1327,7 @@
     },
     {
       "source": "pstack/skills/principle-redesign-from-first-principles/SKILL.md",
-      "blob": "090a4325f43a96080cce3895f0e932b62c39146a",
+      "blob": "5ca5246cbb0fa08884ce17b0d22c117ae1ad67b8",
       "target": "skills/principle-redesign-from-first-principles/SKILL.md",
       "mode": "100644"
     },
@@ -1336,7 +1345,7 @@
     },
     {
       "source": "pstack/skills/principle-subtract-before-you-add/SKILL.md",
-      "blob": "d28770cf47a5798d0250a25ad494aedfecad154e",
+      "blob": "b8740ba6f06922d8e7ef3b23f9fb16e0fc4a876f",
       "target": "skills/principle-subtract-before-you-add/SKILL.md",
       "mode": "100644"
     },
@@ -1344,11 +1353,11 @@
       "source": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
       "target": "skills/principle-test-behavior-not-implementation/SKILL.md",
       "mode": "100644",
-      "blob": "42de6f8f7cab01b9f67aa28bd59b128f7574fbab"
+      "blob": "f5a603e3a0925cdc6363bcc26dfbf587d9a36ec7"
     },
     {
       "source": "pstack/skills/principle-type-system-discipline/SKILL.md",
-      "blob": "6030f171bee0d1902cf7ca91f06225e09f0f5433",
+      "blob": "4321b83e245d99eded0756c7a74f3fb64e32c36b",
       "target": "skills/principle-type-system-discipline/SKILL.md",
       "mode": "100644"
     },
@@ -1370,7 +1379,7 @@
     },
     {
       "source": "pstack/skills/reflect/SKILL.md",
-      "blob": "5ac697a2cc4cd4d066772b76855848a49a8b33c6",
+      "blob": "b6bd41afdc831741819b72efa60ef2f10947cc8c",
       "target": "skills/reflect/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1385,7 +1394,7 @@
     },
     {
       "source": "pstack/skills/reflect/references/divergent-reviewer.md",
-      "blob": "de95be3b9cc9c11052596249336dcc328473eb26",
+      "blob": "1e070a2a3754f4dc0ddbaec4450a56179b81c92f",
       "target": "skills/reflect/references/divergent-reviewer.md",
       "mode": "100644",
       "adaptation": {
@@ -1400,7 +1409,7 @@
     },
     {
       "source": "pstack/skills/reflect/references/judgment-reviewer.md",
-      "blob": "222f02b1c3c6eb3e700fa09a71bad108807d3485",
+      "blob": "61d15d76fff852eb573b551bc1317d79ed5a2e5f",
       "target": "skills/reflect/references/judgment-reviewer.md",
       "mode": "100644",
       "adaptation": {
@@ -1415,13 +1424,13 @@
     },
     {
       "source": "pstack/skills/reflect/references/synthesizer.md",
-      "blob": "d0e78195186c0dd6cfdc87ba19402ea8cd2aa385",
+      "blob": "1a090d86134987719ddb418023020c2ef58a6dae",
       "target": "skills/reflect/references/synthesizer.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/reflect/references/tooling-reviewer.md",
-      "blob": "a37e2009d6ef08f535df87e020e52426c6a5fa33",
+      "blob": "a839db4318798c51539c319cb90387ce02557225",
       "target": "skills/reflect/references/tooling-reviewer.md",
       "mode": "100644",
       "adaptation": {
@@ -1484,7 +1493,7 @@
       "target": "skills/swarm/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor cloud-worker mechanics (environment cloud/local, cloud_base_branch) removed: OMP native task has no cloud environment. Workers run locally as native task calls.; Per-arm model override in races routed through pstack_agent model; worker descriptors via role swarm workers.; Worktree/branch/tmp isolation retained explicitly because workers share no cloud sandbox; config source changed to the pstack-models profile rule. Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution).",
+        "reason": "Cursor cloud-worker mechanics (environment cloud/local, cloud_base_branch) removed: OMP native task has no cloud environment. Workers run locally as native task calls.; Per-arm model override in races routed through pstack_agent model; worker descriptors via role swarm workers.; Worktree/branch/tmp isolation retained explicitly because workers share no cloud sandbox; config source changed to the pstack-models profile rule. Hardcoded default model brands removed from role-description prose; the skill now reads the configured role from the pstack-models rule and requires /setup-pstack when unset or a selected model is unavailable (no silent substitution). Use schema-gated per-item native isolation and controlled patch integration, retain distinct-checkout fallback and private authority, and distinguish plain native task results from structured Eval results.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -1507,7 +1516,7 @@
     },
     {
       "source": "pstack/skills/technical-writing/SKILL.md",
-      "blob": "5eef4fc494a059eb740cb621dadb4a7a81af23e4",
+      "blob": "3e6d26109376cd66439c87ed48b4033df8d78a3a",
       "target": "skills/technical-writing/SKILL.md",
       "mode": "100644"
     },
@@ -1525,13 +1534,13 @@
     },
     {
       "source": "pstack/skills/unslop/SKILL.md",
-      "blob": "229a090708710c36caa0017f8d33e90880dc6846",
+      "blob": "97f5b6412148fa5b2a2fe478836fe8923ffa5cbb",
       "target": "skills/unslop/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/SKILL.md",
-      "blob": "a78076f9d492dbdb8b87136cf9d657a1b97659f7",
+      "blob": "bc2a3eb4f5bacf29949974376bc492df3d59db95",
       "target": "skills/why/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1546,13 +1555,13 @@
     },
     {
       "source": "pstack/skills/why/references/epistemics.md",
-      "blob": "3732bf6881b60d1337fa3498574452a85d33ba30",
+      "blob": "b18abf41dfa245ee55e94f1b3a80c0b750eb10cf",
       "target": "skills/why/references/epistemics.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/investigator-prompt.md",
-      "blob": "3b56af44c589833508f4605cfdd4432b39a16739",
+      "blob": "e1c2bbf52197ff600ba6e4552439e630687b7ae2",
       "target": "skills/why/references/investigator-prompt.md",
       "mode": "100644"
     },
@@ -1573,7 +1582,7 @@
     },
     {
       "source": "pstack/skills/why/references/sources/code-archaeology.md",
-      "blob": "32d5f97f8d2d3974c668f5f0392737b7e8e25afd",
+      "blob": "e3555f809da0a5654ceefe7d2c20080397c03506",
       "target": "skills/why/references/sources/code-archaeology.md",
       "mode": "100644"
     },
@@ -1585,13 +1594,13 @@
     },
     {
       "source": "pstack/skills/why/references/sources/datadog.md",
-      "blob": "d8363b1c1d1c7eadb15d47abd83bf70537c39620",
+      "blob": "536466ddd8ae6543836abb84bdf1efd8e43089ba",
       "target": "skills/why/references/sources/datadog.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/sources/incident-postmortem.md",
-      "blob": "450d6e52f25b1b41f741cb3e9c93e1c74ef858b4",
+      "blob": "e7397e7ef374bee3b7f0018ac8e5ddd4322bab12",
       "target": "skills/why/references/sources/incident-postmortem.md",
       "mode": "100644"
     },
@@ -1609,19 +1618,19 @@
     },
     {
       "source": "pstack/skills/why/references/sources/sentry.md",
-      "blob": "2b7cf6f3098ee868547dc4e69efacfe9c255246b",
+      "blob": "8200fd9f3abbb7fca76d0079663502b33524bd09",
       "target": "skills/why/references/sources/sentry.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/sources/slack.md",
-      "blob": "863a527d60e4e055e680834ef8098ea04273a1ae",
+      "blob": "cadd5618a349adc5eb1dce6fddde38e7221e00fd",
       "target": "skills/why/references/sources/slack.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/why/references/synthesizer-prompt.md",
-      "blob": "9707dfcc2fc57ea126484a433c5cd9ee4d400ef3",
+      "blob": "287a350c925c28b44f0e0dc687bb09a843e11100",
       "target": "skills/why/references/synthesizer-prompt.md",
       "mode": "100644"
     },
@@ -1631,7 +1640,7 @@
       "target": "skills/poteto-mode/references/omp-control-ui.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Added a native OMP browser-tool section (browser.open/observe/id helpers/run/screenshot, ariaSnapshot, CDP attach) as first-class harness before repo Playwright/CDP recipes; guardrails extended with close only tabs you opened. Harness patterns, interaction loop, CDP capabilities, and page-selection rules preserved.",
+        "reason": "Added a native OMP browser-tool section (browser.open/observe/id helpers/run/screenshot, ariaSnapshot, CDP attach) as first-class harness before repo Playwright/CDP recipes; guardrails extended with close only tabs you opened. Harness patterns, interaction loop, CDP capabilities, and page-selection rules preserved. Gate target adoption on Tern/relay and explicit app selection; distinguish observed headless anchored annotations from deferred live overlay/composer behavior.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -1646,7 +1655,7 @@
       "target": "skills/poteto-mode/references/omp-control-cli.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Added OMP supervised-process option (managed start with readiness log/port, stdin send, log follow) to the harness options. tmux/PTY/profiling recipes and guardrails preserved verbatim.",
+        "reason": "Added OMP supervised-process option (managed start with readiness log/port, stdin send, log follow) to the harness options. tmux/PTY/profiling recipes and guardrails preserved verbatim. Document measured native18.10.2 CLI/SDK worktree, job, anonymization, transfer and gitGuard behavior; defer terminal UI success and preserve original harness recipes.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -1672,7 +1681,7 @@
     },
     {
       "source": "pstack/skills/benchmark-checklist/SKILL.md",
-      "blob": "c02adb78929d0c1218fba554a31c423d65deb24d",
+      "blob": "e901d1fdbc9ffce53e94d6514be7d9a22e771a1a",
       "target": "skills/benchmark-checklist/SKILL.md",
       "mode": "100644"
     },
@@ -1684,7 +1693,7 @@
     },
     {
       "source": "pstack/skills/poteto-help/SKILL.md",
-      "blob": "a97ecddf8953b92bda7d8a8cc070faf1d68abc79",
+      "blob": "575d80fbff15d3421e6ef020d3a9cfeb2b0b01f0",
       "target": "skills/poteto-help/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1729,9 +1738,45 @@
     },
     {
       "source": "pstack/skills/principle-explain-the-number/SKILL.md",
-      "blob": "9c22351d1fbe1ffcf277e61aef9fdb7816306fa7",
+      "blob": "1e180c14aefe49a3b2a515320398e08c3ebeb57d",
       "target": "skills/principle-explain-the-number/SKILL.md",
       "mode": "100644"
+    },
+    {
+      "source": "pstack/plugin.json",
+      "blob": "bd84815f8bc4295dad2562045065af4f396b43f3",
+      "target": "plugin.json",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Omit the duplicate Agent Plugins root identity. OMP discovers this adaptation through native package.json and marketplace metadata.",
+        "verification": {
+          "kind": "omp/cli scenario",
+          "artifacts": [
+            "scripts/smoke-install.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "pstack/skills/ketchup/SKILL.md",
+      "blob": "1c63f43f5a58c7496eca0aa4c41d86c688ab3267",
+      "target": "skills/ketchup/SKILL.md",
+      "mode": "100644"
+    },
+    {
+      "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
+      "blob": "fd966c2b5fb6e99c12070c553906765c7bd900d8",
+      "target": "skills/poteto-mode/scripts/check-plan.test.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Run the original fence regressions with Bun and the OMP program-plan vocabulary rather than Node and a Cursor model slug.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     }
   ]
 }
