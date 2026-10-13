@@ -6,6 +6,8 @@ Invoked at the end of every other playbook.
 
 **Optional startup.** Automatic main-session worktrees are source-assessed, not live-UI verified. If enabled locally, use `worktree.onStart=ask`, `worktree.onExit=keep`, and `worktree.cleanSource=false`. Startup begins from HEAD without source WIP. Failure warns and continues in the original cwd. Verify isolation before editing. Do not change global settings.
 
+**Documentation.** Run the [Documentation completion gate](../SKILL.md#documentation-completion-gate) before commit, opening ready, marking ready, or declaring complete. Keep it in task todos before delivery. Include docs paths and exercised accuracy checks, or the concrete no-impact reason, in the final reply and `## Verification`. Unresolved required documentation blocks delivery.
+
 **Commits.** Commit liberally. Rebase into small, ordered commits before opening PRs. Each commit is a future PR: landable, ordered to tell the story. Amend when the fix belongs in a just-made commit. New commit when separable. Commit bodies don't restate the subject.
 
 **PRs.** Run the packaged deslop checklist (`../references/omp-deslop.md`) over the diff before commit and `/no-comments` before review. Write every PR title, description, and commit body with `/technical-writing`, then apply `/unslop`. Apply every technical-writing layer except Diátaxis. Use one word per action, keep articles, and prefer a plain verb to `-ing` where one works.

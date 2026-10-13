@@ -94,6 +94,16 @@ These are agent instructions, not runtime guarantees of retrieval, deduplication
 
 To check a configured model, set `PSTACK_SMOKE_MODEL` to its authenticated selector and run `bun scripts/smoke-memory-context.ts /tmp/pstack-memory-context.json`. This optional native SDK smoke uses controlled memories and an isolated profile. It checks lookup discipline, rejected-memory omission, and a prepared read-only delegate. The same model also reviews unsupported incident and rationale claims. That verdict is not a semantic correctness guarantee. Inspect the recorded answers. A failure reports a model or integration limit rather than silently accepting it.
 
+### documentation before delivery
+
+Poteto mode requires the [Documentation completion gate](./skills/poteto-mode/SKILL.md#documentation-completion-gate) for every permanent change. Features, fixes, refactors, and local work without a PR all use it. Casual chat and read-only questions do not.
+
+The agent adds the gate to task todos before delivery and inspects the diff and existing doc conventions. It updates affected docs with [technical-writing](./skills/technical-writing/SKILL.md) and [unslop](./skills/unslop/SKILL.md), without creating every doc type mechanically. Changed decisions supersede accepted ADRs rather than overwrite their history.
+
+A fresh independent read-only reviewer checks changed docs claim by claim against source, contracts, and observed evidence. Each claim receives `CONFIRMED`, `WRONG`, or `UNVERIFIABLE` with its evidence. Missing evidence blocks completion rather than count as a pass. The agent corrects false claims, reruns applicable checks safely, and obtains fresh review of corrections. Unresolved required documentation blocks commit, ready, and complete. Final replies and PR Verification name docs paths and exercised accuracy checks. If no docs need changing, they give a concrete reason tied to the inspected diff and docs.
+
+This is a mandatory instruction-level policy, not runtime hard enforcement. The plugin does not intercept commits or PR readiness to enforce it. The optional `scripts/smoke-workflow-guidance.ts` documentation cases exercise read-only guidance in actual OMP sessions with synthetic fixture files. Their recorded semantic conditions need review. Read receipts alone do not prove correctness, and the smoke does not write or independently review real change documentation end to end.
+
 ### optional official Spec Kit Feature lane
 
 Use this lane only for a Feature request that explicitly asks for official GitHub Spec Kit. Install the pinned stable `specify-cli` **1.0.12** release and initialize a fresh, separate Git worktree from its root:
