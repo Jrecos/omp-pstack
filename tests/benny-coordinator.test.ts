@@ -5,9 +5,10 @@
  * Socket Mode framing against a local fake Slack. Real temp files, real
  * SQLite, real HTTP/WebSocket — no fs/db/network mocks, no model calls.
  */
-import { test, expect } from "bun:test";
+import { test, expect, beforeAll, afterAll } from "bun:test";
 import type { ModelRegistry } from "@oh-my-pi/pi-coding-agent";
 import type { Model } from "@oh-my-pi/pi-ai";
+import { refreshDirsFromEnv } from "@oh-my-pi/pi-utils";
 import {
 	chmodSync,
 	cpSync,
@@ -57,7 +58,7 @@ import {
 } from "../src/benny.ts";
 import { assertBennyEndpointPolicy } from "../src/benny.ts";
 import { createBennyWorkspace, resolveImageId, WorkspaceBlockError } from "../src/benny-workspace.ts";
-import { createProofRepo, proofConfig } from "../scripts/fixtures/benny-workspace/proof.ts";
+import { createProofRepo, ensureImage, proofConfig, PROOF_IMAGE } from "../scripts/fixtures/benny-workspace/proof.ts";
 import { BennyError, freshOperationsReplies, gitBounded, persistedRunResult, recordCanary, existingFixCredentialScript, retainPublishSnapshot, resumeDraft, freshTerminalResult, trialMediaViolation } from "../src/benny-run.ts";
 import { MAX_SOCKET_FRAME_BYTES, oversizedFrame, type BennySocket } from "../src/benny-socket.ts";
 import type { BennyRunResult, BennyOutcome } from "../src/benny-run.ts";
@@ -66,6 +67,21 @@ import { ActionFailure, type BennyConfig } from "../src/benny.ts";
 import type { BennyActions } from "../src/benny-actions.ts";
 import { admitRun, claimNextRun, finishRun, openRunStore, OS_BOOT_ID, processStartTicks, profileWorkspaceDir, stateDir } from "../src/runner.ts";
 import type { RemoteReceipt, SlackMessage } from "../src/benny-policy.ts";
+
+const previousProfile = process.env.PI_CODING_AGENT_DIR;
+const profile = mkdtempSync(join(tmpdir(), "benny-coordinator-profile-"));
+chmodSync(profile, 0o700);
+beforeAll(async () => {
+	process.env.PI_CODING_AGENT_DIR = profile;
+	refreshDirsFromEnv();
+	await ensureImage();
+}, 10 * 60_000);
+afterAll(() => {
+	if (previousProfile === undefined) delete process.env.PI_CODING_AGENT_DIR;
+	else process.env.PI_CODING_AGENT_DIR = previousProfile;
+	refreshDirsFromEnv();
+	rmSync(profile, { recursive: true, force: true });
+});
 
 const TOKEN_ENVS = [
 	"PSTACK_TEST_SLACK_READ_TOKEN",
@@ -120,12 +136,15 @@ interface OmpProfileIsolation {
 function isolateOmpProfile(): OmpProfileIsolation {
 	const saved = saveEnv();
 	const home = mkdtempSync(join(tmpdir(), "benny-omp-home-"));
+	mkdirSync(join(home, "profile"), { mode: 0o700 });
 	process.env.HOME = home;
 	process.env.PI_CODING_AGENT_DIR = join(home, "profile");
 	process.env.PI_PROFILE = "";
+	refreshDirsFromEnv();
 	return {
 		restore() {
 			restoreEnv(saved);
+			refreshDirsFromEnv();
 			rmSync(home, { recursive: true, force: true });
 		},
 	};
@@ -241,7 +260,7 @@ function writeBennyConfig(target: string, options: { socketUrl?: string } = {}):
 		"  slack_read_token_env: PSTACK_TEST_SLACK_READ_TOKEN",
 		"  slack_write_token_env: PSTACK_TEST_SLACK_WRITE_TOKEN",
 		"  tracker_token_env: PSTACK_TEST_TRACKER_TOKEN",
-		"  workspace_image: omp-pstack/benny-workspace:0",
+		`  workspace_image: ${PROOF_IMAGE}`,
 		'  control_command: ["bun", "/opt/benny-control/control.mjs"]',
 		'  control_config: { worker_command: ["sh", "-c", "true"], app_url: "http://benny-worker:8791/" }',
 		"  environment: {}",

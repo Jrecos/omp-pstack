@@ -348,6 +348,8 @@ with `PSTACK_ROOT` resolved once per host as in [running the `pstack` CLI after 
 
 [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) checks each pull request's merge result with `main`, not just its head. It installs the frozen lockfile, runs type checking, the full test suite, and content integrity checks. Run the same suite locally with `bun run test`. This command uses `bun test --isolate` to prevent module mocks from leaking between files. It remains sequential so Docker fixtures do not run in parallel. The workflow also handles merge-queue checks. The job has read-only permissions and does not persist checkout credentials.
 
+The Benny integration suites create private temporary OMP profiles and restore the previous profile after cleanup. They do not need an initialized developer profile. Docker-dependent suites rebuild their fixture image from current source with a bounded 10-minute setup hook.
+
 [`.github/workflows/pr-title.yml`](./.github/workflows/pr-title.yml) validates Conventional Commit pull request titles with a SHA-pinned action. It reads pull request metadata without checking out contribution code. These workflows do not configure branch protection. Make `checks` and `title` required checks in repository rules to enforce them before merge. [Dependabot](./.github/dependabot.yml) proposes weekly updates to GitHub Actions pins only, not npm dependencies or the OMP SDK pin.
 
 Dependabot uses `ci(deps):` titles so action-update pull requests pass the same title check. Merging an action update intentionally produces a patch release under the per-pull-request policy.

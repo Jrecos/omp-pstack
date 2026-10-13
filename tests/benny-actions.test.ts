@@ -1,10 +1,11 @@
-import { test, expect, afterEach } from "bun:test";
+import { test, expect, beforeAll, afterAll, afterEach } from "bun:test";
 import { Database } from "bun:sqlite";
 import { appendFileSync, chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { refreshDirsFromEnv } from "@oh-my-pi/pi-utils";
 import { createBennyActions, ActionFailure, CanceledStateMissingError, gitCredentialHelperScript, readBoundedJsonObject, rootDigest, spawnBoundedChild, type BennyActions } from "../src/benny-actions.ts";
 import { parseBennyConfig } from "../src/benny.ts";
 import { opsTracker, reproduceMentionSet, resumeDraft, resumePostWindow, resumeTriageWrite, routeMentionAllowlist, runTriage, triageTracker } from "../src/benny-run.ts";
@@ -14,6 +15,17 @@ import { openRunStore } from "../src/runner.ts";
 import { stripDisallowedMentions, type BennyConfig, type ActionJournal, type RemoteReceipt } from "../src/benny-policy.ts";
 import { FIXTURE_JPEG, FIXTURE_PNG, startBennyTransports } from "../scripts/fixtures/benny-transports.ts";
 import type { BennyTransports } from "../scripts/fixtures/benny-transports.ts";
+
+const previousProfile = process.env.PI_CODING_AGENT_DIR;
+const profile = mkdtempSync(join(tmpdir(), "benny-actions-profile-"));
+chmodSync(profile, 0o700);
+beforeAll(() => { process.env.PI_CODING_AGENT_DIR = profile; refreshDirsFromEnv(); });
+afterAll(() => {
+  if (previousProfile === undefined) delete process.env.PI_CODING_AGENT_DIR;
+  else process.env.PI_CODING_AGENT_DIR = previousProfile;
+  refreshDirsFromEnv();
+  rmSync(profile, { recursive: true, force: true });
+});
 
 const yamlConfig = Bun.YAML.parse(await Bun.file(`${import.meta.dir}/../automations/benny/templates/configuration.example.yaml`).text()) as BennyConfig;
 yamlConfig.slack.prefer_configured_actions = false;

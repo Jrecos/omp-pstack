@@ -1,7 +1,9 @@
-import { test, expect, beforeAll } from "bun:test";
+import { test, expect, beforeAll, afterAll } from "bun:test";
 import { mkdtemp, mkdir, readdir, rm, access, lstat, utimes, writeFile, readFile, symlink } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
+import { chmodSync, mkdtempSync, rmSync } from "node:fs";
+import { refreshDirsFromEnv } from "@oh-my-pi/pi-utils";
 import {
 	createBennyWorkspace,
 	materializeAdmittedTree,
@@ -27,6 +29,17 @@ import { openBennyStore } from "../src/benny.ts";
 import { openRunStore, profileWorkspaceDir } from "../src/runner.ts";
 import { createProofRepo, ensureImage, proofConfig, runProof, PROOF_IMAGE } from "../scripts/fixtures/benny-workspace/proof.ts";
 
+const previousProfile = process.env.PI_CODING_AGENT_DIR;
+const profile = mkdtempSync(join(tmpdir(), "benny-workspace-profile-"));
+chmodSync(profile, 0o700);
+beforeAll(() => { process.env.PI_CODING_AGENT_DIR = profile; refreshDirsFromEnv(); });
+afterAll(() => {
+	if (previousProfile === undefined) delete process.env.PI_CODING_AGENT_DIR;
+	else process.env.PI_CODING_AGENT_DIR = previousProfile;
+	refreshDirsFromEnv();
+	rmSync(profile, { recursive: true, force: true });
+});
+
 /**
  * Real-container tests: skipped when the Docker daemon is unavailable. There is
  * deliberately no fake Docker binary or stubbed adapter — the boundary tests
@@ -39,7 +52,7 @@ let image = PROOF_IMAGE;
 
 beforeAll(async () => {
 	if (hasDocker) image = await ensureImage();
-});
+}, 10 * 60_000);
 
 function isExecShape(value: unknown): value is { exitCode: number; stdout: string; stderr: string } {
 	return typeof value === "object" && value !== null
