@@ -16,7 +16,7 @@ import { dirname, join, normalize, relative, resolve, sep } from "node:path";
 import { ensureStateGitExcluded } from "./runner.ts";
 import type { ModelRegistry } from "@oh-my-pi/pi-coding-agent";
 import { BennyError } from "./benny-run.ts";
-import { resolveImageId } from "./benny-workspace.ts";
+import { resolveImageId, sandboxUser } from "./benny-workspace.ts";
 import {
 	assertBennyEndpointPolicy,
 	bennyConfigHash,
@@ -684,18 +684,19 @@ function adapterCheck(config: BennyConfig): PreflightCheck {
 	};
 }
 
-function imageCommandCheck(image: string, command: unknown, target: string): boolean {
+function imageCommandCheck(image: string, command: unknown, target: string, user: string): boolean {
 	if (!Array.isArray(command) || command.length === 0 || command.some((part) => typeof part !== "string" || part.length === 0)) return false;
 	return spawn([
-		"docker", "run", "--rm", "--network", "none", "--entrypoint", "sh", image,
+		"docker", "run", "--rm", "--network", "none", "--user", user, "--entrypoint", "sh", image,
 		"-c",
-		'command -v "$1" >/dev/null || exit 1; shift; for arg do case "$arg" in /*) test -e "$arg" || exit 1;; esac; done',
+		'command -v "$1" >/dev/null || exit 1; shift; for arg do case "$arg" in /*) test -r "$arg" || exit 1;; esac; done',
 		"sh",
 		...command,
 	], target).ok;
 }
 
 export function controlChecks(config: BennyConfig, target: string, revision: string): PreflightCheck[] {
+	const user = sandboxUser();
 	const checks: PreflightCheck[] = [];
 	// Preflight binds the immutable image ID, not the mutable reference: the
 	// reference text alone lets a retagged or repulled tag swap uncanaried
@@ -714,7 +715,7 @@ export function controlChecks(config: BennyConfig, target: string, revision: str
 				: `image ${imageRef} not inspectable; is the docker daemon reachable and the trusted image pulled?`,
 	});
 	const command = config.runtime.control_command;
-	const commandOk = immutable && imageCommandCheck(imageId, command, target);
+	const commandOk = immutable && imageCommandCheck(imageId, command, target, user);
 	checks.push({
 		check: "control adapter command",
 		ok: commandOk,
@@ -729,7 +730,7 @@ export function controlChecks(config: BennyConfig, target: string, revision: str
 	} catch {
 		appUrlOk = false;
 	}
-	const workerOk = immutable && imageCommandCheck(imageId, workerCommand, target);
+	const workerOk = immutable && imageCommandCheck(imageId, workerCommand, target, user);
 	checks.push({
 		check: "target app bootstrap",
 		ok: workerOk && appUrlOk,
@@ -741,7 +742,7 @@ export function controlChecks(config: BennyConfig, target: string, revision: str
 	if (bootstrapCommand !== undefined) {
 		// Optional pre-baseline bootstrap argv; validated for nonempty string
 		// parts and executability inside the trusted image when present.
-		const bootstrapOk = immutable && imageCommandCheck(imageId, bootstrapCommand, target);
+		const bootstrapOk = immutable && imageCommandCheck(imageId, bootstrapCommand, target, user);
 		checks.push({
 			check: "control bootstrap command",
 			ok: bootstrapOk,

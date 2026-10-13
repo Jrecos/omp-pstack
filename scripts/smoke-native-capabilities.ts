@@ -9,6 +9,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { AgentSession } from "@oh-my-pi/pi-coding-agent";
 import type { AgentToolResult } from "@oh-my-pi/pi-agent-core";
+import { manifestDigest } from "./manifest-digest.ts";
 
 type Measurement = {
   name: string;
@@ -247,8 +248,8 @@ async function produce(temporary: string, omp: string): Promise<void> {
         actualVersion: /(?:omp\/|\b)(\d+\.\d+\.\d+(?:-[\w.-]+)?)/.exec(version.stdout)?.[1] ?? null };
       checks.hostVersion = version.code === 0 && !version.timedOut && !version.overflow && host.actualVersion === expectedVersion;
     } else checks.hostVersion = false;
-    for (const path of ["scripts/smoke-native-capabilities.ts", "package.json", "bun.lock"]) {
-      producerInputs[path] = await hashFile(join(root, path));
+    for (const path of ["scripts/smoke-native-capabilities.ts", "scripts/manifest-digest.ts", "package.json", "bun.lock"]) {
+      producerInputs[path] = path === "package.json" ? manifestDigest(await readFile(join(root, path))) : await hashFile(join(root, path));
     }
     for (const name of ["pi-coding-agent", "pi-agent-core", "pi-ai", "pi-catalog", "pi-tui", "pi-utils", "pi-natives"]) {
       const entry = await realpath(fileURLToPath(import.meta.resolve(`@oh-my-pi/${name}`)));

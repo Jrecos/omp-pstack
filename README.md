@@ -346,7 +346,23 @@ with `PSTACK_ROOT` resolved once per host as in [running the `pstack` CLI after 
 
 ## releases
 
-After checks pass, each pull request merged into `main` gets a GitHub release. [`.github/workflows/release.yml`](./.github/workflows/release.yml) handles merged pull requests, including fork contributions, and queues release runs. It runs type checking, release regression tests, and content integrity checks on trusted `main`, then passes the verified commit to [`scripts/release.ts`](./scripts/release.ts). If `main` changes before publication, the run fails rather than releasing unchecked code. The first release is `1.0.0`. Later releases use the pull request title and breaking-change footer:
+[`.github/workflows/ci.yml`](./.github/workflows/ci.yml) checks each pull request's merge result with `main`, not just its head. It installs the frozen lockfile, runs type checking, the full test suite, and content integrity checks. Run the same suite locally with `bun run test`. This command uses `bun test --isolate` to prevent module mocks from leaking between files. It remains sequential so Docker fixtures do not run in parallel. The workflow also handles merge-queue checks. The job has read-only permissions and does not persist checkout credentials.
+
+The Benny integration suites create private temporary OMP profiles and restore the previous profile after cleanup. They do not need an initialized developer profile. Docker-dependent suites rebuild their fixture image from current source with a bounded 10-minute setup hook.
+
+The Docker fixture image uses the invoking host's non-root POSIX UID and GID. Benny uses the same identity for sandbox processes, bounded storage, and seed ownership checks so private host snapshots remain accessible without broader permissions. The trusted control adapter remains root-owned and read-only. Run these fixtures as a non-root user with Docker access.
+
+Benny rejects UID 0, GID 0, or missing POSIX identity before sandbox resource creation. Preflight probes adapter readability as the same user that runs the sandbox, not the image's default user. This ownership contract targets rootful Docker. Rootless Docker and user-namespace remapping are not verified.
+
+The real workspace proof reports failed adversarial probes by name. Its background-writer receipt records actual bytes written, the child's quota exit, and unchanged host-directory bytes. A successful aggregate alone is not evidence that a writer ran.
+
+The mount probe checks namespace destinations and Docker's mount and bind records. It permits only the exact read-only snapshot and owned staging volume. Filesystem source names do not prove that a host home or root directory is mounted.
+
+[`.github/workflows/pr-title.yml`](./.github/workflows/pr-title.yml) validates Conventional Commit pull request titles with a SHA-pinned action. It reads pull request metadata without checking out contribution code. These workflows do not configure branch protection. Make `checks` and `title` required checks in repository rules to enforce them before merge. [Dependabot](./.github/dependabot.yml) proposes weekly updates to GitHub Actions pins only, not npm dependencies or the OMP SDK pin.
+
+Dependabot uses `ci(deps):` titles so action-update pull requests pass the same title check. Merging an action update intentionally produces a patch release under the per-pull-request policy.
+
+After release checks pass, each pull request merged into `main` gets a GitHub release. [`.github/workflows/release.yml`](./.github/workflows/release.yml) handles merged pull requests, including fork contributions, and queues release runs. It runs type checking, release regression tests, and content integrity checks on trusted `main`, then passes the verified commit to [`scripts/release.ts`](./scripts/release.ts). If `main` changes before publication, the run fails rather than releasing unchecked code. The first release is `1.0.0`. Later releases use the pull request title and breaking-change footer in its body, independent of the squash commit message:
 
 | pull request | bump |
 | --- | --- |
@@ -356,11 +372,16 @@ After checks pass, each pull request merged into `main` gets a GitHub release. [
 
 The release commit updates `package.json` to match its `vX.Y.Z` tag. The annotated tag records the version, pull request, and release notes. A rerun uses that record instead of allocating another version. The script never moves or deletes tags, pushes the branch and tag atomically without force, and does not publish to npm. This project's version is independent of the upstream P Stack version recorded in `upstream.json`.
 
+The native proof producers and content checker hash parsed `package.json` with only its top-level `version` omitted. A release-only version change therefore leaves native proof freshness intact. Nested versions, dependency pins, scripts, the lockfile, and producer sources remain binding. The shared digest helper is itself a required hashed input. SDK package manifests and all other listed sources keep their raw-byte hashes. Meaningful input changes require a real proof rerun, not an edited hash receipt.
+
 To recover a failed or cancelled run, use `gh workflow run release.yml -f pr=<number>` from this repository, or select **Run workflow** in the Actions tab.
 
 - If `main` changed or the push was rejected, rerun after `main` is stable.
+- If a type, test, or content check fails, fix the checked source or regenerate stale proofs with their real producers before retrying. A version-only release does not require proof regeneration.
 - If the tag was pushed but release publication failed, a rerun publishes that tag without another version bump.
 - Before allocating a version, the script repairs missing releases for earlier managed tags.
+
+After publication, verify that the GitHub release exists and its tag's `package.json` version matches the tag. A successful merge alone does not prove that publication succeeded.
 
 The token needs permission to write repository contents. Future branch rules must allow the release bot's version commits. The queue holds 100 pending runs. GitHub cancels overflow runs, which need manual recovery. Releases follow queue order rather than merge order. Each release is a cumulative snapshot of verified `main`, so it can include changes merged after the pull request that triggered it.
 

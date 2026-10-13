@@ -205,15 +205,23 @@ const TMP_TMPFS_INODES = 65_536;
 const SHM_TMPFS_BYTES = 256 * 1024 * 1024;
 const SHM_TMPFS_INODES = 65_536;
 const PROCESS_HEADROOM_BYTES = 256 * 1024 * 1024;
-const WORKSPACE_TMPFS_OPTS = `rw,noexec,nosuid,size=${WORKSPACE_TMPFS_BYTES},nr_inodes=${WORKSPACE_TMPFS_INODES},uid=1000,gid=1000`;
-const STAGING_TMPFS_OPTS = `rw,noexec,nosuid,size=${STAGING_TMPFS_BYTES},nr_inodes=${STAGING_TMPFS_INODES},uid=1000,gid=1000`;
-const CONTROL_TMPFS_OPTS = `rw,noexec,nosuid,size=${CONTROL_TMPFS_BYTES},nr_inodes=${CONTROL_TMPFS_INODES},uid=1000,gid=1000`;
-const DECODER_TMPFS_OPTS = `rw,noexec,nosuid,size=${DECODER_TMPFS_BYTES},nr_inodes=${DECODER_TMPFS_INODES},uid=1000,gid=1000`;
+const HOST_UID = process.getuid?.() ?? 0;
+const HOST_GID = process.getgid?.() ?? 0;
+const SANDBOX_USER = `${HOST_UID}:${HOST_GID}`;
+const WORKSPACE_TMPFS_OPTS = `rw,noexec,nosuid,size=${WORKSPACE_TMPFS_BYTES},nr_inodes=${WORKSPACE_TMPFS_INODES},uid=${HOST_UID},gid=${HOST_GID}`;
+const STAGING_TMPFS_OPTS = `rw,noexec,nosuid,size=${STAGING_TMPFS_BYTES},nr_inodes=${STAGING_TMPFS_INODES},uid=${HOST_UID},gid=${HOST_GID}`;
+const CONTROL_TMPFS_OPTS = `rw,noexec,nosuid,size=${CONTROL_TMPFS_BYTES},nr_inodes=${CONTROL_TMPFS_INODES},uid=${HOST_UID},gid=${HOST_GID}`;
+const DECODER_TMPFS_OPTS = `rw,noexec,nosuid,size=${DECODER_TMPFS_BYTES},nr_inodes=${DECODER_TMPFS_INODES},uid=${HOST_UID},gid=${HOST_GID}`;
 const TMP_TMPFS_OPTS = `rw,noexec,nosuid,size=${TMP_TMPFS_BYTES},nr_inodes=${TMP_TMPFS_INODES}`;
 const SHM_TMPFS_OPTS = `rw,noexec,nosuid,size=${SHM_TMPFS_BYTES},nr_inodes=${SHM_TMPFS_INODES}`;
 const WORKER_MEMORY = memoryBound(WORKSPACE_TMPFS_BYTES + STAGING_TMPFS_BYTES + TMP_TMPFS_BYTES + SHM_TMPFS_BYTES + PROCESS_HEADROOM_BYTES);
 const CONTROL_MEMORY = memoryBound(CONTROL_TMPFS_BYTES + TMP_TMPFS_BYTES + SHM_TMPFS_BYTES + PROCESS_HEADROOM_BYTES);
 const DECODER_MEMORY = memoryBound(DECODER_TMPFS_BYTES + TMP_TMPFS_BYTES + SHM_TMPFS_BYTES + PROCESS_HEADROOM_BYTES);
+
+export function sandboxUser(): string {
+	if (HOST_UID === 0 || HOST_GID === 0) fail("Benny sandbox requires a non-root POSIX host UID and GID");
+	return SANDBOX_USER;
+}
 
 function memoryBound(bytes: number): string {
 	return `${Math.ceil(bytes / (1024 * 1024))}m`;
@@ -1026,6 +1034,7 @@ export function unverifiedAbsent(probes: Array<{ resource: string; probe: Docker
 }
 
 export async function createBennyWorkspace(options: WorkspaceOptions): Promise<BennyWorkspace> {
+	sandboxUser();
 	const { config, cwd, runId, revision, artifactDir, deadline, signal } = options;
 	const identity = workspaceIdentity(runId, options.incarnation ?? randomBytes(8).toString("hex"));
 	const name = identity.worker;
@@ -1267,7 +1276,7 @@ export async function createBennyWorkspace(options: WorkspaceOptions): Promise<B
 		"--name", container,
 		"--network", `${networkName}`,
 		"--network-alias", container === name ? "benny-worker" : "benny-controller",
-		"--user", "1000:1000",
+		"--user", SANDBOX_USER,
 		"--cap-drop", "ALL",
 		"--security-opt", "no-new-privileges",
 		"--read-only",
@@ -1391,21 +1400,19 @@ export async function createBennyWorkspace(options: WorkspaceOptions): Promise<B
 	}
 	/** Seed the bounded fix volume from the trusted host tree; the model never writes a host bind. */
 	async function seedFixWorkspace(): Promise<void> {
-		// docker cp preserves the trusted host uid/gid (1000:1000, the worker
-		// user). The container runs with cap-drop ALL, so root cannot chown —
-		// ownership is verified instead, and any foreign-owned byte fails
-		// closed rather than being rewritten.
+		// docker cp preserves host ownership. With cap-drop ALL the worker
+		// cannot repair foreign ownership, so the seed must match its identity.
 		const copied = await docker(["cp", "-a", `${workspacePath}/.`, `${name}:${WORKSPACE_MOUNT}/`], { signal, timeoutMs: 600_000 });
 		if (copied.code !== 0) fail(`fix worktree seed failed: ${copied.stderr.toString().trim().slice(0, 200)}`);
 		const stray = await execIn(
 			name,
-			["sh", "-c", `find ${WORKSPACE_MOUNT} -xdev \\( ! -uid 1000 -o ! -gid 1000 \\) -print | head -n 8`],
+			["sh", "-c", `find ${WORKSPACE_MOUNT} -xdev \\( ! -uid ${HOST_UID} -o ! -gid ${HOST_GID} \\) -print | head -n 8`],
 			{ timeoutMs: 300_000 },
 		);
 		if (stray.code !== 0) fail(`fix worktree seed ownership probe failed: ${stray.stderr.toString().trim().slice(0, 200)}`);
 		const strayPaths = stray.stdout.toString().trim();
 		if (strayPaths.length > 0) {
-			fail(`fix worktree seed contains files not owned by the worker user (uid/gid 1000): ${strayPaths.split("\n").slice(0, 8).join(", ")}`);
+			fail(`fix worktree seed contains files not owned by the worker user (${SANDBOX_USER}): ${strayPaths.split("\n").slice(0, 8).join(", ")}`);
 		}
 	}
 
@@ -2443,6 +2450,7 @@ export async function decodeVideoFrames(
 	data: Uint8Array,
 	options: { maxFrames?: number; signal?: AbortSignal; runId?: string } = {},
 ): Promise<DecodedFrame[]> {
+	sandboxUser();
 	const signal = options.signal;
 	const maxFrames = options.maxFrames ?? MAX_REVIEW_FRAMES;
 	if (data.length === 0) fail("decoder input is empty");
@@ -2509,7 +2517,7 @@ export async function decodeVideoFrames(
 			[
 				"run", "-d", "--name", name,
 				"--network", "none",
-				"--user", "1000:1000",
+				"--user", SANDBOX_USER,
 				"--cap-drop", "ALL",
 				"--security-opt", "no-new-privileges",
 				"--read-only",

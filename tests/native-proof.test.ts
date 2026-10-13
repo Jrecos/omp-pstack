@@ -4,6 +4,8 @@ import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { checkNativeFixtureProofs } from "../scripts/check-content.ts";
+import { manifestDigest } from "../scripts/manifest-digest.ts";
+import { createReleaseFixture } from "./fixtures/release-fixture.ts";
 
 type Name = "capabilities" | "models";
 const temporary: string[] = [];
@@ -17,10 +19,11 @@ async function fixture() {
   temporary.push(directory);
   const root = join(directory, "repo");
   const sources: Record<string, string> = {
-    "package.json": JSON.stringify({ dependencies: { "@oh-my-pi/pi-coding-agent": "18.10.2" } }),
+    "package.json": JSON.stringify({ version: "1.7.0", dependencies: { "@oh-my-pi/pi-coding-agent": "18.10.2" }, scripts: { test: "bun test" }, metadata: { version: "nested" } }, null, 2),
     "bun.lock": "fixture dependency lock\n",
     "scripts/smoke-native-capabilities.ts": "export const capabilities = true;\n",
     "scripts/smoke-models.ts": "export const models = true;\n",
+    "scripts/manifest-digest.ts": "export const digest = true;\n",
     "src/extension.ts": "export const extension = true;\n",
     "src/models.ts": "export const model = true;\n",
     "src/mode.ts": "export const mode = true;\n",
@@ -37,14 +40,14 @@ async function fixture() {
       ok: true, fixtureOnly: true, expectedVersion: "18.10.2",
       measurements: [{ name: "UI", status: "withheld" }], deferred: [{ status: "deferred" }],
       producerInputs: Object.fromEntries([
-        ...["package.json", "bun.lock", "scripts/smoke-native-capabilities.ts"].map(path => [path, hash(sources[path]!)]),
+        ...["package.json", "bun.lock", "scripts/manifest-digest.ts", "scripts/smoke-native-capabilities.ts"].map(path => [path, path === "package.json" ? manifestDigest(sources[path]!) : hash(sources[path]!)]),
         [sdkPath, sdkHash],
       ]),
     },
     models: {
       ok: true, fixtureOnly: true, sdkVersion: "18.10.2",
-      producerInputs: ["package.json", "bun.lock", "scripts/smoke-models.ts", "src/extension.ts", "src/models.ts", "src/mode.ts"]
-        .map(path => ({ path, sha256: hash(sources[path]!) })),
+      producerInputs: ["package.json", "bun.lock", "scripts/manifest-digest.ts", "scripts/smoke-models.ts", "src/extension.ts", "src/models.ts", "src/mode.ts"]
+        .map(path => ({ path, sha256: path === "package.json" ? manifestDigest(sources[path]!) : hash(sources[path]!) })),
     },
   };
   await mkdir(join(root, "proofs"));
@@ -53,10 +56,73 @@ async function fixture() {
   await save("models");
   const outside = join(directory, "private.ts");
   await writeFile(outside, sources["node_modules/@oh-my-pi/pi-coding-agent/src/sdk.ts"]!);
-  return { root, proofs, save, outside, sdkPath, sdkHash };
+  return { root, proofs, save, outside, sdkPath, sdkHash, sources };
 }
 
 describe("native fixture listed-input freshness", () => {
+  test("two actual releases and an idempotent retry keep native proofs fresh in fresh release trees", async () => {
+    const fx = await fixture();
+    const release = createReleaseFixture({ files: {
+      ...fx.sources,
+      ...Object.fromEntries(Object.entries(fx.proofs).map(([name, proof]) => [`proofs/native-${name}.json`, JSON.stringify(proof)])),
+    } });
+    try {
+      release.pushAnnotatedTag("v1.7.0", JSON.stringify({
+        schema: "omp-pstack.release/1", version: "1.7.0", tag: "v1.7.0", bump: "minor",
+        pr: { number: 7, title: "feat: previous release", mergeCommitSha: release.tagCommit("main") },
+        notes: "previous release\n", createdAt: "2026-10-01T00:00:00.000Z",
+      }));
+      for (const [number, title, version] of [[8, "fix: version-stable proofs", "1.7.1"], [9, "feat: next release", "1.8.0"]] as const) {
+        release.mergePullRequest({ number, title });
+        const run = release.run({ PR_NUMBER: String(number) });
+        expect({ status: run.status, stderr: run.stderr }).toEqual({ status: 0, stderr: "" });
+        expect(release.packageVersionAt(`v${version}`)).toBe(version);
+        expect(await checkNativeFixtureProofs(release.treeAt(`v${version}`))).toEqual([]);
+      }
+      const commit = release.tagCommit("v1.8.0");
+      expect(release.run({ PR_NUMBER: "9" }).status).toBe(0);
+      expect(release.tags()).toEqual(["v1.7.0", "v1.7.1", "v1.8.0"]);
+      expect(release.tagCommit("v1.8.0")).toBe(commit);
+      expect(await checkNativeFixtureProofs(release.treeAt("main"))).toEqual([]);
+    } finally { release.cleanup(); }
+  });
+
+  test.each(["dependencies", "scripts", "metadata"] as const)("version changes stay fresh but a real %s change fails", async field => {
+    const fx = await fixture();
+    const manifest = JSON.parse(fx.sources["package.json"]!);
+    for (const version of ["1.7.0", "1.7.1", "1.8.0"]) {
+      await writeFile(join(fx.root, "package.json"), JSON.stringify({ ...manifest, version }, null, 2));
+      expect(await checkNativeFixtureProofs(fx.root)).toEqual([]);
+    }
+    manifest[field][field === "metadata" ? "version" : field === "scripts" ? "test" : "@oh-my-pi/pi-coding-agent"] = "changed";
+    await writeFile(join(fx.root, "package.json"), JSON.stringify(manifest));
+    const errors = await checkNativeFixtureProofs(fx.root);
+    for (const name of ["capabilities", "models"]) {
+      expect(errors.some(error => error.includes(`native-${name}.json`) && error.includes("[hash]") && error.includes("package.json"))).toBe(true);
+    }
+  });
+
+  test("changing the shared digest source invalidates both proofs", async () => {
+    const fx = await fixture();
+    expect(await checkNativeFixtureProofs(fx.root)).toEqual([]);
+    await writeFile(join(fx.root, "scripts/manifest-digest.ts"), "changed digest\n");
+    const errors = await checkNativeFixtureProofs(fx.root);
+    for (const name of ["capabilities", "models"]) {
+      expect(errors.some(error => error.includes(`native-${name}.json`) && error.includes("[hash]"))).toBe(true);
+    }
+  });
+
+  test.each(["null", "[]", "42", "\"manifest\"", "{broken"])("rejects malformed manifest %s at the boundary", async contents => {
+    const fx = await fixture();
+    expect(await checkNativeFixtureProofs(fx.root)).toEqual([]);
+    await writeFile(join(fx.root, "package.json"), contents);
+    expect(() => manifestDigest(contents)).toThrow();
+    const errors = await checkNativeFixtureProofs(fx.root);
+    for (const name of ["capabilities", "models"]) {
+      expect(errors.some(error => error.includes(`native-${name}.json`) && error.includes("[input]") && error.includes("package.json"))).toBe(true);
+    }
+  });
+
   test("current inputs pass without a host binary, credentials, or a full SDK tree, then a changed SDK input fails", async () => {
     const fx = await fixture();
     expect(await checkNativeFixtureProofs(fx.root)).toEqual([]);
@@ -158,9 +224,9 @@ describe("native fixture listed-input freshness", () => {
     expect(await checkNativeFixtureProofs(fx.root)).toEqual([]);
     const contents = JSON.stringify({ dependencies: { "@oh-my-pi/pi-coding-agent": "^18.10.2" } });
     await writeFile(join(fx.root, "package.json"), contents);
-    (fx.proofs.capabilities.producerInputs as Record<string, string>)["package.json"] = hash(contents);
+    (fx.proofs.capabilities.producerInputs as Record<string, string>)["package.json"] = manifestDigest(contents);
     const inputs = fx.proofs.models.producerInputs as { path: string; sha256: string }[];
-    inputs.find(input => input.path === "package.json")!.sha256 = hash(contents);
+    inputs.find(input => input.path === "package.json")!.sha256 = manifestDigest(contents);
     await fx.save("capabilities");
     await fx.save("models");
     const errors = await checkNativeFixtureProofs(fx.root);

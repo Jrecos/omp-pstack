@@ -4,6 +4,7 @@
 import { readdir, readFile, realpath, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { dirname, isAbsolute, join, normalize, relative, sep } from "node:path";
+import { manifestDigest } from "./manifest-digest.ts";
 
 const EXPECTED_HEADER = {
   repository: "https://github.com/cursor/plugins",
@@ -931,7 +932,7 @@ export async function checkNativeFixtureProofs(root: string): Promise<string[]> 
   const sdkPackages = ["pi-coding-agent", "pi-agent-core", "pi-ai", "pi-catalog", "pi-tui", "pi-utils", "pi-natives"];
   for (const name of ["capabilities", "models"] as const) {
     const label = `proofs/native-${name}.json`;
-    const required = ["package.json", "bun.lock", name === "models" ? "scripts/smoke-models.ts" : "scripts/smoke-native-capabilities.ts"];
+    const required = ["package.json", "bun.lock", "scripts/manifest-digest.ts", name === "models" ? "scripts/smoke-models.ts" : "scripts/smoke-native-capabilities.ts"];
     if (name === "models") required.push("src/extension.ts", "src/models.ts", "src/mode.ts");
     const start = found.length;
     let proof: unknown;
@@ -1026,7 +1027,8 @@ export async function checkNativeFixtureProofs(root: string): Promise<string[]> 
     }
     for (const input of resolved) {
       try {
-        const actual = createHash("sha256").update(await readFile(input.file)).digest("hex");
+        const bytes = await readFile(input.file);
+        const actual = input.path === "package.json" ? manifestDigest(bytes) : createHash("sha256").update(bytes).digest("hex");
         if (actual !== input.sha256) found.push(`${label}: [hash] stale producer input ${input.path}; rerun its fixture producer`);
       } catch (e) {
         found.push(`${label}: [input] cannot read ${input.path} (${e})`);

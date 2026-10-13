@@ -1,7 +1,9 @@
-import { test, expect, beforeAll } from "bun:test";
+import { test, expect, beforeAll, afterAll } from "bun:test";
 import { mkdtemp, mkdir, readdir, rm, access, lstat, utimes, writeFile, readFile, symlink } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
+import { chmodSync, mkdtempSync, rmSync } from "node:fs";
+import { refreshDirsFromEnv } from "@oh-my-pi/pi-utils";
 import {
 	createBennyWorkspace,
 	materializeAdmittedTree,
@@ -25,7 +27,19 @@ import {
 import type { BennyWorkspace, DecodedFrame } from "../src/benny-workspace.ts";
 import { openBennyStore } from "../src/benny.ts";
 import { openRunStore, profileWorkspaceDir } from "../src/runner.ts";
-import { createProofRepo, ensureImage, proofConfig, runProof, PROOF_IMAGE } from "../scripts/fixtures/benny-workspace/proof.ts";
+import { createProofRepo, ensureImage, proofConfig, proofMountViolations, runProof, PROOF_IMAGE } from "../scripts/fixtures/benny-workspace/proof.ts";
+import { controlChecks } from "../src/benny-setup.ts";
+
+const previousProfile = process.env.PI_CODING_AGENT_DIR;
+const profile = mkdtempSync(join(tmpdir(), "benny-workspace-profile-"));
+chmodSync(profile, 0o700);
+beforeAll(() => { process.env.PI_CODING_AGENT_DIR = profile; refreshDirsFromEnv(); });
+afterAll(() => {
+	if (previousProfile === undefined) delete process.env.PI_CODING_AGENT_DIR;
+	else process.env.PI_CODING_AGENT_DIR = previousProfile;
+	refreshDirsFromEnv();
+	rmSync(profile, { recursive: true, force: true });
+});
 
 /**
  * Real-container tests: skipped when the Docker daemon is unavailable. There is
@@ -39,7 +53,82 @@ let image = PROOF_IMAGE;
 
 beforeAll(async () => {
 	if (hasDocker) image = await ensureImage();
+}, 10 * 60_000);
+
+test.each(["uid", "gid", "unsupported"] as const)("a privileged or unsupported %s identity rejects before child processes or private state mutations", (kind) => {
+	const fixture = join(import.meta.dir, "fixtures", "benny-root-boundary.ts");
+	const identity = kind === "unsupported"
+		? "process.getuid = undefined; process.getgid = undefined;"
+		: `process.getuid = () => ${kind === "uid" ? 0 : 1000}; process.getgid = () => ${kind === "gid" ? 0 : 1000};`;
+	const child = Bun.spawnSync([process.execPath, "-e", `${identity} await import(${JSON.stringify(fixture)});`], {
+		stdout: "pipe", stderr: "pipe", timeout: 10_000,
+	});
+	expect({ code: child.exitCode, stderr: child.stderr.toString() }).toEqual({ code: 0, stderr: "" });
+	const observed = JSON.parse(child.stdout.toString());
+	expect({ processAttempts: observed.processAttempts, targetEntries: observed.targetEntries, homeEntries: observed.homeEntries, failures: observed.failures }).toEqual({
+		processAttempts: 0, targetEntries: [], homeEntries: [],
+		failures: {
+			workspace: "Benny sandbox requires a non-root POSIX host UID and GID",
+			decoder: "Benny sandbox requires a non-root POSIX host UID and GID",
+			preflight: "Benny sandbox requires a non-root POSIX host UID and GID",
+			fixture: "fixture image requires a non-root POSIX host UID and GID",
+		},
+	});
 });
+
+dockerTest("preflight uses the sandbox reader rather than the image default user for adapter readability", async () => {
+	const { cwd, revision } = await createProofRepo();
+	const build = await mkdtemp(join(tmpdir(), "benny-preflight-reader-"));
+	const tag = `omp-pstack/benny-preflight-reader:${crypto.randomUUID()}`;
+	try {
+		await writeFile(join(build, "Dockerfile"), `FROM ${image}\nUSER 0\nRUN cp /opt/benny-control/control.mjs /opt/benny-control/private.mjs && chmod 0400 /opt/benny-control/private.mjs\n`);
+		await Bun.$`docker build -t ${tag} ${build}`.quiet();
+		const config = proofConfig(tag);
+		config.control.feature_map_path = "app/index.html";
+		config.routing.map_path = "app/index.html";
+		expect((await Bun.$`docker image inspect --format {{.Config.User}} ${tag}`.quiet()).stdout.toString().trim()).toBe("0");
+		expect(controlChecks(config, cwd, revision).find(check => check.check === "control adapter command")?.ok).toBe(true);
+		config.runtime.control_command = ["bun", "/opt/benny-control/private.mjs"];
+		expect(controlChecks(config, cwd, revision).find(check => check.check === "control adapter command")?.ok).toBe(false);
+	} finally {
+		await Bun.$`docker image rm ${tag}`.quiet().nothrow();
+		await rm(build, { recursive: true, force: true });
+		await rm(cwd, { recursive: true, force: true });
+	}
+}, { timeout: 120_000 });
+
+dockerTest("mount proof accepts an owned home-path snapshot and root-named tmpfs source but rejects an extra home bind at another destination", async () => {
+	const root = await mkdtemp(join(tmpdir(), "benny-mount-origin-"));
+	const snapshot = join(root, "home", "runner", "snapshot");
+	await mkdir(snapshot, { recursive: true, mode: 0o700 });
+	await writeFile(join(snapshot, "marker.txt"), "owned snapshot\n");
+	const volume = `benny-mount-origin-${crypto.randomUUID()}`;
+	const containers: string[] = [];
+	try {
+		await Bun.$`docker volume create --driver local --opt type=tmpfs --opt device=/dev/root --opt ${`o=rw,noexec,nosuid,nodev,size=1048576,nr_inodes=64,uid=${process.getuid!()},gid=${process.getgid!()}`} ${volume}`.quiet();
+		for (const extraHome of [false, true]) {
+			const name = `benny-mount-origin-${crypto.randomUUID()}`;
+			containers.push(name);
+			const binds = [`${snapshot}:/workspace:ro`, `${volume}:/artifacts:rw`];
+			if (extraHome) binds.push(`${join(root, "home", "runner")}:/unexpected-home:ro`);
+			const created = await run(["docker", "run", "-d", "--name", name, "--network", "none", "--user", `${process.getuid!()}:${process.getgid!()}`, "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--read-only", "--memory", "128m", "--memory-swap", "128m", "--pids-limit", "32", "--cpus", "1", ...binds.flatMap(bind => ["-v", bind]), image, "sleep", "infinity"]);
+			expect({ code: created.code, stderr: created.stderr }).toEqual({ code: 0, stderr: "" });
+			const rows = (await Bun.$`docker exec ${name} cat /proc/mounts`.quiet()).stdout.toString();
+			const inspected = (await Bun.$`docker inspect --format ${"{{json .Mounts}}\n{{json .HostConfig.Binds}}"} ${name}`.quiet()).stdout.toString();
+			const [mounts, actualBinds] = inspected.trim().split("\n").map(line => JSON.parse(line));
+			const violations = proofMountViolations(rows, mounts, actualBinds, { snapshot, stagingVolume: volume });
+			expect(rows).toMatch(/^\/dev\/root \/artifacts tmpfs /m);
+			if (extraHome) {
+				expect(violations.some(error => error.includes("unexpected Docker mount") && error.includes("/unexpected-home"))).toBe(true);
+				expect(violations.some(error => error.includes("unexpected Docker bind declarations"))).toBe(true);
+			} else expect(violations).toEqual([]);
+		}
+	} finally {
+		for (const name of containers) await Bun.$`docker rm -f ${name}`.quiet().nothrow();
+		await Bun.$`docker volume rm ${volume}`.quiet().nothrow();
+		await rm(root, { recursive: true, force: true });
+	}
+}, { timeout: 120_000 });
 
 function isExecShape(value: unknown): value is { exitCode: number; stdout: string; stderr: string } {
 	return typeof value === "object" && value !== null
@@ -217,6 +306,13 @@ dockerTest("sibling runs with distinct incarnations never cross teardown and car
 	try {
 		first = await createBennyWorkspace({ ...base, runId: "cross-a", incarnation: incarnationA, revision });
 		second = await createBennyWorkspace({ ...base, runId: "cross-b", incarnation: incarnationB, revision });
+		const snapshot = await lstat(first.workspacePath);
+		expect({ uid: snapshot.uid, gid: snapshot.gid, mode: snapshot.mode & 0o777 }).toEqual({
+			uid: process.getuid!(), gid: process.getgid!(), mode: 0o700,
+		});
+		for (const container of [idB.worker, idB.controller]) {
+			expect((await Bun.$`docker container inspect -f {{.Config.User}} ${container}`.quiet()).stdout.toString().trim()).toBe(`${process.getuid!()}:${process.getgid!()}`);
+		}
 		expect(idA.worker).not.toBe(idB.worker);
 		expect(idA.network).not.toBe(idB.network);
 		const networkLabels = JSON.parse(
@@ -953,8 +1049,15 @@ dockerTest(
 		// Every control receipt is host-stamped with run/revision.
 		expect(proof.controlIds.length).toBeGreaterThanOrEqual(11);
 		// All adversarial boundary attempts were denied.
-		expect(proof.allBlocked).toBe(true);
 		expect(proof.blockedProbes).toEqual([]);
+		expect(proof.allBlocked).toBe(true);
+		const background = proof.adversarial.find(entry => entry.probe === "a background writer cannot bypass the storage boundary");
+		expect(background?.blocked).toBe(true);
+		const writer = JSON.parse(background!.detail!);
+		expect(writer.bytes).toBeGreaterThan(0);
+		expect(writer.bytes).toBeLessThanOrEqual(1024 * 1024 * 1024);
+		expect(writer.exitCode).toBe(1);
+		expect(writer.hostBytesAfter).toBe(writer.hostBytesBefore);
 		expect(proof.cleanup.removed).toContain(proof.cleanup.stopped[0]);
 	},
 	{ timeout: 15 * 60_000 },
@@ -1083,7 +1186,7 @@ dockerTest("decodeVideoFrames runs a uniquely named hardened decoder whose input
 	expect(decoderName).toMatch(/^benny-media-[0-9a-f]{16}$/);
 	expect(a).toContain("-d");
 	expect(a[a.indexOf("--network") + 1]).toBe("none");
-	expect(a[a.indexOf("--user") + 1]).toBe("1000:1000");
+	expect(a[a.indexOf("--user") + 1]).toBe(`${process.getuid!()}:${process.getgid!()}`);
 	expect(a[a.indexOf("--cap-drop") + 1]).toBe("ALL");
 	expect(a[a.indexOf("--security-opt") + 1]).toBe("no-new-privileges");
 	expect(a).toContain("--read-only");
@@ -1109,7 +1212,7 @@ dockerTest("decodeVideoFrames runs a uniquely named hardened decoder whose input
 	expect(volumeArgv).toBeDefined();
 	const v = volumeArgv!;
 	expect(v[v.indexOf("--driver") + 1]).toBe("local");
-	expect(v[v.indexOf("--opt", v.indexOf("device=tmpfs") + 1) + 1]).toBe(`o=rw,noexec,nosuid,size=805306368,nr_inodes=8192,uid=1000,gid=1000`);
+	expect(v[v.indexOf("--opt", v.indexOf("device=tmpfs") + 1) + 1]).toBe(`o=rw,noexec,nosuid,size=805306368,nr_inodes=8192,uid=${process.getuid!()},gid=${process.getgid!()}`);
 	const volumeLabels = v.flatMap((arg, index) => (arg === "--label" ? [v[index + 1]!] : []));
 	expect(volumeLabels).toContain("pstack.benny.role=media-storage");
 	expect(volumeLabels).toContain("pstack.benny.run-id=media");

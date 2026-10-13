@@ -1,10 +1,11 @@
-import { test, expect, afterEach } from "bun:test";
+import { test, expect, beforeAll, afterAll, afterEach } from "bun:test";
 import { Database } from "bun:sqlite";
 import { appendFileSync, chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { refreshDirsFromEnv } from "@oh-my-pi/pi-utils";
 import { createBennyActions, ActionFailure, CanceledStateMissingError, gitCredentialHelperScript, readBoundedJsonObject, rootDigest, spawnBoundedChild, type BennyActions } from "../src/benny-actions.ts";
 import { parseBennyConfig } from "../src/benny.ts";
 import { opsTracker, reproduceMentionSet, resumeDraft, resumePostWindow, resumeTriageWrite, routeMentionAllowlist, runTriage, triageTracker } from "../src/benny-run.ts";
@@ -14,6 +15,17 @@ import { openRunStore } from "../src/runner.ts";
 import { stripDisallowedMentions, type BennyConfig, type ActionJournal, type RemoteReceipt } from "../src/benny-policy.ts";
 import { FIXTURE_JPEG, FIXTURE_PNG, startBennyTransports } from "../scripts/fixtures/benny-transports.ts";
 import type { BennyTransports } from "../scripts/fixtures/benny-transports.ts";
+
+const previousProfile = process.env.PI_CODING_AGENT_DIR;
+const profile = mkdtempSync(join(tmpdir(), "benny-actions-profile-"));
+chmodSync(profile, 0o700);
+beforeAll(() => { process.env.PI_CODING_AGENT_DIR = profile; refreshDirsFromEnv(); });
+afterAll(() => {
+  if (previousProfile === undefined) delete process.env.PI_CODING_AGENT_DIR;
+  else process.env.PI_CODING_AGENT_DIR = previousProfile;
+  refreshDirsFromEnv();
+  rmSync(profile, { recursive: true, force: true });
+});
 
 const yamlConfig = Bun.YAML.parse(await Bun.file(`${import.meta.dir}/../automations/benny/templates/configuration.example.yaml`).text()) as BennyConfig;
 yamlConfig.slack.prefer_configured_actions = false;
@@ -668,10 +680,12 @@ async function gitPublishRepo(): Promise<{ repo: string; bare: string; baseOid: 
   };
   run("git", "init", "--bare", "--initial-branch=main", bare);
   run("git", "clone", bare, repo);
+  run("git", "-C", repo, "config", "--local", "user.name", "Benny publication fixture");
+  run("git", "-C", repo, "config", "--local", "user.email", "benny-publication@example.invalid");
   const write = (name: string, content: string) => rmSyncWrite(join(repo, name), content);
   write("app.txt", "v1\n");
   run("git", "-C", repo, "add", "app.txt");
-  run("git", "-C", repo, "-c", "user.name=t", "-c", "user.email=t@localhost", "commit", "-m", "base");
+  run("git", "-C", repo, "commit", "-m", "base");
   run("git", "-C", repo, "push", "origin", "HEAD:refs/heads/main");
   const baseOid = run("git", "-C", repo, "rev-parse", "HEAD");
   return { repo, bare, baseOid };
@@ -739,9 +753,11 @@ test("publishBranch pushes the verified tree at the admitted base and fails clos
   ).rejects.toThrow(/does not match the verified workspace snapshot/);
 
   // Base race: the remote base moved off the admitted revision — refuse before any push.
-  Bun.spawnSync(["git", "-C", repo, "commit", "--allow-empty", "-m", "unrelated", "-q"], { stderr: "ignore" });
+  const movedCommit = Bun.spawnSync(["git", "-C", repo, "commit", "--allow-empty", "-m", "unrelated", "-q"], { stdout: "pipe", stderr: "pipe" });
+  expect({ status: movedCommit.exitCode, stderr: movedCommit.stderr.toString() }).toEqual({ status: 0, stderr: "" });
   const moved = Bun.spawnSync(["git", "-C", repo, "rev-parse", "HEAD"], { stdout: "pipe" }).stdout.toString().trim();
-  Bun.spawnSync(["git", "-C", repo, "push", "-q", "origin", `${moved}:refs/heads/main`], { stderr: "ignore" });
+  const movedPush = Bun.spawnSync(["git", "-C", repo, "push", "-q", "origin", `${moved}:refs/heads/main`], { stdout: "pipe", stderr: "pipe" });
+  expect({ status: movedPush.exitCode, stderr: movedPush.stderr.toString() }).toEqual({ status: 0, stderr: "" });
   await expect(
     actions.publishBranch("pub-3", { sourceDir: workspace, sourceManifest: tree, head: "benny/run-9-aaaaaaaaaaaa", base: "main", baseOid, message: "fix" }),
   ).rejects.toMatchObject({ certainty: "not-delivered" });
