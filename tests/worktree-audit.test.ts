@@ -618,19 +618,17 @@ describe("worktree-audit CLI base selection", () => {
 		expect(stale.stderr).toContain("merged column may be stale");
 	});
 
-	test("invalid canonical branch data never reaches fetch or merge-safe output", () => {
+	test.each(["refs/tags/topic", "refs/heads/bad..ref", "refs/heads/bad name"])("invalid canonical branch %s never reaches fetch or merge-safe output", (ref) => {
 		const fixture = auditFixture("topic");
 		git(["remote", "add", "origin", "https://github.com/octo/repo.git"], fixture.repo);
 		try {
-			for (const ref of ["refs/tags/topic", "refs/heads/bad..ref", "refs/heads/bad name"]) {
-				writeFileSync(join(root, "remote-head"), `ref: ${ref}\tHEAD\n`);
-				rmSync(shimLog, { force: true });
-				const result = runAuditCli([fixture.repo], fixture.repo);
-				expect(result.code).toBe(0);
-				expect(result.stdout.split("\n")[0]).toBe("BASE\tunknown");
-				expect(worktreeColumns(result.stdout, fixture.worktree)[7]).toBe("review");
-				expect(fetchArgLines()).toHaveLength(0);
-			}
+			writeFileSync(join(root, "remote-head"), `ref: ${ref}\tHEAD\n`);
+			rmSync(shimLog, { force: true });
+			const result = runAuditCli([fixture.repo], fixture.repo);
+			expect(result.code).toBe(0);
+			expect(result.stdout.split("\n")[0]).toBe("BASE\tunknown");
+			expect(worktreeColumns(result.stdout, fixture.worktree)[7]).toBe("review");
+			expect(fetchArgLines()).toHaveLength(0);
 		} finally {
 			rmSync(join(root, "remote-head"), { force: true });
 		}

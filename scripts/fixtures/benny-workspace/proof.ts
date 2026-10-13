@@ -30,8 +30,13 @@ const APP_MARKER = "benny-fixture-counter";
 
 /** Always rebuilds from current source; a stale tag never masks fixture changes. */
 export async function ensureImage(tag: string = PROOF_IMAGE): Promise<string> {
+	const uid = process.getuid?.();
+	const gid = process.getgid?.();
+	if (uid === undefined || gid === undefined || uid === 0 || gid === 0) {
+		throw new WorkspaceBlockError("fixture image requires a non-root POSIX host UID and GID");
+	}
 	const fixturesDir = new URL(".", import.meta.url).pathname;
-	const build = await Bun.$`docker build -t ${tag} ${fixturesDir}`.quiet().nothrow();
+	const build = await Bun.$`docker build --build-arg BENNY_UID=${uid} --build-arg BENNY_GID=${gid} -t ${tag} ${fixturesDir}`.quiet().nothrow();
 	if (build.exitCode !== 0) {
 		throw new WorkspaceBlockError(`fixture image '${tag}' build failed: ${build.stderr.toString().slice(0, 500)}`);
 	}

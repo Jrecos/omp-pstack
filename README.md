@@ -350,6 +350,10 @@ with `PSTACK_ROOT` resolved once per host as in [running the `pstack` CLI after 
 
 The Benny integration suites create private temporary OMP profiles and restore the previous profile after cleanup. They do not need an initialized developer profile. Docker-dependent suites rebuild their fixture image from current source with a bounded 10-minute setup hook.
 
+The Docker fixture image uses the invoking host's non-root POSIX UID and GID. Benny uses the same identity for sandbox processes, bounded storage, and seed ownership checks so private host snapshots remain accessible without broader permissions. The trusted control adapter remains root-owned and read-only. Run these fixtures as a non-root user with Docker access.
+
+Benny rejects UID 0, GID 0, or missing POSIX identity before sandbox resource creation. Preflight probes adapter readability as the same user that runs the sandbox, not the image's default user. This ownership contract targets rootful Docker. Rootless Docker and user-namespace remapping are not verified.
+
 [`.github/workflows/pr-title.yml`](./.github/workflows/pr-title.yml) validates Conventional Commit pull request titles with a SHA-pinned action. It reads pull request metadata without checking out contribution code. These workflows do not configure branch protection. Make `checks` and `title` required checks in repository rules to enforce them before merge. [Dependabot](./.github/dependabot.yml) proposes weekly updates to GitHub Actions pins only, not npm dependencies or the OMP SDK pin.
 
 Dependabot uses `ci(deps):` titles so action-update pull requests pass the same title check. Merging an action update intentionally produces a patch release under the per-pull-request policy.

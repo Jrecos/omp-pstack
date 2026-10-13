@@ -28,6 +28,7 @@ import type { BennyWorkspace, DecodedFrame } from "../src/benny-workspace.ts";
 import { openBennyStore } from "../src/benny.ts";
 import { openRunStore, profileWorkspaceDir } from "../src/runner.ts";
 import { createProofRepo, ensureImage, proofConfig, runProof, PROOF_IMAGE } from "../scripts/fixtures/benny-workspace/proof.ts";
+import { controlChecks } from "../src/benny-setup.ts";
 
 const previousProfile = process.env.PI_CODING_AGENT_DIR;
 const profile = mkdtempSync(join(tmpdir(), "benny-workspace-profile-"));
@@ -53,6 +54,48 @@ let image = PROOF_IMAGE;
 beforeAll(async () => {
 	if (hasDocker) image = await ensureImage();
 }, 10 * 60_000);
+
+test.each(["uid", "gid", "unsupported"] as const)("a privileged or unsupported %s identity rejects before child processes or private state mutations", (kind) => {
+	const fixture = join(import.meta.dir, "fixtures", "benny-root-boundary.ts");
+	const identity = kind === "unsupported"
+		? "process.getuid = undefined; process.getgid = undefined;"
+		: `process.getuid = () => ${kind === "uid" ? 0 : 1000}; process.getgid = () => ${kind === "gid" ? 0 : 1000};`;
+	const child = Bun.spawnSync([process.execPath, "-e", `${identity} await import(${JSON.stringify(fixture)});`], {
+		stdout: "pipe", stderr: "pipe", timeout: 10_000,
+	});
+	expect({ code: child.exitCode, stderr: child.stderr.toString() }).toEqual({ code: 0, stderr: "" });
+	const observed = JSON.parse(child.stdout.toString());
+	expect({ processAttempts: observed.processAttempts, targetEntries: observed.targetEntries, homeEntries: observed.homeEntries, failures: observed.failures }).toEqual({
+		processAttempts: 0, targetEntries: [], homeEntries: [],
+		failures: {
+			workspace: "Benny sandbox requires a non-root POSIX host UID and GID",
+			decoder: "Benny sandbox requires a non-root POSIX host UID and GID",
+			preflight: "Benny sandbox requires a non-root POSIX host UID and GID",
+			fixture: "fixture image requires a non-root POSIX host UID and GID",
+		},
+	});
+});
+
+dockerTest("preflight uses the sandbox reader rather than the image default user for adapter readability", async () => {
+	const { cwd, revision } = await createProofRepo();
+	const build = await mkdtemp(join(tmpdir(), "benny-preflight-reader-"));
+	const tag = `omp-pstack/benny-preflight-reader:${crypto.randomUUID()}`;
+	try {
+		await writeFile(join(build, "Dockerfile"), `FROM ${image}\nUSER 0\nRUN cp /opt/benny-control/control.mjs /opt/benny-control/private.mjs && chmod 0400 /opt/benny-control/private.mjs\n`);
+		await Bun.$`docker build -t ${tag} ${build}`.quiet();
+		const config = proofConfig(tag);
+		config.control.feature_map_path = "app/index.html";
+		config.routing.map_path = "app/index.html";
+		expect((await Bun.$`docker image inspect --format {{.Config.User}} ${tag}`.quiet()).stdout.toString().trim()).toBe("0");
+		expect(controlChecks(config, cwd, revision).find(check => check.check === "control adapter command")?.ok).toBe(true);
+		config.runtime.control_command = ["bun", "/opt/benny-control/private.mjs"];
+		expect(controlChecks(config, cwd, revision).find(check => check.check === "control adapter command")?.ok).toBe(false);
+	} finally {
+		await Bun.$`docker image rm ${tag}`.quiet().nothrow();
+		await rm(build, { recursive: true, force: true });
+		await rm(cwd, { recursive: true, force: true });
+	}
+}, { timeout: 120_000 });
 
 function isExecShape(value: unknown): value is { exitCode: number; stdout: string; stderr: string } {
 	return typeof value === "object" && value !== null
@@ -230,6 +273,13 @@ dockerTest("sibling runs with distinct incarnations never cross teardown and car
 	try {
 		first = await createBennyWorkspace({ ...base, runId: "cross-a", incarnation: incarnationA, revision });
 		second = await createBennyWorkspace({ ...base, runId: "cross-b", incarnation: incarnationB, revision });
+		const snapshot = await lstat(first.workspacePath);
+		expect({ uid: snapshot.uid, gid: snapshot.gid, mode: snapshot.mode & 0o777 }).toEqual({
+			uid: process.getuid!(), gid: process.getgid!(), mode: 0o700,
+		});
+		for (const container of [idB.worker, idB.controller]) {
+			expect((await Bun.$`docker container inspect -f {{.Config.User}} ${container}`.quiet()).stdout.toString().trim()).toBe(`${process.getuid!()}:${process.getgid!()}`);
+		}
 		expect(idA.worker).not.toBe(idB.worker);
 		expect(idA.network).not.toBe(idB.network);
 		const networkLabels = JSON.parse(
@@ -1096,7 +1146,7 @@ dockerTest("decodeVideoFrames runs a uniquely named hardened decoder whose input
 	expect(decoderName).toMatch(/^benny-media-[0-9a-f]{16}$/);
 	expect(a).toContain("-d");
 	expect(a[a.indexOf("--network") + 1]).toBe("none");
-	expect(a[a.indexOf("--user") + 1]).toBe("1000:1000");
+	expect(a[a.indexOf("--user") + 1]).toBe(`${process.getuid!()}:${process.getgid!()}`);
 	expect(a[a.indexOf("--cap-drop") + 1]).toBe("ALL");
 	expect(a[a.indexOf("--security-opt") + 1]).toBe("no-new-privileges");
 	expect(a).toContain("--read-only");
@@ -1122,7 +1172,7 @@ dockerTest("decodeVideoFrames runs a uniquely named hardened decoder whose input
 	expect(volumeArgv).toBeDefined();
 	const v = volumeArgv!;
 	expect(v[v.indexOf("--driver") + 1]).toBe("local");
-	expect(v[v.indexOf("--opt", v.indexOf("device=tmpfs") + 1) + 1]).toBe(`o=rw,noexec,nosuid,size=805306368,nr_inodes=8192,uid=1000,gid=1000`);
+	expect(v[v.indexOf("--opt", v.indexOf("device=tmpfs") + 1) + 1]).toBe(`o=rw,noexec,nosuid,size=805306368,nr_inodes=8192,uid=${process.getuid!()},gid=${process.getgid!()}`);
 	const volumeLabels = v.flatMap((arg, index) => (arg === "--label" ? [v[index + 1]!] : []));
 	expect(volumeLabels).toContain("pstack.benny.role=media-storage");
 	expect(volumeLabels).toContain("pstack.benny.run-id=media");

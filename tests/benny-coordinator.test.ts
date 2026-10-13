@@ -2051,7 +2051,7 @@ test("installed package identity fails when the installed source Benny pack is t
 		// A faithful full copy of this package plays the OMP plugin cache: the
 		commitAll(target, "init");
 		const packageRoot = realpathSync(join(import.meta.dir, ".."));
-		const copy = join(target, "..", "cache", "omp-pstack");
+		const copy = join(target, "cache", "omp-pstack");
 		mkdirSync(dirname(copy), { recursive: true });
 		cpSync(packageRoot, copy, { recursive: true, filter: (src) => !/[\\/](\.git|node_modules)([\\/]|$)/.test(src) });
 		const link = join(target, ".omp", "plugins", "node_modules", "omp-pstack");

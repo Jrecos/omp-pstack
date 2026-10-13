@@ -1,11 +1,11 @@
 {
   "fixture": true,
-  "capturedAt": "2026-10-13T04:10:45.045Z",
+  "capturedAt": "2026-10-13T08:17:56.333Z",
   "actualModel": "openai-codex/gpt-6-astra:high",
   "fixtureTransports": {
-    "slack": "http://localhost:46521/api",
-    "tracker": "http://localhost:33745/graphql",
-    "github": "localhost:39509"
+    "slack": "http://localhost:45743/api",
+    "tracker": "http://localhost:33627/graphql",
+    "github": "localhost:37119"
   },
   "effectiveBudgets": {
     "poll_seconds": 45,
@@ -46,7 +46,7 @@
   ],
   "trackerIssues": 1,
   "draftPulls": 1,
-  "publishedHeadOid": "ba19d0f15fd97a0f6c94d108582aeda868c7fc81",
+  "publishedHeadOid": "fc43fec0e21afcb0540f77f24aa0ad58fe4d1a4c",
   "sourceThreadPosts": 2,
   "canaryEligible": true,
   "producerInputs": [
@@ -83,5 +83,5 @@
     "src/trackers/contract.ts",
     "src/trackers/linear.ts"
   ],
-  "producerDigest": "046e800ef07170f57663256f0e63a5e2df81d30d50bf483288794825a741fffb"
+  "producerDigest": "fcc584584e16b2a22af44b55a64efe7c7b3f4d9f975d9ec7d58edfa36f43fcf2"
 }
