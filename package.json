@@ -9,7 +9,7 @@
   "omp": { "extensions": ["./src/extension.ts"] },
   "bin": { "pstack": "./src/cli.ts" },
   "scripts": {
-    "test": "bun test",
+    "test": "bun test --isolate",
     "typecheck": "tsc --noEmit",
     "check:content": "bun scripts/check-content.ts",
     "check:speckit-assets": "bun scripts/check-speckit-assets.ts",

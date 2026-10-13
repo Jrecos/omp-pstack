@@ -141,8 +141,10 @@ function git(cwd: string, ...args: string[]): void {
 }
 
 function commitAll(cwd: string, message: string): void {
+	git(cwd, "config", "--local", "user.name", "Benny coordinator fixture");
+	git(cwd, "config", "--local", "user.email", "benny-coordinator@example.invalid");
 	git(cwd, "add", "-A");
-	git(cwd, "-c", "user.name=Test", "-c", "user.email=test@localhost", "commit", "-m", message);
+	git(cwd, "commit", "-m", message);
 }
 
 /** Hermetic stand-in for the authenticated model registry: exactly the four fixture selectors (minus `omit`). */
