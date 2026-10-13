@@ -1016,8 +1016,15 @@ dockerTest(
 		// Every control receipt is host-stamped with run/revision.
 		expect(proof.controlIds.length).toBeGreaterThanOrEqual(11);
 		// All adversarial boundary attempts were denied.
-		expect(proof.allBlocked).toBe(true);
 		expect(proof.blockedProbes).toEqual([]);
+		expect(proof.allBlocked).toBe(true);
+		const background = proof.adversarial.find(entry => entry.probe === "a background writer cannot bypass the storage boundary");
+		expect(background?.blocked).toBe(true);
+		const writer = JSON.parse(background!.detail!);
+		expect(writer.bytes).toBeGreaterThan(0);
+		expect(writer.bytes).toBeLessThanOrEqual(1024 * 1024 * 1024);
+		expect(writer.exitCode).toBe(1);
+		expect(writer.hostBytesAfter).toBe(writer.hostBytesBefore);
 		expect(proof.cleanup.removed).toContain(proof.cleanup.stopped[0]);
 	},
 	{ timeout: 15 * 60_000 },

@@ -354,6 +354,8 @@ The Docker fixture image uses the invoking host's non-root POSIX UID and GID. Be
 
 Benny rejects UID 0, GID 0, or missing POSIX identity before sandbox resource creation. Preflight probes adapter readability as the same user that runs the sandbox, not the image's default user. This ownership contract targets rootful Docker. Rootless Docker and user-namespace remapping are not verified.
 
+The real workspace proof reports failed adversarial probes by name. Its background-writer receipt records actual bytes written, the child's quota exit, and unchanged host-directory bytes. A successful aggregate alone is not evidence that a writer ran.
+
 [`.github/workflows/pr-title.yml`](./.github/workflows/pr-title.yml) validates Conventional Commit pull request titles with a SHA-pinned action. It reads pull request metadata without checking out contribution code. These workflows do not configure branch protection. Make `checks` and `title` required checks in repository rules to enforce them before merge. [Dependabot](./.github/dependabot.yml) proposes weekly updates to GitHub Actions pins only, not npm dependencies or the OMP SDK pin.
 
 Dependabot uses `ci(deps):` titles so action-update pull requests pass the same title check. Merging an action update intentionally produces a patch release under the per-pull-request policy.

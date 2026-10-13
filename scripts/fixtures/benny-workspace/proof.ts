@@ -165,10 +165,10 @@ export async function runProof(options: { image?: string; runId?: string; deadli
 	 * ProbeViolated marks an observable violation; any other error is an
 	 * infrastructure/assertion failure. Both fail the proof.
 	 */
-	async function expectDenied(probe: string, attempt: () => Promise<void>) {
+	async function expectDenied(probe: string, attempt: () => Promise<void | string>) {
 		try {
-			await attempt();
-			adversarial.push({ probe, blocked: true });
+			const detail = await attempt();
+			adversarial.push({ probe, blocked: true, ...(detail === undefined ? {} : { detail }) });
 		} catch (error) {
 			if (error instanceof WorkspaceBlockError) {
 				adversarial.push({ probe, blocked: true, detail: error.message });
@@ -356,7 +356,7 @@ export async function runProof(options: { image?: string; runId?: string; deadli
 			if (!/^\S+ \/workspace tmpfs /m.test(mounts.stdout) || !/^\S+ \/artifacts tmpfs /m.test(mounts.stdout)) {
 				throw new ProbeViolated(`model-writable surfaces are not bounded tmpfs: ${mounts.stdout.slice(0, 200)}`);
 			}
-			if (/^tmpfs \/workspace .*?(benny|host|home|dev)/m.test(mounts.stdout)) throw new ProbeViolated("unexpected host bind on /workspace");
+			return mounts.stdout.trim();
 		});
 		async function hostDirBytes(dir: string): Promise<number> {
 			const du = await Bun.$`du -sb ${dir}`.quiet().nothrow();
@@ -365,15 +365,15 @@ export async function runProof(options: { image?: string; runId?: string; deadli
 		}
 		await expectDenied("a writer past the quota is kernel-stopped without host growth", async () => {
 			const before = await hostDirBytes(workspace.workspacePath);
-			// Far more than the 1 GiB tmpfs (and the container's 1 GiB memory
-			// cgroup): the kernel must stop the writer, never the host scan.
+			// The requested write exceeds the 1 GiB tmpfs. The kernel must stop
+			// it before the host scan observes any growth.
 			const filled = await execWorker(["sh", "-c", "dd if=/dev/zero of=/workspace/quota-probe.bin bs=1M count=4096"], "fix");
 			const after = await hostDirBytes(workspace.workspacePath);
 			const removed = await execWorker(["sh", "-c", "rm -f /workspace/quota-probe.bin"], "fix");
 			if (removed.exitCode !== 0) throw new Error(`quota probe cleanup failed (exit ${removed.exitCode}); the fix volume is not recoverable after ENOSPC`);
 			if (filled.exitCode === 0) throw new ProbeViolated("worktree writer exceeded the quota without ENOSPC");
 			if (!/No space left on device|exited/.test(`${filled.stderr} ${String(filled.exitCode)}`) && filled.exitCode !== 137) {
-				throw new Error(`unexpected quota failure mode: ${filled.stderr.slice(0, 200)}`);
+				throw new Error(`unexpected quota failure mode (exit ${filled.exitCode}): ${filled.stderr.slice(0, 200)}`);
 			}
 			if (after !== before) throw new ProbeViolated(`host worktree grew ${after - before} bytes under a tmpfs writer`);
 		});
@@ -385,18 +385,26 @@ export async function runProof(options: { image?: string; runId?: string; deadli
 		});
 		await expectDenied("a background writer cannot bypass the storage boundary", async () => {
 			const before = await hostDirBytes(workspace.workspacePath);
-			await execWorker(["sh", "-c", "nohup sh -c 'until :; do dd if=/dev/zero bs=1M count=1 >> /workspace/grow.bin 2>/dev/null || break; done' >/dev/null 2>&1 & sleep 4"], "fix");
-			const after = await hostDirBytes(workspace.workspacePath);
-			// The tmpfs-resident file may have grown up to the quota, but the
-			// HOST worktree is untouched: no bind exists to grow.
-			// Two separate execs: a combined `pkill -f grow.bin; rm ...` shell
-			// matches its own cmdline and is killed before rm runs, leaving the
-			// ~1 GiB tmpfs file charged against the container's memory cgroup —
-			// every later exec is then OOM-killed at runc setns (exit 128).
-			const killed = await execWorker(["sh", "-c", "pkill -f grow.bin || true; sleep 0.3"], "fix");
-			const removedGrow = await execWorker(["sh", "-c", "rm -f /workspace/grow.bin"], "fix");
-			if (removedGrow.exitCode !== 0) throw new Error(`writer cleanup failed (exit ${removedGrow.exitCode})`);
-			if (after !== before) throw new ProbeViolated(`background writer grew the host worktree by ${after - before} bytes`);
+			try {
+				const writer = await execWorker(["sh", "-c", [
+					"nohup sh -c 'while :; do dd if=/dev/zero bs=1M count=1 >> /workspace/grow.bin 2>/artifacts/grow.stderr || exit $?; done' >/dev/null 2>&1 &",
+					"writer=$!; printf '%s\\n' \"$writer\" > /artifacts/grow.pid",
+					"wait \"$writer\"; status=$?",
+					"printf '%s %s %s\\n' \"$writer\" \"$(wc -c < /workspace/grow.bin)\" \"$status\"",
+					"cat /artifacts/grow.stderr",
+				].join("\n")], "fix");
+				const [pid, bytes, status] = writer.stdout.split("\n")[0]!.trim().split(/\s+/).map(Number);
+				if (writer.exitCode !== 0 || !Number.isSafeInteger(pid) || pid! <= 0 || !Number.isSafeInteger(bytes) || bytes! <= 0 || !Number.isSafeInteger(status) || status! <= 0) {
+					throw new Error(`background writer did not demonstrate a positive write and nonzero exit: ${JSON.stringify(writer)}`);
+				}
+				if (!writer.stdout.includes("No space left on device")) throw new Error(`background writer did not hit its storage quota: ${writer.stdout}`);
+				const after = await hostDirBytes(workspace.workspacePath);
+				if (after !== before) throw new ProbeViolated(`background writer grew the host worktree by ${after - before} bytes`);
+				return JSON.stringify({ pid, bytes, exitCode: status, hostBytesBefore: before, hostBytesAfter: after });
+			} finally {
+				const cleanup = await execWorker(["sh", "-c", "if test -f /artifacts/grow.pid; then writer=$(cat /artifacts/grow.pid); if kill -0 \"$writer\" 2>/dev/null; then kill \"$writer\" || exit 1; fi; fi; rm -f /workspace/grow.bin /artifacts/grow.pid /artifacts/grow.stderr"], "fix");
+				if (cleanup.exitCode !== 0) throw new Error(`writer cleanup failed (exit ${cleanup.exitCode})`);
+			}
 		});
 		// Leaving fix freezes the patched snapshot and remounts read-only.
 		await workspace.call("read", { path: "app/index.html" }, "verify");
