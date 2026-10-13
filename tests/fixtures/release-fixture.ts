@@ -1,6 +1,6 @@
 import { chmodSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 const RELEASE_SCRIPT = join(import.meta.dir, "..", "..", "scripts", "release.ts");
 
@@ -22,6 +22,7 @@ export interface ReleaseFixture {
 	releases(): string[];
 	release(tag: string): Record<string, unknown>;
 	packageVersionAt(ref: string): string;
+	treeAt(ref: string): string;
 	failReleaseCreation(enabled: boolean): void;
 	raceMainOnPullFetch(message?: string): void;
 	clearPullFetchHook(): void;
@@ -77,7 +78,7 @@ case "\${1:-}" in
 esac
 `;
 
-export function createReleaseFixture(options: { version?: string } = {}): ReleaseFixture {
+export function createReleaseFixture(options: { version?: string; files?: Record<string, string | Uint8Array> } = {}): ReleaseFixture {
 	const root = mkdtempSync(join(tmpdir(), "omp-pstack-release-"));
 	const origin = join(root, "origin.git");
 	const seed = join(root, "seed");
@@ -110,6 +111,10 @@ export function createReleaseFixture(options: { version?: string } = {}): Releas
 		"}",
 		"",
 	].join("\n"));
+	for (const [path, contents] of Object.entries(options.files ?? {})) {
+		mkdirSync(dirname(join(seed, path)), { recursive: true });
+		writeFileSync(join(seed, path), contents);
+	}
 	git(seed, "add", "-A");
 	git(seed, "commit", "-q", "-m", "chore: seed the release fixture");
 	git(seed, "remote", "add", "origin", origin);
@@ -205,6 +210,13 @@ export function createReleaseFixture(options: { version?: string } = {}): Releas
 		packageVersionAt(ref) {
 			const manifest = JSON.parse(git(origin, "show", `${ref}:package.json`)) as { version?: unknown };
 			return String(manifest.version);
+		},
+
+		treeAt(ref) {
+			const tree = mkdtempSync(join(root, "tree-"));
+			git(root, "clone", "-q", origin, tree);
+			git(tree, "checkout", "-q", "--detach", ref);
+			return tree;
 		},
 
 		failReleaseCreation(enabled) {

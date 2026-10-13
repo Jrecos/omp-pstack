@@ -12,6 +12,7 @@ import { getAgentDir, getConfigAgentDirName, refreshDirsFromEnv } from "@oh-my-p
 import pstack from "../src/extension.ts";
 import { ROLES, parseConfig, resolvePaths, saveRoles } from "../src/models.ts";
 
+import { manifestDigest } from "./manifest-digest.ts";
 const root = join(import.meta.dir, "..");
 const temporary = process.env.PSTACK_SMOKE_HOME ?? await mkdtemp(join(tmpdir(), "pstack-model-smoke-"));
 const profile = join(temporary, getConfigAgentDirName());
@@ -334,8 +335,8 @@ try {
     const proof = {
       ok: true, cancellationUnchanged: true, recommendedRule, sdkVersion,
       capturedAt: new Date().toISOString(), fixtureOnly: true,
-      producerInputs: await Promise.all(["scripts/smoke-models.ts", "package.json", "bun.lock", "src/extension.ts", "src/models.ts", "src/mode.ts"].map(async path => ({
-        path, sha256: createHash("sha256").update(await readFile(join(root, path))).digest("hex"),
+      producerInputs: await Promise.all(["scripts/smoke-models.ts", "scripts/manifest-digest.ts", "package.json", "bun.lock", "src/extension.ts", "src/models.ts", "src/mode.ts"].map(async path => ({
+        path, sha256: path === "package.json" ? manifestDigest(await readFile(join(root, path))) : createHash("sha256").update(await readFile(join(root, path))).digest("hex"),
       }))),
       models: { first: { provider: first.provider, id: first.id, api: first.api }, second: { provider: second.provider, id: second.id, api: second.api } }, isolationCases,
       limits: ["Authenticated fixture samples only. No accuracy or performance gain is claimed.", "Native checkout isolation is not the Benny Docker security boundary.", "The inputs bind the listed producer and P Stack files, not a complete transitive-source release gate."],

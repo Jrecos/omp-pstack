@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "capturedAt": "2026-10-12T19:40:55.556Z",
+  "capturedAt": "2026-10-13T03:59:57.654Z",
   "fixtureOnly": true,
   "expectedVersion": "18.10.2",
   "host": {
-    "resolvedBinary": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+    "resolvedBinary": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
     "expectedVersion": "18.10.2",
     "versionCommand": {
       "argv": [
-        "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+        "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
         "--version"
       ],
-      "cwd": "/tmp/pstack-native-capabilities-sz5XVR",
+      "cwd": "/tmp/pstack-native-capabilities-kIpPIC",
       "code": 0,
       "signal": null,
       "timedOut": false,
       "overflow": false,
       "stdout": "omp/18.10.2\n",
       "stderr": "",
-      "durationMs": 593.672907
+      "durationMs": 600.727531
     },
     "binarySha256": "df9f273cb0120795940f918f94a22aa8d7c667f2fd97ec21e74f841c2c878f3e",
     "actualVersion": "18.10.2"
@@ -26,38 +26,38 @@
   "sdkPackages": {
     "pi-coding-agent": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/src/index.ts",
-      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/package.json"
+      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/src/index.ts",
+      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/package.json"
     },
     "pi-agent-core": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-agent-core/src/index.ts",
-      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-agent-core/package.json"
+      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-agent-core/src/index.ts",
+      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-agent-core/package.json"
     },
     "pi-ai": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-ai/src/index.ts",
-      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-ai/package.json"
+      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-ai/src/index.ts",
+      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-ai/package.json"
     },
     "pi-catalog": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-catalog/src/index.ts",
-      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-catalog/package.json"
+      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-catalog/src/index.ts",
+      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-catalog/package.json"
     },
     "pi-tui": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-tui/src/index.ts",
-      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-tui/package.json"
+      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-tui/src/index.ts",
+      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-tui/package.json"
     },
     "pi-utils": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-utils/src/index.ts",
-      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-utils/package.json"
+      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-utils/src/index.ts",
+      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-utils/package.json"
     },
     "pi-natives": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-natives/native/index.js",
-      "manifest": "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-natives/package.json"
+      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-natives/native/index.js",
+      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-natives/package.json"
     }
   },
   "runtime": {
@@ -67,8 +67,9 @@
   },
   "producerInputs": {
     "bun.lock": "c832a5b24d7dd36e6e37a3b6cd3ec78a196f0f86f5e2dc4537bd151becea3a02",
-    "package.json": "06bec20e0c32d1ead5ffc1b1f5c59c67787154981678e9d5a303dc62f053c3c3",
-    "scripts/smoke-native-capabilities.ts": "359f33efb0e895819a7de173fe29889ddf0a0df85fecd5722d2739a294b83131",
+    "package.json": "1cbaf6d08e210d170c27813e15da66b7bcb2d2fbd5bcc34f80b55cdc0ce16ab1",
+    "scripts/manifest-digest.ts": "f144020e961bc8b1fb07b7597f115994cdbdd024298a2f551db4e3947c95478d",
+    "scripts/smoke-native-capabilities.ts": "0b851901338c32ed6aae60a73b901749966bb310b4ffc1a58b64220317a5dd3b",
     "sdk/pi-agent-core/package.json": "0c383715195b2fc01accea38ed83cfb1febd8a54229f937d9078532dcd8bba3a",
     "sdk/pi-ai/package.json": "72c73936572581a7a843cc49d99a22150eb78dda86d8322813c961d84b56b41a",
     "sdk/pi-catalog/package.json": "bd48518e6f6aa6ac8358040471eb87b14070ac51eb9e3314743770213aca4581",
@@ -96,7 +97,7 @@
     "sdk/pi-tui/package.json": "76d555ecfd301420a196620340ac843e06e7053431daa48d78be65e2836d311c",
     "sdk/pi-utils/package.json": "ea1a6e8fc11f91865e8d1ca05f21b7d7e9a043b46345b31b1a1839a8fb2011d1"
   },
-  "producerDigest": "d50686c6729df12e422a37c1ef9101e0d6b1e6becd8de213599806dd18a3bd5f",
+  "producerDigest": "87abe75423b6f4bcdc6d87a6386753092440a852bf869bb61f364a1becc9c0e4",
   "privacy": {
     "realHistoriesRead": false,
     "authImportedOrExported": false,
@@ -129,27 +130,27 @@
           "raw": {
             "command": {
               "argv": [
-                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "worktree",
                 "add",
                 "-b",
                 "native-proof",
-                "/tmp/pstack-native-capabilities-sz5XVR/worktree",
+                "/tmp/pstack-native-capabilities-kIpPIC/worktree",
                 "HEAD"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at c04d65b fixture\n",
-              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-sz5XVR/repository/tracked.txt -> /tmp/pstack-native-capabilities-sz5XVR/worktree/tracked.txt: Operation not supported (os error 95)\n",
-              "durationMs": 754.8338330000001
+              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at 70db4ed fixture\n",
+              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-kIpPIC/repository/tracked.txt -> /tmp/pstack-native-capabilities-kIpPIC/worktree/tracked.txt: Operation not supported (os error 95)\n",
+              "durationMs": 792.995183
             },
             "before": {
               "tracked": "365bbc197309687a64ee63ff74d06a4d2704240d00545096ad359c5a8c0192ab",
-              "artifact": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27",
-              "head": "c04d65b53a5b5f1e86c428b73d4cd66aad14e3f5"
+              "artifact": "e8949fdce26e2e92c5edb188a71c30bfa094268ed442c07352c60e86e85a79b2",
+              "head": "70db4ed6dffc9917ffe4c5a01d46ac34cd3c2ffe"
             },
             "settings": {
               "worktree": {
@@ -173,7 +174,7 @@
             "initialChildSha256": "cc2e4bb51f522b77c0c3ad04f7a87386a7e06d4fa287c004b6c066410c5c24dc",
             "childSha256": "b1bc5d359a36df977e1338dbbcc1cf516b34b9417c88367159d9041f3084bbd8",
             "sourceAfterChildEdit": "365bbc197309687a64ee63ff74d06a4d2704240d00545096ad359c5a8c0192ab",
-            "sourceHead": "c04d65b53a5b5f1e86c428b73d4cd66aad14e3f5"
+            "sourceHead": "70db4ed6dffc9917ffe4c5a01d46ac34cd3c2ffe"
           },
           "checks": {
             "branchCreated": true,
@@ -195,24 +196,24 @@
           "raw": {
             "command": {
               "argv": [
-                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "worktree",
                 "add",
                 "-b",
                 "native-proof",
-                "/tmp/pstack-native-capabilities-sz5XVR/worktree",
+                "/tmp/pstack-native-capabilities-kIpPIC/worktree",
                 "HEAD"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at c04d65b fixture\n",
-              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-sz5XVR/repository/tracked.txt -> /tmp/pstack-native-capabilities-sz5XVR/worktree/tracked.txt: Operation not supported (os error 95)\n",
-              "durationMs": 754.8338330000001
+              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at 70db4ed fixture\n",
+              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-kIpPIC/repository/tracked.txt -> /tmp/pstack-native-capabilities-kIpPIC/worktree/tracked.txt: Operation not supported (os error 95)\n",
+              "durationMs": 792.995183
             },
-            "sourceSha256": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27",
+            "sourceSha256": "e8949fdce26e2e92c5edb188a71c30bfa094268ed442c07352c60e86e85a79b2",
             "settings": {
               "worktree": {
                 "clone": true
@@ -593,15 +594,15 @@
           "name": "persisted transcript fork",
           "evidence": "native-sdk-runtime",
           "raw": {
-            "oldFile": "/tmp/pstack-native-capabilities-sz5XVR/transfer-source/2026-10-12T19-40-52-110Z_01a131a1-d60e-7000-bb3f-e445e2dd016a.jsonl",
-            "newFile": "/tmp/pstack-native-capabilities-sz5XVR/transfer-source/2026-10-12T19-40-52-114Z_01a131a1-d612-7000-8ca6-1617f449f663.jsonl",
-            "oldId": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
-            "newId": "01a131a1-d612-7000-8ca6-1617f449f663",
-            "oldCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
-            "newCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
-            "parentSession": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
-            "sourceSha256Before": "6cbd7507014396b4aacab85e46b1ee93a211fa9f6d77d5b028a535340edbeb25",
-            "sourceSha256After": "6cbd7507014396b4aacab85e46b1ee93a211fa9f6d77d5b028a535340edbeb25"
+            "oldFile": "/tmp/pstack-native-capabilities-kIpPIC/transfer-source/2026-10-13T03-59-54-261Z_01a1336a-b795-7000-8541-d6cb16cc8217.jsonl",
+            "newFile": "/tmp/pstack-native-capabilities-kIpPIC/transfer-source/2026-10-13T03-59-54-267Z_01a1336a-b79b-7000-87fc-cdd142daa2e9.jsonl",
+            "oldId": "01a1336a-b795-7000-8541-d6cb16cc8217",
+            "newId": "01a1336a-b79b-7000-87fc-cdd142daa2e9",
+            "oldCwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
+            "newCwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
+            "parentSession": "01a1336a-b795-7000-8541-d6cb16cc8217",
+            "sourceSha256Before": "686e57709c29b9ac42a125eb4a3dd6c23eebd9d7a2275bd5bcaf9292eae52936",
+            "sourceSha256After": "686e57709c29b9ac42a125eb4a3dd6c23eebd9d7a2275bd5bcaf9292eae52936"
           },
           "checks": {
             "newIdentity": true,
@@ -653,20 +654,20 @@
                 "timeoutSeconds": 20
               }
             },
-            "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
+            "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-finished\", \"unexpected completion\");'",
             "jobId": "bg_1",
-            "pid": 3094109,
-            "readyMs": 28.834187000000384,
-            "cancelToSettlementMs": 28.332086000000345,
+            "pid": 3644226,
+            "readyMs": 26.57928500000162,
+            "cancelToSettlementMs": 27.77044500000011,
             "snapshot": {
               "running": [
                 {
                   "id": "bg_1",
                   "type": "bash",
                   "status": "running",
-                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid...",
-                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
-                  "startTime": 1791834055487
+                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-ready\", String(process.pid...",
+                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-finished\", \"unexpected completion\");'",
+                  "startTime": 1791863997587
                 }
               ],
               "recent": [],
@@ -677,10 +678,10 @@
               }
             },
             "inspection": {
-              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-finished\", \"unexpected completion\");'",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
               "pids": [
-                3094109
+                3644226
               ],
               "output": "NATIVE_JOB_READY\n"
             },
@@ -694,10 +695,10 @@
                   "id": "bg_1",
                   "type": "bash",
                   "status": "cancelled",
-                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid...",
-                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
-                  "startTime": 1791834055487,
-                  "endTime": 1791834055517
+                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-ready\", String(process.pid...",
+                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-finished\", \"unexpected completion\");'",
+                  "startTime": 1791863997587,
+                  "endTime": 1791863997615
                 }
               ],
               "delivery": {
@@ -710,14 +711,14 @@
               "id": "bg_1",
               "type": "bash",
               "status": "cancelled",
-              "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid...",
-              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
-              "startTime": 1791834055487,
-              "endTime": 1791834055517
+              "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-ready\", String(process.pid...",
+              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-finished\", \"unexpected completion\");'",
+              "startTime": 1791863997587,
+              "endTime": 1791863997615
             },
             "finalInspection": {
-              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-sz5XVR/job-finished\", \"unexpected completion\");'",
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-kIpPIC/job-finished\", \"unexpected completion\");'",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
               "pids": [],
               "output": "[Command cancelled]\nNATIVE_JOB_READY\n"
             },
@@ -769,20 +770,20 @@
           "raw": {
             "command": {
               "argv": [
-                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "anonymize",
-                "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl",
+                "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19.jsonl",
                 "--out",
-                "/tmp/pstack-native-capabilities-sz5XVR/anonymized"
+                "/tmp/pstack-native-capabilities-kIpPIC/anonymized"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "Anonymized 2 transcripts → /tmp/pstack-native-capabilities-sz5XVR/anonymized\nSkipped 1 malformed record in subagents/seg6.jsonl\nNot exported (no readable session header): subagents/seg5.jsonl\nTurn contents and error text are redacted and paths/literals replaced; metadata such as model names is kept — review before sharing.\n",
+              "stdout": "Anonymized 2 transcripts → /tmp/pstack-native-capabilities-kIpPIC/anonymized\nSkipped 1 malformed record in subagents/seg6.jsonl\nNot exported (no readable session header): subagents/seg5.jsonl\nTurn contents and error text are redacted and paths/literals replaced; metadata such as model names is kept — review before sharing.\n",
               "stderr": "",
-              "durationMs": 717.8983210000001
+              "durationMs": 709.5709689999999
             },
             "syntheticFixture": true,
             "exportedMembers": [
@@ -805,125 +806,125 @@
             ],
             "sourceMetadata": [
               {
-                "id": "01a131a1-cb43-7000-be6e-eb170cc6982d",
+                "id": "01a1336a-ac8d-7000-b0a5-b1f11fdffa19",
                 "type": "session"
               },
               {
-                "id": "e4d4da45",
+                "id": "2996b0ad",
                 "type": "message",
                 "role": "user"
               },
               {
-                "id": "fb88e214",
+                "id": "33922a88",
                 "type": "custom"
               }
             ],
             "exportMetadata": [
               {
-                "id": "01a131a1-cb43-7000-be6e-eb170cc6982d",
+                "id": "01a1336a-ac8d-7000-b0a5-b1f11fdffa19",
                 "type": "session"
               },
               {
-                "id": "e4d4da45",
+                "id": "2996b0ad",
                 "type": "message",
                 "role": "user"
               },
               {
-                "id": "fb88e214",
+                "id": "33922a88",
                 "type": "custom"
               }
             ],
             "sourceChildMetadata": [
               {
-                "id": "01a131a1-cb47-7000-a997-cf2edb48326c",
+                "id": "01a1336a-ac92-7000-bfb7-1501cb3731fe",
                 "type": "session"
               },
               {
-                "id": "61605160",
+                "id": "59c5a943",
                 "type": "message",
                 "role": "user"
               },
               {
-                "id": "9c9091f0",
+                "id": "77bd35da",
                 "type": "custom"
               }
             ],
             "exportChildMetadata": [
               {
-                "id": "01a131a1-cb47-7000-a997-cf2edb48326c",
+                "id": "01a1336a-ac92-7000-bfb7-1501cb3731fe",
                 "type": "session"
               },
               {
-                "id": "61605160",
+                "id": "59c5a943",
                 "type": "message",
                 "role": "user"
               },
               {
-                "id": "9c9091f0",
+                "id": "77bd35da",
                 "type": "custom"
               }
             ],
             "sourceHashesBefore": {
-              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl": "db1ddf06f38a24a015e1561b01f849dabfccdeb215886e325987a85ae462f1ab",
-              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d/2026-10-12T19-40-49-351Z_01a131a1-cb47-7000-a997-cf2edb48326c.jsonl": "7ad80e1030a35748748666909f4eb7db7f9d0978f104caa7c23839105c757d7d",
-              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
+              "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19.jsonl": "f5dcf899d0093c1221b2e5d17a8f977b8c9cb331181ef8e6e62e94d82ba65cb3",
+              "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19/2026-10-13T03-59-51-442Z_01a1336a-ac92-7000-bfb7-1501cb3731fe.jsonl": "b7a43420fcf7b51f748685766b8488b500922c43065ee66f453424150d75c1bf",
+              "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
             },
             "sourceHashesAfter": {
-              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl": "db1ddf06f38a24a015e1561b01f849dabfccdeb215886e325987a85ae462f1ab",
-              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d/2026-10-12T19-40-49-351Z_01a131a1-cb47-7000-a997-cf2edb48326c.jsonl": "7ad80e1030a35748748666909f4eb7db7f9d0978f104caa7c23839105c757d7d",
-              "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
+              "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19.jsonl": "f5dcf899d0093c1221b2e5d17a8f977b8c9cb331181ef8e6e62e94d82ba65cb3",
+              "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19/2026-10-13T03-59-51-442Z_01a1336a-ac92-7000-bfb7-1501cb3731fe.jsonl": "b7a43420fcf7b51f748685766b8488b500922c43065ee66f453424150d75c1bf",
+              "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
             },
             "refusals": [
               {
                 "argv": [
-                  "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                  "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                   "anonymize",
-                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl",
+                  "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19.jsonl",
                   "--out",
-                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source"
+                  "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source"
                 ],
-                "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+                "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
                 "code": 2,
                 "signal": null,
                 "timedOut": false,
                 "overflow": false,
                 "stdout": "",
-                "stderr": "Error: --out /tmp/pstack-native-capabilities-sz5XVR/anonymous-source would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
-                "durationMs": 684.6839550000004
+                "stderr": "Error: --out /tmp/pstack-native-capabilities-kIpPIC/anonymous-source would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
+                "durationMs": 697.8470429999998
               },
               {
                 "argv": [
-                  "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                  "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                   "anonymize",
-                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl",
+                  "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19.jsonl",
                   "--out",
-                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d"
+                  "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19"
                 ],
-                "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+                "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
                 "code": 2,
                 "signal": null,
                 "timedOut": false,
                 "overflow": false,
                 "stdout": "",
-                "stderr": "Error: --out /tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
-                "durationMs": 662.5987910000003
+                "stderr": "Error: --out /tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19 would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
+                "durationMs": 708.9767179999994
               },
               {
                 "argv": [
-                  "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                  "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                   "anonymize",
-                  "/tmp/pstack-native-capabilities-sz5XVR/anonymous-source/2026-10-12T19-40-49-347Z_01a131a1-cb43-7000-be6e-eb170cc6982d.jsonl",
+                  "/tmp/pstack-native-capabilities-kIpPIC/anonymous-source/2026-10-13T03-59-51-437Z_01a1336a-ac8d-7000-b0a5-b1f11fdffa19.jsonl",
                   "--out",
-                  "/tmp/pstack-native-capabilities-sz5XVR/nonempty-export"
+                  "/tmp/pstack-native-capabilities-kIpPIC/nonempty-export"
                 ],
-                "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+                "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
                 "code": 2,
                 "signal": null,
                 "timedOut": false,
                 "overflow": false,
                 "stdout": "",
-                "stderr": "Error: --out /tmp/pstack-native-capabilities-sz5XVR/nonempty-export is not empty; choose a new or empty directory\nRun `omp --help` for available flags.\n",
-                "durationMs": 684.2832200000003
+                "stderr": "Error: --out /tmp/pstack-native-capabilities-kIpPIC/nonempty-export is not empty; choose a new or empty directory\nRun `omp --help` for available flags.\n",
+                "durationMs": 691.3825000000006
               }
             ]
           },
@@ -961,80 +962,80 @@
           "raw": {
             "pack": {
               "argv": [
-                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "session",
                 "pack",
-                "/tmp/pstack-native-capabilities-sz5XVR/transfer-source/2026-10-12T19-40-52-110Z_01a131a1-d60e-7000-bb3f-e445e2dd016a.jsonl",
-                "/tmp/pstack-native-capabilities-sz5XVR/transfer.tar"
+                "/tmp/pstack-native-capabilities-kIpPIC/transfer-source/2026-10-13T03-59-54-261Z_01a1336a-b795-7000-8541-d6cb16cc8217.jsonl",
+                "/tmp/pstack-native-capabilities-kIpPIC/transfer.tar"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "/tmp/pstack-native-capabilities-sz5XVR/transfer.tar\n",
+              "stdout": "/tmp/pstack-native-capabilities-kIpPIC/transfer.tar\n",
               "stderr": "",
-              "durationMs": 681.0294819999999
+              "durationMs": 696.6188189999993
             },
             "unpack": {
               "argv": [
-                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "session",
                 "unpack",
-                "/tmp/pstack-native-capabilities-sz5XVR/transfer.tar",
+                "/tmp/pstack-native-capabilities-kIpPIC/transfer.tar",
                 "--cwd",
-                "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout"
+                "/tmp/pstack-native-capabilities-kIpPIC/receiver-checkout"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/receiver-checkout",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "/tmp/pstack-native-capabilities-sz5XVR/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-sz5XVR-receiver-checkout--/2026-10-12T19-40-52-110Z_01a131a1-d60e-7000-bb3f-e445e2dd016a.jsonl\n",
-              "stderr": "Unpacked session (01a131a1-d60e-7000-bb3f-e445e2dd016a).\n",
-              "durationMs": 721.4140529999995
+              "stdout": "/tmp/pstack-native-capabilities-kIpPIC/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-kIpPIC-receiver-checkout--/2026-10-13T03-59-54-261Z_01a1336a-b795-7000-8541-d6cb16cc8217.jsonl\n",
+              "stderr": "Unpacked session (01a1336a-b795-7000-8541-d6cb16cc8217).\n",
+              "durationMs": 718.7319800000005
             },
             "divergentUnpack": {
               "argv": [
-                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "session",
                 "unpack",
-                "/tmp/pstack-native-capabilities-sz5XVR/transfer.tar",
+                "/tmp/pstack-native-capabilities-kIpPIC/transfer.tar",
                 "--cwd",
-                "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout"
+                "/tmp/pstack-native-capabilities-kIpPIC/receiver-checkout"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/receiver-checkout",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "/tmp/pstack-native-capabilities-sz5XVR/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-sz5XVR-receiver-checkout--/2026-10-12T19-40-54-198Z_01a131a1-de36-7000-aefc-1d98bc4b68d9.jsonl\n",
-              "stderr": "The local copy of this session diverged; unpacked as a fork (01a131a1-de36-7000-aefc-1d98bc4b68d9).\n",
-              "durationMs": 689.6515300000001
+              "stdout": "/tmp/pstack-native-capabilities-kIpPIC/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-kIpPIC-receiver-checkout--/2026-10-13T03-59-56-370Z_01a1336a-bfd2-7000-b6e8-85aa9eb669ac.jsonl\n",
+              "stderr": "The local copy of this session diverged; unpacked as a fork (01a1336a-bfd2-7000-b6e8-85aa9eb669ac).\n",
+              "durationMs": 704.8423809999995
             },
             "moved": {
               "argv": [
-                "/tmp/omp-pstack-upstream-native-20261012/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "session",
                 "moved",
-                "/tmp/pstack-native-capabilities-sz5XVR/moved-copy.jsonl",
+                "/tmp/pstack-native-capabilities-kIpPIC/moved-copy.jsonl",
                 "--to",
                 "fixture-recipient"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
               "stdout": "",
               "stderr": "",
-              "durationMs": 705.8286189999999
+              "durationMs": 687.7693520000003
             },
             "syntheticFixture": true,
             "manifest": {
               "version": 1,
-              "id": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "id": "01a1336a-b795-7000-8541-d6cb16cc8217",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
               "omp": "18.10.2"
             },
             "archiveMembers": [
@@ -1042,43 +1043,43 @@
               "manifest.json",
               "session.jsonl"
             ],
-            "archiveSha256": "05c5c83212ac9f27eff2919f354926ffeb1dfdc049df15b61ff32961098a5c80",
+            "archiveSha256": "0eba5dd1b83bcd586cf6cb7fffa1690250791d87108bb1091c4303460d3f087e",
             "before": {
-              "transcript": "6cbd7507014396b4aacab85e46b1ee93a211fa9f6d77d5b028a535340edbeb25",
-              "artifact": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27"
+              "transcript": "686e57709c29b9ac42a125eb4a3dd6c23eebd9d7a2275bd5bcaf9292eae52936",
+              "artifact": "e8949fdce26e2e92c5edb188a71c30bfa094268ed442c07352c60e86e85a79b2"
             },
             "after": {
-              "transcript": "6cbd7507014396b4aacab85e46b1ee93a211fa9f6d77d5b028a535340edbeb25",
-              "artifact": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27"
+              "transcript": "686e57709c29b9ac42a125eb4a3dd6c23eebd9d7a2275bd5bcaf9292eae52936",
+              "artifact": "e8949fdce26e2e92c5edb188a71c30bfa094268ed442c07352c60e86e85a79b2"
             },
-            "sourceId": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
-            "sourceCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
-            "receivedId": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
-            "receivedCwd": "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout",
-            "receivedArtifactSha256": "d4176977b1b4594f9389464fda7787d36be734c27ab0cf589c5ac3bd524acc27",
+            "sourceId": "01a1336a-b795-7000-8541-d6cb16cc8217",
+            "sourceCwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
+            "receivedId": "01a1336a-b795-7000-8541-d6cb16cc8217",
+            "receivedCwd": "/tmp/pstack-native-capabilities-kIpPIC/receiver-checkout",
+            "receivedArtifactSha256": "e8949fdce26e2e92c5edb188a71c30bfa094268ed442c07352c60e86e85a79b2",
             "arrived": {
               "kind": "arrived",
-              "fromCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/receiver-checkout"
+              "fromCwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/receiver-checkout"
             },
-            "divergentId": "01a131a1-de36-7000-aefc-1d98bc4b68d9",
-            "divergentParent": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
-            "divergentOriginalSha256Before": "778449f1fce6ffda342d25238f83e6ec9ca11cc38c045b4651cc05cc232a257d",
-            "divergentOriginalSha256After": "778449f1fce6ffda342d25238f83e6ec9ca11cc38c045b4651cc05cc232a257d",
+            "divergentId": "01a1336a-bfd2-7000-b6e8-85aa9eb669ac",
+            "divergentParent": "01a1336a-b795-7000-8541-d6cb16cc8217",
+            "divergentOriginalSha256Before": "ed006dc058781e81b5c2a88e9e6a51c4ab4319801352c9aa6f5abb9073d7f02a",
+            "divergentOriginalSha256After": "ed006dc058781e81b5c2a88e9e6a51c4ab4319801352c9aa6f5abb9073d7f02a",
             "departed": {
               "kind": "departed",
               "to": "fixture-recipient"
             },
             "originalEntryIds": [
-              "7af74bcd",
-              "7cc63e13"
+              "6f43ea91",
+              "e858008b"
             ],
             "receivedOriginalEntryIds": [
-              "7af74bcd",
-              "7cc63e13"
+              "6f43ea91",
+              "e858008b"
             ],
-            "movedId": "01a131a1-d60e-7000-bb3f-e445e2dd016a",
-            "movedCwd": "/tmp/pstack-native-capabilities-sz5XVR/repository"
+            "movedId": "01a1336a-b795-7000-8541-d6cb16cc8217",
+            "movedCwd": "/tmp/pstack-native-capabilities-kIpPIC/repository"
           },
           "checks": {
             "packedIdCwdAndHost": true,
@@ -1203,7 +1204,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 52.373539999998684
+                    "wallTimeMs": 47.60267500000009
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1218,12 +1219,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "HEAD is now at c04d65b fixture\n\n\nWall time: 0.01 seconds"
+                      "text": "HEAD is now at 70db4ed fixture\n\n\nWall time: 0.00 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 7.117238000000725
+                    "wallTimeMs": 3.8211649999993824
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1243,7 +1244,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 3.7160170000006474
+                    "wallTimeMs": 2.482418999999936
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1258,12 +1259,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "HEAD is now at c04d65b fixture\n\n\nWall time: 0.00 seconds"
+                      "text": "HEAD is now at 70db4ed fixture\n\n\nWall time: 0.00 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 3.650314000000435
+                    "wallTimeMs": 2.676392000001215
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1278,12 +1279,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "(no output)\n\nWall time: 0.01 seconds"
+                      "text": "(no output)\n\nWall time: 0.00 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 6.1212089999989985
+                    "wallTimeMs": 3.942291999999725
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1298,12 +1299,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "HEAD is now at c04d65b fixture\n\n\nWall time: 0.02 seconds"
+                      "text": "HEAD is now at 70db4ed fixture\n\n\nWall time: 0.02 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 21.89213600000039
+                    "wallTimeMs": 20.224544000000606
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1323,7 +1324,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 3.719993999999133,
+                    "wallTimeMs": 2.542811999999685,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1345,7 +1346,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 0.9591589999999997,
+                    "wallTimeMs": 0.913710999999239,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1367,7 +1368,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 1.6264379999993253,
+                    "wallTimeMs": 1.6596790000003239,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1389,7 +1390,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 0.49870499999997264,
+                    "wallTimeMs": 2.3918890000004467,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1411,7 +1412,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 0.5239020000008168,
+                    "wallTimeMs": 1.0545849999998609,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1433,7 +1434,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 0.6619290000016917,
+                    "wallTimeMs": 0.6485240000001795,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1453,7 +1454,7 @@
               ],
               "details": {
                 "timeoutSeconds": 5,
-                "wallTimeMs": 3.6969610000014654
+                "wallTimeMs": 2.9392549999993207
               }
             },
             "cached": {
@@ -1463,14 +1464,14 @@
                 "--cached",
                 "--name-only"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-sz5XVR/repository",
+              "cwd": "/tmp/pstack-native-capabilities-kIpPIC/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
               "stdout": "",
               "stderr": "",
-              "durationMs": 2.3692769999997836
+              "durationMs": 1.8130459999993036
             },
             "beforeUnstage": "fff2ec3d159fa985cabaf62319c6576e2950301e7865386094063b079c3ab6cb",
             "afterUnstage": "fff2ec3d159fa985cabaf62319c6576e2950301e7865386094063b079c3ab6cb"
