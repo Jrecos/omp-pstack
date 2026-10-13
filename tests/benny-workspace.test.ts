@@ -27,7 +27,7 @@ import {
 import type { BennyWorkspace, DecodedFrame } from "../src/benny-workspace.ts";
 import { openBennyStore } from "../src/benny.ts";
 import { openRunStore, profileWorkspaceDir } from "../src/runner.ts";
-import { createProofRepo, ensureImage, proofConfig, runProof, PROOF_IMAGE } from "../scripts/fixtures/benny-workspace/proof.ts";
+import { createProofRepo, ensureImage, proofConfig, proofMountViolations, runProof, PROOF_IMAGE } from "../scripts/fixtures/benny-workspace/proof.ts";
 import { controlChecks } from "../src/benny-setup.ts";
 
 const previousProfile = process.env.PI_CODING_AGENT_DIR;
@@ -94,6 +94,39 @@ dockerTest("preflight uses the sandbox reader rather than the image default user
 		await Bun.$`docker image rm ${tag}`.quiet().nothrow();
 		await rm(build, { recursive: true, force: true });
 		await rm(cwd, { recursive: true, force: true });
+	}
+}, { timeout: 120_000 });
+
+dockerTest("mount proof accepts an owned home-path snapshot and root-named tmpfs source but rejects an extra home bind at another destination", async () => {
+	const root = await mkdtemp(join(tmpdir(), "benny-mount-origin-"));
+	const snapshot = join(root, "home", "runner", "snapshot");
+	await mkdir(snapshot, { recursive: true, mode: 0o700 });
+	await writeFile(join(snapshot, "marker.txt"), "owned snapshot\n");
+	const volume = `benny-mount-origin-${crypto.randomUUID()}`;
+	const containers: string[] = [];
+	try {
+		await Bun.$`docker volume create --driver local --opt type=tmpfs --opt device=/dev/root --opt ${`o=rw,noexec,nosuid,nodev,size=1048576,nr_inodes=64,uid=${process.getuid!()},gid=${process.getgid!()}`} ${volume}`.quiet();
+		for (const extraHome of [false, true]) {
+			const name = `benny-mount-origin-${crypto.randomUUID()}`;
+			containers.push(name);
+			const binds = [`${snapshot}:/workspace:ro`, `${volume}:/artifacts:rw`];
+			if (extraHome) binds.push(`${join(root, "home", "runner")}:/unexpected-home:ro`);
+			const created = await run(["docker", "run", "-d", "--name", name, "--network", "none", "--user", `${process.getuid!()}:${process.getgid!()}`, "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--read-only", "--memory", "128m", "--memory-swap", "128m", "--pids-limit", "32", "--cpus", "1", ...binds.flatMap(bind => ["-v", bind]), image, "sleep", "infinity"]);
+			expect({ code: created.code, stderr: created.stderr }).toEqual({ code: 0, stderr: "" });
+			const rows = (await Bun.$`docker exec ${name} cat /proc/mounts`.quiet()).stdout.toString();
+			const inspected = (await Bun.$`docker inspect --format ${"{{json .Mounts}}\n{{json .HostConfig.Binds}}"} ${name}`.quiet()).stdout.toString();
+			const [mounts, actualBinds] = inspected.trim().split("\n").map(line => JSON.parse(line));
+			const violations = proofMountViolations(rows, mounts, actualBinds, { snapshot, stagingVolume: volume });
+			expect(rows).toMatch(/^\/dev\/root \/artifacts tmpfs /m);
+			if (extraHome) {
+				expect(violations.some(error => error.includes("unexpected Docker mount") && error.includes("/unexpected-home"))).toBe(true);
+				expect(violations.some(error => error.includes("unexpected Docker bind declarations"))).toBe(true);
+			} else expect(violations).toEqual([]);
+		}
+	} finally {
+		for (const name of containers) await Bun.$`docker rm -f ${name}`.quiet().nothrow();
+		await Bun.$`docker volume rm ${volume}`.quiet().nothrow();
+		await rm(root, { recursive: true, force: true });
 	}
 }, { timeout: 120_000 });
 

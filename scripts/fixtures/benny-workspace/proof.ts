@@ -20,7 +20,7 @@
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { createBennyWorkspace, CONTROL_CAPABILITIES, WorkspaceBlockError } from "../../../src/benny-workspace.ts";
+import { createBennyWorkspace, CONTROL_CAPABILITIES, WorkspaceBlockError, workspaceIdentity } from "../../../src/benny-workspace.ts";
 import type { BennyConfig } from "../../../src/benny-policy.ts";
 
 export const PROOF_IMAGE = process.env.BENNY_WORKSPACE_IMAGE ?? "omp-pstack/benny-workspace:0";
@@ -101,6 +101,36 @@ interface AdversarialEntry {
 	probe: string;
 	blocked: boolean;
 	detail?: string;
+}
+
+export function proofMountViolations(procMounts: string, mounts: unknown, binds: unknown, expected: { snapshot: string; stagingVolume: string }): string[] {
+	const violations: string[] = [];
+	for (const row of procMounts.trim().split("\n")) {
+		const fields = row.split(/\s+/);
+		if (fields.length < 6) { violations.push(`malformed mount row ${row}`); continue; }
+		const destination = fields[1]!.replace(/\\([0-7]{3})/g, (_, octal: string) => String.fromCharCode(Number.parseInt(octal, 8)));
+		if (destination === "/root" || destination.startsWith("/root/") || destination === "/home" || destination.startsWith("/home/") || destination.endsWith("/docker.sock")) {
+			violations.push(`forbidden mount destination ${destination}: ${row}`);
+		}
+	}
+	if (!Array.isArray(mounts)) violations.push("Docker mounts are not a list");
+	else {
+		if (mounts.length !== 2) violations.push(`expected two Docker mounts, observed ${mounts.length}`);
+		for (const mount of mounts) {
+			if (typeof mount !== "object" || mount === null || Array.isArray(mount)) { violations.push("malformed Docker mount"); continue; }
+			if (mount.Destination === "/workspace") {
+				if (mount.Type !== "bind" || mount.Source !== expected.snapshot || mount.RW !== false) violations.push(`workspace mount is not the exact read-only snapshot: ${JSON.stringify(mount)}`);
+			} else if (mount.Destination === "/artifacts") {
+				if (mount.Type !== "volume" || mount.Name !== expected.stagingVolume || mount.RW !== true) violations.push(`artifact mount is not the exact staging volume: ${JSON.stringify(mount)}`);
+			} else violations.push(`unexpected Docker mount: ${JSON.stringify(mount)}`);
+		}
+		if (mounts.filter(mount => mount?.Destination === "/workspace").length !== 1 || mounts.filter(mount => mount?.Destination === "/artifacts").length !== 1) violations.push("expected mount destinations are missing or duplicated");
+	}
+	const requiredBinds = [`${expected.snapshot}:/workspace:ro`, `${expected.stagingVolume}:/artifacts:rw`].sort();
+	if (!Array.isArray(binds) || binds.some(bind => typeof bind !== "string") || JSON.stringify([...binds].sort()) !== JSON.stringify(requiredBinds)) {
+		violations.push(`unexpected Docker bind declarations: ${JSON.stringify(binds)}`);
+	}
+	return violations;
 }
 
 function isExecResult(value: unknown): value is { exitCode: number; stdout: string; stderr: string } {
@@ -191,7 +221,8 @@ export async function runProof(options: { image?: string; runId?: string; deadli
 	}
 
 
-	const workspace = await createBennyWorkspace({ config, cwd, runId, revision, artifactDir, deadline });
+	const identity = workspaceIdentity(runId, crypto.randomUUID().replaceAll("-", "").slice(0, 16));
+	const workspace = await createBennyWorkspace({ config, cwd, runId, revision, artifactDir, deadline, incarnation: identity.incarnation });
 	let proof: ProofResult | undefined;
 	let proofFailed: unknown = null;
 	try {
@@ -301,10 +332,14 @@ export async function runProof(options: { image?: string; runId?: string; deadli
 			}
 		});
 		await expectDenied("no host home/socket mounts", async () => {
-			const mounts = await execWorker(["sh", "-c", "cat /proc/mounts"]);
-			if (/docker\.sock|\/root\s|\/home\/[a-z_]+\s/.test(mounts.stdout)) {
-				throw new ProbeViolated("host home/root/docker-socket mount visible in worker");
-			}
+			const rows = await execWorker(["sh", "-c", "cat /proc/mounts"]);
+			if (rows.exitCode !== 0) throw new Error(`cannot inspect worker mount namespace: ${JSON.stringify(rows)}`);
+			const inspected = await Bun.$`docker inspect --format ${"{{json .Mounts}}\n{{json .HostConfig.Binds}}"} ${identity.worker}`.quiet().nothrow();
+			if (inspected.exitCode !== 0) throw new Error(`cannot inspect worker Docker mounts: ${inspected.stderr.toString()}`);
+			const [mounts, binds] = inspected.stdout.toString().trim().split("\n").map(line => JSON.parse(line));
+			const violations = proofMountViolations(rows.stdout, mounts, binds, { snapshot: workspace.workspacePath, stagingVolume: identity.stageVolume });
+			if (violations.length > 0) throw new ProbeViolated(`${violations.join("; ")}; observations=${JSON.stringify({ procMounts: rows.stdout, mounts, binds })}`);
+			return JSON.stringify({ procMounts: rows.stdout, mounts, binds });
 		});
 		await expectDenied("controller CDP unreachable from worker", async () => {
 			const result = await execWorker([

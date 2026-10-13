@@ -356,6 +356,8 @@ Benny rejects UID 0, GID 0, or missing POSIX identity before sandbox resource cr
 
 The real workspace proof reports failed adversarial probes by name. Its background-writer receipt records actual bytes written, the child's quota exit, and unchanged host-directory bytes. A successful aggregate alone is not evidence that a writer ran.
 
+The mount probe checks namespace destinations and Docker's mount and bind records. It permits only the exact read-only snapshot and owned staging volume. Filesystem source names do not prove that a host home or root directory is mounted.
+
 [`.github/workflows/pr-title.yml`](./.github/workflows/pr-title.yml) validates Conventional Commit pull request titles with a SHA-pinned action. It reads pull request metadata without checking out contribution code. These workflows do not configure branch protection. Make `checks` and `title` required checks in repository rules to enforce them before merge. [Dependabot](./.github/dependabot.yml) proposes weekly updates to GitHub Actions pins only, not npm dependencies or the OMP SDK pin.
 
 Dependabot uses `ci(deps):` titles so action-update pull requests pass the same title check. Merging an action update intentionally produces a patch release under the per-pull-request policy.
