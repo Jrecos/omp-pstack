@@ -350,6 +350,8 @@ with `PSTACK_ROOT` resolved once per host as in [running the `pstack` CLI after 
 
 [`.github/workflows/pr-title.yml`](./.github/workflows/pr-title.yml) validates Conventional Commit pull request titles with a SHA-pinned action. It reads pull request metadata without checking out contribution code. These workflows do not configure branch protection. Make `checks` and `title` required checks in repository rules to enforce them before merge. [Dependabot](./.github/dependabot.yml) proposes weekly updates to GitHub Actions pins only, not npm dependencies or the OMP SDK pin.
 
+Dependabot uses `ci(deps):` titles so action-update pull requests pass the same title check. Merging an action update intentionally produces a patch release under the per-pull-request policy.
+
 After release checks pass, each pull request merged into `main` gets a GitHub release. [`.github/workflows/release.yml`](./.github/workflows/release.yml) handles merged pull requests, including fork contributions, and queues release runs. It runs type checking, release regression tests, and content integrity checks on trusted `main`, then passes the verified commit to [`scripts/release.ts`](./scripts/release.ts). If `main` changes before publication, the run fails rather than releasing unchecked code. The first release is `1.0.0`. Later releases use the pull request title and breaking-change footer in its body, independent of the squash commit message:
 
 | pull request | bump |
