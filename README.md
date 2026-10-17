@@ -2,19 +2,11 @@
   <img src="./assets/omp-pstack-hero.webp" alt="Illustrated Jrecos leading four OMP robot agents in a watercolor engineering workshop beside the omp-pstack title." width="100%">
 </p>
 
-# omp-pstack
+# omp-pstack brings P Stack to Oh My Pi (OMP)
 
-`omp-pstack` is our OMP-native adaptation of [P Stack](https://github.com/cursor/plugins/tree/main/pstack). This repository is the independently maintained OMP plugin: its packaging, host integrations, CLI/runtime, automations, and documentation are built for OMP rather than Cursor.
+`omp-pstack` is an independent adaptation of [Poteto's P Stack](https://github.com/cursor/plugins/tree/main/pstack) for [Oh My Pi (OMP)](https://github.com/can1357/oh-my-pi). It provides multi-model coding workflows, engineering playbooks, verification guidance, and automation tools for OMP's native agents.
 
 The original P Stack was created by [Lauren Tan (poteto)](https://x.com/poteto). Its engineering approach and much of its skill content originated in the upstream project. This adaptation preserves that credit and the original MIT license while owning the OMP-specific implementation and direction here.
-
-P Stack is an answer to AI-generated slop: go deep before going fast, write less code, and demand evidence that the result works.
-
-**pstack gives you fearless parallelism.** when you can go deep on one agent and trust it to write good, verifiable code, you can truly parallelize with confidence. start multiple agents with `poteto-mode` and trust that they'll apply rigorous engineering principles to their work.
-
-**omp-pstack gives you the best of OMP.** use P Stack with any model available through OMP, including its multi-model workflows, native agents, tools, and plugin runtime.
-
-fork it. improve it. make it yours. PRs are welcome!
 
 ## install in OMP
 
