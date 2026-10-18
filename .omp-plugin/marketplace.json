@@ -1,5 +1,5 @@
 {
   "name": "omp-pstack",
   "owner": { "name": "omp-pstack maintainers" },
-  "plugins": [{ "name": "omp-pstack", "source": "./", "description": "OMP-native Potato's P Stack" }]
+  "plugins": [{ "name": "omp-pstack", "source": "./", "description": "Multi-model coding workflows, engineering playbooks, verification, and automation for Oh My Pi (OMP), adapted from Poteto's P Stack." }]
 }
