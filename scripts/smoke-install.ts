@@ -63,7 +63,7 @@ try {
     const {agents} = await task.discoverAgents(process.cwd());
     console.log(JSON.stringify({skills, agents}));
   `]));
-  for (const name of ["principle-attack-the-premise", "principle-test-behavior-not-implementation"]) {
+  for (const name of ["principle-attack-the-premise", "principle-test-behavior-not-implementation", "in-your-own-words", "sharpen", "create-formal-verification-skill", "maintain-formal-verification-skill"]) {
     const skill = discovered.skills.find((entry: { name: string }) => entry.name === name);
     assert(skill?.filePath.startsWith(temporary), `${name} missing from project installation`);
   }

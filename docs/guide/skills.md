@@ -1,10 +1,10 @@
 # Skills reference
 
-The plugin ships 53 discoverable skills under `skills/`. The 29 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 53 through `/skill:<name>`.
+The plugin ships 57 discoverable skills under `skills/`. The 33 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 57 through `/skill:<name>`.
 
 A foreign command or an OMP built-in can own a bare name. In that case, use `/skill:<name>` for the plugin skill. Workflows that dispatch agents require configured model roles. `/setup-pstack` selects an approved model pool and saves the role map. An unset or unavailable role blocks dispatch rather than choosing another model.
 
-## Direct workflow skills (29)
+## Direct workflow skills (33)
 
 | Skill | Purpose and use case |
 |---|---|
@@ -19,7 +19,11 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 | [`figure-it-out`](../../skills/figure-it-out/SKILL.md) | Design an auditable playbook when no bundled playbook fits a task. |
 | [`how`](../../skills/how/SKILL.md) | Explain a subsystem's code path, ownership, and runtime behavior. |
 | [`interrogate`](../../skills/interrogate/SKILL.md) | Have independent models challenge a diff from different review angles. |
-| [`/ketchup`](../../skills/ketchup/SKILL.md) | Catch up on the current chat and distinguish user decisions from work the agent can finish. |
+| [`/in-your-own-words`](../../skills/in-your-own-words/SKILL.md) | Restate the user's goal and problem before starting. |
+| [`/sharpen`](../../skills/sharpen/SKILL.md) | Choose an expert approach and an independent check without adding unnecessary work. |
+| [`/create-formal-verification-skill`](../../skills/create-formal-verification-skill/SKILL.md) | Generate a project-local formal check of a high-risk property and prove it catches a real break. |
+| [`/maintain-formal-verification-skill`](../../skills/maintain-formal-verification-skill/SKILL.md) | Bring formal checks back in sync with changed code and distinguish verification drift from product bugs. |
+| [`/ketchup`](../../skills/ketchup/SKILL.md) | Explain current-chat changes with real visuals and list every waiting user decision without truncation. |
 | [`maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md) | Compare a verification skill and its feature map with current source and one live pass, then correct proven drift. |
 | [`make-bot-ui`](../../skills/make-bot-ui/SKILL.md) | Build a bot interface whose buttons wake an agent routine through a webhook, with sender-key and Tailscale access. |
 | [`no-comments`](../../skills/no-comments/SKILL.md) | Have Comment Sicko challenge comments before review and fix accepted findings. |

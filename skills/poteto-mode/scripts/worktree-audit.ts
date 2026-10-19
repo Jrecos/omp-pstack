@@ -192,44 +192,50 @@ export function parseGithubSlug(url: string): string | undefined {
 	return undefined;
 }
 
-/**
- * PR inventory for the canonical slug. Returns the record list, or null when
- * the inventory is UNKNOWN: gh failed, timed out, or returned a malformed or
- * non-array response. Unknown is never an empty list — an empty inventory is
- * only ever the result of a successful gh query, so a worktree can never be
- * classified safe/prunable on missing evidence.
- */
+/** Unknown inventory is never an empty successful query. */
 function fetchPrs(repo: string, gitE: Record<string, string>, ghE: Record<string, string>, scratch: string): PrRecord[] | null {
-	// Explicit validated repo identity: gh never resolves the audited repo's
-	// remotes (or follows their rewrites) itself, and it runs in the scratch
-	// dir, not the audited repo, so nothing hostile is in its working
-	// context. A remote whose URL is not a canonical github.com owner/repo
-	// yields no gh query at all: no GitHub identity means no PR inventory to
-	// consult, and the audit degrades exactly as before.
 	const url = remoteOriginUrl(repo, gitE);
 	const slug = url ? parseGithubSlug(url) : undefined;
 	if (!slug) return [];
-	const result = Bun.spawnSync(
-		["gh", "pr", "list", "--repo", slug, "--author", "@me", "--state", "all", "--limit", "1000", "--json", "number,state,headRefName"],
-		{ cwd: scratch, env: ghE, stdout: "pipe", stderr: "ignore", timeout: 60_000 },
-	);
-	if ((result.exitCode ?? 1) !== 0) return null; // failure or timeout: inventory unknown
-	let parsed: unknown;
-	try {
-		parsed = JSON.parse(result.stdout.toString());
-	} catch {
-		return null; // malformed JSON: inventory unknown
+	const originRepo = join(scratch, "origin-query");
+	mkdirSync(originRepo);
+	const originReady = git(["init", "-q"], originRepo, gitE).code === 0
+		&& git(["config", "remote.origin.url", `https://github.com/${slug}.git`], originRepo, gitE).code === 0;
+	const queries = [
+		{ command: "origin", fields: "number,status,headRef", stateField: "status", headField: "headRef", args: [], cwd: originRepo },
+		{ command: "gh", fields: "number,state,headRefName", stateField: "state", headField: "headRefName", args: ["--repo", slug], cwd: scratch },
+	];
+	for (const query of queries) {
+		if (query.command === "origin" && !originReady) continue;
+		if (!Bun.which(query.command, { PATH: ghE.PATH })) continue;
+		const result = Bun.spawnSync(
+			[query.command, "pr", "list", ...query.args, "--author", "@me", "--state", "all", "--limit", "1000", "--json", query.fields],
+			{ cwd: query.cwd, env: { ...gitE, ...ghE }, stdout: "pipe", stderr: "ignore", timeout: 60_000 },
+		);
+		if ((result.exitCode ?? 1) !== 0) continue;
+		let parsed: unknown;
+		try {
+			parsed = JSON.parse(result.stdout.toString());
+		} catch {
+			return null;
+		}
+		if (!Array.isArray(parsed)) return null;
+		const prs: PrRecord[] = [];
+		for (const entry of parsed) {
+			if (typeof entry !== "object" || entry === null) return null;
+			const row = entry as Record<string, unknown>;
+			const number = row.number;
+			const state = row[query.stateField];
+			const headRefName = row[query.headField];
+			if (typeof number !== "number" || !Number.isSafeInteger(number) || number < 1) return null;
+			if (typeof state !== "string" || typeof headRefName !== "string" || !headRefName) return null;
+			const normalized = state.toUpperCase();
+			if (!["OPEN", "DRAFT", "MERGED", "CLOSED"].includes(normalized)) return null;
+			prs.push({ number, state: normalized, headRefName });
+		}
+		return prs;
 	}
-	if (!Array.isArray(parsed)) return null; // non-array response: inventory unknown
-	const prs: PrRecord[] = [];
-	for (const entry of parsed) {
-		if (typeof entry !== "object" || entry === null) return null;
-		const { number, state, headRefName } = entry as Record<string, unknown>;
-		if (typeof number !== "number" || !Number.isFinite(number)) return null;
-		if (typeof state !== "string" || typeof headRefName !== "string") return null;
-		prs.push({ number, state, headRefName });
-	}
-	return prs;
+	return null;
 }
 
 type SelectedBase = { name: string; tip: string | undefined; remoteRef: string | undefined };
@@ -352,7 +358,7 @@ export function auditWorktrees(options: AuditOptions): AuditReport {
 		// "unknown" and no worktree can be classified safe/prunable on
 		// missing evidence.
 		const prs = fetchPrs(repo, gitE, ghE, scratch);
-		if (prs === null) warnings.push("warn: gh PR inventory unavailable; PR column is unknown and no worktree is marked safe");
+		if (prs === null) warnings.push("warn: forge PR inventory unavailable; PR column is unknown and no worktree is marked safe");
 		const url = remoteOriginUrl(repo, gitE);
 		const slug = url ? parseGithubSlug(url) : undefined;
 		const selected = selectBase(options.base, repo, slug, scratch, gitE);
@@ -421,7 +427,7 @@ export function auditWorktrees(options: AuditOptions): AuditReport {
 
 			let bucket: string;
 			if (dirty.startsWith("wip:")) bucket = "hold-wip";
-			else if (pr.includes("OPEN")) bucket = "hold-open-pr";
+			else if (/\/(OPEN|DRAFT)$/.test(pr)) bucket = "hold-open-pr";
 			else if (recent) bucket = "verify-recent-chat";
 			// Unknown PR inventory can never be safe/prunable: the human reviews.
 			else if (pr === "unknown" || merged === "unknown") bucket = "review";

@@ -130,6 +130,8 @@ echo "[]"
 	);
 	chmodSync(join(shimDir, "git"), 0o700);
 	chmodSync(join(shimDir, "gh"), 0o700);
+	writeFileSync(join(shimDir, "origin"), "#!/bin/sh\nexit 1\n");
+	chmodSync(join(shimDir, "origin"), 0o700);
 });
 
 afterAll(() => {
@@ -346,6 +348,51 @@ describe("worktree-audit", () => {
 		chmodSync(join(shimDir, "gh"), 0o700);
 	}
 
+	test("Origin inventory holds open and draft PRs without trusting repository configuration", () => {
+		git(["remote", "set-url", "origin", "https://github.com/octo/repo.git"]);
+		writeFileSync(join(shimDir, "origin"), `#!/bin/sh
+printf '%s\\n' "$PWD" > ${join(root, "origin-query-cwd")}
+echo '[{"number":21,"status":"draft","headRef":"feature-clean"},{"number":22,"status":"open","headRef":"feature-recent"},{"number":23,"status":"closed","headRef":"feature-wip"}]'
+`);
+		chmodSync(join(shimDir, "origin"), 0o700);
+		setGhShim("exit 1");
+		try {
+			const { rows } = runAuditWithCanaries({ GH_HOST: "attacker.example", GIT_CONFIG_COUNT: "1", GIT_CONFIG_KEY_0: "core.sshCommand", GIT_CONFIG_VALUE_0: "false" });
+			const clean = rows.find((row) => row.worktree === cleanWt)!;
+			expect(clean.pr).toBe("#21/DRAFT");
+			expect(clean.bucket).toBe("hold-open-pr");
+			expect(rows.find((row) => row.worktree === recentWt)!.bucket).toBe("hold-open-pr");
+			expect(rows.find((row) => row.worktree === wipWt)!.bucket).toBe("hold-wip");
+			const queryCwd = readFileSync(join(root, "origin-query-cwd"), "utf8").trim();
+			expect(queryCwd).toMatch(/^\/tmp\/pstack-audit-env-[^/]+\/origin-query$/);
+			expect(existsSync(queryCwd)).toBe(false);
+		} finally {
+			writeFileSync(join(shimDir, "origin"), "#!/bin/sh\nexit 1\n");
+			setGhShim('echo "[]"');
+			git(["remote", "set-url", "origin", join(root, "origin-fixture")]);
+		}
+	});
+
+	test("failed Origin falls back to gh, while malformed successful Origin stays unknown", () => {
+		git(["remote", "set-url", "origin", "https://github.com/octo/repo.git"]);
+		setGhShim(`echo '[{"number":24,"state":"OPEN","headRefName":"feature-clean"}]'`);
+		try {
+			const fallback = runAuditWithCanaries({});
+			expect(fallback.rows.find((row) => row.worktree === cleanWt)!.pr).toBe("#24/OPEN");
+			expect(fallback.rows.find((row) => row.worktree === cleanWt)!.bucket).toBe("hold-open-pr");
+			for (const output of ['{oops', '{}', '[{"number":25,"status":"unknown","headRef":"feature-clean"}]']) {
+				writeFileSync(join(shimDir, "origin"), `#!/bin/sh\nprintf '%s\\n' '${output}'\n`);
+				const malformed = runAuditWithCanaries({});
+				expect(malformed.rows.find((row) => row.worktree === cleanWt)!.pr).toBe("unknown");
+				expect(malformed.rows.find((row) => row.worktree === cleanWt)!.bucket).toBe("review");
+			}
+		} finally {
+			writeFileSync(join(shimDir, "origin"), "#!/bin/sh\nexit 1\n");
+			setGhShim('echo "[]"');
+			git(["remote", "set-url", "origin", join(root, "origin-fixture")]);
+		}
+	});
+
 	test("gh failure, malformed output and signal termination render PR inventory unknown and never safe", () => {
 		git(["remote", "set-url", "origin", "https://github.com/octo/repo.git"]);
 		const cases: Array<[string, string]> = [
@@ -364,7 +411,7 @@ describe("worktree-audit", () => {
 				// Unknown inventory can never classify a worktree safe/prunable.
 				expect(clean.bucket).not.toBe("safe");
 				expect(clean.bucket).toBe("review");
-				expect(warnings.join("\n")).toContain("gh PR inventory unavailable");
+				expect(warnings.join("\n")).toContain("forge PR inventory unavailable");
 			}
 			// A successful empty query is a KNOWN inventory: safe stays reachable.
 			setGhShim('echo "[]"');

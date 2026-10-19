@@ -8,16 +8,16 @@ import { manifestDigest } from "./manifest-digest.ts";
 
 const EXPECTED_HEADER = {
   repository: "https://github.com/cursor/plugins",
-  commit: "1b6d44ff26d4e242f4e8f68c391e6d2f7ca16def",
-  version: "0.15.20",
-  subtree: "1dbec20ada6e40cb12774b8893960a558319fd6b",
+  commit: "d457567332aa6989e753ea289f30ea2bfbc80bc0",
+  version: "0.15.28",
+  subtree: "06803099e18ed488c8c2a2fda118ce772b4e2a77",
 };
 
 const DIRECT_SKILLS = [
   "architect", "arena", "automate-me", "benchmark-checklist", "blast-radius", "bro",
-  "correct", "create-verification-skill", "figure-it-out", "how", "interrogate", "ketchup",
-  "maintain-verification-skill", "make-bot-ui", "no-comments", "poteto-help", "poteto-mode",
-  "recall", "reflect", "session-review", "setup-pstack", "show-me-your-work", "swarm", "tdd",
+  "correct", "create-formal-verification-skill", "create-verification-skill", "figure-it-out", "how", "in-your-own-words", "interrogate", "ketchup",
+  "maintain-formal-verification-skill", "maintain-verification-skill", "make-bot-ui", "no-comments", "poteto-help", "poteto-mode",
+  "recall", "reflect", "session-review", "setup-pstack", "sharpen", "show-me-your-work", "swarm", "tdd",
   "teach", "technical-writing", "typescript-best-practices", "unslop", "why",
 ];
 
@@ -227,7 +227,7 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
   },
   {
     id: "verification-skill-prose",
-    pattern: /^skills\/(create|maintain)-verification-skill\/SKILL\.md$/,
+    pattern: /^skills\/(create|maintain)-(?:formal-)?verification-skill\/SKILL\.md$/,
     kind: "pinned-byte/link inspection",
     artifacts: ["scripts/check-content.ts"],
     contract: "Generated-skill path translations are prose; honest claim is link health and inventory integrity.",
@@ -299,14 +299,14 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     id: "helper-commander-resolution",
     pattern: /^skills\/poteto-mode\/scripts\/(orch\/orch\.ts|watch-pr\/watch-pr)$/,
     kind: "omp/cli scenario",
-    artifacts: ["skills/poteto-mode/scripts/orch/orch.test.ts"],
+    artifacts: ["tests/orch.test.ts"],
     contract: "Shared launcher-resolution pattern proven by the orch suite spawning the script as a real subprocess; the watch-pr launcher is the same one-line resolution.",
   },
   {
     id: "helper-manifest-consolidation",
     pattern: /^skills\/poteto-mode\/scripts\/(bun\.lock|package\.json)$/,
     kind: "omp/cli scenario",
-    artifacts: ["skills/poteto-mode/scripts/orch/orch.test.ts", "skills/poteto-mode/scripts/watch-pr/cli.test.ts"],
+    artifacts: ["tests/orch.test.ts", "skills/poteto-mode/scripts/watch-pr/cli.test.ts"],
     contract: "Nested-manifest removal proven by both helper suites resolving commander through the root package graph.",
     authorizesAbsence: true,
   },
@@ -338,6 +338,36 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     kind: "omp/cli scenario",
     artifacts: ["scripts/smoke-install.ts"],
     contract: "Bootstrap-installer removal proven by the native marketplace-install scenario succeeding without it.",
+    authorizesAbsence: true,
+  },
+  {
+    id: "claude-code-source-only",
+    pattern: /^upstream-only\/(?:harness\/pstack\/.+|scripts\/generate-pstack-harness-trees\.mjs|\.claude-plugin\/marketplace\.json)$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts", "scripts/check-upstream.ts"],
+    contract: "Canonical Claude Code generated files, generator, and marketplace are source provenance only. Their targets must remain absent so OMP installs one native package, not a second host runtime.",
+    authorizesAbsence: true,
+  },
+  {
+    id: "host-assessment-prose",
+    pattern: /^docs\/harness\/claude-code\.md$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "The upstream Claude Code adapter is replaced with an OMP provenance assessment, not executable host mappings or a second supported runtime.",
+  },
+  {
+    id: "catch-up-guidance",
+    pattern: /^skills\/ketchup\/SKILL\.md$/,
+    kind: "omp/cli scenario",
+    artifacts: ["scripts/smoke-workflow-guidance.ts"],
+    contract: "A synthetic OMP conversation exercises older waiting-item completeness, assistant-runnable work, and honest visuals. Available native drawing tools replace the unavailable upstream visualize command. Recorded semantic conditions require review beyond read receipts.",
+  },
+  {
+    id: "orch-test-provenance",
+    pattern: /^skills\/poteto-mode\/scripts\/orch\/orch\.test\.ts$/,
+    kind: "omp/cli scenario",
+    artifacts: ["tests/orch.test.ts"],
+    contract: "The imported test target is intentionally absent. The native behavioral suite at tests/orch.test.ts retains store, forge frontier, and CLI regression coverage without incidental framework help wording assertions.",
     authorizesAbsence: true,
   },
 ];
@@ -491,11 +521,17 @@ function checkHeader(inv: Inventory): void {
 export async function checkFileEntry(root: string, f: InventoryFile): Promise<string[]> {
   const found: string[] = [];
   const { source: src, target: tgt } = f;
-  if (!src.startsWith("pstack/") && !/^cursor-team-kit\/skills\/(control-ui|control-cli|deslop)\/SKILL\.md$/.test(src)) found.push(`${src}: source is outside the approved upstream inventory`);
+  if (!src.startsWith("pstack/") && !/^cursor-team-kit\/skills\/(control-ui|control-cli|deslop)\/SKILL\.md$/.test(src) && !/^(?:harness\/pstack\/.+|scripts\/generate-pstack-harness-trees\.mjs|\.claude-plugin\/marketplace\.json)$/.test(src)) found.push(`${src}: source is outside the approved upstream inventory`);
   if (!/^[0-9a-f]{40}$/.test(f.blob)) found.push(`${src}: blob is not a 40-hex sha`);
   if (f.mode !== "100644" && f.mode !== "100755") found.push(`${src}: unexpected mode ${JSON.stringify(f.mode)}`);
 
+  if (/^(?:harness\/pstack\/|scripts\/generate-pstack-harness-trees\.mjs$|\.claude-plugin\/marketplace\.json$)/.test(src) && tgt !== `upstream-only/${src}`) {
+    found.push(`${src}: host-only source must use its intentional-absence target`);
+  }
   const localPath = join(root, tgt);
+  if (tgt.startsWith("upstream-only/") && await exists(localPath)) {
+    found.push(`${src}: host-only source must remain absent at ${tgt}`);
+  }
   if (!(await exists(localPath))) {
     if (f.adaptation) {
       // An adapted row may pass absence only through the repository's explicit,
@@ -1052,7 +1088,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "c9d87da1c7cf1f6e49892d5b61265b86e12cc36a6cceb92c1d7354918faf169b";
+    const pinnedDigest = "193ed01ed679cb79e64137a9a396cacc9f1decebee95921e6b7ad06ccd4378f2";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

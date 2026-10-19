@@ -76,4 +76,23 @@ describe("check-content inventory target presence", () => {
 			await rm(root, { recursive: true, force: true });
 		}
 	});
+  test("Claude Code provenance stays absent and cannot be redirected into discovery", async () => {
+    const root = await mkdtemp(join(tmpdir(), "check-content-host-only-"));
+    const source = "harness/pstack/claude-code/skills/sharpen/SKILL.md";
+    const target = `upstream-only/${source}`;
+    const verification = { kind: "pinned-byte/link inspection", artifacts: ["scripts/check-content.ts", "scripts/check-upstream.ts"] };
+    try {
+      expect(await checkFileEntry(root, adaptedEntry(source, target, verification))).toEqual([]);
+      await mkdir(join(root, target, ".."), { recursive: true });
+      await writeFile(join(root, target), "# accidental second-host skill\n");
+      expect(await checkFileEntry(root, adaptedEntry(source, target, verification))).toContain(
+        `${source}: host-only source must remain absent at ${target}`,
+      );
+      expect(await checkFileEntry(root, adaptedEntry(source, "skills/sharpen/SKILL.md", verification))).toContain(
+        `${source}: host-only source must use its intentional-absence target`,
+      );
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
+  });
 });
