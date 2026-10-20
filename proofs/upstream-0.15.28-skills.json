@@ -1,0 +1,238 @@
+{
+  "capturedAt": "2026-10-19T08:29:37.965Z",
+  "upstreamVersion": "0.15.28",
+  "upstreamCommit": "d457567332aa6989e753ea289f30ea2bfbc80bc0",
+  "fixtureOnly": true,
+  "model": "openai-codex/gpt-6.1-sol",
+  "limits": [
+    "Synthetic, isolated OMP SDK sessions under pinned 18.10.2. No whole-system formal proof is claimed.",
+    "The creation case deliberately selected the Bun-only generated-input fallback. No TLA+ or external verifier was exercised.",
+    "Product-byte restoration and maintenance non-mutation were asserted by the parent harness. Temporary fixture directories were removed."
+  ],
+  "results": [
+    {
+      "name": "in-your-own-words",
+      "source": "skills/in-your-own-words/SKILL.md",
+      "sourceSha256": "fa8ba74e27d7be371dc270ec78bbf816411477d0dfab185356c861ac8dd413ad",
+      "prompt": "Our report exporter drops accented customer names. I need names preserved, not a new export format. Restate the goal and problem. Do not implement anything.",
+      "response": "You want the existing report exporter to preserve customer names exactly, including accented characters. The problem is that accented names are being lost during export; the goal is to fix that data loss without changing the export format. No implementation requested.",
+      "executableReceipts": []
+    },
+    {
+      "name": "sharpen",
+      "source": "skills/sharpen/SKILL.md",
+      "sourceSha256": "d895695fcc29b832bf118b842c1d7cf356a69622d63c9d49b40a0c97d8496c80",
+      "prompt": "Recommend a fix plan for a CSV exporter that strips accents. Preserve our existing file format. Raw evidence would be input bytes, output bytes, and the current encoder. Do not write code or invent observations. Keep the recommendation short.",
+      "response": "- Trace one accented value through **input bytes → current encoder → output bytes**. Locate the first lossy step; don’t assume the cause is encoding rather than transliteration or normalization.\n- Remove only that loss. Preserve the existing encoding, BOM policy, delimiters, quoting, and line endings. If the encoding cannot represent the required characters, flag the conflict for your decision rather than silently changing the format or replacing characters.\n- **Outside check:** independently decode the exported bytes using the existing encoding, compare the accented field with the original, and open the file in the existing consumer.\n\nNo cause is confirmed without the byte samples and encoder configuration.",
+      "executableReceipts": []
+    },
+    {
+      "name": "maintain-formal-verification-skill",
+      "source": "skills/maintain-formal-verification-skill/SKILL.md",
+      "sourceSha256": "0c96f54293542d3818b68754562b338073958781a9684454611dca37592e2d2c",
+      "prompt": "This empty project has no verification skill. Follow your missing-check path. Do not create anything.",
+      "response": "No project-local verification skill exists, so there are no checks to run or maintain. Use `/create-formal-verification-skill` to create one.\n\nNo files created or changed.",
+      "executableReceipts": []
+    },
+    {
+      "name": "create-formal-verification-skill",
+      "source": "skills/create-formal-verification-skill/SKILL.md",
+      "sourceSha256": "dbd2725bcbe317553d28aae832de0d76bb8a5bf7d27d6f61e3d76cc20a51be68",
+      "prompt": "Verify reserve in permits.ts. The promise is the resulting inUse is at most capacity, for integer inputs 0 <= inUse <= capacity <= 3. Use the existing .omp/skills root. This is a bounded code-level verification fixture. Only Bun is available for checks. No network, package installation, or other runtimes are permitted. If no suitable verifier is available, use your real-code generated-input fallback and label its limits honestly. Leave one runnable check and a project verify skill. Show the check catches a temporary mutation changing < to <= in the actual product file, then restore that file. Do not change product behavior. Use no task delegates. Finish the executable work, not just a plan.",
+      "response": "Created:\n- Skill: `.omp/skills/verify-permits-reserve/SKILL.md`\n- Runnable check: `.omp/skills/verify-permits-reserve/check.ts`\n\n**Verified:** the actual `reserve` function returns `inUse <= capacity` for all **10 integer pairs** satisfying `0 <= inUse <= capacity <= 3`.\n\n**Tool:** Bun 1.3.14, exhaustively generating inputs and calling the real code. This is a bounded generated-input check—not a formal proof. No suitable formal verifier is available under the Bun-only, no-install constraints.\n\nRun from the repository root:\n```sh\nbun .omp/skills/verify-permits-reserve/check.ts\n```\n\n**Observed verification:**\n- Original code: **10/10 passed**, exit 0.\n- Temporary `<` → `<=` mutation in the actual `permits.ts`: **4 failures**, exit 1.\n- Restored original guard: **10/10 passed**, exit 0.\n\nThe mutation allowed `reserve(0, 0)` to take the increment branch and return `1`, exceeding capacity `0`. All four full-capacity inputs exposed the same bug. Product behavior is restored and unchanged.\n\nThe skill records covered code, sync commit `01572b753963d3586ca93ae45109d4b49e4b2dc5`, failure interpretation, and mutation/recheck instructions. Coverage excludes inputs outside the stated bound, caller behavior, concurrency, and allocation correctness beyond the upper-bound promise.\n\nUse `/maintain-formal-verification-skill` when later changes land without rechecking the verification.",
+      "executableReceipts": [
+        {
+          "tool": "bash",
+          "error": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "1.3.14\n01572b753963d3586ca93ae45109d4b49e4b2dc5\n\n\nWall time: 0.08 seconds"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 10,
+              "wallTimeMs": 75.07007400000293
+            }
+          }
+        },
+        {
+          "tool": "bash",
+          "error": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "export function reserve(inUse: number, capacity: number): number {\n  return inUse < capacity ? inUse + 1 : inUse;\n}\n\n\nWall time: 0.01 seconds"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 10,
+              "wallTimeMs": 6.3574140000055195
+            }
+          }
+        },
+        {
+          "tool": "bash",
+          "error": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "PASS: 10/10 integer inputs satisfy resulting inUse <= capacity (0 <= inUse <= capacity <= 3).\n\n\nWall time: 0.03 seconds"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 10,
+              "wallTimeMs": 28.028051000001142
+            }
+          }
+        },
+        {
+          "tool": "bash",
+          "error": true,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "FAIL reserve(0, 0) returned 1; resulting inUse must be <= capacity 0\nFAIL reserve(1, 1) returned 2; resulting inUse must be <= capacity 1\nFAIL reserve(2, 2) returned 3; resulting inUse must be <= capacity 2\nFAIL reserve(3, 3) returned 4; resulting inUse must be <= capacity 3\nFAIL: 4/10 inputs exceed capacity.\n\n\nWall time: 0.03 seconds\n\nCommand exited with code 1"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 10,
+              "wallTimeMs": 26.221644999997807,
+              "exitCode": 1
+            },
+            "isError": true
+          }
+        },
+        {
+          "tool": "bash",
+          "error": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "PASS: 10/10 integer inputs satisfy resulting inUse <= capacity (0 <= inUse <= capacity <= 3).\n\n\nWall time: 0.03 seconds"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 10,
+              "wallTimeMs": 28.456274999989546
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "maintain-formal-verification-skill",
+      "source": "skills/maintain-formal-verification-skill/SKILL.md",
+      "sourceSha256": "0c96f54293542d3818b68754562b338073958781a9684454611dca37592e2d2c",
+      "prompt": "Maintain the project-local verification in /tmp/pstack-new-skill-iFERdk/permits/.omp/skills/verify-permits-reserve/SKILL.md. A recent product change may have broken the promise. Read the commits and run the existing check. Classify failures as drift or a product bug. Do not edit permits.ts or weaken the invariant or bounds. No network or package installation. No delegates. [main 1c81e21] fixture: introduce permit overflow\n 1 file changed, 1 insertion(+), 1 deletion(-)",
+      "response": "## Outcome: **bug**\n\nThe checker describes and executes the current code faithfully. **The failures are product bugs, not verification drift.** Only the skill’s coverage text and recorded baseline were stale.\n\n### Commits reviewed\n\n- `01572b7` — original implementation; previous sync commit.\n- `234dbf8` — added the verification skill and checker.\n- `1c81e21` — introduced the bug by changing `<` to `<=` in `permits.ts:2`.\n\nNo evidence establishes an intentional change to the capacity promise.\n\n### Verification results\n\nRan the existing check before edits, then followed the updated skill and reran it with Bun 1.3.14. Both runs exited **1**, reporting the same four violations:\n\n| Call | Returned | Capacity |\n|---|---:|---:|\n| `reserve(0, 0)` | 1 | 0 |\n| `reserve(1, 1)` | 2 | 1 |\n| `reserve(2, 2)` | 3 | 2 |\n| `reserve(3, 3)` | 4 | 3 |\n\n**Counterexample:** call `reserve(0, 0)` → `0 <= 0` is true → the increment branch returns `1` → the result exceeds capacity `0`. A separate direct-code replay confirmed this path and all four boundary results.\n\n**Harm:** callers using the result can overbook their resource by one permit.\n\nNo scratch mutation was needed: the product commit already contains the exact full-capacity guard break that the sensitivity procedure targets, and the checker catches it.\n\n### Verification-only changes\n\nUpdated `.omp/skills/verify-permits-reserve/SKILL.md` to:\n- describe the current guard and failing baseline;\n- record the counterexamples and introducing commit;\n- advance synchronization to `1c81e21`, explicitly distinguishing synchronization from correctness;\n- prevent sensitivity testing from modifying working-tree product code during maintenance.\n\n`permits.ts`, `check.ts`, the invariant, and the bounds remain unchanged. No product fix is included.\n\n### Remaining limits\n\nCoverage remains the 10 integer pairs satisfying `0 <= inUse <= capacity <= 3`, checking only the returned upper bound. Larger or invalid inputs, successful allocation, caller state, concurrency, fairness, and ownership remain outside scope. No moved code, new writers, or newly uncovered product paths were found.",
+      "executableReceipts": [
+        {
+          "tool": "bash",
+          "error": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "commit 1c81e21e1004b1ba60897b3cc12e08e67a652c04\nAuthor:     Probe <probe@example.invalid>\nAuthorDate: Mon Oct 19 08:23:04 2026 +0000\nCommit:     Probe <probe@example.invalid>\nCommitDate: Mon Oct 19 08:23:04 2026 +0000\n\n    fixture: introduce permit overflow\n\n permits.ts | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\n\ncommit 234dbf8cf8e461e68d526bc397773611c418b5b5\nAuthor:     Probe <probe@example.invalid>\nAuthorDate: Mon Oct 19 08:23:04 2026 +0000\nCommit:     Probe <probe@example.invalid>\nCommitDate: Mon Oct 19 08:23:04 2026 +0000\n\n    fixture: record bounded verification\n\n .omp/skills/verify-permits-reserve/SKILL.md | 64 +++++++++++++++++++++++++++++\n .omp/skills/verify-permits-reserve/check.ts | 24 +++++++++++\n 2 files changed, 88 insertions(+)\n.omp/skills/verify-permits-reserve/SKILL.md | 64 ++++++++++++++++++++++++\n.omp/skills/verify-permits-reserve/check.ts | 24 ++++++++++++++++++++++++\npermits.ts | 2 +-\n3 files changed, 89 insertions(+), 1 deletions(-)\n\n--- Changes ---\n\nFile: .omp/skills/verify-permits-reserve/SKILL.md\n  @@ -0,0 +1,64 @@\n  +---\n  +name: verify-permits-reserve\n  +description: Check the bounded capacity promise when changing reserve in permits.ts, its capacity guard or increment, or reviewing an over-capacity bug. Run th…[+92]\n  +---\n  +\n  +# Verify reserve's bounded capacity promise\n  […58 changed lines elided…]\n\nFile: .omp/skills/verify-permits-reserve/check.ts\n  @@ -0,0 +1,24 @@\n  +import { reserve } from \"../../../permits.ts\";\n  +\n  +// Complete integer domain: 0 <= inUse <= capacity <= 3.\n  +let checked = 0;\n  +let failures = 0;\n  +for (let capacity = 0; capacity <= 3; capacity++) {\n  […18 changed lines elided…]\n\nFile: permits.ts\n  @@ -1,3 +1,3 @@\n  -  return inUse < capacity ? inUse + 1 : inUse;\n  +  return inUse <= capacity ? inUse + 1 : inUse;\n1c81e21e1004b1ba60897b3cc12e08e67a652c04\n[raw output: artifact://2]\n\n\nWall time: 0.02 seconds"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 60,
+              "wallTimeMs": 21.763768999982858
+            }
+          }
+        },
+        {
+          "tool": "bash",
+          "error": true,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "FAIL reserve(0, 0) returned 1; resulting inUse must be <= capacity 0\nFAIL reserve(1, 1) returned 2; resulting inUse must be <= capacity 1\nFAIL reserve(2, 2) returned 3; resulting inUse must be <= capacity 2\nFAIL reserve(3, 3) returned 4; resulting inUse must be <= capacity 3\nFAIL: 4/10 inputs exceed capacity.\n\n\nWall time: 0.02 seconds\n\nCommand exited with code 1"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 60,
+              "wallTimeMs": 22.38443800000823,
+              "exitCode": 1
+            },
+            "isError": true
+          }
+        },
+        {
+          "tool": "bash",
+          "error": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "commit 01572b753963d3586ca93ae45109d4b49e4b2dc5\nAuthor:     Probe <probe@example.invalid>\nAuthorDate: Mon Oct 19 08:21:26 2026 +0000\nCommit:     Probe <probe@example.invalid>\nCommitDate: Mon Oct 19 08:21:26 2026 +0000\n\n    fixture: add bounded permit reservation\n\n permits.ts | 3 +++\n 1 file changed, 3 insertions(+)\nexport function reserve(inUse: number, capacity: number): number {\n  return inUse < capacity ? inUse + 1 : inUse;\n}\ncommit 1c81e21e1004b1ba60897b3cc12e08e67a652c04\nAuthor:     Probe <probe@example.invalid>\nAuthorDate: Mon Oct 19 08:23:04 2026 +0000\nCommit:     Probe <probe@example.invalid>\nCommitDate: Mon Oct 19 08:23:04 2026 +0000\n\n    fixture: introduce permit overflow\n\ndiff --git a/permits.ts b/permits.ts\nindex efc3c15..e53c324 100644\n--- a/permits.ts\n+++ b/permits.ts\n@@ -1,3 +1,3 @@\n export function reserve(inUse: number, capacity: number): number {\n-  return inUse < capacity ? inUse + 1 : inUse;\n+  return inUse <= capacity ? inUse + 1 : inUse;\n }\n1.3.14\n\n\nWall time: 0.03 seconds"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 60,
+              "wallTimeMs": 28.11774799998966
+            }
+          }
+        },
+        {
+          "tool": "bash",
+          "error": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"inUse\":0,\"capacity\":0,\"guard\":true,\"result\":1,\"exceedsCapacity\":true}\n{\"inUse\":1,\"capacity\":1,\"guard\":true,\"result\":2,\"exceedsCapacity\":true}\n{\"inUse\":2,\"capacity\":2,\"guard\":true,\"result\":3,\"exceedsCapacity\":true}\n{\"inUse\":3,\"capacity\":3,\"guard\":true,\"result\":4,\"exceedsCapacity\":true}\n\n\nWall time: 0.02 seconds"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 60,
+              "wallTimeMs": 24.958717000001343
+            }
+          }
+        },
+        {
+          "tool": "bash",
+          "error": false,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "reserve(0, 0): guard 0 <= 0 is true; increment returns 1; exceeds capacity: true\n\n\nWall time: 0.02 seconds"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 60,
+              "wallTimeMs": 24.029366000002483
+            }
+          }
+        },
+        {
+          "tool": "bash",
+          "error": true,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "FAIL reserve(0, 0) returned 1; resulting inUse must be <= capacity 0\nFAIL reserve(1, 1) returned 2; resulting inUse must be <= capacity 1\nFAIL reserve(2, 2) returned 3; resulting inUse must be <= capacity 2\nFAIL reserve(3, 3) returned 4; resulting inUse must be <= capacity 3\nFAIL: 4/10 inputs exceed capacity.\n\n\nWall time: 0.02 seconds\n\nCommand exited with code 1"
+              }
+            ],
+            "details": {
+              "timeoutSeconds": 60,
+              "wallTimeMs": 24.569696999998996,
+              "exitCode": 1
+            },
+            "isError": true
+          }
+        }
+      ]
+    }
+  ]
+}

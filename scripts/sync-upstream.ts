@@ -17,7 +17,7 @@ const commit = git("rev-parse", `${commitArg}^{commit}`).toString().trim();
 const inventory = await Bun.file(join(root, "upstream.json")).json();
 const tree = new Map<string, { mode: string; blob: string }>();
 let subtree = "";
-for (const record of git("ls-tree", "-rzt", commit, "--", "pstack", "cursor-team-kit").toString().split("\0")) {
+for (const record of git("ls-tree", "-rzt", commit, "--", "pstack", "cursor-team-kit", "harness/pstack", "scripts/generate-pstack-harness-trees.mjs", ".claude-plugin/marketplace.json").toString().split("\0")) {
   if (!record) continue;
   const [metadata, path] = record.split("\t");
   const [mode, kind, blob] = metadata!.split(" ");
@@ -62,7 +62,17 @@ try {
   }
   const recorded = new Set(inventory.files.map((file: { source: string }) => file.source));
   for (const [source, next] of tree) {
-    if (!source.startsWith("pstack/") || recorded.has(source)) continue;
+    if (recorded.has(source)) continue;
+    if (/^(?:harness\/pstack\/|scripts\/generate-pstack-harness-trees\.mjs$|\.claude-plugin\/marketplace\.json$)/.test(source)) {
+      const target = `upstream-only/${source}`;
+      inventory.files.push({ source, ...next, target, adaptation: {
+        reason: "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        verification: { kind: "pinned-byte/link inspection", artifacts: ["scripts/check-content.ts", "scripts/check-upstream.ts"] },
+      } });
+      report.absent.push(target);
+      continue;
+    }
+    if (!source.startsWith("pstack/")) continue;
     const target = source.slice("pstack/".length);
     await mkdir(dirname(join(root, target)), { recursive: true });
     await writeFile(join(root, target), git("cat-file", "blob", next.blob));

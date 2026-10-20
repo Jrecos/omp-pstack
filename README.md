@@ -57,6 +57,8 @@ updating replaces the plugin code (skills, CLI, runtime) but keeps your configur
 
 upgrading from a pre-0.15.0 config: the `how critics` role is retired and the 17-role parser rejects a config still carrying its line. before the next `/setup-pstack` save, edit `rules/pstack-models.md` to remove the `how critics:` role line, and any stale `# how critics[...]` address comments next to it. keep the approved model pool and every other role assignment. do not delete the whole config.
 
+This package ports canonical P Stack 0.15.28. The release adds four commands, complete waiting-item catch-ups with real visuals, forge-based orchestration frontiers, Code Review Gate approval handling, and Origin-aware worktree auditing. OMP retains its configured model pool, persistent mode, native task agents, workspace-scoped history, full swarm on each patch-changing Autopilot push, and bottom-only stack landing. The [Claude Code provenance assessment](./docs/harness/claude-code.md) explains why upstream host artifacts are inventoried but not installed.
+
 repo maintainers can verify manifest completeness, recorded source blobs, and byte-exact unadapted files against the pinned upstream commit with `bun scripts/check-upstream.ts <cursor/plugins checkout>`.
 
 to move the pin, run `bun scripts/sync-upstream.ts <cursor/plugins checkout> <commit> <version>`. it copies unadapted files, three-way merges adapted files against the old upstream blob (conflicts land as `<<<<<<< omp` markers), adds new upstream files, and rewrites `upstream.json`. then resolve the markers, record new adaptations, and repin `EXPECTED_HEADER` and the inventory digest in `scripts/check-content.ts`.
@@ -184,12 +186,16 @@ Invoking [`/poteto-mode`](./skills/poteto-mode/SKILL.md) turns on persistent mod
 /interrogate review this pr.
 ```
 
-The [complete skills reference](./docs/guide/skills.md) lists all 53 discoverable skills with their purposes and source files. It separates 29 direct workflow skills from 24 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 53.
+The [complete skills reference](./docs/guide/skills.md) lists all 57 discoverable skills with their purposes and source files. It separates 33 direct workflow skills from 24 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 57.
 
 | New skill | Use it when |
 |---|---|
 | [`/poteto-help`](./skills/poteto-help/SKILL.md) | Find the skill, playbook, or principle for your goal and get a prompt to send. It runs only when you invoke it and does not start the work. |
-| [`/ketchup`](./skills/ketchup/SKILL.md) | Catch up on this chat since your last message, in plain words, with enough context to decide each action item. |
+| [`/in-your-own-words`](./skills/in-your-own-words/SKILL.md) | Restate the user's goal and problem before starting. |
+| [`/sharpen`](./skills/sharpen/SKILL.md) | Choose an expert approach and an independent check without adding unnecessary work. |
+| [`/create-formal-verification-skill`](./skills/create-formal-verification-skill/SKILL.md) | Generate a project-local formal check of a high-risk property and prove it catches a real break. |
+| [`/maintain-formal-verification-skill`](./skills/maintain-formal-verification-skill/SKILL.md) | Bring formal checks back in sync with changed code and distinguish verification drift from product bugs. |
+| [`/ketchup`](./skills/ketchup/SKILL.md) | Catch up on this chat with real visuals and every waiting user decision, including older waiting items. Do not replace an item list with a count. |
 | [`/correct`](./skills/correct/SKILL.md) | Fix repeated agent mistakes at the highest enforceable level, with architecture first and documentation last. Pair each rule with its enforcement. |
 | [`/benchmark-checklist`](./skills/benchmark-checklist/SKILL.md) | Vet a measured number for its limiter, tuning, errors, repeatability, end-to-end relevance, and whether the timed work ran. |
 
@@ -272,7 +278,7 @@ twenty-four short skills, one principle each. `poteto-mode` indexes them inline 
 | [laziness-protocol](./skills/principle-laziness-protocol/SKILL.md) | core | Bias toward deletion and the smallest change that solves the problem. |
 | [foundational-thinking](./skills/principle-foundational-thinking/SKILL.md) | core | Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious. |
 | [redesign-from-first-principles](./skills/principle-redesign-from-first-principles/SKILL.md) | core | Redesign as if the requirement had been a foundational assumption from day one, instead of bolting it on. |
-| [attack-the-premise](./skills/principle-attack-the-premise/SKILL.md) | core | Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it. |
+| [attack-the-premise](./skills/principle-attack-the-premise/SKILL.md) | core | Apply when two or more fixes that share one premise have failed the same gate. Write the premise down and test it directly before you write another fix that assumes it. |
 | [subtract-before-you-add](./skills/principle-subtract-before-you-add/SKILL.md) | core | Remove dead weight, redundant validators, and stub references first, then build on the simpler base. |
 | [minimize-reader-load](./skills/principle-minimize-reader-load/SKILL.md) | core | Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope. |
 | [outcome-oriented-execution](./skills/principle-outcome-oriented-execution/SKILL.md) | core | Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code. |
@@ -281,12 +287,12 @@ twenty-four short skills, one principle each. `poteto-mode` indexes them inline 
 | [build-the-lever](./skills/principle-build-the-lever/SKILL.md) | core | Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun. |
 | [model-the-domain](./skills/principle-model-the-domain/SKILL.md) | architecture | Encode the domain in a structure instead of scattered conditionals. |
 | [boundary-discipline](./skills/principle-boundary-discipline/SKILL.md) | architecture | Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions. |
-| [type-system-discipline](./skills/principle-type-system-discipline/SKILL.md) | architecture | Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas. |
+| [type-system-discipline](./skills/principle-type-system-discipline/SKILL.md) | architecture | Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, exhaust variants, derive from authoritative schemas. |
 | [make-operations-idempotent](./skills/principle-make-operations-idempotent/SKILL.md) | architecture | Converge to the same end state regardless of partial prior runs. |
 | [migrate-callers-then-delete-legacy-apis](./skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md) | architecture | Migrate callers and delete the old API in the same wave instead of preserving compatibility layers. |
 | [separate-before-serializing-shared-state](./skills/principle-separate-before-serializing-shared-state/SKILL.md) | architecture | Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant. |
 | [prove-it-works](./skills/principle-prove-it-works/SKILL.md) | verification | Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'. |
-| [fix-root-causes](./skills/principle-fix-root-causes/SKILL.md) | verification | Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes. |
+| [fix-root-causes](./skills/principle-fix-root-causes/SKILL.md) | verification | Trace each symptom back to the first place the system went wrong and fix it there. A guard is a fix only when the state it handles is legitimate. |
 | [sequence-verifiable-units](./skills/principle-sequence-verifiable-units/SKILL.md) | verification | Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer. |
 | [test-behavior-not-implementation](./skills/principle-test-behavior-not-implementation/SKILL.md) | verification | Apply when you write, change, or keep a test. Call the code the way its users do and assert the result they observe against a literal expected value. If the test would still pass when every imported function returns undefined, rewrite the assertion or delete the test. |
 | [explain-the-number](./skills/principle-explain-the-number/SKILL.md) | verification | Before trusting, reporting, or acting on a measured number, find what limits it. Rule out that it measured work other than the work you intended. |
@@ -379,6 +385,6 @@ The token needs permission to write repository contents. Future branch rules mus
 
 ## credits and license
 
-Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.20`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
+Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.28`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
 
 Released under the [MIT License](./LICENSE). The original copyright notice is retained.

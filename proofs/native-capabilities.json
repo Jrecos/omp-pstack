@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "capturedAt": "2026-10-13T05:03:33.459Z",
+  "capturedAt": "2026-10-19T08:28:37.612Z",
   "fixtureOnly": true,
   "expectedVersion": "18.10.2",
   "host": {
-    "resolvedBinary": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+    "resolvedBinary": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
     "expectedVersion": "18.10.2",
     "versionCommand": {
       "argv": [
-        "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+        "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
         "--version"
       ],
-      "cwd": "/tmp/pstack-native-capabilities-CmbjVe",
+      "cwd": "/tmp/pstack-native-capabilities-zWUL1G",
       "code": 0,
       "signal": null,
       "timedOut": false,
       "overflow": false,
       "stdout": "omp/18.10.2\n",
       "stderr": "",
-      "durationMs": 628.6304630000001
+      "durationMs": 959.157953
     },
     "binarySha256": "df9f273cb0120795940f918f94a22aa8d7c667f2fd97ec21e74f841c2c878f3e",
     "actualVersion": "18.10.2"
@@ -26,38 +26,38 @@
   "sdkPackages": {
     "pi-coding-agent": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/src/index.ts",
-      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/package.json"
+      "entry": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/src/index.ts",
+      "manifest": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/package.json"
     },
     "pi-agent-core": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-agent-core/src/index.ts",
-      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-agent-core/package.json"
+      "entry": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-agent-core/src/index.ts",
+      "manifest": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-agent-core/package.json"
     },
     "pi-ai": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-ai/src/index.ts",
-      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-ai/package.json"
+      "entry": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-ai/src/index.ts",
+      "manifest": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-ai/package.json"
     },
     "pi-catalog": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-catalog/src/index.ts",
-      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-catalog/package.json"
+      "entry": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-catalog/src/index.ts",
+      "manifest": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-catalog/package.json"
     },
     "pi-tui": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-tui/src/index.ts",
-      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-tui/package.json"
+      "entry": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-tui/src/index.ts",
+      "manifest": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-tui/package.json"
     },
     "pi-utils": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-utils/src/index.ts",
-      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-utils/package.json"
+      "entry": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-utils/src/index.ts",
+      "manifest": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-utils/package.json"
     },
     "pi-natives": {
       "version": "18.10.2",
-      "entry": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-natives/native/index.js",
-      "manifest": "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-natives/package.json"
+      "entry": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-natives/native/index.js",
+      "manifest": "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-natives/package.json"
     }
   },
   "runtime": {
@@ -67,7 +67,7 @@
   },
   "producerInputs": {
     "bun.lock": "c832a5b24d7dd36e6e37a3b6cd3ec78a196f0f86f5e2dc4537bd151becea3a02",
-    "package.json": "abaf4ee7c1b5d74cce8141ba96f62e858351399f5bb93fbb0dcff9a7650ea97b",
+    "package.json": "60240bc0c47ab59f4f2358cbf96eb332d3959fb4ffca68258f72a47b556b48f8",
     "scripts/manifest-digest.ts": "f144020e961bc8b1fb07b7597f115994cdbdd024298a2f551db4e3947c95478d",
     "scripts/smoke-native-capabilities.ts": "0b851901338c32ed6aae60a73b901749966bb310b4ffc1a58b64220317a5dd3b",
     "sdk/pi-agent-core/package.json": "0c383715195b2fc01accea38ed83cfb1febd8a54229f937d9078532dcd8bba3a",
@@ -97,7 +97,7 @@
     "sdk/pi-tui/package.json": "76d555ecfd301420a196620340ac843e06e7053431daa48d78be65e2836d311c",
     "sdk/pi-utils/package.json": "ea1a6e8fc11f91865e8d1ca05f21b7d7e9a043b46345b31b1a1839a8fb2011d1"
   },
-  "producerDigest": "64e2995ae83d36e970edee5e9778bff4001e7904f8d4ce6ca6912a68be833063",
+  "producerDigest": "6fd150e399605ff1b6414b65a2bc517f573f1977cf65aa54ae6b1633d16c46da",
   "privacy": {
     "realHistoriesRead": false,
     "authImportedOrExported": false,
@@ -130,27 +130,27 @@
           "raw": {
             "command": {
               "argv": [
-                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "worktree",
                 "add",
                 "-b",
                 "native-proof",
-                "/tmp/pstack-native-capabilities-CmbjVe/worktree",
+                "/tmp/pstack-native-capabilities-zWUL1G/worktree",
                 "HEAD"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at 4153671 fixture\n",
-              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-CmbjVe/repository/tracked.txt -> /tmp/pstack-native-capabilities-CmbjVe/worktree/tracked.txt: Operation not supported (os error 95)\n",
-              "durationMs": 835.6045809999998
+              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at 3824291 fixture\n",
+              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-zWUL1G/repository/tracked.txt -> /tmp/pstack-native-capabilities-zWUL1G/worktree/tracked.txt: Operation not supported (os error 95)\n",
+              "durationMs": 1168.5090169999999
             },
             "before": {
               "tracked": "365bbc197309687a64ee63ff74d06a4d2704240d00545096ad359c5a8c0192ab",
-              "artifact": "15162f460181731c9c73c8fceb3b3c4b8568eab57d20c7e76b195e7119ff84b9",
-              "head": "41536717d0f2e99f9500634af55f014d34726f7d"
+              "artifact": "ebe70b1c024a1bf407cc715efc8e3ea6a69c3b475c67cd2ae2d05cc141031e2b",
+              "head": "3824291c1de35b8a8697a411b29e953bad0d9dd4"
             },
             "settings": {
               "worktree": {
@@ -174,7 +174,7 @@
             "initialChildSha256": "cc2e4bb51f522b77c0c3ad04f7a87386a7e06d4fa287c004b6c066410c5c24dc",
             "childSha256": "b1bc5d359a36df977e1338dbbcc1cf516b34b9417c88367159d9041f3084bbd8",
             "sourceAfterChildEdit": "365bbc197309687a64ee63ff74d06a4d2704240d00545096ad359c5a8c0192ab",
-            "sourceHead": "41536717d0f2e99f9500634af55f014d34726f7d"
+            "sourceHead": "3824291c1de35b8a8697a411b29e953bad0d9dd4"
           },
           "checks": {
             "branchCreated": true,
@@ -196,24 +196,24 @@
           "raw": {
             "command": {
               "argv": [
-                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "worktree",
                 "add",
                 "-b",
                 "native-proof",
-                "/tmp/pstack-native-capabilities-CmbjVe/worktree",
+                "/tmp/pstack-native-capabilities-zWUL1G/worktree",
                 "HEAD"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at 4153671 fixture\n",
-              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-CmbjVe/repository/tracked.txt -> /tmp/pstack-native-capabilities-CmbjVe/worktree/tracked.txt: Operation not supported (os error 95)\n",
-              "durationMs": 835.6045809999998
+              "stdout": "Preparing worktree (new branch 'native-proof')\nHEAD is now at 3824291 fixture\n",
+              "stderr": "warning: worktree clone fell back to plain checkout: git worktree add: FICLONE unsupported for /tmp/pstack-native-capabilities-zWUL1G/repository/tracked.txt -> /tmp/pstack-native-capabilities-zWUL1G/worktree/tracked.txt: Operation not supported (os error 95)\n",
+              "durationMs": 1168.5090169999999
             },
-            "sourceSha256": "15162f460181731c9c73c8fceb3b3c4b8568eab57d20c7e76b195e7119ff84b9",
+            "sourceSha256": "ebe70b1c024a1bf407cc715efc8e3ea6a69c3b475c67cd2ae2d05cc141031e2b",
             "settings": {
               "worktree": {
                 "clone": true
@@ -594,15 +594,15 @@
           "name": "persisted transcript fork",
           "evidence": "native-sdk-runtime",
           "raw": {
-            "oldFile": "/tmp/pstack-native-capabilities-CmbjVe/transfer-source/2026-10-13T05-03-29-997Z_01a133a4-f0cd-7000-b7ec-fdc688271fb7.jsonl",
-            "newFile": "/tmp/pstack-native-capabilities-CmbjVe/transfer-source/2026-10-13T05-03-30-000Z_01a133a4-f0d0-7000-96fa-7d1d94164b2f.jsonl",
-            "oldId": "01a133a4-f0cd-7000-b7ec-fdc688271fb7",
-            "newId": "01a133a4-f0d0-7000-96fa-7d1d94164b2f",
-            "oldCwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
-            "newCwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
-            "parentSession": "01a133a4-f0cd-7000-b7ec-fdc688271fb7",
-            "sourceSha256Before": "84417f1558efe244752feb79fcde478658fbb9887f7aadba7738698410400a44",
-            "sourceSha256After": "84417f1558efe244752feb79fcde478658fbb9887f7aadba7738698410400a44"
+            "oldFile": "/tmp/pstack-native-capabilities-zWUL1G/transfer-source/2026-10-19T08-28-32-082Z_01a15346-cfd2-7000-909d-a074ae1deb9d.jsonl",
+            "newFile": "/tmp/pstack-native-capabilities-zWUL1G/transfer-source/2026-10-19T08-28-32-086Z_01a15346-cfd6-7000-889d-c3b44d875120.jsonl",
+            "oldId": "01a15346-cfd2-7000-909d-a074ae1deb9d",
+            "newId": "01a15346-cfd6-7000-889d-c3b44d875120",
+            "oldCwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
+            "newCwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
+            "parentSession": "01a15346-cfd2-7000-909d-a074ae1deb9d",
+            "sourceSha256Before": "1e728b8ebdec4d7b70807a88bc32208938c460f9f9a6349a6c8421e478e15aac",
+            "sourceSha256After": "1e728b8ebdec4d7b70807a88bc32208938c460f9f9a6349a6c8421e478e15aac"
           },
           "checks": {
             "newIdentity": true,
@@ -654,20 +654,20 @@
                 "timeoutSeconds": 20
               }
             },
-            "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-finished\", \"unexpected completion\");'",
+            "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-finished\", \"unexpected completion\");'",
             "jobId": "bg_1",
-            "pid": 3796887,
-            "readyMs": 26.620741999999154,
-            "cancelToSettlementMs": 27.544809999999416,
+            "pid": 441694,
+            "readyMs": 38.89404900000045,
+            "cancelToSettlementMs": 34.362544999999955,
             "snapshot": {
               "running": [
                 {
                   "id": "bg_1",
                   "type": "bash",
                   "status": "running",
-                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-ready\", String(process.pid...",
-                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-finished\", \"unexpected completion\");'",
-                  "startTime": 1791867813394
+                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-ready\", String(process.pid...",
+                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-finished\", \"unexpected completion\");'",
+                  "startTime": 1792398517522
                 }
               ],
               "recent": [],
@@ -678,10 +678,10 @@
               }
             },
             "inspection": {
-              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-finished\", \"unexpected completion\");'",
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-finished\", \"unexpected completion\");'",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
               "pids": [
-                3796887
+                441694
               ],
               "output": "NATIVE_JOB_READY\n"
             },
@@ -695,10 +695,10 @@
                   "id": "bg_1",
                   "type": "bash",
                   "status": "cancelled",
-                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-ready\", String(process.pid...",
-                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-finished\", \"unexpected completion\");'",
-                  "startTime": 1791867813394,
-                  "endTime": 1791867813421
+                  "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-ready\", String(process.pid...",
+                  "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-finished\", \"unexpected completion\");'",
+                  "startTime": 1792398517522,
+                  "endTime": 1792398517562
                 }
               ],
               "delivery": {
@@ -711,14 +711,14 @@
               "id": "bg_1",
               "type": "bash",
               "status": "cancelled",
-              "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-ready\", String(process.pid...",
-              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-finished\", \"unexpected completion\");'",
-              "startTime": 1791867813394,
-              "endTime": 1791867813421
+              "label": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-ready\", String(process.pid...",
+              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-finished\", \"unexpected completion\");'",
+              "startTime": 1792398517522,
+              "endTime": 1792398517562
             },
             "finalInspection": {
-              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-CmbjVe/job-finished\", \"unexpected completion\");'",
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+              "command": "'/home/jreco/.bun/bin/bun' -e 'await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-ready\", String(process.pid)); console.log(\"NATIVE_JOB_READY\"); await Bun.sleep(15000); await Bun.write(\"/tmp/pstack-native-capabilities-zWUL1G/job-finished\", \"unexpected completion\");'",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
               "pids": [],
               "output": "[Command cancelled]\nNATIVE_JOB_READY\n"
             },
@@ -770,20 +770,20 @@
           "raw": {
             "command": {
               "argv": [
-                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "anonymize",
-                "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d.jsonl",
+                "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2.jsonl",
                 "--out",
-                "/tmp/pstack-native-capabilities-CmbjVe/anonymized"
+                "/tmp/pstack-native-capabilities-zWUL1G/anonymized"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "Anonymized 2 transcripts → /tmp/pstack-native-capabilities-CmbjVe/anonymized\nSkipped 1 malformed record in subagents/seg6.jsonl\nNot exported (no readable session header): subagents/seg5.jsonl\nTurn contents and error text are redacted and paths/literals replaced; metadata such as model names is kept — review before sharing.\n",
+              "stdout": "Anonymized 2 transcripts → /tmp/pstack-native-capabilities-zWUL1G/anonymized\nSkipped 1 malformed record in subagents/seg6.jsonl\nNot exported (no readable session header): subagents/seg5.jsonl\nTurn contents and error text are redacted and paths/literals replaced; metadata such as model names is kept — review before sharing.\n",
               "stderr": "",
-              "durationMs": 706.927729
+              "durationMs": 1726.9403470000007
             },
             "syntheticFixture": true,
             "exportedMembers": [
@@ -806,125 +806,125 @@
             ],
             "sourceMetadata": [
               {
-                "id": "01a133a4-e5fa-7000-8306-b77823b7869d",
+                "id": "01a15346-bce3-7000-8cc4-7abf44de0ee2",
                 "type": "session"
               },
               {
-                "id": "8f05f4f5",
+                "id": "e2ffb4ce",
                 "type": "message",
                 "role": "user"
               },
               {
-                "id": "f7b3a3de",
+                "id": "54699c1a",
                 "type": "custom"
               }
             ],
             "exportMetadata": [
               {
-                "id": "01a133a4-e5fa-7000-8306-b77823b7869d",
+                "id": "01a15346-bce3-7000-8cc4-7abf44de0ee2",
                 "type": "session"
               },
               {
-                "id": "8f05f4f5",
+                "id": "e2ffb4ce",
                 "type": "message",
                 "role": "user"
               },
               {
-                "id": "f7b3a3de",
+                "id": "54699c1a",
                 "type": "custom"
               }
             ],
             "sourceChildMetadata": [
               {
-                "id": "01a133a4-e604-7000-ad53-08f2715f0e6e",
+                "id": "01a15346-bd28-7000-974e-98bfae4546dd",
                 "type": "session"
               },
               {
-                "id": "40ddf406",
+                "id": "a082e1fc",
                 "type": "message",
                 "role": "user"
               },
               {
-                "id": "a1ab2130",
+                "id": "58a7d26c",
                 "type": "custom"
               }
             ],
             "exportChildMetadata": [
               {
-                "id": "01a133a4-e604-7000-ad53-08f2715f0e6e",
+                "id": "01a15346-bd28-7000-974e-98bfae4546dd",
                 "type": "session"
               },
               {
-                "id": "40ddf406",
+                "id": "a082e1fc",
                 "type": "message",
                 "role": "user"
               },
               {
-                "id": "a1ab2130",
+                "id": "58a7d26c",
                 "type": "custom"
               }
             ],
             "sourceHashesBefore": {
-              "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d.jsonl": "6adda8c8a7f1f89555d882d8d9db6666d4c72f2a35df42f1438c59d5f538c019",
-              "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d/2026-10-13T05-03-27-236Z_01a133a4-e604-7000-ad53-08f2715f0e6e.jsonl": "c9ba0f531f2fda6b3da63c922ee335048a6f5867bfde56bf16e31fbb8b8864e6",
-              "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
+              "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2.jsonl": "71e372006026e790f54fd8f0737186dda02ca01be71bac92227c3286202d54ab",
+              "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2/2026-10-19T08-28-27-304Z_01a15346-bd28-7000-974e-98bfae4546dd.jsonl": "0713d7ab1b5020ddee63d2a1cadd26e6820b0e6732da43da6ea6042ac202f819",
+              "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
             },
             "sourceHashesAfter": {
-              "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d.jsonl": "6adda8c8a7f1f89555d882d8d9db6666d4c72f2a35df42f1438c59d5f538c019",
-              "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d/2026-10-13T05-03-27-236Z_01a133a4-e604-7000-ad53-08f2715f0e6e.jsonl": "c9ba0f531f2fda6b3da63c922ee335048a6f5867bfde56bf16e31fbb8b8864e6",
-              "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
+              "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2.jsonl": "71e372006026e790f54fd8f0737186dda02ca01be71bac92227c3286202d54ab",
+              "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2/2026-10-19T08-28-27-304Z_01a15346-bd28-7000-974e-98bfae4546dd.jsonl": "0713d7ab1b5020ddee63d2a1cadd26e6820b0e6732da43da6ea6042ac202f819",
+              "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2/Unreadable.jsonl": "a136d343c724075b3e7dafdd290a8714d940ea08614339856d21799bd134ce0d"
             },
             "refusals": [
               {
                 "argv": [
-                  "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                  "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                   "anonymize",
-                  "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d.jsonl",
+                  "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2.jsonl",
                   "--out",
-                  "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source"
+                  "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source"
                 ],
-                "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+                "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
                 "code": 2,
                 "signal": null,
                 "timedOut": false,
                 "overflow": false,
                 "stdout": "",
-                "stderr": "Error: --out /tmp/pstack-native-capabilities-CmbjVe/anonymous-source would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
-                "durationMs": 700.0371140000002
+                "stderr": "Error: --out /tmp/pstack-native-capabilities-zWUL1G/anonymous-source would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
+                "durationMs": 978.1267370000005
               },
               {
                 "argv": [
-                  "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                  "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                   "anonymize",
-                  "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d.jsonl",
+                  "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2.jsonl",
                   "--out",
-                  "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d"
+                  "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2"
                 ],
-                "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+                "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
                 "code": 2,
                 "signal": null,
                 "timedOut": false,
                 "overflow": false,
                 "stdout": "",
-                "stderr": "Error: --out /tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
-                "durationMs": 664.0033759999997
+                "stderr": "Error: --out /tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2 would mix the export with raw session transcripts; choose another directory\nRun `omp --help` for available flags.\n",
+                "durationMs": 1071.2180829999988
               },
               {
                 "argv": [
-                  "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                  "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                   "anonymize",
-                  "/tmp/pstack-native-capabilities-CmbjVe/anonymous-source/2026-10-13T05-03-27-226Z_01a133a4-e5fa-7000-8306-b77823b7869d.jsonl",
+                  "/tmp/pstack-native-capabilities-zWUL1G/anonymous-source/2026-10-19T08-28-27-235Z_01a15346-bce3-7000-8cc4-7abf44de0ee2.jsonl",
                   "--out",
-                  "/tmp/pstack-native-capabilities-CmbjVe/nonempty-export"
+                  "/tmp/pstack-native-capabilities-zWUL1G/nonempty-export"
                 ],
-                "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+                "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
                 "code": 2,
                 "signal": null,
                 "timedOut": false,
                 "overflow": false,
                 "stdout": "",
-                "stderr": "Error: --out /tmp/pstack-native-capabilities-CmbjVe/nonempty-export is not empty; choose a new or empty directory\nRun `omp --help` for available flags.\n",
-                "durationMs": 678.9513399999996
+                "stderr": "Error: --out /tmp/pstack-native-capabilities-zWUL1G/nonempty-export is not empty; choose a new or empty directory\nRun `omp --help` for available flags.\n",
+                "durationMs": 882.026362999999
               }
             ]
           },
@@ -962,80 +962,80 @@
           "raw": {
             "pack": {
               "argv": [
-                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "session",
                 "pack",
-                "/tmp/pstack-native-capabilities-CmbjVe/transfer-source/2026-10-13T05-03-29-997Z_01a133a4-f0cd-7000-b7ec-fdc688271fb7.jsonl",
-                "/tmp/pstack-native-capabilities-CmbjVe/transfer.tar"
+                "/tmp/pstack-native-capabilities-zWUL1G/transfer-source/2026-10-19T08-28-32-082Z_01a15346-cfd2-7000-909d-a074ae1deb9d.jsonl",
+                "/tmp/pstack-native-capabilities-zWUL1G/transfer.tar"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "/tmp/pstack-native-capabilities-CmbjVe/transfer.tar\n",
+              "stdout": "/tmp/pstack-native-capabilities-zWUL1G/transfer.tar\n",
               "stderr": "",
-              "durationMs": 685.7779969999992
+              "durationMs": 1129.9300910000002
             },
             "unpack": {
               "argv": [
-                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "session",
                 "unpack",
-                "/tmp/pstack-native-capabilities-CmbjVe/transfer.tar",
+                "/tmp/pstack-native-capabilities-zWUL1G/transfer.tar",
                 "--cwd",
-                "/tmp/pstack-native-capabilities-CmbjVe/receiver-checkout"
+                "/tmp/pstack-native-capabilities-zWUL1G/receiver-checkout"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/receiver-checkout",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/receiver-checkout",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "/tmp/pstack-native-capabilities-CmbjVe/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-CmbjVe-receiver-checkout--/2026-10-13T05-03-29-997Z_01a133a4-f0cd-7000-b7ec-fdc688271fb7.jsonl\n",
-              "stderr": "Unpacked session (01a133a4-f0cd-7000-b7ec-fdc688271fb7).\n",
-              "durationMs": 719.1694740000003
+              "stdout": "/tmp/pstack-native-capabilities-zWUL1G/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-zWUL1G-receiver-checkout--/2026-10-19T08-28-32-082Z_01a15346-cfd2-7000-909d-a074ae1deb9d.jsonl\n",
+              "stderr": "Unpacked session (01a15346-cfd2-7000-909d-a074ae1deb9d).\n",
+              "durationMs": 1084.8338269999986
             },
             "divergentUnpack": {
               "argv": [
-                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "session",
                 "unpack",
-                "/tmp/pstack-native-capabilities-CmbjVe/transfer.tar",
+                "/tmp/pstack-native-capabilities-zWUL1G/transfer.tar",
                 "--cwd",
-                "/tmp/pstack-native-capabilities-CmbjVe/receiver-checkout"
+                "/tmp/pstack-native-capabilities-zWUL1G/receiver-checkout"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/receiver-checkout",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/receiver-checkout",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
-              "stdout": "/tmp/pstack-native-capabilities-CmbjVe/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-CmbjVe-receiver-checkout--/2026-10-13T05-03-32-084Z_01a133a4-f8f4-7000-88b0-0f8681f82197.jsonl\n",
-              "stderr": "The local copy of this session diverged; unpacked as a fork (01a133a4-f8f4-7000-88b0-0f8681f82197).\n",
-              "durationMs": 695.98938
+              "stdout": "/tmp/pstack-native-capabilities-zWUL1G/receiver-home/.omp/agent/sessions/--tmp-pstack-native-capabilities-zWUL1G-receiver-checkout--/2026-10-19T08-28-35-273Z_01a15346-dc49-7000-8e21-3ab5dad4985f.jsonl\n",
+              "stderr": "The local copy of this session diverged; unpacked as a fork (01a15346-dc49-7000-8e21-3ab5dad4985f).\n",
+              "durationMs": 934.1732380000012
             },
             "moved": {
               "argv": [
-                "/tmp/omp-pstack-release-fix-20261013/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
+                "/tmp/omp-pstack-port-20261019/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js",
                 "session",
                 "moved",
-                "/tmp/pstack-native-capabilities-CmbjVe/moved-copy.jsonl",
+                "/tmp/pstack-native-capabilities-zWUL1G/moved-copy.jsonl",
                 "--to",
                 "fixture-recipient"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
               "stdout": "",
               "stderr": "",
-              "durationMs": 692.142355
+              "durationMs": 1188.1059520000017
             },
             "syntheticFixture": true,
             "manifest": {
               "version": 1,
-              "id": "01a133a4-f0cd-7000-b7ec-fdc688271fb7",
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+              "id": "01a15346-cfd2-7000-909d-a074ae1deb9d",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
               "omp": "18.10.2"
             },
             "archiveMembers": [
@@ -1043,43 +1043,43 @@
               "manifest.json",
               "session.jsonl"
             ],
-            "archiveSha256": "e9547f92d128247185a56b39f7a99805e3e9a79005231b36bcd2961bd5486c58",
+            "archiveSha256": "56c25da3af66b162f1e7d48b4fa33e92e6490084814dbc00a02cf4dc9a0f7962",
             "before": {
-              "transcript": "84417f1558efe244752feb79fcde478658fbb9887f7aadba7738698410400a44",
-              "artifact": "15162f460181731c9c73c8fceb3b3c4b8568eab57d20c7e76b195e7119ff84b9"
+              "transcript": "1e728b8ebdec4d7b70807a88bc32208938c460f9f9a6349a6c8421e478e15aac",
+              "artifact": "ebe70b1c024a1bf407cc715efc8e3ea6a69c3b475c67cd2ae2d05cc141031e2b"
             },
             "after": {
-              "transcript": "84417f1558efe244752feb79fcde478658fbb9887f7aadba7738698410400a44",
-              "artifact": "15162f460181731c9c73c8fceb3b3c4b8568eab57d20c7e76b195e7119ff84b9"
+              "transcript": "1e728b8ebdec4d7b70807a88bc32208938c460f9f9a6349a6c8421e478e15aac",
+              "artifact": "ebe70b1c024a1bf407cc715efc8e3ea6a69c3b475c67cd2ae2d05cc141031e2b"
             },
-            "sourceId": "01a133a4-f0cd-7000-b7ec-fdc688271fb7",
-            "sourceCwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
-            "receivedId": "01a133a4-f0cd-7000-b7ec-fdc688271fb7",
-            "receivedCwd": "/tmp/pstack-native-capabilities-CmbjVe/receiver-checkout",
-            "receivedArtifactSha256": "15162f460181731c9c73c8fceb3b3c4b8568eab57d20c7e76b195e7119ff84b9",
+            "sourceId": "01a15346-cfd2-7000-909d-a074ae1deb9d",
+            "sourceCwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
+            "receivedId": "01a15346-cfd2-7000-909d-a074ae1deb9d",
+            "receivedCwd": "/tmp/pstack-native-capabilities-zWUL1G/receiver-checkout",
+            "receivedArtifactSha256": "ebe70b1c024a1bf407cc715efc8e3ea6a69c3b475c67cd2ae2d05cc141031e2b",
             "arrived": {
               "kind": "arrived",
-              "fromCwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/receiver-checkout"
+              "fromCwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/receiver-checkout"
             },
-            "divergentId": "01a133a4-f8f4-7000-88b0-0f8681f82197",
-            "divergentParent": "01a133a4-f0cd-7000-b7ec-fdc688271fb7",
-            "divergentOriginalSha256Before": "85216cfff1ea8fe71794f1f9dc505e0c3142e7c2faec37addd32292cea99dce2",
-            "divergentOriginalSha256After": "85216cfff1ea8fe71794f1f9dc505e0c3142e7c2faec37addd32292cea99dce2",
+            "divergentId": "01a15346-dc49-7000-8e21-3ab5dad4985f",
+            "divergentParent": "01a15346-cfd2-7000-909d-a074ae1deb9d",
+            "divergentOriginalSha256Before": "0a4de24a89926827836bdb44c6a2cf9903ccc1718041e1bc59755522c75c61d9",
+            "divergentOriginalSha256After": "0a4de24a89926827836bdb44c6a2cf9903ccc1718041e1bc59755522c75c61d9",
             "departed": {
               "kind": "departed",
               "to": "fixture-recipient"
             },
             "originalEntryIds": [
-              "786cde50",
-              "58f43cb8"
+              "35a41d71",
+              "a806b2fd"
             ],
             "receivedOriginalEntryIds": [
-              "786cde50",
-              "58f43cb8"
+              "35a41d71",
+              "a806b2fd"
             ],
-            "movedId": "01a133a4-f0cd-7000-b7ec-fdc688271fb7",
-            "movedCwd": "/tmp/pstack-native-capabilities-CmbjVe/repository"
+            "movedId": "01a15346-cfd2-7000-909d-a074ae1deb9d",
+            "movedCwd": "/tmp/pstack-native-capabilities-zWUL1G/repository"
           },
           "checks": {
             "packedIdCwdAndHost": true,
@@ -1199,12 +1199,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "Saved working directory and index state On main: native-proof\n\n\nWall time: 0.09 seconds"
+                      "text": "Saved working directory and index state On main: native-proof\n\n\nWall time: 0.10 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 93.31135600000016
+                    "wallTimeMs": 104.98517100000026
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1219,12 +1219,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "HEAD is now at 4153671 fixture\n\n\nWall time: 0.00 seconds"
+                      "text": "HEAD is now at 3824291 fixture\n\n\nWall time: 0.00 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 4.966840000000957
+                    "wallTimeMs": 4.348312000000078
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1239,12 +1239,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "(no output)\n\nWall time: 0.00 seconds"
+                      "text": "(no output)\n\nWall time: 0.01 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 3.735376999999062
+                    "wallTimeMs": 10.534647000000405
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1259,12 +1259,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "HEAD is now at 4153671 fixture\n\n\nWall time: 0.01 seconds"
+                      "text": "HEAD is now at 3824291 fixture\n\n\nWall time: 0.01 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 6.960395000000062
+                    "wallTimeMs": 6.44511600000078
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1279,12 +1279,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "(no output)\n\nWall time: 0.01 seconds"
+                      "text": "(no output)\n\nWall time: 0.04 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 6.721113999999943
+                    "wallTimeMs": 36.45977900000071
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1299,12 +1299,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "HEAD is now at 4153671 fixture\n\n\nWall time: 0.03 seconds"
+                      "text": "HEAD is now at 3824291 fixture\n\n\nWall time: 0.07 seconds"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 25.13970899999913
+                    "wallTimeMs": 65.54373499999929
                   }
                 },
                 "before": "04272f95a756d943cccafea7b689e16bc7196b6fbb5d6d293408683894d9951a",
@@ -1319,12 +1319,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "git stash is blocked by workspace policy — do not work around it.\nThis is a SHARED workspace; stash mutates the tree/index other concurrent agents rely on, silently trashing their work. You cannot stash with unmerged paths anyway — resolve conflicts in place. Read-only `git stash list` and `git stash show` remain available.\n\n\nWall time: 0.01 seconds\n\nCommand exited with code 1"
+                      "text": "git stash is blocked by workspace policy — do not work around it.\nThis is a SHARED workspace; stash mutates the tree/index other concurrent agents rely on, silently trashing their work. You cannot stash with unmerged paths anyway — resolve conflicts in place. Read-only `git stash list` and `git stash show` remain available.\n\n\nWall time: 0.00 seconds\n\nCommand exited with code 1"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 11.911443999999392,
+                    "wallTimeMs": 4.440342999998393,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1346,7 +1346,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 0.8324000000011438,
+                    "wallTimeMs": 0.9635490000000573,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1363,12 +1363,12 @@
                   "content": [
                     {
                       "type": "text",
-                      "text": "git restore is blocked by workspace policy — do not work around it.\nThis is a SHARED workspace; overwriting working-tree files or switching branches discards or strands uncommitted changes other concurrent agents rely on. It is exempt only while a merge/rebase conflict is being resolved, and the repository is not in one.\nUnstaging is always allowed: git reset [<path>] / git restore --staged <path>. To undo working-tree edits, edit forward; inspect history read-only with git diff/log/show.\n\n\nWall time: 0.00 seconds\n\nCommand exited with code 1"
+                      "text": "git restore is blocked by workspace policy — do not work around it.\nThis is a SHARED workspace; overwriting working-tree files or switching branches discards or strands uncommitted changes other concurrent agents rely on. It is exempt only while a merge/rebase conflict is being resolved, and the repository is not in one.\nUnstaging is always allowed: git reset [<path>] / git restore --staged <path>. To undo working-tree edits, edit forward; inspect history read-only with git diff/log/show.\n\n\nWall time: 0.01 seconds\n\nCommand exited with code 1"
                     }
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 2.1326499999995576,
+                    "wallTimeMs": 9.699587999999494,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1390,7 +1390,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 0.5066110000007029,
+                    "wallTimeMs": 0.6944800000001123,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1412,7 +1412,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 0.7867560000013327,
+                    "wallTimeMs": 0.717040999999881,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1434,7 +1434,7 @@
                   ],
                   "details": {
                     "timeoutSeconds": 5,
-                    "wallTimeMs": 0.6569469999994908,
+                    "wallTimeMs": 1.383628999999928,
                     "exitCode": 1
                   },
                   "isError": true
@@ -1449,12 +1449,12 @@
               "content": [
                 {
                   "type": "text",
-                  "text": "(no output)\n\nWall time: 0.00 seconds"
+                  "text": "(no output)\n\nWall time: 0.01 seconds"
                 }
               ],
               "details": {
                 "timeoutSeconds": 5,
-                "wallTimeMs": 2.649250000000393
+                "wallTimeMs": 6.380687000000762
               }
             },
             "cached": {
@@ -1464,14 +1464,14 @@
                 "--cached",
                 "--name-only"
               ],
-              "cwd": "/tmp/pstack-native-capabilities-CmbjVe/repository",
+              "cwd": "/tmp/pstack-native-capabilities-zWUL1G/repository",
               "code": 0,
               "signal": null,
               "timedOut": false,
               "overflow": false,
               "stdout": "",
               "stderr": "",
-              "durationMs": 1.6697999999996682
+              "durationMs": 7.744848999998794
             },
             "beforeUnstage": "fff2ec3d159fa985cabaf62319c6576e2950301e7865386094063b079c3ab6cb",
             "afterUnstage": "fff2ec3d159fa985cabaf62319c6576e2950301e7865386094063b079c3ab6cb"

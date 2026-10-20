@@ -26,6 +26,7 @@ Check the state that changes the answer, and mention it only when it does:
 
 - No `rules/pstack-models.md` in the active OMP profile means `/setup-pstack` hasn't configured models there. No role has a default. Suggest `/setup-pstack` to approve the pool first, then assign every role from that pool.
 - No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app. Mention `/create-verification-skill` when the question is about proving a change works.
+- No formal verification skill in the project means no property is checked past what tests reach. Mention `/create-formal-verification-skill` when the question is about a race, an invariant, or another case tests rarely hit. When one exists and the code it covers changed after the commit it records as last in sync, mention `/maintain-formal-verification-skill` if the question touches that code.
 
 When the model rule is missing and it matters, ask whether the user wants to approve a model pool and pick each role's model and reasoning effort now. It matters when the user is new, the question is about setup or cost, or the answer depends on which models run. Use OMP's `ask` tool at most once per chat. If the need is also unclear, ask both questions together. Offer two choices:
 
@@ -35,7 +36,7 @@ When the model rule is missing and it matters, ask whether the user wants to app
 ## Get set up
 
 1. Install with `omp plugin marketplace add https://github.com/Jrecos/omp-pstack`, then `omp plugin install omp-pstack@omp-pstack`. Restart OMP to load the plugin.
-2. Run [`/setup-pstack`](../setup-pstack/SKILL.md). Approve the model pool first, then confirm each role's model and reasoning effort. The `pstack_models` tool writes `rules/pstack-models.md` in the active OMP profile. It applies to new dispatches. An unset role requires setup.
+2. Run [`/setup-pstack`](../setup-pstack/SKILL.md). Approve the model pool first, then confirm each role's model and reasoning effort. The `pstack_models` tool writes `rules/pstack-models.md` in the active OMP profile. It applies to new dispatches. An unset role requires setup. Then offer once each to generate a verification skill and a formal verification skill, unless the project already has one.
 3. Start a real task with `/poteto-mode`, a goal, and a check that can pass or fail.
 
 Installing changes nothing until the user invokes a skill. Only `/setup-pstack` loads from the user's words. The [README](../../README.md) and [guide page 1](../../docs/guide/01-setup.md) have the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
@@ -59,11 +60,13 @@ The default answer is `/poteto-mode`, which runs most of the others when its ste
 | The user wants to | Skill |
 |---|---|
 | Do any non-trivial task with rigor | [`/poteto-mode`](../poteto-mode/SKILL.md) |
+| Check that the agent understood their goal and the problem before it starts | [`/in-your-own-words`](../in-your-own-words/SKILL.md) |
+| Aim a task higher before starting: more expert, more outcome-focused, not overspecified | [`/sharpen`](../sharpen/SKILL.md) |
 | Know how code works now, or where new code should live | [`/how`](../how/SKILL.md) |
 | Know why code is shaped this way, or where a number came from | [`/why`](../why/SKILL.md) |
 | Understand a change or subsystem, explained plainly | [`/teach`](../teach/SKILL.md) |
 | Catch up on their own recent work on a topic | [`/recall`](../recall/SKILL.md) |
-| Catch up on everything in this chat since their last message, with enough context to decide each action item | [`/ketchup`](../ketchup/SKILL.md) |
+| Catch up on what changed in this chat since their last message, in plain words and small visuals, with every item waiting on them listed and decidable from the reply alone | [`/ketchup`](../ketchup/SKILL.md) |
 | Know what a small diff could break outside itself | [`/blast-radius`](../blast-radius/SKILL.md) |
 | Settle types and module shape before code that crosses a function boundary | [`/architect`](../architect/SKILL.md) |
 | Get several attempts at one brief, merged into the best one | [`/arena`](../arena/SKILL.md) |
@@ -77,6 +80,8 @@ The default answer is `/poteto-mode`, which runs most of the others when its ste
 | Hear the last reply again in plain words | [`/bro`](../bro/SKILL.md) |
 | Give agents a scripted way to drive the app and prove behavior | [`/create-verification-skill`](../create-verification-skill/SKILL.md) |
 | Bring a verification skill and its feature map back in line with the app | [`/maintain-verification-skill`](../maintain-verification-skill/SKILL.md) |
+| Formally verify a race, invariant, or other property that tests rarely reach | [`/create-formal-verification-skill`](../create-formal-verification-skill/SKILL.md) |
+| Bring a formal verification back in line after the code it covers changed, and learn whether a failure is drift or a bug | [`/maintain-formal-verification-skill`](../maintain-formal-verification-skill/SKILL.md) |
 | Vet a performance number before reporting or acting on it | [`/benchmark-checklist`](../benchmark-checklist/SKILL.md) |
 | Run a large or cross-cutting change, or one to review after stepping away | [`/figure-it-out`](../figure-it-out/SKILL.md) |
 | Keep a decision log during a run, and review it afterward | [`/show-me-your-work`](../show-me-your-work/SKILL.md) |

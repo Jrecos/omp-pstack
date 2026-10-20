@@ -15,6 +15,8 @@ OMP confirms the plugin is installed.
 
 Before using CLI-backed workflows, complete the [installed CLI dependency setup](../../README.md#running-the-pstack-cli-after-install). Repeat it after every upgrade or forced reinstall.
 
+This guide covers OMP. The upstream Claude Code distribution is recorded as [source-only provenance](../harness/claude-code.md). This package does not install or support that runtime.
+
 ## Pick your models
 
 Run:
@@ -31,13 +33,15 @@ The budgets target reasoning effort. `unlimited` targets `max`, `large` targets 
 
 Set a role to `inherit-parent` or `auto` to use your parent chat model. The alias must appear in the approved pool. `pstack_agent` resolves the prepared worker for the configured role. Ordinary delegates use `kind: "poteto"`. Native `task` receives only the returned `agent`, not a `model` field. Both aliases mean the same thing, and neither is a model slug. A panel list sets the number of candidates or reviewers. Arena selects one judge from `arena cross-judge pool`, preferring a different model family when possible. Setup also configures `swarm workers`, the model every `/swarm` worker uses unless a race names a model for each arm.
 
-## Accept the verification offer, or don't
+## Accept the verification offers, or don't
 
 At the end of setup, `/setup-pstack` looks for a way to prove app behavior in your project, either a `verify-*` skill or an existing harness. If it finds neither, it offers once to generate one with [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md).
 
 Say yes and it writes `<skill-root>/verify-<app>/` in an existing `.agents/skills/` or `.omp/skills/` root, asking which to create if neither exists. The project-local skill teaches agents to drive your app the way a user does and is proved once before handoff. Say no and setup moves on. You can run `/create-verification-skill` yourself any time. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers when it earns its place.
 
 If you're new to pstack, say yes. An agent that can check its own work keeps going until the check passes. An agent that cannot check hands every result back to you for a manual check. The verification skill saves that work.
+
+Then setup offers once to generate a formal verification skill with [`/create-formal-verification-skill`](../../skills/create-formal-verification-skill/SKILL.md), unless the project already has one. Tests check the cases someone thought to write. A formal verification skill checks one key property of your code, such as "a job never runs twice at once", in every case within a stated scope. Say yes when your code has concurrency, retries, a state machine, or a parser, where a bug is costly and tests rarely reach the case that breaks. Otherwise say no, and run it later if that changes. [Verify and ship](./06-verify-and-ship.md#prove-a-property-with-a-formal-verification-skill) covers it.
 
 After setup, start a new chat. The model rule applies to new sessions.
 

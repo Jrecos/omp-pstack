@@ -30,7 +30,7 @@ For each reviewer, resolve `pstack_agent` with `{role: "interrogate reviewers", 
 
 Ordered duplicate entries count as separate reviewers. Never deduplicate or replace the configured list with fallbacks. If a concrete model fails to resolve, name the failed role and rerun `/setup-pstack` to choose a model that resolves. `inherit-parent` and `auto` resolve to the live parent model through the returned agent. Do not treat aliases as rejected selectors.
 
-Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`.
+Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 ## Step 4, Synthesize
 

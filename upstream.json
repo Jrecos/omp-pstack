@@ -1,12 +1,12 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "commit": "1b6d44ff26d4e242f4e8f68c391e6d2f7ca16def",
-  "version": "0.15.20",
-  "subtree": "1dbec20ada6e40cb12774b8893960a558319fd6b",
+  "commit": "d457567332aa6989e753ea289f30ea2bfbc80bc0",
+  "version": "0.15.28",
+  "subtree": "06803099e18ed488c8c2a2fda118ce772b4e2a77",
   "files": [
     {
       "source": "pstack/.cursor-plugin/plugin.json",
-      "blob": "879440be129f60eb112cca5d6a6ef8d9689ffffc",
+      "blob": "7754f381a8845086604cc3d98f2a696619b4cd12",
       "target": "package.json",
       "mode": "100644",
       "adaptation": {
@@ -43,7 +43,7 @@
     },
     {
       "source": "pstack/README.md",
-      "blob": "5e34dbff924bd4204eb2436c3357950d33718964",
+      "blob": "8d350cc17cde60942ecac373c8189c38169c77eb",
       "target": "README.md",
       "mode": "100644",
       "adaptation": {
@@ -75,7 +75,7 @@
     },
     {
       "source": "pstack/agents/poteto-agent.md",
-      "blob": "41a39ed4035f91af53ed3ecc776184749198ca22",
+      "blob": "e1d2df2e8c3c4954b87ee1b29655c898bc7ee699",
       "target": "agents/poteto-agent.md",
       "mode": "100644",
       "adaptation": {
@@ -275,7 +275,7 @@
     },
     {
       "source": "pstack/docs/guide/01-setup.md",
-      "blob": "62420df8255f5f3de03f3977e64bc0f34dbdc073",
+      "blob": "2c2ef341357ea7c39c8b831ee8c8669b17e85475",
       "target": "docs/guide/01-setup.md",
       "mode": "100644",
       "adaptation": {
@@ -290,7 +290,7 @@
     },
     {
       "source": "pstack/docs/guide/02-poteto-mode.md",
-      "blob": "8341604aebe418077003b10a894ebcaff2a9ce0d",
+      "blob": "db16b5e95bf505ffaf20863f1f50502e3919caec",
       "target": "docs/guide/02-poteto-mode.md",
       "mode": "100644",
       "adaptation": {
@@ -305,19 +305,19 @@
     },
     {
       "source": "pstack/docs/guide/03-understand.md",
-      "blob": "e15bea0520eff6e03df789a22cd4224daee04bd6",
+      "blob": "e26661f913e2ba31a0f043df3ede772461fd6a96",
       "target": "docs/guide/03-understand.md",
       "mode": "100644"
     },
     {
       "source": "pstack/docs/guide/04-design.md",
-      "blob": "61d5bbb591c93e432fafe77259cd62a7aaf1cce8",
+      "blob": "65862086a58780b258fdb490dcafedd75b9cce18",
       "target": "docs/guide/04-design.md",
       "mode": "100644"
     },
     {
       "source": "pstack/docs/guide/05-build-and-clean.md",
-      "blob": "fc48a46df4f3e7f980522d40571367d4b809733b",
+      "blob": "dbadc3d41294ab2cc3cde04f96b861dd294e496e",
       "target": "docs/guide/05-build-and-clean.md",
       "mode": "100644",
       "adaptation": {
@@ -332,7 +332,7 @@
     },
     {
       "source": "pstack/docs/guide/06-verify-and-ship.md",
-      "blob": "007ea2cab45724e48e0ab8f52e52bf7957f694f2",
+      "blob": "3c7b3c4dd0a256165f308f051b7125b9c5b37b62",
       "target": "docs/guide/06-verify-and-ship.md",
       "mode": "100644",
       "adaptation": {
@@ -347,7 +347,7 @@
     },
     {
       "source": "pstack/docs/guide/07-overnight.md",
-      "blob": "cbad0672355927da4aa86547c5e5e108b354a4e2",
+      "blob": "dd4230d8cc242638095f648f5f3e7b5bd46f61a9",
       "target": "docs/guide/07-overnight.md",
       "mode": "100644",
       "adaptation": {
@@ -362,13 +362,13 @@
     },
     {
       "source": "pstack/docs/guide/08-principles.md",
-      "blob": "0aaec930c3e6ca6a014087194d519048dd52b764",
+      "blob": "d2921500bb44643ac3f841fa03e19e0b3a240c8b",
       "target": "docs/guide/08-principles.md",
       "mode": "100644"
     },
     {
       "source": "pstack/docs/guide/09-make-it-yours.md",
-      "blob": "321caaf9169aba31c69996fcf0de9c9423b24188",
+      "blob": "8d1c4b4f951bbb203ff1288e02ce91e8b6832a43",
       "target": "docs/guide/09-make-it-yours.md",
       "mode": "100644",
       "adaptation": {
@@ -383,7 +383,7 @@
     },
     {
       "source": "pstack/docs/guide/10-recipes-and-pitfalls.md",
-      "blob": "68751e7c02bde6e7b0620b9469c0e10b5e022168",
+      "blob": "fb4743c29011d9668cb1ba35249721a0dbed8443",
       "target": "docs/guide/10-recipes-and-pitfalls.md",
       "mode": "100644",
       "adaptation": {
@@ -398,7 +398,7 @@
     },
     {
       "source": "pstack/docs/guide/README.md",
-      "blob": "627bfb222f5a6b0f544809de2ef43ec056ee684f",
+      "blob": "17422b9921f1179b2a2b7137805267225ab271c2",
       "target": "docs/guide/README.md",
       "mode": "100644",
       "adaptation": {
@@ -482,7 +482,7 @@
     },
     {
       "source": "pstack/skills/arena/SKILL.md",
-      "blob": "58ae9d9a3f8812429091515f2a7ce2f91cf14ef9",
+      "blob": "b198b9e425c6b3e6ff01ca789b97ca5b4abb7ce2",
       "target": "skills/arena/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -497,7 +497,7 @@
     },
     {
       "source": "pstack/skills/automate-me/SKILL.md",
-      "blob": "cd3636e9a53c7c782cf15254204dccfc854086b5",
+      "blob": "50971b894688b1e1923458996b89f2a9961feeb3",
       "target": "skills/automate-me/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -558,13 +558,13 @@
     },
     {
       "source": "pstack/skills/figure-it-out/SKILL.md",
-      "blob": "195f50b83d0f643758a2b92e432374fbb5ef7635",
+      "blob": "0d04c2e69b75b22ff1a9a1d8ab339580a5fbbfed",
       "target": "skills/figure-it-out/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/how/SKILL.md",
-      "blob": "775d292f8d5d369200502eabe3136d8f56666239",
+      "blob": "67edc340d4d8a9c7ab0b9e08c663e0e63b8d9125",
       "target": "skills/how/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -591,7 +591,7 @@
     },
     {
       "source": "pstack/skills/interrogate/SKILL.md",
-      "blob": "9e3b99a19bf22623220b42412bbabd1d67d02f05",
+      "blob": "94946d22d8bf896bfcc2c54d363df5af3d17b4ca",
       "target": "skills/interrogate/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -612,7 +612,7 @@
     },
     {
       "source": "pstack/skills/interrogate/references/lead-judgment.md",
-      "blob": "5ce526097fdd3dfeaf4cd3b126a3f486c3ee36ae",
+      "blob": "3b41346c9c3f5c35453d34f1c77374b7e9346aa9",
       "target": "skills/interrogate/references/lead-judgment.md",
       "mode": "100644"
     },
@@ -645,7 +645,7 @@
     },
     {
       "source": "pstack/skills/make-bot-ui/SKILL.md",
-      "blob": "285df7569758a70e62e9f3596a1f829a5b6ba80e",
+      "blob": "446342ca35a46af771271e0cd901354a61997589",
       "target": "skills/make-bot-ui/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -660,7 +660,7 @@
     },
     {
       "source": "pstack/skills/no-comments/SKILL.md",
-      "blob": "4b608af0cb5323d7364011aa9e3d6a88b6e93ab5",
+      "blob": "a07ce9dfc657bdf1b2bdf3f7619225e7faac091b",
       "target": "skills/no-comments/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -676,7 +676,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/SKILL.md",
-      "blob": "ddf2c4513a22ff41a4824029801c1ba864a04801",
+      "blob": "21993f546032ca37671d5f1caf39c9a82ab4fa9d",
       "target": "skills/poteto-mode/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -708,7 +708,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autonomous-run.md",
-      "blob": "12c3a7d84effcacf3550cb893be67498d7b28a4a",
+      "blob": "e6b88703cf327a76bcdd424429345ac0efeca67e",
       "target": "skills/poteto-mode/playbooks/autonomous-run.md",
       "mode": "100644",
       "adaptation": {
@@ -723,11 +723,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-full.md",
-      "blob": "d5a68c339e25ac016ffad9c51d858f0f6c37937a",
+      "blob": "068882379d9bdc2298052e7762d67ac795715baf",
       "target": "skills/poteto-mode/playbooks/autopilot-full.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor cloud agent per PR translated to native background task agent per PR; deslop and control-surface references repointed to packaged OMP references; hourly audit cadence uses a native background 3600-second timer sentinel because /loop limits total duration, not tick interval; trunk re-read path fixed from pstack/skills/... to skills/.... Code-ready and patch-changing verification rounds adapted from upstream PR #414. Own-branch rebase safety adapted from upstream PR #422 while preserving the OMP control references and patch-id gate.",
+        "reason": "Preserve native OMP tasks, approved model-role routing and host controls. Keep the stricter landed full-swarm gate after every patch-changing Autopilot push and bottom-only stack landing instead of upstream relaxation.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -739,11 +739,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
-      "blob": "750a7547235ae8eb340285684b9be7c36dff323a",
+      "blob": "d7bdc289e045e8bc7da97b4ddfccc8d6c9ed0800",
       "target": "skills/poteto-mode/playbooks/autopilot-stack.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Native task agents, packaged deslop reference, corrected trunk re-read path, and native background timer sentinel replace Cursor-only mechanics. Stack topology and patch-id re-verification remain; code-ready and patch-changing verification rounds adapted from upstream PR #414.",
+        "reason": "Preserve native OMP tasks, approved model-role routing and host controls. Keep the stricter landed full-swarm gate after every patch-changing Autopilot push and bottom-only stack landing instead of upstream relaxation.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -771,7 +771,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/bug-fix.md",
-      "blob": "eeebc42b7477d435d8ac61d631d84822f908f59c",
+      "blob": "b5de0bfa63add6ed38a38a8bd668cf36ac009c61",
       "target": "skills/poteto-mode/playbooks/bug-fix.md",
       "mode": "100644",
       "adaptation": {
@@ -786,7 +786,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/eval.md",
-      "blob": "3dae34e2ef0cbdd9bafa5ab372da5ea143d48452",
+      "blob": "768a894e275b1e9b198e83ceb6b46964e3f9d6db",
       "target": "skills/poteto-mode/playbooks/eval.md",
       "mode": "100644",
       "adaptation": {
@@ -801,7 +801,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/feature.md",
-      "blob": "79a6bbbe0ce61c3b5ef9af1ee8e3ccdb0557edc6",
+      "blob": "eb1040cb2631f3eeacd8f9f6469d7e97277f24ef",
       "target": "skills/poteto-mode/playbooks/feature.md",
       "mode": "100644",
       "adaptation": {
@@ -817,7 +817,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/hillclimb.md",
-      "blob": "c6441b92d30a71489d88eae5bfa8dc457da55cb1",
+      "blob": "e9cf267908a9737236b3a8a8a5a99fe9066f7554",
       "target": "skills/poteto-mode/playbooks/hillclimb.md",
       "mode": "100644",
       "adaptation": {
@@ -838,11 +838,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/multi-phase-plan.md",
-      "blob": "f8ed78a6533cc5d738d3a3ec106bf2577d3f98ca",
+      "blob": "27e99947bd20575e2ff503dbfba985a4f0fa298e",
       "target": "skills/poteto-mode/playbooks/multi-phase-plan.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Exploration uses pstack_agent role and kind resolution followed by native task with the returned prepared agent. Verification lanes use the configured swarm workers role instead of a fixed Cursor model. Isolated native task worktrees replace cloud VM boot instructions. The documented PSTACK_ROOT resolver invokes pstack check-plan, and deslop uses the packaged reference. A background 3600-second timer sentinel supplies the hourly audit cadence because native /loop bounds total duration rather than tick interval. Plan skeleton, ten-lane verification, review gates, and appendices are preserved. Autopilot plans verify at code-ready and after patch-changing pushes per upstream PR #414.",
+        "reason": "Preserve native OMP tasks, approved model-role routing and host controls. Keep the stricter landed full-swarm gate after every patch-changing Autopilot push and bottom-only stack landing instead of upstream relaxation.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -854,7 +854,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
-      "blob": "fcd00527c6b9fb592aecfc3b1512e3b838146de3",
+      "blob": "d729a7a06c5b67e406b081e1777114bc03b66f4a",
       "target": "skills/poteto-mode/playbooks/opening-a-pr.md",
       "mode": "100644",
       "adaptation": {
@@ -870,7 +870,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/orchestrate.md",
-      "blob": "d5b6d008026ff0177f52e22a6fb4b2edae5c87e2",
+      "blob": "4ccb24d76c5e190125cecc99d4a9b5c9eb2932d9",
       "target": "skills/poteto-mode/playbooks/orchestrate.md",
       "mode": "100644",
       "adaptation": {
@@ -900,7 +900,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/perf-issue.md",
-      "blob": "405c7a4362bedbd4194a5ef234553adf0dff78c9",
+      "blob": "46dcc9963366992016dfb1d59ccaae977930f982",
       "target": "skills/poteto-mode/playbooks/perf-issue.md",
       "mode": "100644",
       "adaptation": {
@@ -921,7 +921,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/refactoring.md",
-      "blob": "df2a863b531906c64f92b9f9d8feb62f8c7a8665",
+      "blob": "c04b07eeb8b8fa651d080729363466ab73d2fe40",
       "target": "skills/poteto-mode/playbooks/refactoring.md",
       "mode": "100644",
       "adaptation": {
@@ -936,13 +936,13 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/runtime-forensics.md",
-      "blob": "ba659bfe1c4c2f956f3285974bfdc941120f9948",
+      "blob": "6bf64240d1a890df290b98c632ad374d20ca9fd4",
       "target": "skills/poteto-mode/playbooks/runtime-forensics.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/session-pickup.md",
-      "blob": "9b2ed06e0ff8b01bf03b7a0d6a4cbb8ba3a46720",
+      "blob": "876b1433828ccc7c874123cdf300240abb285dd9",
       "target": "skills/poteto-mode/playbooks/session-pickup.md",
       "mode": "100644",
       "adaptation": {
@@ -957,11 +957,11 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/shipping.md",
-      "blob": "0f1d41f189222b991734015926a3b22607e1b92f",
+      "blob": "0a0c3cfde8948e3aa8ee80c6f3f9ce7e3e64fcba",
       "target": "skills/poteto-mode/playbooks/shipping.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Cursor cloud agent wording translated to native background task agent; control-surface references repointed to packaged omp references; watch-pr watcher resolved via the documented PSTACK_ROOT installed-root resolver (README, running the pstack CLI after install) and invoked as the stable pstack watch-pr subcommand. Patch-id verdicts, contiguous-run rule, and one-at-a-time landing preserved verbatim.",
+        "reason": "Preserve native OMP tasks, approved model-role routing and host controls. Keep the stricter landed full-swarm gate after every patch-changing Autopilot push and bottom-only stack landing instead of upstream relaxation.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -972,7 +972,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/trace-forensics.md",
-      "blob": "ee54a2391b69d1d2a9ad7d3ee06266120c5e054e",
+      "blob": "bf1b003786503623d91ca173fc97a6e54eee3acf",
       "target": "skills/poteto-mode/playbooks/trace-forensics.md",
       "mode": "100644"
     },
@@ -984,7 +984,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/worktree-cleanup.md",
-      "blob": "c767ac09ab584070fe3a76ddd754966b0cdf452f",
+      "blob": "45e1af693cc40d0271249a0e98f15bfc815af615",
       "target": "skills/poteto-mode/playbooks/worktree-cleanup.md",
       "mode": "100644",
       "adaptation": {
@@ -1028,7 +1028,7 @@
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
-            "skills/poteto-mode/scripts/orch/orch.test.ts",
+            "tests/orch.test.ts",
             "skills/poteto-mode/scripts/watch-pr/cli.test.ts"
           ]
         }
@@ -1051,13 +1051,22 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
-      "blob": "538775e37f3ac6fd2dd128883b7f7fe51c1316d5",
+      "blob": "2ef435d7d6f464a396d23158d4bcaae08f19c94d",
       "target": "skills/poteto-mode/scripts/orch/orch.test.ts",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Move the retained behavioral store, forge-chain, and CLI regressions into tests/orch.test.ts. Delete incidental commander help wording assertions instead of pinning implementation prose.",
+        "verification": {
+          "kind": "omp/cli scenario",
+          "artifacts": [
+            "tests/orch.test.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.ts",
-      "blob": "219ac17bd8805b45140eca7c429834be9ded1b7d",
+      "blob": "14cb5139a91745a58780a81d8a1b40ef67d9504d",
       "target": "skills/poteto-mode/scripts/orch/orch.ts",
       "mode": "100755",
       "adaptation": {
@@ -1065,14 +1074,14 @@
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
-            "skills/poteto-mode/scripts/orch/orch.test.ts"
+            "tests/orch.test.ts"
           ]
         }
       }
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/store.ts",
-      "blob": "5e6c602fb670a6b5598977f5bf85d717cf797ef7",
+      "blob": "417368918d2a6e2589c0221ade5c65535ffe05f1",
       "target": "skills/poteto-mode/scripts/orch/store.ts",
       "mode": "100644"
     },
@@ -1086,7 +1095,7 @@
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
-            "skills/poteto-mode/scripts/orch/orch.test.ts",
+            "tests/orch.test.ts",
             "skills/poteto-mode/scripts/watch-pr/cli.test.ts"
           ]
         }
@@ -1112,13 +1121,13 @@
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.test.ts",
-      "blob": "4ef39d2a1d2981e205e948b1707f7db96b750280",
+      "blob": "54722a940aeeff3d8c8cdea5fe7e796296bb44c4",
       "target": "skills/poteto-mode/scripts/watch-pr/github.test.ts",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
-      "blob": "cfc3764a03d35fd5ed6c79818b076329bcd08437",
+      "blob": "4828b0299672a4696e6844132c1caedb7ebbbd8b",
       "target": "skills/poteto-mode/scripts/watch-pr/github.ts",
       "mode": "100644"
     },
@@ -1204,18 +1213,18 @@
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
-            "skills/poteto-mode/scripts/orch/orch.test.ts"
+            "tests/orch.test.ts"
           ]
         }
       }
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/worktree-audit.sh",
-      "blob": "b2d1192187c0a1504366e591318129ac3d2879aa",
+      "blob": "743c4e9250ba95000f90db10ef6ba47d8a106461",
       "target": "skills/poteto-mode/scripts/worktree-audit.sh",
       "mode": "100755",
       "adaptation": {
-        "reason": "Replaced the shell-only audit entrypoint with the native TypeScript port at worktree-audit.ts; bucket precedence and read-only behavior are preserved.",
+        "reason": "Replace the shell helper with the OMP TypeScript audit. Prefer Origin then gh from a sanitized scratch repository, hold drafts and open PRs, and keep unknown inventory non-prunable without widening Git, profile, or workspace trust.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -1228,7 +1237,7 @@
       "source": "pstack/skills/principle-attack-the-premise/SKILL.md",
       "target": "skills/principle-attack-the-premise/SKILL.md",
       "mode": "100644",
-      "blob": "f9785ff9fdcf37d1c689e4468da7d611f3b76d4b"
+      "blob": "e9a6d499606992edd9963b80f8f8f57feaccb221"
     },
     {
       "source": "pstack/skills/principle-boundary-discipline/SKILL.md",
@@ -1262,7 +1271,7 @@
     },
     {
       "source": "pstack/skills/principle-fix-root-causes/SKILL.md",
-      "blob": "7e5a419aeec97b4076fa517865013677428a9fa3",
+      "blob": "14fc189fa1ec3fb1614b0a3c75557f92943d8f13",
       "target": "skills/principle-fix-root-causes/SKILL.md",
       "mode": "100644"
     },
@@ -1286,13 +1295,13 @@
     },
     {
       "source": "pstack/skills/principle-make-operations-idempotent/SKILL.md",
-      "blob": "a0834247ca99b09c11441747717a8034d4c22d7c",
+      "blob": "c93f323d694a4d310515ea27165a093d399bc55e",
       "target": "skills/principle-make-operations-idempotent/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
-      "blob": "06c7cfd87becc62d614d0af075b792f8ec6eb21d",
+      "blob": "57ddd7b27d06ba4ee9e2d3811880476a18b88df6",
       "target": "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
       "mode": "100644"
     },
@@ -1354,17 +1363,17 @@
       "source": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
       "target": "skills/principle-test-behavior-not-implementation/SKILL.md",
       "mode": "100644",
-      "blob": "f5a603e3a0925cdc6363bcc26dfbf587d9a36ec7"
+      "blob": "78c9389bfe707d6d56485ade32c59150958228f9"
     },
     {
       "source": "pstack/skills/principle-type-system-discipline/SKILL.md",
-      "blob": "4321b83e245d99eded0756c7a74f3fb64e32c36b",
+      "blob": "9fa08b0b17d536ce751fffa90134be8fb03699c7",
       "target": "skills/principle-type-system-discipline/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/recall/SKILL.md",
-      "blob": "a70062a3f89a8d68b3391bc71fc4c6cc2dfcf6a4",
+      "blob": "cd8cc20790d90579e632626fe6db2b1fff593eea",
       "target": "skills/recall/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1380,7 +1389,7 @@
     },
     {
       "source": "pstack/skills/reflect/SKILL.md",
-      "blob": "b6bd41afdc831741819b72efa60ef2f10947cc8c",
+      "blob": "998ae6530fe294791c3a1daa635b36e2947fcca2",
       "target": "skills/reflect/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1446,7 +1455,7 @@
     },
     {
       "source": "pstack/skills/setup-pstack/SKILL.md",
-      "blob": "90a9e575397fb59f4d9a47e6157c2106f4b4a5e2",
+      "blob": "cb61b8d3ee5d2a1b8fa403d8b99ed8d2e18f77df",
       "target": "skills/setup-pstack/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1461,7 +1470,7 @@
     },
     {
       "source": "pstack/skills/show-me-your-work/SKILL.md",
-      "blob": "d350a150c36ca16382b4aa6d4196b39e67454ad1",
+      "blob": "ada1bba1e51356de0e0d4da1d13ba5a56ba9c7cb",
       "target": "skills/show-me-your-work/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1490,7 +1499,7 @@
     },
     {
       "source": "pstack/skills/swarm/SKILL.md",
-      "blob": "db22b8787966abc61216052d9f3142018404cab8",
+      "blob": "b0b1eb83363853843ccf1524917b83d0c16d2cd8",
       "target": "skills/swarm/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1523,13 +1532,13 @@
     },
     {
       "source": "pstack/skills/typescript-best-practices/SKILL.md",
-      "blob": "2c0279d9a5f800192605e47b55cae4e75a17ec27",
+      "blob": "e1e5aa7c97ed39c425d60d933a96424a3f14539e",
       "target": "skills/typescript-best-practices/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/typescript-best-practices/references/patterns.md",
-      "blob": "c21d876b71b9c7afa897f2f6d982ead07db8f104",
+      "blob": "f8dd99b63ecb469a090b8fa0a7e235d3239cb9ec",
       "target": "skills/typescript-best-practices/references/patterns.md",
       "mode": "100644"
     },
@@ -1541,7 +1550,7 @@
     },
     {
       "source": "pstack/skills/why/SKILL.md",
-      "blob": "bc2a3eb4f5bacf29949974376bc492df3d59db95",
+      "blob": "b5fe93f8b78f58b06e0bf245a6b5b8faae4300e8",
       "target": "skills/why/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1688,13 +1697,13 @@
     },
     {
       "source": "pstack/skills/correct/SKILL.md",
-      "blob": "c09f486e32935a154dd98daa13aa8187856600fe",
+      "blob": "c45e06f48a0982ae19f92c6e83a8cd05988097a3",
       "target": "skills/correct/SKILL.md",
       "mode": "100644"
     },
     {
       "source": "pstack/skills/poteto-help/SKILL.md",
-      "blob": "575d80fbff15d3421e6ef020d3a9cfeb2b0b01f0",
+      "blob": "5ce3a74d89e71a4672f5b0ad27a4d47a74177989",
       "target": "skills/poteto-help/SKILL.md",
       "mode": "100644",
       "adaptation": {
@@ -1724,7 +1733,7 @@
     },
     {
       "source": "pstack/skills/poteto-help/references/recipes.md",
-      "blob": "73118e2a2d2d025938d7b53b541b37cb1fe9c449",
+      "blob": "c4f60466ca6d022e403042c9458dde68e8a79f92",
       "target": "skills/poteto-help/references/recipes.md",
       "mode": "100644",
       "adaptation": {
@@ -1745,7 +1754,7 @@
     },
     {
       "source": "pstack/plugin.json",
-      "blob": "bd84815f8bc4295dad2562045065af4f396b43f3",
+      "blob": "333c7394290e75e45109041b67d80c461465a80f",
       "target": "plugin.json",
       "mode": "100644",
       "adaptation": {
@@ -1760,9 +1769,18 @@
     },
     {
       "source": "pstack/skills/ketchup/SKILL.md",
-      "blob": "1c63f43f5a58c7496eca0aa4c41d86c688ab3267",
+      "blob": "9eef27f92f8029137a7bfa7378305b075df9dc4f",
       "target": "skills/ketchup/SKILL.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Use available native visual tools instead of the unprovided visualize command while retaining complete waiting-item reporting and genuine visuals.",
+        "verification": {
+          "kind": "omp/cli scenario",
+          "artifacts": [
+            "scripts/smoke-workflow-guidance.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
@@ -1775,6 +1793,2630 @@
           "kind": "pinned-byte/link inspection",
           "artifacts": [
             "scripts/check-content.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "pstack/docs/harness/claude-code.md",
+      "blob": "bf154e6464a6cca96a9627bbe10a628092e8c09e",
+      "target": "docs/harness/claude-code.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Replace second-host runtime mappings with an OMP provenance assessment. Generated Claude Code artifacts are inventoried as intentional absences.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "pstack/skills/create-formal-verification-skill/SKILL.md",
+      "blob": "b97609fd2649e95ea2960e720b3b581a6c2cb75a",
+      "target": "skills/create-formal-verification-skill/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Generate skills in existing OMP-discoverable project roots according to the native authoring reference.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "pstack/skills/in-your-own-words/SKILL.md",
+      "blob": "4b2a476a9017863032c8dba9d12f0a2026943292",
+      "target": "skills/in-your-own-words/SKILL.md",
+      "mode": "100644"
+    },
+    {
+      "source": "pstack/skills/maintain-formal-verification-skill/SKILL.md",
+      "blob": "5d2f7f2228a3b771ca5b03124fc265ddfc53c5fc",
+      "target": "skills/maintain-formal-verification-skill/SKILL.md",
+      "mode": "100644"
+    },
+    {
+      "source": "pstack/skills/sharpen/SKILL.md",
+      "blob": "c1cfebe409b2e9d20ae96d14d71d8f2d9d360ecb",
+      "target": "skills/sharpen/SKILL.md",
+      "mode": "100644"
+    },
+    {
+      "source": ".claude-plugin/marketplace.json",
+      "blob": "93579dcc657c6b46349cf549085847b6319840ba",
+      "target": "upstream-only/.claude-plugin/marketplace.json",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/README.md",
+      "blob": "07e17d8a951758de8098a020e42a451b00bdba9c",
+      "target": "upstream-only/harness/pstack/README.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/.claude-plugin/plugin.json",
+      "blob": "333c7394290e75e45109041b67d80c461465a80f",
+      "target": "upstream-only/harness/pstack/claude-code/.claude-plugin/plugin.json",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/LICENSE",
+      "blob": "6b5400237fdf6545be0b8fae370d6f2fcff8fb25",
+      "target": "upstream-only/harness/pstack/claude-code/LICENSE",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/README.md",
+      "blob": "f4ee63dad7682d2cb3173d17bf746c84affb4a4d",
+      "target": "upstream-only/harness/pstack/claude-code/README.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/agents/comment-sicko.md",
+      "blob": "209e3704dfa75022060c936bd3f3362fa3bbe254",
+      "target": "upstream-only/harness/pstack/claude-code/agents/comment-sicko.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/agents/poteto-agent.md",
+      "blob": "e1d2df2e8c3c4954b87ee1b29655c898bc7ee699",
+      "target": "upstream-only/harness/pstack/claude-code/agents/poteto-agent.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/01-setup.md",
+      "blob": "2c2ef341357ea7c39c8b831ee8c8669b17e85475",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/01-setup.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/02-poteto-mode.md",
+      "blob": "db16b5e95bf505ffaf20863f1f50502e3919caec",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/02-poteto-mode.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/03-understand.md",
+      "blob": "e26661f913e2ba31a0f043df3ede772461fd6a96",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/03-understand.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/04-design.md",
+      "blob": "65862086a58780b258fdb490dcafedd75b9cce18",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/04-design.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/05-build-and-clean.md",
+      "blob": "dbadc3d41294ab2cc3cde04f96b861dd294e496e",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/05-build-and-clean.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/06-verify-and-ship.md",
+      "blob": "3c7b3c4dd0a256165f308f051b7125b9c5b37b62",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/06-verify-and-ship.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/07-overnight.md",
+      "blob": "94846677693c0561ab015020a73cf61310ed1e1e",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/07-overnight.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/08-principles.md",
+      "blob": "d2921500bb44643ac3f841fa03e19e0b3a240c8b",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/08-principles.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/09-make-it-yours.md",
+      "blob": "8d1c4b4f951bbb203ff1288e02ce91e8b6832a43",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/09-make-it-yours.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/10-recipes-and-pitfalls.md",
+      "blob": "fb4743c29011d9668cb1ba35249721a0dbed8443",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/10-recipes-and-pitfalls.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/README.md",
+      "blob": "17422b9921f1179b2a2b7137805267225ab271c2",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/README.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/images/design.jpg",
+      "blob": "f86909437f8b5a83da3cba7bc35a018c9d4887c8",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/images/design.jpg",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/images/overnight.jpg",
+      "blob": "d64e1c63066c9f088da909160f5e136049e9a512",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/images/overnight.jpg",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/images/recipes.jpg",
+      "blob": "69fe992fdb9fb8e7baacc144ea140f9c93b262fb",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/images/recipes.jpg",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/images/router.jpg",
+      "blob": "c8fba6a266505caf406d5185d7a4cc6e34be98a4",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/images/router.jpg",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/images/understanding.jpg",
+      "blob": "bb1b1ac15dd11da9ad047d203049a1a24abb2b46",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/images/understanding.jpg",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/guide/images/verification.jpg",
+      "blob": "a252ae0b5e14cb6fcef2e3b806bbd66316242446",
+      "target": "upstream-only/harness/pstack/claude-code/docs/guide/images/verification.jpg",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/docs/harness/claude-code.md",
+      "blob": "bf154e6464a6cca96a9627bbe10a628092e8c09e",
+      "target": "upstream-only/harness/pstack/claude-code/docs/harness/claude-code.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/plugin.json",
+      "blob": "333c7394290e75e45109041b67d80c461465a80f",
+      "target": "upstream-only/harness/pstack/claude-code/plugin.json",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/architect/SKILL.md",
+      "blob": "0cd5921d4848396c93a0bb5f9db451cf9cb2cb35",
+      "target": "upstream-only/harness/pstack/claude-code/skills/architect/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/architect/references/design-red-flags.md",
+      "blob": "f8503c9595b289c607ff5088f82b21197edf94ec",
+      "target": "upstream-only/harness/pstack/claude-code/skills/architect/references/design-red-flags.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/architect/references/rationale-template.md",
+      "blob": "a10f77f59510c532cd909faaf3bfeee5ffbfd588",
+      "target": "upstream-only/harness/pstack/claude-code/skills/architect/references/rationale-template.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/architect/references/runner-prompt.md",
+      "blob": "b1ad21aef22e80d718c361787190b599eb359d6c",
+      "target": "upstream-only/harness/pstack/claude-code/skills/architect/references/runner-prompt.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/arena/SKILL.md",
+      "blob": "1aa77e452cb5fc4ce53901c41788f939601f5830",
+      "target": "upstream-only/harness/pstack/claude-code/skills/arena/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/automate-me/SKILL.md",
+      "blob": "a76caabc75163c883caf3415b591f464a9949fa4",
+      "target": "upstream-only/harness/pstack/claude-code/skills/automate-me/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/benchmark-checklist/SKILL.md",
+      "blob": "e901d1fdbc9ffce53e94d6514be7d9a22e771a1a",
+      "target": "upstream-only/harness/pstack/claude-code/skills/benchmark-checklist/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/blast-radius/SKILL.md",
+      "blob": "b296cce0d746260a53c16e3671cb05bacfe82daf",
+      "target": "upstream-only/harness/pstack/claude-code/skills/blast-radius/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/bro/SKILL.md",
+      "blob": "b1701b778639c08bfc306291d70170c525c66a68",
+      "target": "upstream-only/harness/pstack/claude-code/skills/bro/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/correct/SKILL.md",
+      "blob": "c45e06f48a0982ae19f92c6e83a8cd05988097a3",
+      "target": "upstream-only/harness/pstack/claude-code/skills/correct/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/create-formal-verification-skill/SKILL.md",
+      "blob": "fe72da6d8af52067cc12b44b06930212857f3fe4",
+      "target": "upstream-only/harness/pstack/claude-code/skills/create-formal-verification-skill/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/create-verification-skill/SKILL.md",
+      "blob": "553e53efb3fdbe813e9b39c8c5fe29a3a681b69a",
+      "target": "upstream-only/harness/pstack/claude-code/skills/create-verification-skill/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/create-verification-skill/references/feature-map-example/README.md",
+      "blob": "fb64570cfab3bbe672fe80925651933ebd57aa33",
+      "target": "upstream-only/harness/pstack/claude-code/skills/create-verification-skill/references/feature-map-example/README.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/create-verification-skill/references/feature-map-example/create-note.md",
+      "blob": "21357566b69223a503d6780a04fb90ce540eae22",
+      "target": "upstream-only/harness/pstack/claude-code/skills/create-verification-skill/references/feature-map-example/create-note.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/create-verification-skill/references/feature-map-example/search.md",
+      "blob": "1f8e57d3aaf19cf27a9464d55fa72e46bcbc8b0f",
+      "target": "upstream-only/harness/pstack/claude-code/skills/create-verification-skill/references/feature-map-example/search.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/figure-it-out/SKILL.md",
+      "blob": "d628d482b7fe86dcb3bc1ce4f50189c50cc45768",
+      "target": "upstream-only/harness/pstack/claude-code/skills/figure-it-out/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/how/SKILL.md",
+      "blob": "b378f87fe02f41d9cdadb3a5c499206192a92187",
+      "target": "upstream-only/harness/pstack/claude-code/skills/how/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/how/references/explainer-prompt.md",
+      "blob": "3a36fb6736c5b74ac2774350841e332a019dec94",
+      "target": "upstream-only/harness/pstack/claude-code/skills/how/references/explainer-prompt.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/how/references/explorer-prompt.md",
+      "blob": "724bacfc7df759865c0c29705bfee641e4c1aeca",
+      "target": "upstream-only/harness/pstack/claude-code/skills/how/references/explorer-prompt.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/in-your-own-words/SKILL.md",
+      "blob": "4b2a476a9017863032c8dba9d12f0a2026943292",
+      "target": "upstream-only/harness/pstack/claude-code/skills/in-your-own-words/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/interrogate/SKILL.md",
+      "blob": "b6b047164e4e64f2149db7be723d7f10ab8becb2",
+      "target": "upstream-only/harness/pstack/claude-code/skills/interrogate/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/interrogate/references/code-quality-review.md",
+      "blob": "16581250d81044c7e80fe234c4970a3f7b7fc98a",
+      "target": "upstream-only/harness/pstack/claude-code/skills/interrogate/references/code-quality-review.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/interrogate/references/lead-judgment.md",
+      "blob": "3b41346c9c3f5c35453d34f1c77374b7e9346aa9",
+      "target": "upstream-only/harness/pstack/claude-code/skills/interrogate/references/lead-judgment.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/interrogate/references/reviewer-prompt.md",
+      "blob": "ef7bff3d77c35a0af2a9947187ccee15465657f4",
+      "target": "upstream-only/harness/pstack/claude-code/skills/interrogate/references/reviewer-prompt.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/interrogate/references/rubric.md",
+      "blob": "8dab195ab840554bfe5e74e9b5ca0d9edbe9b496",
+      "target": "upstream-only/harness/pstack/claude-code/skills/interrogate/references/rubric.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/ketchup/SKILL.md",
+      "blob": "9eef27f92f8029137a7bfa7378305b075df9dc4f",
+      "target": "upstream-only/harness/pstack/claude-code/skills/ketchup/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/maintain-formal-verification-skill/SKILL.md",
+      "blob": "d56ef9ce9951b118f59db13e0baa0d33083e02b8",
+      "target": "upstream-only/harness/pstack/claude-code/skills/maintain-formal-verification-skill/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/maintain-verification-skill/SKILL.md",
+      "blob": "efc2ffcf9000e14e4d1d5f92477e95fe72b499e5",
+      "target": "upstream-only/harness/pstack/claude-code/skills/maintain-verification-skill/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/make-bot-ui/SKILL.md",
+      "blob": "7f05b0504297fd22dba9cd9f79edc352ed79987e",
+      "target": "upstream-only/harness/pstack/claude-code/skills/make-bot-ui/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/no-comments/SKILL.md",
+      "blob": "3b7e32e82439cf90d3bec829c72f20c0d7135a10",
+      "target": "upstream-only/harness/pstack/claude-code/skills/no-comments/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-help/SKILL.md",
+      "blob": "f9f3587f8094dab7c5f7517ab4815b5ad4b6cb3b",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-help/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-help/references/prompting.md",
+      "blob": "6b72b2e6081fdb78a3261bd77cf7334596d1ee20",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-help/references/prompting.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-help/references/recipes.md",
+      "blob": "c4f60466ca6d022e403042c9458dde68e8a79f92",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-help/references/recipes.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/SKILL.md",
+      "blob": "1bb3884a529e8a5ec047c0c8ff7a2385b62a55dc",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/authoring-a-skill.md",
+      "blob": "8c5a55a44f5e95bba92f652da0ac87e941c49538",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/authoring-a-skill.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/autonomous-run.md",
+      "blob": "e6b88703cf327a76bcdd424429345ac0efeca67e",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/autonomous-run.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/autopilot-full.md",
+      "blob": "068882379d9bdc2298052e7762d67ac795715baf",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/autopilot-full.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/autopilot-stack.md",
+      "blob": "d7bdc289e045e8bc7da97b4ddfccc8d6c9ed0800",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/autopilot-stack.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/babysit.md",
+      "blob": "51549ab2da11e5905342bbb3aadb93685c8ac348",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/babysit.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/bug-fix.md",
+      "blob": "b5de0bfa63add6ed38a38a8bd668cf36ac009c61",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/bug-fix.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/eval.md",
+      "blob": "768a894e275b1e9b198e83ceb6b46964e3f9d6db",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/eval.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/feature.md",
+      "blob": "eb1040cb2631f3eeacd8f9f6469d7e97277f24ef",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/feature.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/hillclimb.md",
+      "blob": "e9cf267908a9737236b3a8a8a5a99fe9066f7554",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/hillclimb.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/investigation.md",
+      "blob": "cd119f04f23e0b7acb3f8cc5ba13ce4ab7aa6c7d",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/investigation.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/multi-phase-plan.md",
+      "blob": "27e99947bd20575e2ff503dbfba985a4f0fa298e",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/multi-phase-plan.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/opening-a-pr.md",
+      "blob": "d729a7a06c5b67e406b081e1777114bc03b66f4a",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/opening-a-pr.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/orchestrate.md",
+      "blob": "4ccb24d76c5e190125cecc99d4a9b5c9eb2932d9",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/orchestrate.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/pause-safely.md",
+      "blob": "9d1c5f8303976fff40de099f7f28185909430c11",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/pause-safely.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/perf-issue.md",
+      "blob": "46dcc9963366992016dfb1d59ccaae977930f982",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/perf-issue.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/prototype.md",
+      "blob": "18bedc7e9249d180f9198d5b4b13e3817d41d281",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/prototype.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/refactoring.md",
+      "blob": "c04b07eeb8b8fa651d080729363466ab73d2fe40",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/refactoring.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/runtime-forensics.md",
+      "blob": "6bf64240d1a890df290b98c632ad374d20ca9fd4",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/runtime-forensics.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/session-pickup.md",
+      "blob": "876b1433828ccc7c874123cdf300240abb285dd9",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/session-pickup.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/shipping.md",
+      "blob": "0a0c3cfde8948e3aa8ee80c6f3f9ce7e3e64fcba",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/shipping.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/trace-forensics.md",
+      "blob": "bf1b003786503623d91ca173fc97a6e54eee3acf",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/trace-forensics.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/visual-parity.md",
+      "blob": "248830ec74a593fc22143a842026388f92f1b9f4",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/visual-parity.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/playbooks/worktree-cleanup.md",
+      "blob": "45e1af693cc40d0271249a0e98f15bfc815af615",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/playbooks/worktree-cleanup.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/references/bugbot-triage.md",
+      "blob": "b2fc7d35712783707607cf2f39752885c8d5105c",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/references/bugbot-triage.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/bootstrap.ts",
+      "blob": "d9c63e2007449a80000abe75ecaf7f2a0bd5826b",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/bootstrap.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/bun.lock",
+      "blob": "65f0c662f300a0f72b319ca93ea18f56219c2581",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/bun.lock",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/check-plan.mjs",
+      "blob": "c8626766cee4cc4a2736fe438a1aea5c1f1b28ce",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/check-plan.mjs",
+      "mode": "100755",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/check-plan.test.ts",
+      "blob": "fd966c2b5fb6e99c12070c553906765c7bd900d8",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/check-plan.test.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/orch/orch.test.ts",
+      "blob": "2ef435d7d6f464a396d23158d4bcaae08f19c94d",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/orch/orch.test.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/orch/orch.ts",
+      "blob": "14cb5139a91745a58780a81d8a1b40ef67d9504d",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/orch/orch.ts",
+      "mode": "100755",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/orch/store.ts",
+      "blob": "417368918d2a6e2589c0221ade5c65535ffe05f1",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/orch/store.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/package.json",
+      "blob": "d8abe49ad0eafd10d302e8c6a9a0a95c5e6fb0ef",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/package.json",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/cli.test.ts",
+      "blob": "0656b413e6c180858ca42981105944c45caf9dca",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/cli.test.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/cli.ts",
+      "blob": "ec8a2f27c5ac24866b699e6395e7d1f32e595068",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/cli.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
+      "blob": "84ccf596b01e03e7fb77e73ea82ec3b1738026ad",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/github.test.ts",
+      "blob": "54722a940aeeff3d8c8cdea5fe7e796296bb44c4",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/github.test.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/github.ts",
+      "blob": "4828b0299672a4696e6844132c1caedb7ebbbd8b",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/github.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
+      "blob": "6dae16da71800fb06eb37a7e3b296a8d27275b08",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/policy.ts",
+      "blob": "cabadb9bf96f4d8c4c0426d77d0cbdab80fbe3e5",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/policy.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/render.ts",
+      "blob": "0e935839357335f24ab1bbc193d761495646ea99",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/render.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/tsconfig.json",
+      "blob": "477af90b05cbd24fcf974fd73cf331d5ac7379cc",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/tsconfig.json",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/types.compile.ts",
+      "blob": "1b53279c7f3e5da55703ed17d6ad0616254c5751",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/types.compile.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/types.ts",
+      "blob": "6c94e0a687f8e48f91acffd21f725320dd66e659",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/types.ts",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/watch-pr",
+      "blob": "99807d577c3b006cfe6ee9e149cf2914bfd4afd6",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/watch-pr/watch-pr",
+      "mode": "100755",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/poteto-mode/scripts/worktree-audit.sh",
+      "blob": "743c4e9250ba95000f90db10ef6ba47d8a106461",
+      "target": "upstream-only/harness/pstack/claude-code/skills/poteto-mode/scripts/worktree-audit.sh",
+      "mode": "100755",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-attack-the-premise/SKILL.md",
+      "blob": "e9a6d499606992edd9963b80f8f8f57feaccb221",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-attack-the-premise/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-boundary-discipline/SKILL.md",
+      "blob": "dfe9a6fb0e5acd6ae43a41437ee0951adfe839cb",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-boundary-discipline/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-build-the-lever/SKILL.md",
+      "blob": "cbf003850489d95fea78e64198fd972c35b1aad3",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-build-the-lever/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-encode-lessons-in-structure/SKILL.md",
+      "blob": "4a96f77fe70e36cb030f9c5efa142f66877bf58a",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-encode-lessons-in-structure/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-exhaust-the-design-space/SKILL.md",
+      "blob": "395a0839126bb231430a9c9da02ebab5422557d5",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-exhaust-the-design-space/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-experience-first/SKILL.md",
+      "blob": "5ea51741302cf3af4cc0b90ec70815bd3208dbf2",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-experience-first/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-explain-the-number/SKILL.md",
+      "blob": "1e180c14aefe49a3b2a515320398e08c3ebeb57d",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-explain-the-number/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-fix-root-causes/SKILL.md",
+      "blob": "14fc189fa1ec3fb1614b0a3c75557f92943d8f13",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-fix-root-causes/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-foundational-thinking/SKILL.md",
+      "blob": "19cc6c0eaa6fcbc2863fb73d1d25ca196c6a46e0",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-foundational-thinking/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-guard-the-context-window/SKILL.md",
+      "blob": "0a1d3cfcf4539fe048887174000fecbf2fa40e81",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-guard-the-context-window/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-laziness-protocol/SKILL.md",
+      "blob": "016c3c7c8dfffd995c1a02135a62248e6625879b",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-laziness-protocol/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-make-operations-idempotent/SKILL.md",
+      "blob": "c93f323d694a4d310515ea27165a093d399bc55e",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-make-operations-idempotent/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+      "blob": "57ddd7b27d06ba4ee9e2d3811880476a18b88df6",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-minimize-reader-load/SKILL.md",
+      "blob": "628999088c5d05c1c546b3a3ca89da553cd3f3b2",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-minimize-reader-load/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-model-the-domain/SKILL.md",
+      "blob": "09b7c739955facf03f08f66e1e329745d2f8880e",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-model-the-domain/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-never-block-on-the-human/SKILL.md",
+      "blob": "4f59bdc69f79d536b30b0014a563ed3be05b8b62",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-never-block-on-the-human/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-outcome-oriented-execution/SKILL.md",
+      "blob": "c49be0bc74783f0dee013101365ae09b2abb48a2",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-outcome-oriented-execution/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-prove-it-works/SKILL.md",
+      "blob": "31df67d63d26fcc8c7fd8b022b1be34dd59b00cb",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-prove-it-works/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-redesign-from-first-principles/SKILL.md",
+      "blob": "5ca5246cbb0fa08884ce17b0d22c117ae1ad67b8",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-redesign-from-first-principles/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-separate-before-serializing-shared-state/SKILL.md",
+      "blob": "ff93b4a2032c08e2232992a9a24f2891ee14e58f",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-separate-before-serializing-shared-state/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-sequence-verifiable-units/SKILL.md",
+      "blob": "986371260ebccd9a5a6818c9561e88c1d270d0ee",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-sequence-verifiable-units/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-subtract-before-you-add/SKILL.md",
+      "blob": "b8740ba6f06922d8e7ef3b23f9fb16e0fc4a876f",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-subtract-before-you-add/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-test-behavior-not-implementation/SKILL.md",
+      "blob": "78c9389bfe707d6d56485ade32c59150958228f9",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-test-behavior-not-implementation/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/principle-type-system-discipline/SKILL.md",
+      "blob": "9fa08b0b17d536ce751fffa90134be8fb03699c7",
+      "target": "upstream-only/harness/pstack/claude-code/skills/principle-type-system-discipline/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/recall/SKILL.md",
+      "blob": "a82ea1b287a66f99d70473f03aed18a44efb3779",
+      "target": "upstream-only/harness/pstack/claude-code/skills/recall/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/reflect/SKILL.md",
+      "blob": "5ef623f7355c9e54610121473e4f949a2bfe00a1",
+      "target": "upstream-only/harness/pstack/claude-code/skills/reflect/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/reflect/references/divergent-reviewer.md",
+      "blob": "1e070a2a3754f4dc0ddbaec4450a56179b81c92f",
+      "target": "upstream-only/harness/pstack/claude-code/skills/reflect/references/divergent-reviewer.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/reflect/references/judgment-reviewer.md",
+      "blob": "61d15d76fff852eb573b551bc1317d79ed5a2e5f",
+      "target": "upstream-only/harness/pstack/claude-code/skills/reflect/references/judgment-reviewer.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/reflect/references/synthesizer.md",
+      "blob": "1a090d86134987719ddb418023020c2ef58a6dae",
+      "target": "upstream-only/harness/pstack/claude-code/skills/reflect/references/synthesizer.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/reflect/references/tooling-reviewer.md",
+      "blob": "a839db4318798c51539c319cb90387ce02557225",
+      "target": "upstream-only/harness/pstack/claude-code/skills/reflect/references/tooling-reviewer.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/setup-pstack/SKILL.md",
+      "blob": "672bb4bef320fe6c9edd77b75bb63efd16155321",
+      "target": "upstream-only/harness/pstack/claude-code/skills/setup-pstack/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/sharpen/SKILL.md",
+      "blob": "c1cfebe409b2e9d20ae96d14d71d8f2d9d360ecb",
+      "target": "upstream-only/harness/pstack/claude-code/skills/sharpen/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/show-me-your-work/SKILL.md",
+      "blob": "52765f07b3cafcbfdd184af9b4fc5c993d92ebe2",
+      "target": "upstream-only/harness/pstack/claude-code/skills/show-me-your-work/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/show-me-your-work/references/decision-log-template.tsv",
+      "blob": "db220376ecb8c582a6a4f6575a8f26469603a38d",
+      "target": "upstream-only/harness/pstack/claude-code/skills/show-me-your-work/references/decision-log-template.tsv",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/show-me-your-work/scripts/log.sh",
+      "blob": "052e53b7e1090579eaec1d3d59f7a1cd2f2e452a",
+      "target": "upstream-only/harness/pstack/claude-code/skills/show-me-your-work/scripts/log.sh",
+      "mode": "100755",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/swarm/SKILL.md",
+      "blob": "1a41d6447a2f02c8d63427c07c7ff01855e07437",
+      "target": "upstream-only/harness/pstack/claude-code/skills/swarm/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/tdd/SKILL.md",
+      "blob": "ca6f24c963001d9d518db2936dfe3d12f29b4e94",
+      "target": "upstream-only/harness/pstack/claude-code/skills/tdd/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/teach/SKILL.md",
+      "blob": "44a108bde55866308d115c73e7d99465c8eb581f",
+      "target": "upstream-only/harness/pstack/claude-code/skills/teach/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/technical-writing/SKILL.md",
+      "blob": "903d7d6d2a2bc12e846eb2947e53d2f159b23938",
+      "target": "upstream-only/harness/pstack/claude-code/skills/technical-writing/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/typescript-best-practices/SKILL.md",
+      "blob": "e1e5aa7c97ed39c425d60d933a96424a3f14539e",
+      "target": "upstream-only/harness/pstack/claude-code/skills/typescript-best-practices/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/typescript-best-practices/references/patterns.md",
+      "blob": "f8dd99b63ecb469a090b8fa0a7e235d3239cb9ec",
+      "target": "upstream-only/harness/pstack/claude-code/skills/typescript-best-practices/references/patterns.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/unslop/SKILL.md",
+      "blob": "97f5b6412148fa5b2a2fe478836fe8923ffa5cbb",
+      "target": "upstream-only/harness/pstack/claude-code/skills/unslop/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/SKILL.md",
+      "blob": "4747bc594bd48f424ebd997e1581f2354f56842e",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/SKILL.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/epistemics.md",
+      "blob": "b18abf41dfa245ee55e94f1b3a80c0b750eb10cf",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/epistemics.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/investigator-prompt.md",
+      "blob": "e1c2bbf52197ff600ba6e4552439e630687b7ae2",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/investigator-prompt.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/source-playbook.md",
+      "blob": "aa3d877cd539763ff05e266ae0a02dd811441e2b",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/source-playbook.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/sources/code-archaeology.md",
+      "blob": "e3555f809da0a5654ceefe7d2c20080397c03506",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/sources/code-archaeology.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/sources/databricks.md",
+      "blob": "2770763ff5d0d1ad004abcc9a0138c9537ad1978",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/sources/databricks.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/sources/datadog.md",
+      "blob": "536466ddd8ae6543836abb84bdf1efd8e43089ba",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/sources/datadog.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/sources/incident-postmortem.md",
+      "blob": "e7397e7ef374bee3b7f0018ac8e5ddd4322bab12",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/sources/incident-postmortem.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/sources/linear.md",
+      "blob": "899c643c078f322afe6ae0ef78a007f8ffd356c1",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/sources/linear.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/sources/notion.md",
+      "blob": "d16230a4105fd1dacf870da0950a38faeb9381e6",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/sources/notion.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/sources/sentry.md",
+      "blob": "8200fd9f3abbb7fca76d0079663502b33524bd09",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/sources/sentry.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/sources/slack.md",
+      "blob": "cadd5618a349adc5eb1dce6fddde38e7221e00fd",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/sources/slack.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "harness/pstack/claude-code/skills/why/references/synthesizer-prompt.md",
+      "blob": "287a350c925c28b44f0e0dc687bb09a843e11100",
+      "target": "upstream-only/harness/pstack/claude-code/skills/why/references/synthesizer-prompt.md",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
+          ]
+        }
+      }
+    },
+    {
+      "source": "scripts/generate-pstack-harness-trees.mjs",
+      "blob": "83335a116b670afd69b2eb586af63afb75d84bdd",
+      "target": "upstream-only/scripts/generate-pstack-harness-trees.mjs",
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Claude Code source provenance only. OMP installs one native package and never installs this host-specific artifact.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts",
+            "scripts/check-upstream.ts"
           ]
         }
       }
