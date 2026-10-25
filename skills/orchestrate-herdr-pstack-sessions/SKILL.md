@@ -78,7 +78,7 @@ Then run:
 bun "$PSTACK_ROOT/src/cli.ts" herdr-run launch "$RUN"
 ```
 
-The helper checks `workers.json`, the briefs, the reports, and that no live Herdr agent already holds a worker name, all before it creates anything. It opens a tab labeled `pstack <run-id>`, gives each worker its own pane there, starts OMP in Poteto mode on the brief, and writes `$RUN/run.json` with each worker's real pane and, when OMP reported one during launch, its session. Your own pane is never split. It prints the same record.
+The helper checks `workers.json`, the briefs, the reports, and that no live Herdr agent already holds a worker name, all before it creates anything. Each brief must name its own `$RUN/<n>/report.md` path, or the launch is refused. It opens a tab labeled `pstack <run-id>`, gives each worker its own pane there, starts OMP in Poteto mode on the brief, and writes `$RUN/run.json` with each worker's real pane and, when OMP reported one during launch, its session. Your own pane is never split. It prints the same record.
 
 - `startup: "working"` means the worker began its turn. `startup: "blocked"` goes to the `blocked` row in step 4.
 - `startup: "unknown"` means Herdr did not report that worker working or blocked within the 60 seconds launch waits for each worker. Read the pane with `herdr agent read <name> --source recent-unwrapped --lines 120` before sending anything. If the pane visibly works while `herdr agent get <name>` reports `idle`, Herdr may not be receiving OMP state. Ask the user to confirm `herdr integration install omp`, then restart that worker.

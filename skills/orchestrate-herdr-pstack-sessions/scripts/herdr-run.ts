@@ -132,6 +132,8 @@ function readWorkerSpecs(runDir: string, run: string): WorkerSpec[] {
 		if (!existsSync(brief)) die({ error: `missing brief: ${brief}` });
 		const report = join(runDir, String(n), "report.md");
 		if (existsSync(report)) die({ error: `report already exists: ${report}` });
+		// `wait` points the orchestrator at this path, so a brief that names another one strands the report.
+		if (!readFileSync(brief, "utf8").includes(report)) die({ error: `brief ${brief} does not name its report path ${report}` });
 		specs.push({ n, name: `${run}-${n}`, cwd, model: typeof model === "string" ? model : undefined, brief, report });
 	});
 	return specs;

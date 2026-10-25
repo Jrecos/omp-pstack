@@ -98,6 +98,7 @@ function resetLog(): void {
 interface MakeOptions {
 	skipBrief?: number[];
 	reports?: number[];
+	staleReportPath?: number[];
 }
 
 /** Creates $tmp/<id> with workers.json (entries verbatim), per-worker dirs, briefs, and the cwds themselves. */
@@ -108,7 +109,8 @@ function makeRun(id: string, entries: Record<string, unknown>[], options: MakeOp
 		const n = index + 1;
 		if (typeof entry.cwd === "string" && isAbsolute(entry.cwd)) mkdirSync(entry.cwd, { recursive: true });
 		mkdirSync(join(runDir, String(n)), { recursive: true });
-		if (!(options.skipBrief ?? []).includes(n)) writeFileSync(join(runDir, String(n), "brief.md"), `# brief ${n}\n`);
+		const reportPath = (options.staleReportPath ?? []).includes(n) ? join(tmp, `${id}-old`, String(n), "report.md") : join(runDir, String(n), "report.md");
+		if (!(options.skipBrief ?? []).includes(n)) writeFileSync(join(runDir, String(n), "brief.md"), `# brief ${n}\n\nWrite ${reportPath}.\n`);
 		if ((options.reports ?? []).includes(n)) writeFileSync(join(runDir, String(n), "report.md"), "Status: DONE\n");
 	});
 	writeFileSync(join(runDir, "workers.json"), `${JSON.stringify(entries, null, "\t")}\n`);
@@ -223,6 +225,7 @@ describe("herdr-run launch", () => {
 			{ name: "five workers", id: "auth-5", entries: [1, 2, 3, 4, 5].map((n) => ({ cwd: join(tmp, `auth-5-w${n}`) })) },
 			{ name: "missing brief", id: "auth-6", entries: [{ cwd: join(tmp, "auth-6-w1") }, { cwd: join(tmp, "auth-6-w2") }], options: { skipBrief: [2] } },
 			{ name: "existing report", id: "auth-7", entries: [{ cwd: join(tmp, "auth-7-w1") }], options: { reports: [1] } },
+			{ name: "brief names another report path", id: "auth-13", entries: [{ cwd: join(tmp, "auth-13-w1") }, { cwd: join(tmp, "auth-13-w2") }], options: { staleReportPath: [2] } },
 			{ name: "live name collision", id: "auth-4", entries: [{ cwd: join(tmp, "auth-4-w1") }], env: { FAKE_HERDR_LIVE: "auth-4-1" }, listCalls: 1 },
 			{ name: "worker session guard", id: "auth-3", entries: [{ cwd: join(tmp, "auth-3-w1") }], env: { PSTACK_HERDR_RUN: "auth-3" } },
 			{ name: "HERDR_ENV unset", id: "auth-2", entries: [{ cwd: join(tmp, "auth-2-w1") }], env: { HERDR_ENV: undefined } },
