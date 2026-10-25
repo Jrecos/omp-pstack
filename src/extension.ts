@@ -11,7 +11,7 @@ import { registerSpecKit } from "./speckit.ts";
 export const DIRECT_SKILLS = [
   "architect", "arena", "automate-me", "benchmark-checklist", "blast-radius", "bro", "correct",
   "create-formal-verification-skill", "create-verification-skill", "figure-it-out", "how", "in-your-own-words", "interrogate", "ketchup", "maintain-formal-verification-skill", "maintain-verification-skill",
-  "make-bot-ui", "no-comments", "poteto-help", "poteto-mode", "recall", "reflect", "session-review",
+  "make-bot-ui", "no-comments", "orchestrate-herdr-pstack-sessions", "poteto-help", "poteto-mode", "recall", "reflect", "session-review",
   "setup-pstack", "sharpen", "show-me-your-work", "swarm", "tdd", "teach", "technical-writing",
   "typescript-best-practices", "unslop", "why",
 ] as const;

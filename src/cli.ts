@@ -18,6 +18,7 @@ const HELPERS: Record<string, { argv: string[]; exec?: string }> = {
 	"watch-pr": { argv: ["skills/poteto-mode/scripts/watch-pr/watch-pr"] },
 	"check-plan": { argv: ["skills/poteto-mode/scripts/check-plan.mjs"] },
 	"worktree-audit": { argv: ["skills/poteto-mode/scripts/worktree-audit.ts"] },
+	"herdr-run": { argv: ["skills/orchestrate-herdr-pstack-sessions/scripts/herdr-run.ts"] },
 	log: { argv: ["skills/show-me-your-work/scripts/log.sh"], exec: "bash" },
 };
 const helperName = process.argv[2];
