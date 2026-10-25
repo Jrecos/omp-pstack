@@ -1,10 +1,10 @@
 # Skills reference
 
-The plugin ships 57 discoverable skills under `skills/`. The 33 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 57 through `/skill:<name>`.
+The plugin ships 58 discoverable skills under `skills/`. The 34 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 58 through `/skill:<name>`.
 
 A foreign command or an OMP built-in can own a bare name. In that case, use `/skill:<name>` for the plugin skill. Workflows that dispatch agents require configured model roles. `/setup-pstack` selects an approved model pool and saves the role map. An unset or unavailable role blocks dispatch rather than choosing another model.
 
-## Direct workflow skills (33)
+## Direct workflow skills (34)
 
 | Skill | Purpose and use case |
 |---|---|
@@ -27,6 +27,7 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 | [`maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md) | Compare a verification skill and its feature map with current source and one live pass, then correct proven drift. |
 | [`make-bot-ui`](../../skills/make-bot-ui/SKILL.md) | Build a bot interface whose buttons wake an agent routine through a webhook, with sender-key and Tailscale access. |
 | [`no-comments`](../../skills/no-comments/SKILL.md) | Have Comment Sicko challenge comments before review and fix accepted findings. |
+| [`orchestrate-herdr-pstack-sessions`](../../skills/orchestrate-herdr-pstack-sessions/SKILL.md) | Start up to four parallel OMP sessions in Herdr panes, each in Poteto mode on a written brief, then monitor, unblock, and integrate their reports. Requires running inside Herdr. |
 | [`/poteto-help`](../../skills/poteto-help/SKILL.md) | Find the skill, playbook, or principle for your goal and return a prompt to send. It runs only when invoked and does not start the work. |
 | [`poteto-mode`](../../skills/poteto-mode/SKILL.md) | Route a nontrivial task through a matching playbook and supporting skills. The mode stays active until disabled. |
 | [`recall`](../../skills/recall/SKILL.md) | Rebuild recent working context from chat history and the shared record into a current-state brief. |
@@ -43,6 +44,8 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 | [`why`](../../skills/why/SKILL.md) | Investigate a decision or tradeoff through available evidence sources and report cited findings. |
 
 `/session-review [N] [--plugin-report]` reads the last N session files in the current workspace. N defaults to 10. The review is read-only and reports its evidence, recoveries, and limits in chat. `--plugin-report` explicitly adds a separate sanitized plugin-feedback section for you to inspect before sharing. The bare command rejects invalid arguments before a model turn. `/skill:session-review` does not have that host-side argument gate. A private saved copy requires an explicit request. Local history storage does not mean local-only processing. Your configured model and provider process the selected session content through your normal account.
+
+`/orchestrate-herdr-pstack-sessions` runs only inside a Herdr pane (`HERDR_ENV=1`). Each worker gets a brief file under `${TMPDIR:-/tmp}/pstack-herdr/<run-id>/` and the `PSTACK_HERDR_RUN` environment variable, which tells a worker session not to start its own Herdr run. Workers that write code get their own git worktree and commit to their own branch. Read-only workers share the current checkout. The orchestrating session reviews their work, reruns their checks, and integrates it.
 
 ## Supporting principles (24)
 
