@@ -149,7 +149,7 @@ const THINKING_LEVELS: Readonly<Record<ThinkingSuffix, true>> = {
 	auto: true,
 };
 
-function isThinkingSuffix(value: string): value is ThinkingSuffix {
+export function isThinkingSuffix(value: string): value is ThinkingSuffix {
 	return Object.hasOwn(THINKING_LEVELS, value);
 }
 

@@ -19,7 +19,7 @@ Use OMP 18.10.2 with this checkout. The SDK is pinned to 18.10.2. Native task co
 
 ### running the `pstack` CLI after install
 
-the helper commands (`orch`, `watch-pr`, `check-plan`, `worktree-audit`, `log`, plus the `routine` and `benny` commands documented below) live in the installed package. invoke them through the installed root, whatever scope you installed in.
+the helper commands (`orch`, `watch-pr`, `check-plan`, `worktree-audit`, `herdr-run`, `log`, plus the `routine` and `benny` commands documented below) live in the installed package. invoke them through the installed root, whatever scope you installed in.
 
 the marketplace copies the plugin without installing npm dependencies. OMP can load the native extension, but the standalone CLI and CLI-backed skills need the package dependencies. install them before using those commands:
 
@@ -205,7 +205,7 @@ The repository report names the selected sessions and cites entry IDs for suppor
 
 Maintainers can exercise the command with `PSTACK_SMOKE_MODEL=<authenticated-selector> bun scripts/smoke-session-review.ts`. The smoke uses synthetic sessions in a disposable profile and records the observed reports in `proofs/session-review.json`.
 
-`/orchestrate-herdr-pstack-sessions` fans work out to separate OMP sessions in Herdr panes instead of subagents inside one chat. Run it from a session inside Herdr and describe the parallel work. It writes one brief per worker, opens one pane per worker (in a dedicated tab when there are two or more), and starts each worker with `/poteto-mode` on its brief. Workers that write code get their own worktree and branch. You can watch or type into any worker pane. The orchestrating session relays questions, reviews each report against the worker's branch, reruns its checks, and integrates the result.
+`/orchestrate-herdr-pstack-sessions` fans work out to separate OMP sessions in Herdr panes instead of subagents inside one chat. Run it from a session inside Herdr and describe the parallel work. It writes one brief per worker, then runs the packaged `herdr-run launch` helper. The helper opens a tab for the run with one pane per worker and starts each worker with `/poteto-mode` on its brief. It records each worker's pane, and its session when OMP reports one during launch, in the run's `run.json`. Workers that write code get their own worktree and branch. You can watch or type into any worker pane. The orchestrating session waits on each worker with `herdr-run wait`, relays questions, reviews each report against the worker's branch, reruns its checks, and integrates the result.
 
 
 
