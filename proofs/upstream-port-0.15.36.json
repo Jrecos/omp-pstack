@@ -1,0 +1,136 @@
+{
+  "capturedAt": "2026-10-29T21:14:22.434150+00:00",
+  "upstream": {
+    "commit": "1ba91fc25c0977741dd0e267849e6234b037ed0a",
+    "version": "0.15.36"
+  },
+  "scope": "Captured port verification, not a deployment or model accuracy evaluation.",
+  "suite": {
+    "command": "bun run test",
+    "bun": {
+      "passed": 471,
+      "failed": 0
+    },
+    "node": {
+      "passed": 361,
+      "failed": 0,
+      "skipped": 0
+    },
+    "prerequisites": {
+      "bun": "1.3.14",
+      "node": "22.23.2",
+      "jdk": "25.0.5+8",
+      "tlc": "1.7.4",
+      "docker": true
+    }
+  },
+  "nativeSkillScenarios": {
+    "model": "openai-codex/gpt-6.1-sol",
+    "skills": 59,
+    "results": [
+      {
+        "name": "statechart",
+        "prompt": "This is a read-only workflow smoke. Read the statechart skill. A supplied TLC config has one invariant that fails and another whose check reaches the bound. Explain exactly how to report each result, the expected command exit code for the broken invariant, and how to prevent writing over existing output. Do not create files or run commands.",
+        "filePath": "/tmp/omp-pstack-port-20261029/skills/statechart/SKILL.md",
+        "reads": [
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/statechart/SKILL.md"
+          },
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/statechart"
+          },
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/statechart/scripts/statechart.ts:1-220"
+          }
+        ],
+        "response": "- **Failing invariant:** Report it as **broken**, with one line containing its name, the reader’s sentence for the rule, and the counterexample path using the report’s numbering. Identify the affected chart state; `breaks` means all model states behind that label violate the rule, while `mayBreak` means only some do. Use `tlc.out` for the original run and `tlc-RULE.out` when the discovering run’s bug path is not shown in the chart.\n- **Invariant whose check reaches the bound:** Report it under **“Rules not checked”**, explicitly **unknown—not passed and not proven broken**. After the first failure, subsequent checks stop at **100,000 distinct states**. This invariant receives no chart mark. To finish checking it, remove the known-broken invariant from the config or make the model smaller.\n- **Expected exit code: `1`.** The command preserves TLC’s result on the **config as written**. The original invariant failure determines that result; a later bounded check does not turn it into success. Exit `1` still permits report/chart output.\n- **Prevent overwriting:** Supply a fresh `--out` directory for every run, outside the repo. The destination must be **new or empty**; a nonempty destination is rejected with exit `2`. Output is staged, and if the destination becomes nonempty during the check, publication is refused rather than overwriting it.\n\nRead `SKILL.md` and the CLI source to verify these semantics. No files created; no commands run."
+      },
+      {
+        "name": "ketchup-video",
+        "prompt": "This is a read-only workflow smoke. Read the ketchup-video and ketchup skills. Explain how you would catch me up after the previous user message with a video, including pending operator choices, render failure, subtitle placement, and verifying slide reading time. Do not create a video or run commands.",
+        "filePath": "/tmp/omp-pstack-port-20261029/skills/ketchup-video/SKILL.md",
+        "reads": [
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/ketchup-video/SKILL.md"
+          },
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/ketchup/SKILL.md"
+          },
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/ketchup/SKILL.md:27-27:raw"
+          },
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/bro/SKILL.md"
+          }
+        ],
+        "response": "Nothing is waiting on you in this smoke check.\n\nI read both skills. No commands run, files written, or video created.\n\nFor a real `/ketchup-video`, I would:\n\n- **Use the right window:** start at your last message before `/ketchup-video`, not before an earlier `/ketchup`. Gather the work and check the current state of any PRs, checks, or agents involved, without changing anything.\n- **Keep every pending choice:** include calls still waiting on you, even from before that window. Give my recommendation, evidence, risks, and known links. For choices, explain every option’s gain and cost, using exactly the names shown in the video. Mark needed facts I cannot establish as “unknown.”\n- **Plan a short visual story:** privately write one takeaway sentence and one line per slide. Use at most ten slides, fewer where possible, built from actual screenshots, recordings, diffs, and data—not chat descriptions. Evolve one connected picture; avoid lists and tables. Show outcomes, bugs fixed, and anything unfinished or unchecked. Never show user approval as already given.\n- **Place subtitles below the picture:** one short line per slide, roughly ten words, burned into a dedicated, constant-height strip. Nothing else goes in that strip, and it covers none of the picture.\n- **Render and verify:** create one silent landscape video outside the repo, with motion between slides. Inspect a decoded frame from every slide at chat size. Measure each fully visible hold by matching rendered frames to the slide—not by detecting stillness. Require at least one second per three added words, counting the subtitle and new or changed labels, but excluding screenshot text. Fix and render again if readability or timing fails.\n- **Deliver:** opening sentence, video, one line naming work I can still do, then your action items. If inline playback is unavailable, attach or link the actual file without claiming it is embedded. If rendering fails, give one failure line and only the pending calls—no substitute summary.\n\nWork I can still do: none for this read-only smoke check.\n\nAction items: none."
+      },
+      {
+        "name": "orchestrate",
+        "prompt": "This is a read-only workflow smoke. Read the orchestrate playbook. I want a standing multi-PR project coordinated in OMP. Explain which agent writes branches, how the root retains durable project state without the old orch scripts or a Project store tool, what native tools replace cloud Task and event subscriptions, and how current-head independent verification controls merging. Do not start the project or run commands.",
+        "filePath": "/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/orchestrate.md",
+        "reads": [
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/orchestrate.md:1-220"
+          },
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/poteto-mode"
+          },
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/poteto-mode/SKILL.md:1-180"
+          },
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/poteto-mode/SKILL.md:raw:108-123"
+          },
+          {
+            "path": "/tmp/omp-pstack-port-20261029/skills/poteto-mode/references/omp-control-cli.md:1-160"
+          }
+        ],
+        "response": "The root coordinates the standing project. PR owners write and land the code. Durable files and the root’s tracker preserve project state; native tasks and job deliveries replace a separate orchestration service.\n\nRead [the orchestrate playbook](/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/orchestrate.md) and its supporting Subagents and CLI-control references.\n\n### Branch ownership\n\n- **One owner per PR.** Only that owner writes its branch, pushes, rebases, retargets, resolves conflicts, and merges. The root never edits code.\n- Each writer gets a distinct worktree or isolated checkout. Its kickoff requires verification of base, branch, cwd, dependencies, and environment.\n- Independent tasks get fresh workers. Reuse is justified only when work needs state retained by the existing worker, such as uncommitted changes or a running process.\n- The owner role can outlive one worker. A replacement receives the consolidated brief, branch, and durable reports without creating concurrent branch writers.\n- Closing or retargeting a base PR requires the root’s explicit call because it can orphan dependent PRs.\n\n### Durable root state without legacy infrastructure\n\n“Store and tracker” describes the root’s responsibility. It does not require a tool named Project store.\n\nA concrete implementation would keep a **root-owned project ledger and decision log in durable files**, with the root’s native `todo` tracking execution. The ledger should record goals, acceptance evidence, PR dependencies, owners, worker IDs, checkout paths, head SHAs, verdicts, blockers, and report paths.\n\nEvery kickoff points to those files and the upstream reports it needs. The root incorporates results into its ledger and tracker. Workers do not own the root’s todo list, and the root does not relay agent messages or status between workers. No old `orch` scripts, custom coordinator, or second job registry.\n\n### Native execution and monitoring\n\n- Resolve each worker’s configured role through **`pstack_agent`**, then pass the returned **`agent`** to native **`task`**. Do not pass a model override or invent a fallback.\n- Native tasks run asynchronously and deliver background-job completions. Inspect native jobs rather than messaging workers for status, which can restart an idle worker.\n- The CLI reference identifies SDK job APIs as `getAsyncJobSnapshot()`, `inspectAsyncJob(id)`, and `cancelAsyncJob(id)`. These are SDK interfaces, not assumed chat-tool names.\n- Forge event subscriptions remain optional. If unavailable, inspect PR state at meaningful checkpoints using `gh pr view` and `gh pr checks`, or forge equivalents. Do not replace subscriptions with a script polling loop.\n\nStart with one unit through owner, verification, and merge before expanding concurrency.\n\n### Current-head verification gates merging\n\nEach PR needs an independent verifier who is **not its author and uses a different model family**. The verifier reviews the actual diff and behavioral evidence, not just the owner’s summary or green CI.\n\nThe verdict covers **one exact head SHA**. Any new push invalidates that verdict and requires fresh verification. The owner merges only after a pass on the current head. The root checks live PR state and checks before reporting readiness or completion.\n\n**Smoke outcome:** read-only review completed. No commands run, workers dispatched, files changed, or PRs created. Nothing landed or was dropped. No user decision is pending."
+      }
+    ]
+  },
+  "ownerScenario": {
+    "model": "openai-codex/gpt-6.1-sol",
+    "results": [
+      {
+        "scenario": "autopilot-stack-owner",
+        "invocation": "I own a dependent PR in an Autopilot-stack chain, and I am its only branch writer. Its parent branch moved and my PR needs rebasing. The root coordinates the chain. Who rebases and publishes my branch, what is its rebase target, and what checks guard that publication and the later operator handoff? Do not touch a branch or PR. Read /tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/autopilot-stack.md and /tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/babysit.md first.",
+        "semanticConditions": [
+          "The PR owner leaves babysit to rebase and publish only its own branch. The root coordinates owners and does not rewrite their branches.",
+          "A dependent child rebases onto its parent branch, while a stack root or independent PR rebases onto trunk.",
+          "Check the remote tip and stop on an unexpected writer. Pin force-with-lease to the last pushed or taken-over SHA.",
+          "Reassess patch verdict coverage. A rebase gets a fresh single verifier unless a major change requires a full swarm. Require green CI and mergeability for the new head. Do not merge or push after operator handoff without the operator's go."
+        ],
+        "reads": [
+          "{\"path\":\"/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/autopilot-stack.md\"}",
+          "{\"path\":\"/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/babysit.md\"}",
+          "{\"path\":\"/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/babysit.md:4-29:raw\"}",
+          "{\"path\":\"/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/autopilot-full.md:1-90:raw\"}",
+          "{\"path\":\"/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/investigation.md\"}",
+          "{\"path\":\"skill://unslop\"}",
+          "{\"path\":\"skill://principle-prove-it-works\"}",
+          "{\"path\":\"skill://how\"}",
+          "{\"path\":\"/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/shipping.md:1-65:raw\"}"
+        ],
+        "response": "You want the ownership, rebase target, and safety gates for your dependent PR. **You rebase and publish your branch. The root coordinates the restack but never rewrites your branch.**\n\n## Ownership and target\n\nAs the Autopilot-stack owner and only branch writer, you leave the babysit loop, rebase your branch, publish it safely, then resume babysit. A standalone babysitter only reports the rebase requirement upward.\n\nYour target is **your immediate parent PR's branch**, updated to its new head, not trunk. Only stack roots and independent PRs rebase onto trunk. A changed parent head triggers restacking above it through each PR's owner.\n\nThese rules are explicit in [Autopilot-stack, step 2](/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/autopilot-stack.md) and [Babysit, step 4](/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/babysit.md).\n\n## Publication gates\n\n1. **Check branch ownership before pushing.** Inspect the remote tip with `git ls-remote`. Publish with `git push --force-with-lease` explicitly pinned to the SHA you last pushed or formally took over. Do not replace that expected SHA with an unexpected remote tip. If another actor pushed, stop and report to the root.\n2. **Reconcile drift during the rebase.** Resolve conflicts and sweep for newly introduced callers of code your patch deletes or moves. Do this in the same push wave.\n3. **Check the committed head.** Run the repository's checks for touched paths before the code-ready push and before a later push that needs a verifier. Report every new head to the root.\n4. **Resume babysit after publication.** Work conflicts first, review threads second, and CI third. Rearm the watcher after the push wave.\n\nSources are [Babysit, steps 4–6](/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/babysit.md) and [Autopilot-full, step 2](/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/autopilot-full.md), inherited by Autopilot-stack.\n\n## Verification and operator handoff\n\n- **A verdict covers a patch. CI covers a head.** Compare the rebased PR's stable base-to-head `git patch-id` with the clean verdict's recorded patch. An unchanged patch retains its code verdict, but CI and mergeability must run again on the new head. Old green checks are insufficient.\n- **Fresh verification follows the change size.** Autopilot-full step 4 assigns a single verifier to a rebase, conflict resolution, or minor fix. New behavior, redesign, or a large new diff requires another full swarm. The root audits verification receipts, including live proof on the real artifact. Matching patch IDs avoid another full swarm, not the current-head checks.\n- **Forge readiness matters.** A green check list alone is insufficient. Babysit requires the active forge's readiness verdict and blocker handling. GitHub uses the watcher's applicable readiness stop condition. Origin requires green checks, mergeability, and no unresolved blockers.\n- **Handoff happens only when every PR is verified and green at its current head.** Report each PR with its verdict. Autopilot-stack does not merge. After handoff, **nobody pushes without the operator's go**.\n\nSources are [Autopilot-full, step 4](/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/autopilot-full.md), [Shipping, step 3](/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/shipping.md), [Babysit, step 6](/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/babysit.md), and [Autopilot-stack, step 1](/tmp/omp-pstack-port-20261029/skills/poteto-mode/playbooks/autopilot-stack.md).\n\n**Prove It Works** shaped this answer by separating patch-verdict reuse from current-head CI and live verification, rather than treating green CI as proof.\n\nRead-only source review only. No branch or PR operations performed."
+      }
+    ]
+  },
+  "compiler": {
+    "holdingModelReport": "# Login\n\nTLC reached 9 states and 18 steps. The chart draws 9 states and 14 arrows.\nWith VIEW, TLC keeps one representative for each group of states that it counts as the same. An arrow can lead to the representative rather than to the state that the step reaches.\n\n## Rules that hold\nTypeOK, NoDeadlock\n",
+    "brokenModelReport": "# CounterDeadlock\n\nTLC reached 4 states and 3 steps. The chart draws 4 states and 4 arrows.\n1 step that the constraints exclude ends a rule's path, and the chart includes it. TLC checks the rules after such a step, but it does not take the step.\nThe chart marks only the deadlock that TLC reports. Under a CONSTRAINT or an ACTION_CONSTRAINT, a state with no step in the chart can still have steps that the constraints leave out, and TLC does not count it as a deadlock.\n\n## NotThree breaks\nThe shortest path has 1 step:\n0. 0\n1. Jump: 3\n\n## NoDeadlock breaks\nThe shortest path has 3 steps:\n0. 0\n1. Inc: 1\n2. Inc: 2\n3. Inc: 3\n",
+    "observedExits": {
+      "holdingModel": 0,
+      "brokenModel": 1,
+      "nonemptyOutputRefusal": 2
+    },
+    "nonemptyOutputReportPreserved": true
+  },
+  "limits": [
+    "Skill scenarios were read-only and reviewed for the recorded decisions. No catch-up video or live multi-PR orchestration was produced.",
+    "Native capabilities proof has four passed proposals and six explicit deferrals.",
+    "Authenticated native-model and Benny proofs are fixtures, not live external service or accuracy claims.",
+    "The unchanged ketchup fixture listed all cleanup approvals but did not lead with them. Read receipts do not prove every semantic condition passed."
+  ]
+}

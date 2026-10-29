@@ -14,7 +14,6 @@ import { createRoutine, listRoutines, serve, setRoutineEnabled, stopServeStack }
  */
 const PACKAGE_ROOT = resolve(import.meta.dir, "..");
 const HELPERS: Record<string, { argv: string[]; exec?: string }> = {
-	orch: { argv: ["skills/poteto-mode/scripts/orch/orch.ts"] },
 	"watch-pr": { argv: ["skills/poteto-mode/scripts/watch-pr/watch-pr"] },
 	"check-plan": { argv: ["skills/poteto-mode/scripts/check-plan.mjs"] },
 	"worktree-audit": { argv: ["skills/poteto-mode/scripts/worktree-audit.ts"] },

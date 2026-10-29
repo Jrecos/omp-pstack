@@ -19,7 +19,7 @@ Use OMP 18.10.2 with this checkout. The SDK is pinned to 18.10.2. Native task co
 
 ### running the `pstack` CLI after install
 
-the helper commands (`orch`, `watch-pr`, `check-plan`, `worktree-audit`, `log`, plus the `routine` and `benny` commands documented below) live in the installed package. invoke them through the installed root, whatever scope you installed in.
+the helper commands (`watch-pr`, `check-plan`, `worktree-audit`, `log`, plus the `routine` and `benny` commands documented below) live in the installed package. invoke them through the installed root, whatever scope you installed in.
 
 the marketplace copies the plugin without installing npm dependencies. OMP can load the native extension, but the standalone CLI and CLI-backed skills need the package dependencies. install them before using those commands:
 
@@ -57,7 +57,7 @@ updating replaces the plugin code (skills, CLI, runtime) but keeps your configur
 
 upgrading from a pre-0.15.0 config: the `how critics` role is retired and the 17-role parser rejects a config still carrying its line. before the next `/setup-pstack` save, edit `rules/pstack-models.md` to remove the `how critics:` role line, and any stale `# how critics[...]` address comments next to it. keep the approved model pool and every other role assignment. do not delete the whole config.
 
-This package ports canonical P Stack 0.15.28. The release adds four commands, complete waiting-item catch-ups with real visuals, forge-based orchestration frontiers, Code Review Gate approval handling, and Origin-aware worktree auditing. OMP retains its configured model pool, persistent mode, native task agents, workspace-scoped history, full swarm on each patch-changing Autopilot push, and bottom-only stack landing. The [Claude Code provenance assessment](./docs/harness/claude-code.md) explains why upstream host artifacts are inventoried but not installed.
+This package ports canonical P Stack 0.15.36. It adds statechart model checking and video catch-ups, replaces orchestration scripts with native agent coordination, and requires reproduced findings for adversarial review. OMP retains its configured model pool, persistent mode, native task agents, workspace-scoped history, and bottom-only stack landing. Autopilot uses the upstream full-swarm-once policy and stacks only dependent PRs. The [Claude Code provenance assessment](./docs/harness/claude-code.md) explains why upstream host artifacts are recorded but not installed.
 
 repo maintainers can verify manifest completeness, recorded source blobs, and byte-exact unadapted files against the pinned upstream commit with `bun scripts/check-upstream.ts <cursor/plugins checkout>`.
 
@@ -150,8 +150,8 @@ morning.
 | [shipping](./skills/poteto-mode/playbooks/shipping.md) | independently verify a green stack, then land the contiguous verified run bottom-up through github by default or origin when available. |
 | [autonomous run](./skills/poteto-mode/playbooks/autonomous-run.md) | drive a long task to completion without stopping. |
 | [orchestrate](./skills/poteto-mode/playbooks/orchestrate.md) | a standing project handed to one coordinator chat: multi-day, many stacked prs, fleets of subagents. |
-| [autopilot-full](./skills/poteto-mode/playbooks/autopilot-full.md) | run independent prs to merged with one owner per pr and a root swarm verification round at code-ready and after each patch-changing push. |
-| [autopilot-stack](./skills/poteto-mode/playbooks/autopilot-stack.md) | build and verify one linear base-branch stack for the operator to review and land. |
+| [autopilot-full](./skills/poteto-mode/playbooks/autopilot-full.md) | run independent prs to merged with one owner per pr. a swarm verifies each code-ready head, and every later change to the patch gets a fresh check. |
+| [autopilot-stack](./skills/poteto-mode/playbooks/autopilot-stack.md) | autopilot-full without the merge. build and verify prs for the operator to review and land, stacking a pr only on a pr it builds on. |
 | [session pickup](./skills/poteto-mode/playbooks/session-pickup.md) | resume or take over a prior agent's in-flight work. |
 | [pause safely](./skills/poteto-mode/playbooks/pause-safely.md) | suspend in-flight work cleanly so it can be resumed later. |
 | [multi-phase plan](./skills/poteto-mode/playbooks/multi-phase-plan.md) | work that spans phases or stacked PRs. |
@@ -186,18 +186,22 @@ Invoking [`/poteto-mode`](./skills/poteto-mode/SKILL.md) turns on persistent mod
 /interrogate review this pr.
 ```
 
-The [complete skills reference](./docs/guide/skills.md) lists all 57 discoverable skills with their purposes and source files. It separates 33 direct workflow skills from 24 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 57.
+The [complete skills reference](./docs/guide/skills.md) lists all 59 discoverable skills with their purposes and source files. It separates 35 direct workflow skills from 24 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 59.
 
 | New skill | Use it when |
 |---|---|
 | [`/poteto-help`](./skills/poteto-help/SKILL.md) | Find the skill, playbook, or principle for your goal and get a prompt to send. It runs only when you invoke it and does not start the work. |
 | [`/in-your-own-words`](./skills/in-your-own-words/SKILL.md) | Restate the user's goal and problem before starting. |
-| [`/sharpen`](./skills/sharpen/SKILL.md) | Choose an expert approach and an independent check without adding unnecessary work. |
+| [`/sharpen`](./skills/sharpen/SKILL.md) | Rewrite a prompt with expert methods, primary material, and an outside check without executing the task. |
 | [`/create-formal-verification-skill`](./skills/create-formal-verification-skill/SKILL.md) | Generate a project-local formal check of a high-risk property and prove it catches a real break. |
 | [`/maintain-formal-verification-skill`](./skills/maintain-formal-verification-skill/SKILL.md) | Bring formal checks back in sync with changed code and distinguish verification drift from product bugs. |
 | [`/ketchup`](./skills/ketchup/SKILL.md) | Catch up on this chat with real visuals and every waiting user decision, including older waiting items. Do not replace an item list with a count. |
 | [`/correct`](./skills/correct/SKILL.md) | Fix repeated agent mistakes at the highest enforceable level, with architecture first and documentation last. Pair each rule with its enforcement. |
 | [`/benchmark-checklist`](./skills/benchmark-checklist/SKILL.md) | Vet a measured number for its limiter, tuning, errors, repeatability, end-to-end relevance, and whether the timed work ran. |
+| [`/statechart`](./skills/statechart/SKILL.md) | Check a TLA+ state model with TLC and draw a Mermaid chart. Report a shortest path per broken invariant or deadlock rule and TLC counterexamples for temporal properties. |
+| [`/ketchup-video`](./skills/ketchup-video/SKILL.md) | Catch up with a short subtitled video and waiting decisions. Deliver a file link or attachment when the client cannot embed video. |
+
+The 0.15.36 upstream port replaces the `orch` helper with agent-driven orchestration through native tasks and durable tracker files. `/interrogate` now reports only findings demonstrated by a run and verified by the parent. `/statechart` imports the upstream compiler with minimal strict-TypeScript compatibility fixes. Its tests use the native Node runner and root-pinned development dependencies instead of test-time renderer installs. The port removes implementation-text and import-layout assertions but retains the behavioral compiler, rendering, parsing, and fuzz tests. By default, the compiler uses mise to find pinned TLC and Java versions, installing them with network access if needed. For offline or pre-provisioned use, set `TLA2TOOLS` to a local `tla2tools.jar` path to bypass mise. With `TLA2TOOLS` set, `JAVA` selects a Java 11 or later binary and defaults to `java` from `PATH`. Video generation uses available rendering tools outside the repository.
 
 `/session-review` reviews the last 10 sessions in the current workspace. Use `/session-review 25` to select the last 25, or `/session-review 25 --plugin-report` to add a separate, sanitized plugin-feedback section. The bare command rejects invalid counts and flags locally before dispatching a model turn. The `/skill:session-review` alternative is prompt-driven and has no host-side argument gate. The review uses the full available history window, not only the last seven days, and never edits the repository or sends a report elsewhere. Results appear in chat unless you explicitly request a private saved copy.
 
@@ -344,7 +348,13 @@ with `PSTACK_ROOT` resolved once per host as in [running the `pstack` CLI after 
 
 ## releases
 
-[`.github/workflows/ci.yml`](./.github/workflows/ci.yml) checks each pull request's merge result with `main`, not just its head. It installs the frozen lockfile, runs type checking, the full test suite, and content integrity checks. Run the same suite locally with `bun run test`. This command uses `bun test --isolate` to prevent module mocks from leaking between files. It remains sequential so Docker fixtures do not run in parallel. The workflow also handles merge-queue checks. The job has read-only permissions and does not persist checkout credentials.
+[`.github/workflows/ci.yml`](./.github/workflows/ci.yml) checks each pull request's merge result with `main`, not just its head. It installs the frozen lockfile, runs type checking, the full test suite, and content integrity checks. Run the same suite locally with `bun run test`. The root command runs the OMP and Benny tests with `bun test --isolate`, then runs every statechart test with `node --test`. Bun excludes only the statechart test directory so those tests run once under their native runner. The two runners execute sequentially, and Bun keeps Docker fixture files sequential. The workflow also handles merge-queue checks. The job has read-only permissions and does not persist checkout credentials.
+
+Use Node 22.23.2 for the imported statechart test suite, matching CI. Node is a test-only requirement for that suite. OMP and Benny still run on Bun. After `bun install --frozen-lockfile`, render tests use root-pinned `pele` 1.9.0, `mermaid` 11.16.0, and `jsdom` 26.1.0 without network access or cache installs. Fuzz tests use `fast-check` 4.5.3.
+
+For the live TLC suite, set `TLA2TOOLS` to a local `tla2tools.jar` and use a full JDK's `java` executable. Set `JAVA` when that executable is not already `java` on `PATH`. The config-parser oracle compiles Java source, so a JRE alone is insufficient. Without `TLA2TOOLS`, the optional live TLC checks are skipped.
+
+For a focused Bun run with extra test arguments, invoke `bun test --isolate --path-ignore-patterns 'skills/statechart/scripts/test/**' <arguments>` directly. Do not append Bun options to the combined root script, where they would reach Node. A focused run does not replace `bun run test`.
 
 The Benny integration suites create private temporary OMP profiles and restore the previous profile after cleanup. They do not need an initialized developer profile. Docker-dependent suites rebuild their fixture image from current source with a bounded 10-minute setup hook.
 
@@ -385,6 +395,6 @@ The token needs permission to write repository contents. Future branch rules mus
 
 ## credits and license
 
-Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.28`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
+Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.36`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
 
 Released under the [MIT License](./LICENSE). The original copyright notice is retained.

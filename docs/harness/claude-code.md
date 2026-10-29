@@ -1,6 +1,6 @@
 # Upstream Claude Code provenance
 
-Canonical P Stack 0.15.28 adds a generated Claude Code distribution under `harness/pstack/claude-code/`, an overview at `harness/pstack/README.md`, a generator at `scripts/generate-pstack-harness-trees.mjs`, and a root `.claude-plugin/marketplace.json` registration.
+Canonical P Stack introduced its generated Claude Code distribution in 0.15.28. The 0.15.36 pin retains it under `harness/pstack/claude-code/`, with an overview at `harness/pstack/README.md`, a generator at `scripts/generate-pstack-harness-trees.mjs`, and a root `.claude-plugin/marketplace.json` registration.
 
 `upstream.json` records those source blobs and modes as intentional absences under `upstream-only/`. The content checker rejects a present target in that namespace. The upstream checker compares each recorded source with the pinned commit and requires complete coverage of the selected source trees.
 
