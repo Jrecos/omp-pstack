@@ -1,10 +1,10 @@
 # Skills reference
 
-The plugin ships 57 discoverable skills under `skills/`. The 33 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 57 through `/skill:<name>`.
+The plugin ships 59 discoverable skills under `skills/`. The 35 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 59 through `/skill:<name>`.
 
 A foreign command or an OMP built-in can own a bare name. In that case, use `/skill:<name>` for the plugin skill. Workflows that dispatch agents require configured model roles. `/setup-pstack` selects an approved model pool and saves the role map. An unset or unavailable role blocks dispatch rather than choosing another model.
 
-## Direct workflow skills (33)
+## Direct workflow skills (35)
 
 | Skill | Purpose and use case |
 |---|---|
@@ -18,12 +18,13 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 | [`create-verification-skill`](../../skills/create-verification-skill/SKILL.md) | Create a project-local verification skill and feature map when behavior lacks a repeatable check. |
 | [`figure-it-out`](../../skills/figure-it-out/SKILL.md) | Design an auditable playbook when no bundled playbook fits a task. |
 | [`how`](../../skills/how/SKILL.md) | Explain a subsystem's code path, ownership, and runtime behavior. |
-| [`interrogate`](../../skills/interrogate/SKILL.md) | Have independent models challenge a diff from different review angles. |
+| [`interrogate`](../../skills/interrogate/SKILL.md) | Run independent adversaries in isolated worktrees and retain only findings whose commands reproduce a failure against the intended behavior. |
 | [`/in-your-own-words`](../../skills/in-your-own-words/SKILL.md) | Restate the user's goal and problem before starting. |
-| [`/sharpen`](../../skills/sharpen/SKILL.md) | Choose an expert approach and an independent check without adding unnecessary work. |
+| [`/sharpen`](../../skills/sharpen/SKILL.md) | Rewrite a prompt with expert methods, primary material, and an outside check without executing the task. |
 | [`/create-formal-verification-skill`](../../skills/create-formal-verification-skill/SKILL.md) | Generate a project-local formal check of a high-risk property and prove it catches a real break. |
 | [`/maintain-formal-verification-skill`](../../skills/maintain-formal-verification-skill/SKILL.md) | Bring formal checks back in sync with changed code and distinguish verification drift from product bugs. |
 | [`/ketchup`](../../skills/ketchup/SKILL.md) | Explain current-chat changes with real visuals and list every waiting user decision without truncation. |
+| [`ketchup-video`](../../skills/ketchup-video/SKILL.md) | Catch up with a short subtitled video and waiting decisions, with an attachment or link when inline playback is unavailable. |
 | [`maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md) | Compare a verification skill and its feature map with current source and one live pass, then correct proven drift. |
 | [`make-bot-ui`](../../skills/make-bot-ui/SKILL.md) | Build a bot interface whose buttons wake an agent routine through a webhook, with sender-key and Tailscale access. |
 | [`no-comments`](../../skills/no-comments/SKILL.md) | Have Comment Sicko challenge comments before review and fix accepted findings. |
@@ -34,6 +35,7 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 | [`session-review`](../../skills/session-review/SKILL.md) | Review recent workspace sessions for supported repository navigation, setup, or documentation problems. |
 | [`setup-pstack`](../../skills/setup-pstack/SKILL.md) | Choose an approved model pool and save the role map used by delegated workflows. |
 | [`show-me-your-work`](../../skills/show-me-your-work/SKILL.md) | Keep a TSV decision trail with reasons and evidence during long or unattended work. |
+| [`statechart`](../../skills/statechart/SKILL.md) | Check TLA+ models with TLC, draw Mermaid statecharts, and report shortest paths to broken rules. |
 | [`swarm`](../../skills/swarm/SKILL.md) | Assign parallel workers distinct slices, races, or checks and return one combined report. |
 | [`tdd`](../../skills/tdd/SKILL.md) | Write a failing test before the fix when TDD is requested or a cheap local test path is clear. |
 | [`teach`](../../skills/teach/SKILL.md) | Explain a change or subsystem in plain language by combining how it works with why it exists. |

@@ -8,16 +8,16 @@ import { manifestDigest } from "./manifest-digest.ts";
 
 const EXPECTED_HEADER = {
   repository: "https://github.com/cursor/plugins",
-  commit: "d457567332aa6989e753ea289f30ea2bfbc80bc0",
-  version: "0.15.28",
-  subtree: "06803099e18ed488c8c2a2fda118ce772b4e2a77",
+  commit: "1ba91fc25c0977741dd0e267849e6234b037ed0a",
+  version: "0.15.36",
+  subtree: "4719e1c4b4c43bac85d4206a8b41dd2899769c1c",
 };
 
 const DIRECT_SKILLS = [
   "architect", "arena", "automate-me", "benchmark-checklist", "blast-radius", "bro",
-  "correct", "create-formal-verification-skill", "create-verification-skill", "figure-it-out", "how", "in-your-own-words", "interrogate", "ketchup",
+  "correct", "create-formal-verification-skill", "create-verification-skill", "figure-it-out", "how", "in-your-own-words", "interrogate", "ketchup", "ketchup-video",
   "maintain-formal-verification-skill", "maintain-verification-skill", "make-bot-ui", "no-comments", "poteto-help", "poteto-mode",
-  "recall", "reflect", "session-review", "setup-pstack", "sharpen", "show-me-your-work", "swarm", "tdd",
+  "recall", "reflect", "session-review", "setup-pstack", "sharpen", "show-me-your-work", "statechart", "swarm", "tdd",
   "teach", "technical-writing", "typescript-best-practices", "unslop", "why",
 ];
 
@@ -103,7 +103,7 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     pattern: /^package\.json$/,
     kind: "omp/cli scenario",
     artifacts: ["scripts/smoke-install.ts", "scripts/smoke-workflow-guidance.ts"],
-    contract: "Root OMP package metadata is covered by marketplace installation and native discovery. The smoke:workflow command runs checkout-bound read-only OMP guidance sessions; it does not run live PRs.",
+    contract: "Root OMP package metadata is covered by marketplace installation and native discovery. The smoke:workflow command runs checkout-bound read-only OMP guidance sessions; it does not run live PRs. The root test command separately runs the Bun OMP suite and native Node statechart suite with root-pinned renderer dependencies; these suites must run to verify test integration.",
   },
   {
     id: "native-root-manifest",
@@ -188,7 +188,7 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     pattern: /^docs\/guide\/(\d[^/]*|README)\.md$/,
     kind: "pinned-byte/link inspection",
     artifacts: ["scripts/check-content.ts"],
-    contract: "Guide path/command translations are prose; the honest claim is link/asset health and inventory integrity, not a behavioral scenario.",
+    contract: "Guide path and command translations and source-backed behavior descriptions are prose; the honest claim is link/asset health and inventory integrity, not a behavioral scenario.",
   },
   {
     id: "mode-skill",
@@ -230,7 +230,7 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     pattern: /^skills\/(create|maintain)-(?:formal-)?verification-skill\/SKILL\.md$/,
     kind: "pinned-byte/link inspection",
     artifacts: ["scripts/check-content.ts"],
-    contract: "Generated-skill path translations are prose; honest claim is link health and inventory integrity.",
+    contract: "Generated-skill placement and source-backed verification instructions are prose; honest claim is link health and inventory integrity.",
   },
   {
     id: "help-skill-prose",
@@ -297,17 +297,17 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
   },
   {
     id: "helper-commander-resolution",
-    pattern: /^skills\/poteto-mode\/scripts\/(orch\/orch\.ts|watch-pr\/watch-pr)$/,
+    pattern: /^skills\/poteto-mode\/scripts\/watch-pr\/watch-pr$/,
     kind: "omp/cli scenario",
-    artifacts: ["tests/orch.test.ts"],
-    contract: "Shared launcher-resolution pattern proven by the orch suite spawning the script as a real subprocess; the watch-pr launcher is the same one-line resolution.",
+    artifacts: ["tests/routines.test.ts"],
+    contract: "The root pstack:watch-pr subprocess regression exercises the shipped launcher and its actionable no-network commander resolution failure.",
   },
   {
     id: "helper-manifest-consolidation",
     pattern: /^skills\/poteto-mode\/scripts\/(bun\.lock|package\.json)$/,
     kind: "omp/cli scenario",
-    artifacts: ["tests/orch.test.ts", "skills/poteto-mode/scripts/watch-pr/cli.test.ts"],
-    contract: "Nested-manifest removal proven by both helper suites resolving commander through the root package graph.",
+    artifacts: ["skills/poteto-mode/scripts/watch-pr/cli.test.ts"],
+    contract: "Nested-manifest removal is covered by the watch-pr CLI suite resolving commander through the root package graph.",
     authorizesAbsence: true,
   },
   {
@@ -341,6 +341,34 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     authorizesAbsence: true,
   },
   {
+    id: "statechart-skill-prose",
+    pattern: /^skills\/statechart\/SKILL\.md$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "Statechart setup and report-scope corrections are prose. This class checks inventory integrity and links, not TLC behavior or counterexample minimality.",
+  },
+  {
+    id: "statechart-exit-typing",
+    pattern: /^skills\/statechart\/scripts\/run\.ts$/,
+    kind: "omp/cli scenario",
+    artifacts: ["skills/statechart/scripts/test/corpus.test.ts"],
+    contract: "Typing-only adaptation: the corpus suite pins the exit-class mapping end to end by running statechart.ts per case and asserting each committed verdict exit (0, or 11/12/13 as 1, else 2), so the 0|1|2 annotation cannot change behavior. The annotation itself is gated by the root tsc typecheck.",
+  },
+  {
+    id: "statechart-cli-suite-typing",
+    pattern: /^skills\/statechart\/scripts\/test\/cli\.test\.ts$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "Await-shape-only adaptation of the suite's signal-fixture callbacks; every SIGKILL/SIGINT/SIGTERM cleanup assertion is kept for the native Node suite in the root test command and the root tsc gate. This class pins inventory integrity and links, not a separate behavioral scenario.",
+  },
+  {
+    id: "statechart-test-integration",
+    pattern: /^skills\/statechart\/scripts\/test\/(pipeline|render)\.test\.ts$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "Pipeline import-layout and source-text assertions and the renderer CSS-source assertion are removed. Behavioral compile/result, rendering, parsing, and fuzz tests remain in the native Node suite. Renderer setup resolves root-pinned packages without test-time installation. This class checks provenance and links only; the root test command and tsc gate must verify behavior and typing.",
+  },
+  {
     id: "claude-code-source-only",
     pattern: /^upstream-only\/(?:harness\/pstack\/.+|scripts\/generate-pstack-harness-trees\.mjs|\.claude-plugin\/marketplace\.json)$/,
     kind: "pinned-byte/link inspection",
@@ -363,12 +391,11 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     contract: "A synthetic OMP conversation exercises older waiting-item completeness, assistant-runnable work, and honest visuals. Available native drawing tools replace the unavailable upstream visualize command. Recorded semantic conditions require review beyond read receipts.",
   },
   {
-    id: "orch-test-provenance",
-    pattern: /^skills\/poteto-mode\/scripts\/orch\/orch\.test\.ts$/,
-    kind: "omp/cli scenario",
-    artifacts: ["tests/orch.test.ts"],
-    contract: "The imported test target is intentionally absent. The native behavioral suite at tests/orch.test.ts retains store, forge frontier, and CLI regression coverage without incidental framework help wording assertions.",
-    authorizesAbsence: true,
+    id: "video-delivery-prose",
+    pattern: /^skills\/ketchup-video\/SKILL\.md$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "The OMP attachment fallback is presentation guidance. This class verifies provenance and links, not video rendering or model execution.",
   },
 ];
 
@@ -1088,7 +1115,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "193ed01ed679cb79e64137a9a396cacc9f1decebee95921e6b7ad06ccd4378f2";
+    const pinnedDigest = "8621143ce75e98b085119e21c4b20531acb54d583e0890ed5b9c10f304d07570";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

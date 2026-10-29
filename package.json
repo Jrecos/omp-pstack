@@ -4,18 +4,17 @@
   "type": "module",
   "license": "MIT",
   "author": "Lauren Tan",
-  "description": "OMP-native adaptation of Potato's P Stack 0.15.28",
+  "description": "OMP-native adaptation of Potato's P Stack 0.15.36",
   "engines": { "bun": ">=1.3.14" },
   "omp": { "extensions": ["./src/extension.ts"] },
   "bin": { "pstack": "./src/cli.ts" },
   "scripts": {
-    "test": "bun test --isolate",
+    "test": "bun test --isolate --path-ignore-patterns 'skills/statechart/scripts/test/**' && node --disable-warning=ExperimentalWarning --test skills/statechart/scripts/test/*.test.ts",
     "typecheck": "tsc --noEmit",
     "check:content": "bun scripts/check-content.ts",
     "check:speckit-assets": "bun scripts/check-speckit-assets.ts",
     "smoke": "bun scripts/smoke.ts",
     "smoke:workflow": "bun scripts/smoke-workflow-guidance.ts",
-    "pstack:orch": "bun skills/poteto-mode/scripts/orch/orch.ts",
     "pstack:watch-pr": "bun skills/poteto-mode/scripts/watch-pr/watch-pr",
     "pstack:check-plan": "bun skills/poteto-mode/scripts/check-plan.mjs",
     "pstack:worktree-audit": "bun skills/poteto-mode/scripts/worktree-audit.ts",
@@ -32,6 +31,10 @@
   },
   "devDependencies": {
     "bun-types": "1.3.14",
+    "fast-check": "4.5.3",
+    "jsdom": "26.1.0",
+    "mermaid": "11.16.0",
+    "pele": "1.9.0",
     "typescript": "7.0.2"
   }
 }

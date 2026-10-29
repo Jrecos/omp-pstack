@@ -123,7 +123,13 @@ const cases: Scenario[] = [
   {
     name: "autopilot-stack-owner",
     files: [stack, babysit],
-    prompt: `I own a PR that the root already appended to an Autopilot-stack chain. Trunk moved and the chain needs rebasing, including my PR. Should I rebase and force-push my own branch while babysitting, or should I report the conflict for the root to handle? Do not touch a branch or PR. Read ${stack} and ${babysit} first.`,
+    prompt: `I own a dependent PR in an Autopilot-stack chain, and I am its only branch writer. Its parent branch moved and my PR needs rebasing. The root coordinates the chain. Who rebases and publishes my branch, what is its rebase target, and what checks guard that publication and the later operator handoff? Do not touch a branch or PR. Read ${stack} and ${babysit} first.`,
+    semanticConditions: [
+      "The PR owner leaves babysit to rebase and publish only its own branch. The root coordinates owners and does not rewrite their branches.",
+      "A dependent child rebases onto its parent branch, while a stack root or independent PR rebases onto trunk.",
+      "Check the remote tip and stop on an unexpected writer. Pin force-with-lease to the last pushed or taken-over SHA.",
+      "Reassess patch verdict coverage. A rebase gets a fresh single verifier unless a major change requires a full swarm. Require green CI and mergeability for the new head. Do not merge or push after operator handoff without the operator's go.",
+    ],
   },
   {
     name: "decision-log",

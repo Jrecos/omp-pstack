@@ -42,6 +42,8 @@ Present the synthesizer's full Accepted / Rejected / Backlog output and wait for
 
 File each Backlog item to your team's devex or backlog tracker without waiting. Only the Accepted list waits for approval.
 
+Never edit an installed plugin copy or a skill under `plugins/cache/`. Before approval, resolve and show the source checkout and skill path. For package-owned skills, edit that source checkout after approval. For project or personal skills, use their existing `.agents/skills/` or `.omp/skills/` source according to `skills/poteto-mode/references/omp-create-skill.md`. Do not copy a package skill into a shadowing local override. Never open a PR or push.
+
 Follow each approved row's Routing exactly:
 
 - Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): the parent does it directly.
