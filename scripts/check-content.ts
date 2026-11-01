@@ -103,7 +103,7 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     pattern: /^package\.json$/,
     kind: "omp/cli scenario",
     artifacts: ["scripts/smoke-install.ts", "scripts/smoke-workflow-guidance.ts"],
-    contract: "Root OMP package metadata is covered by marketplace installation and native discovery. The smoke:workflow command runs checkout-bound read-only OMP guidance sessions; it does not run live PRs. The root test command separately runs the Bun OMP suite and native Node statechart suite with root-pinned renderer dependencies; these suites must run to verify test integration.",
+    contract: "Root OMP package metadata is covered by marketplace installation and native discovery. The smoke:workflow command runs checkout-bound read-only OMP guidance sessions; it does not run live PRs. The root test command separately runs the Bun OMP suite and native Node statechart suite, whose render tests install their renderer packages at test time as upstream does; these suites must run to verify test integration.",
   },
   {
     id: "native-root-manifest",
