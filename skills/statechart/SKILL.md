@@ -20,6 +20,8 @@ Work in a scratch folder outside the repo. Write a TLA+ spec and its config. The
 
 The first run installs TLC and Java with mise and needs the network.
 
+Before you write the spec, check that `mise` is on `PATH` or that `TLA2TOOLS` is set. If neither is, ask the user whether to install mise with `curl -fsSL https://mise.run | sh`, which puts it in `~/.local/bin` for their user only. If they agree, install it, add `~/.local/bin` to `PATH`, and continue. If they decline, stop and tell them to set `TLA2TOOLS` to a `tla2tools.jar` they already have, and `JAVA` when `java` is not on `PATH`. Do not search the disk for Java or TLC, and do not download them yourself.
+
 ## Write the spec
 
 - Write each rule that the reader agrees to as an INVARIANT. A rule can be about a screen, a result, a stored value, or a message. If the model has no variable for a rule, add the variable. Never weaken a rule to make it hold.
