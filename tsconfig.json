@@ -9,5 +9,6 @@
     "allowImportingTsExtensions": true,
     "types": ["bun-types"]
   },
-  "include": ["src/**/*.ts", "scripts/**/*.ts", "tests/**/*.ts", "skills/**/*.ts"]
+  "include": ["src/**/*.ts", "scripts/**/*.ts", "tests/**/*.ts", "skills/**/*.ts"],
+  "exclude": ["skills/statechart/scripts/**"]
 }

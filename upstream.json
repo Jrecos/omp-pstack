@@ -10,7 +10,7 @@
       "target": "package.json",
       "mode": "100644",
       "adaptation": {
-        "reason": "Replace enabled Cursor manifest with native OMP package metadata, preserving upstream author/license/version lineage. Expose an authenticated checkout-bound workflow smoke command for read-only guidance verification. Run the Bun OMP suite and native Node statechart suite sequentially from the root test command. Pin upstream-required fast-check 4.5.3, pele 1.9.0, mermaid 11.16.0, and jsdom 26.1.0 as root development dependencies so imported tests resolve them without test-time installs; skills/statechart/scripts/package.json stays verbatim.",
+        "reason": "Replace enabled Cursor manifest with native OMP package metadata, preserving upstream author/license/version lineage. Expose an authenticated checkout-bound workflow smoke command for read-only guidance verification. Run the Bun OMP suite and native Node statechart suite sequentially from the root test command. Pin upstream-required fast-check 4.5.3 as a root development dependency so the verbatim statechart tests resolve it from the root install; skills/statechart/scripts/package.json stays verbatim.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -10793,16 +10793,7 @@
       "source": "pstack/skills/statechart/SKILL.md",
       "blob": "f5a64a8db4b8a5957ac5e76e051b1823cecd4d5e",
       "target": "skills/statechart/SKILL.md",
-      "mode": "100644",
-      "adaptation": {
-        "reason": "Correct the compiler-backed report contract to one shortest path per broken invariant or deadlock rule and TLC counterexamples for temporal properties. Remove universal shortest-path wording from constraint guidance. Document default pinned mise provisioning separately from the offline TLA2TOOLS/JAVA alternative, which bypasses mise and requires Java 11 or later.",
-        "verification": {
-          "kind": "pinned-byte/link inspection",
-          "artifacts": [
-            "scripts/check-content.ts"
-          ]
-        }
-      }
+      "mode": "100644"
     },
     {
       "source": "pstack/skills/statechart/references/render.md",
@@ -10958,14 +10949,7 @@
       "source": "pstack/skills/statechart/scripts/run.ts",
       "blob": "4efd368e5bcd0b4ef7cf8d8cfd1e511483c720aa",
       "target": "skills/statechart/scripts/run.ts",
-      "mode": "100644",
-      "adaptation": {
-        "reason": "Upstream runs the statechart scripts under node --test with no typecheck; the OMP root gate type-checks skills/** with tsc, where exitClass's unannotated conditional widens to number and rejects CheckResult's 0|1|2 exit field. Annotate the exit class; behavior is unchanged.",
-        "verification": {
-          "kind": "omp/cli scenario",
-          "artifacts": ["skills/statechart/scripts/test/corpus.test.ts"]
-        }
-      }
+      "mode": "100644"
     },
     {
       "source": "pstack/skills/statechart/scripts/statechart",
@@ -11013,14 +10997,7 @@
       "source": "pstack/skills/statechart/scripts/test/cli.test.ts",
       "blob": "97b71c30c228eafd55f599375f16be4f656f20e5",
       "target": "skills/statechart/scripts/test/cli.test.ts",
-      "mode": "100644",
-      "adaptation": {
-        "reason": "Two signal-fixture callbacks returned signalWhile's fixture object where node:test wants Promise<void> under the OMP root tsc gate. Await signalWhile inside async callbacks; every cleanup assertion is kept.",
-        "verification": {
-          "kind": "pinned-byte/link inspection",
-          "artifacts": ["scripts/check-content.ts"]
-        }
-      }
+      "mode": "100644"
     },
     {
       "source": "pstack/skills/statechart/scripts/test/config-fuzz.test.ts",
@@ -13216,16 +13193,7 @@
       "source": "pstack/skills/statechart/scripts/test/pipeline.test.ts",
       "blob": "81a5056a37276e38bb4f68993378a82fb55036f5",
       "target": "skills/statechart/scripts/test/pipeline.test.ts",
-      "mode": "100644",
-      "adaptation": {
-        "reason": "Remove five implementation-coupled import-layout and source-text tests and their exclusive helpers. Preserve every behavioral pipeline compile/result assertion for the native Node test runner.",
-        "verification": {
-          "kind": "pinned-byte/link inspection",
-          "artifacts": [
-            "scripts/check-content.ts"
-          ]
-        }
-      }
+      "mode": "100644"
     },
     {
       "source": "pstack/skills/statechart/scripts/test/plain-tlc.test.ts",
@@ -13237,16 +13205,7 @@
       "source": "pstack/skills/statechart/scripts/test/render.test.ts",
       "blob": "5309a92648b950554381f5adecacac161bee3e28",
       "target": "skills/statechart/scripts/test/render.test.ts",
-      "mode": "100644",
-      "adaptation": {
-        "reason": "Resolve exact upstream-required renderer packages from root-pinned development dependencies instead of installing into a shared cache during tests. Remove the source-text CSS theme assertion and its exclusive scaffolding. Preserve Pele node-class rendering assertions, Mermaid parsing, and label/color fuzz behavior under the native Node runner.",
-        "verification": {
-          "kind": "pinned-byte/link inspection",
-          "artifacts": [
-            "scripts/check-content.ts"
-          ]
-        }
-      }
+      "mode": "100644"
     },
     {
       "source": "pstack/skills/statechart/scripts/test/tlc-out.test.ts",

@@ -341,34 +341,6 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     authorizesAbsence: true,
   },
   {
-    id: "statechart-skill-prose",
-    pattern: /^skills\/statechart\/SKILL\.md$/,
-    kind: "pinned-byte/link inspection",
-    artifacts: ["scripts/check-content.ts"],
-    contract: "Statechart setup and report-scope corrections are prose. This class checks inventory integrity and links, not TLC behavior or counterexample minimality.",
-  },
-  {
-    id: "statechart-exit-typing",
-    pattern: /^skills\/statechart\/scripts\/run\.ts$/,
-    kind: "omp/cli scenario",
-    artifacts: ["skills/statechart/scripts/test/corpus.test.ts"],
-    contract: "Typing-only adaptation: the corpus suite pins the exit-class mapping end to end by running statechart.ts per case and asserting each committed verdict exit (0, or 11/12/13 as 1, else 2), so the 0|1|2 annotation cannot change behavior. The annotation itself is gated by the root tsc typecheck.",
-  },
-  {
-    id: "statechart-cli-suite-typing",
-    pattern: /^skills\/statechart\/scripts\/test\/cli\.test\.ts$/,
-    kind: "pinned-byte/link inspection",
-    artifacts: ["scripts/check-content.ts"],
-    contract: "Await-shape-only adaptation of the suite's signal-fixture callbacks; every SIGKILL/SIGINT/SIGTERM cleanup assertion is kept for the native Node suite in the root test command and the root tsc gate. This class pins inventory integrity and links, not a separate behavioral scenario.",
-  },
-  {
-    id: "statechart-test-integration",
-    pattern: /^skills\/statechart\/scripts\/test\/(pipeline|render)\.test\.ts$/,
-    kind: "pinned-byte/link inspection",
-    artifacts: ["scripts/check-content.ts"],
-    contract: "Pipeline import-layout and source-text assertions and the renderer CSS-source assertion are removed. Behavioral compile/result, rendering, parsing, and fuzz tests remain in the native Node suite. Renderer setup resolves root-pinned packages without test-time installation. This class checks provenance and links only; the root test command and tsc gate must verify behavior and typing.",
-  },
-  {
     id: "claude-code-source-only",
     pattern: /^upstream-only\/(?:harness\/pstack\/.+|scripts\/generate-pstack-harness-trees\.mjs|\.claude-plugin\/marketplace\.json)$/,
     kind: "pinned-byte/link inspection",
@@ -1115,7 +1087,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "8621143ce75e98b085119e21c4b20531acb54d583e0890ed5b9c10f304d07570";
+    const pinnedDigest = "b4fd2075c895258d2387583ef69e3c2ec95259717f485183f1fb070eccf4392f";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
 import { test } from "node:test";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { inspect } from "node:util";
 import { checkView } from "../frontends/view.ts";
 import {
@@ -12,6 +16,103 @@ import {
   type Verdict,
 } from "../ir.ts";
 import { compile } from "../pipeline.ts";
+
+const scripts = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+const sources = (target: string) => {
+  const full = path.join(scripts, target);
+  if (!fs.statSync(full).isDirectory()) return [target];
+  return fs
+    .readdirSync(full, { recursive: true, encoding: "utf8" })
+    .map((entry) => path.join(target, entry))
+    .filter((file) => fs.statSync(path.join(scripts, file)).isFile());
+};
+
+const RECORD = `
+import { registerHooks } from "node:module";
+const edges = [];
+registerHooks({
+  resolve(specifier, context, nextResolve) {
+    const resolved = nextResolve(specifier, context);
+    if (context.parentURL !== import.meta.url) edges.push([context.parentURL, resolved.url]);
+    return resolved;
+  },
+});
+for (const url of process.argv.slice(1)) await import(url);
+console.log(JSON.stringify(edges));
+`;
+const loads = (...targets: string[]) => {
+  const urls = targets.flatMap(sources).map((file) => pathToFileURL(path.join(scripts, file)).href);
+  const out = execFileSync(process.execPath, ["--input-type=module", "-e", RECORD, ...urls], {
+    encoding: "utf8",
+  });
+  const name = (url: string) =>
+    url.startsWith("file:") ? path.relative(scripts, fileURLToPath(url)) : url;
+  return (JSON.parse(out) as string[][]).map(([from, to]) => [name(from), name(to)]);
+};
+
+const COMMENT =
+  /("(?:[^"\\\n]|\\[\s\S])*"|'(?:[^'\\\n]|\\[\s\S])*'|`(?:[^`\\]|\\[\s\S])*`)|\/\/[^\n]*|\/\*[\s\S]*?\*\//g;
+const codeOf = (file: string) =>
+  fs.readFileSync(path.join(scripts, file), "utf8").replace(COMMENT, (_, text) => text ?? " ");
+
+const RUNTIME =
+  /\b(?:process|require|globalThis|global|Deno|Bun|Buffer|setImmediate|clearImmediate|fetch)\b|\bimport\s*\(/g;
+const TYPE_IMPORT =
+  /\b(?:import|export)\s+type\b\s*(?:[\w$]+|\*(?:\s*as\s+[\w$]+)?|\{[^}]*\})\s*from\s*["']([^"']*)["']/g;
+const typeImports = (file: string) =>
+  Array.from(codeOf(file).matchAll(TYPE_IMPORT), (m) => path.join(path.dirname(file), m[1]));
+
+test("ir.ts imports nothing", () => {
+  assert.deepEqual(loads("ir.ts"), []);
+  assert.deepEqual(typeImports("ir.ts"), []);
+});
+
+test("each pass imports only ir.ts", () => {
+  const files = sources("passes");
+  assert.deepEqual(
+    files.filter((file) => !file.endsWith(".ts")),
+    [],
+  );
+  const found = loads("passes");
+  assert.ok(found.length > 0);
+  for (const [from, to] of found) assert.equal(to, "ir.ts", `${from} imports ${to}`);
+  for (const file of files)
+    for (const to of typeImports(file))
+      assert.equal(to, "ir.ts", `${file} imports types from ${to}`);
+});
+
+test("pipeline.ts reaches no node: module", () => {
+  assert.deepEqual(
+    loads("pipeline.ts").filter(([, to]) => to.startsWith("node:")),
+    [],
+  );
+  for (const to of typeImports("pipeline.ts"))
+    assert.equal(to, "ir.ts", `pipeline.ts imports types from ${to}`);
+});
+
+test("ir.ts, the passes, pipeline.ts, the frontends, the backends, and every file they load are .ts files that name no listed runtime global and call no import()", () => {
+  const targets = ["ir.ts", "passes", "pipeline.ts", "frontends", "backends"];
+  const reached = loads(...targets).flatMap(([, to]) => (to.startsWith("node:") ? [] : [to]));
+  const files = [...new Set([...targets.flatMap(sources), ...reached])];
+  assert.deepEqual(
+    files.filter((file) => !file.endsWith(".ts")),
+    [],
+  );
+  for (const file of files) assert.deepEqual(codeOf(file).match(RUNTIME), null, file);
+});
+
+test("no frontend or backend loads a node: module when imported, even through another file", () => {
+  for (const folder of ["frontends", "backends"]) {
+    const files = fs
+      .readdirSync(path.join(scripts, folder), { encoding: "utf8", recursive: true })
+      .filter((f) => f.endsWith(".ts"));
+    assert.ok(files.length > 0, folder);
+    for (const f of files)
+      for (const [, to] of loads(path.join(folder, f)))
+        assert.ok(!to.startsWith("node:"), `${folder}/${f} reaches ${to}`);
+  }
+});
 
 const small: Rule = { kind: "invariant", name: "Small" };
 
