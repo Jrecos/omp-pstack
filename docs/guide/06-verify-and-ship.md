@@ -123,7 +123,7 @@ A counterexample in model terms convinces you. The PM or designer who owns the b
 /statechart what the user sees when they edit a note offline
 ```
 
-[`/statechart`](../../skills/statechart/SKILL.md) draws a Mermaid statechart of what the user sees, generated from a TLA+ model, so the picture and the checked model can't drift apart. The reader's rules ("you never see Synced while you're offline") become invariants. The chart marks states that break rules. The report gives a shortest path per broken invariant or deadlock rule in the reader's words, and TLC counterexamples for temporal properties. Before the hand-off, the agent reproduces each bug path in the real code, so a modeling error doesn't reach the reader as a bug.
+[`/statechart`](../../skills/statechart/SKILL.md) draws a Mermaid statechart of what the user sees, generated from a TLA+ model, so the picture and the checked model can't drift apart. The reader's rules ("you never see Synced while you're offline") become invariants. The chart marks each state that breaks a rule, and the report gives the shortest path to it in the reader's words. Before the hand-off, the agent reproduces each bug path in the real code, so a modeling error doesn't reach the reader as a bug.
 
 ## Open the PR
 
