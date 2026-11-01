@@ -341,6 +341,13 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     authorizesAbsence: true,
   },
   {
+    id: "statechart-toolchain-preflight",
+    pattern: /^skills\/statechart\/SKILL\.md$/,
+    kind: "pinned-byte/link inspection",
+    artifacts: ["scripts/check-content.ts"],
+    contract: "The mise preflight is agent instruction prose. This class checks inventory integrity and links; the ask-then-install behavior is proven by headless OMP sessions recorded in the pull request, not by TLC.",
+  },
+  {
     id: "claude-code-source-only",
     pattern: /^upstream-only\/(?:harness\/pstack\/.+|scripts\/generate-pstack-harness-trees\.mjs|\.claude-plugin\/marketplace\.json)$/,
     kind: "pinned-byte/link inspection",
@@ -1087,7 +1094,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "b4fd2075c895258d2387583ef69e3c2ec95259717f485183f1fb070eccf4392f";
+    const pinnedDigest = "b5d6ae58923e929c15d223472da855201c7660091bee2dbb6e3e6ef63fa7cfb1";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

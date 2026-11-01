@@ -47,7 +47,7 @@
       "target": "README.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "README identity, editorial voice, credits, and presentation distinguish this independently maintained OMP plugin adaptation from upstream P Stack by Lauren Tan (poteto), link the original source, retain its MIT notice, attribute poteto-mode's style to its creator, point to pinned provenance in upstream.json, and feature original Astra-generated watercolor artwork of Jrecos and OMP robot agents instead of upstream character art.; Install section: /add-plugin pstack replaced with omp plugin marketplace add https://github.com/Jrecos/omp-pstack + omp plugin install omp-pstack@omp-pstack.; 'turns cursor into'/'cursor gives you' reworded to agent/omp; cursor's /loop attributed to omp's built-in /loop.; poteto-agent and Comment Sicko spawn recipes translated to native task agent names; 'substituting generalPurpose' reworded.; 'not shipped here' (cursor-team-kit, /create-skill, /babysit) replaced by a host-adaptations section naming the packaged references omp-deslop.md, omp-control-cli.md, omp-control-ui.md, omp-create-skill.md.; Plan-mode section references omp native plan mode; benny setup path .cursor/automations/benny/ changed to .omp/automations/benny/ and 'point cursor' to 'point the agent'.; Added explicit optional official Spec Kit Feature setup, pinned provenance, and security limits. Pin OMP18.10.2 and link the measured native-capability assessment while preserving original attribution and native installation. Describe statechart as the upstream skill shipped byte for byte, its default mise bootstrap, its root tsc exclusion, and its test-time renderer installs with root fast-check 4.5.3. These source-backed documentation corrections do not claim measured behavioral equivalence.",
+        "reason": "README identity, editorial voice, credits, and presentation distinguish this independently maintained OMP plugin adaptation from upstream P Stack by Lauren Tan (poteto), link the original source, retain its MIT notice, attribute poteto-mode's style to its creator, point to pinned provenance in upstream.json, and feature original Astra-generated watercolor artwork of Jrecos and OMP robot agents instead of upstream character art.; Install section: /add-plugin pstack replaced with omp plugin marketplace add https://github.com/Jrecos/omp-pstack + omp plugin install omp-pstack@omp-pstack.; 'turns cursor into'/'cursor gives you' reworded to agent/omp; cursor's /loop attributed to omp's built-in /loop.; poteto-agent and Comment Sicko spawn recipes translated to native task agent names; 'substituting generalPurpose' reworded.; 'not shipped here' (cursor-team-kit, /create-skill, /babysit) replaced by a host-adaptations section naming the packaged references omp-deslop.md, omp-control-cli.md, omp-control-ui.md, omp-create-skill.md.; Plan-mode section references omp native plan mode; benny setup path .cursor/automations/benny/ changed to .omp/automations/benny/ and 'point cursor' to 'point the agent'.; Added explicit optional official Spec Kit Feature setup, pinned provenance, and security limits. Pin OMP18.10.2 and link the measured native-capability assessment while preserving original attribution and native installation. Describe statechart as the upstream skill shipped byte for byte except its mise preflight paragraph, its default mise bootstrap, its root tsc exclusion, and its test-time renderer installs with root fast-check 4.5.3. These source-backed documentation corrections do not claim measured behavioral equivalence.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -10793,7 +10793,16 @@
       "source": "pstack/skills/statechart/SKILL.md",
       "blob": "f5a64a8db4b8a5957ac5e76e051b1823cecd4d5e",
       "target": "skills/statechart/SKILL.md",
-      "mode": "100644"
+      "mode": "100644",
+      "adaptation": {
+        "reason": "Add one paragraph to Run: before modelling, check for mise on PATH or TLA2TOOLS. When neither is present, ask the user before installing mise with the mise.run installer, continue on yes, and stop with the TLA2TOOLS/JAVA alternative on no. Never search the disk for Java or TLC or download them unasked. Upstream's line about the first run installing TLC and Java with mise is kept verbatim.",
+        "verification": {
+          "kind": "pinned-byte/link inspection",
+          "artifacts": [
+            "scripts/check-content.ts"
+          ]
+        }
+      }
     },
     {
       "source": "pstack/skills/statechart/references/render.md",
