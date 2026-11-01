@@ -18,7 +18,9 @@ Work in a scratch folder outside the repo. Write a TLA+ spec and its config. The
 
 `scripts/statechart.ts` is TypeScript, so run it with a runtime that can execute TypeScript.
 
-By default, the command uses mise to find pinned TLC and Java versions. If they are not installed, mise installs them and needs network access. For an offline or pre-provisioned run, set `TLA2TOOLS` to the local `tla2tools.jar` path to bypass mise. Set `JAVA` to a Java 11 or later binary, or leave it unset to use `java` from `PATH`.
+By default, the command uses mise to find pinned TLC and Java versions, so `mise` must be on `PATH`. If they are not installed, mise installs them and needs network access. For an offline or pre-provisioned run, set `TLA2TOOLS` to the local `tla2tools.jar` path to bypass mise. With `TLA2TOOLS` set, set `JAVA` to a Java 11 or later binary, or leave it unset to use `java` from `PATH`.
+
+Before you write the spec, check that `TLA2TOOLS` is set or that `mise` is on `PATH`. If neither holds, stop and tell the user the two setups: install mise, or set `TLA2TOOLS` to a `tla2tools.jar` they already have, plus `JAVA` when `java` is not on `PATH`. Do not search the disk for Java or TLC, and do not download them yourself.
 
 ## Write the spec
 

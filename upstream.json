@@ -10795,7 +10795,7 @@
       "target": "skills/statechart/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Correct the compiler-backed report contract to one shortest path per broken invariant or deadlock rule and TLC counterexamples for temporal properties. Remove universal shortest-path wording from constraint guidance. Document default pinned mise provisioning separately from the offline TLA2TOOLS/JAVA alternative, which bypasses mise and requires Java 11 or later.",
+        "reason": "Correct the compiler-backed report contract to one shortest path per broken invariant or deadlock rule and TLC counterexamples for temporal properties. Remove universal shortest-path wording from constraint guidance. Document default pinned mise provisioning separately from the offline TLA2TOOLS/JAVA alternative, which bypasses mise and requires Java 11 or later. State that the default path needs mise on PATH and that JAVA falls back to java on PATH only with TLA2TOOLS set. Stop before modelling when neither mise nor TLA2TOOLS is available, rather than searching the disk or downloading a Java runtime unasked.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
