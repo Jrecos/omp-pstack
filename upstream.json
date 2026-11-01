@@ -47,7 +47,7 @@
       "target": "README.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "README identity, editorial voice, credits, and presentation distinguish this independently maintained OMP plugin adaptation from upstream P Stack by Lauren Tan (poteto), link the original source, retain its MIT notice, attribute poteto-mode's style to its creator, point to pinned provenance in upstream.json, and feature original Astra-generated watercolor artwork of Jrecos and OMP robot agents instead of upstream character art.; Install section: /add-plugin pstack replaced with omp plugin marketplace add https://github.com/Jrecos/omp-pstack + omp plugin install omp-pstack@omp-pstack.; 'turns cursor into'/'cursor gives you' reworded to agent/omp; cursor's /loop attributed to omp's built-in /loop.; poteto-agent and Comment Sicko spawn recipes translated to native task agent names; 'substituting generalPurpose' reworded.; 'not shipped here' (cursor-team-kit, /create-skill, /babysit) replaced by a host-adaptations section naming the packaged references omp-deslop.md, omp-control-cli.md, omp-control-ui.md, omp-create-skill.md.; Plan-mode section references omp native plan mode; benny setup path .cursor/automations/benny/ changed to .omp/automations/benny/ and 'point cursor' to 'point the agent'.; Added explicit optional official Spec Kit Feature setup, pinned provenance, and security limits. Pin OMP18.10.2 and link the measured native-capability assessment while preserving original attribution and native installation. Describe statechart's per-rule safety paths separately from temporal counterexamples, its default mise bootstrap and offline TLA2TOOLS/JAVA alternative, and its minimal strict-TypeScript compatibility fixes with root fast-check 4.5.3. These source-backed documentation corrections do not claim measured behavioral equivalence.",
+        "reason": "README identity, editorial voice, credits, and presentation distinguish this independently maintained OMP plugin adaptation from upstream P Stack by Lauren Tan (poteto), link the original source, retain its MIT notice, attribute poteto-mode's style to its creator, point to pinned provenance in upstream.json, and feature original Astra-generated watercolor artwork of Jrecos and OMP robot agents instead of upstream character art.; Install section: /add-plugin pstack replaced with omp plugin marketplace add https://github.com/Jrecos/omp-pstack + omp plugin install omp-pstack@omp-pstack.; 'turns cursor into'/'cursor gives you' reworded to agent/omp; cursor's /loop attributed to omp's built-in /loop.; poteto-agent and Comment Sicko spawn recipes translated to native task agent names; 'substituting generalPurpose' reworded.; 'not shipped here' (cursor-team-kit, /create-skill, /babysit) replaced by a host-adaptations section naming the packaged references omp-deslop.md, omp-control-cli.md, omp-control-ui.md, omp-create-skill.md.; Plan-mode section references omp native plan mode; benny setup path .cursor/automations/benny/ changed to .omp/automations/benny/ and 'point cursor' to 'point the agent'.; Added explicit optional official Spec Kit Feature setup, pinned provenance, and security limits. Pin OMP18.10.2 and link the measured native-capability assessment while preserving original attribution and native installation. Describe statechart as the upstream skill shipped byte for byte, its default mise bootstrap, its root tsc exclusion, and its test-time renderer installs with root fast-check 4.5.3. These source-backed documentation corrections do not claim measured behavioral equivalence.",
         "verification": {
           "kind": "omp/cli scenario",
           "artifacts": [
@@ -345,7 +345,7 @@
       "target": "docs/guide/06-verify-and-ship.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Generated verify skill path changed to .omp/skills/verify-<app>/. Correct the statechart report description to one shortest path per broken invariant or deadlock rule and TLC counterexamples for temporal properties. Images and example links are untouched.",
+        "reason": "Generated verify skill path changed to .omp/skills/verify-<app>/. Images and example links are untouched.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -1644,7 +1644,7 @@
       "target": "skills/poteto-help/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Describe this OMP adaptation: marketplace install, session-branch mode persistence, pool-first /setup-pstack via pstack_models with no default models, native task agents, OMP /loop semantics, and repository links. Correct the statechart route to promise per-rule shortest invariant/deadlock paths and TLC temporal counterexamples, not a shortest path to every violating state.",
+        "reason": "Describe this OMP adaptation: marketplace install, session-branch mode persistence, pool-first /setup-pstack via pstack_models with no default models, native task agents, OMP /loop semantics, and repository links.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
@@ -1755,7 +1755,7 @@
       "target": "skills/create-formal-verification-skill/SKILL.md",
       "mode": "100644",
       "adaptation": {
-        "reason": "Generate skills in existing OMP-discoverable project roots according to the native authoring reference. Correct statechart guidance to distinguish per-rule shortest invariant/deadlock paths from TLC temporal counterexamples and qualify charts on passing checks by the 500-state budget.",
+        "reason": "Generate skills in existing OMP-discoverable project roots according to the native authoring reference.",
         "verification": {
           "kind": "pinned-byte/link inspection",
           "artifacts": [
