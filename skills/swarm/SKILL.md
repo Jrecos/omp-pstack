@@ -24,10 +24,13 @@ Open a todolist with one entry per phase before launching anything.
 3. Set N from the user or derive it from the shape. N is total workers, not a concurrency limit.
 4. Pick the worker model from the configured `swarm workers` role in `rules/pstack-models.md`. Query it with `pstack_models` action `show`. If the role is unset or a selected model is unavailable, run `/setup-pstack` first. Never substitute another model. `inherit-parent` and `auto` resolve to the live parent model through the returned agent. For a model race, name each arm's model and pass its selector as the `model` override to `pstack_agent`. Overrides must belong to the approved pool.
 5. Give each worker its own writable output when it writes. When workers verify or measure commits, each brief names the exact SHAs. A measurement brief also names the sample count, what one sample is, and the order. The worker records both the SHAs and method in its result.
+6. Match each worker's supported reasoning effort to the job through the configured pool, per the Subagents section of **poteto-mode**.
 
 ## Phase B: Fan out
 
 Get each worker's descriptor from `pstack_agent` with `{role: "swarm workers", kind: "general"}`. Include the arm-specific `model` override for a race. Spawn all N workers in one native `task` batch using only each returned `agent`. The returned `model` is metadata, not a native `task` field. Ordinary tasks return final text by default, not `yield`. Eval `agent()` and `workpool` remain structured. Give each writer a distinct checkout or output directory. If the native schema advertises per-item `isolated`, use it only with isolation enabled and plan mode off. With one integration owner, use controlled `task.isolation.apply=false` and review retained patch or branch artifacts. Otherwise use the existing distinct-checkout fallback. Pass shared goal pointers in `context`. Use native owner-scoped job or Agent Hub controls for cancellation.
+
+For implementation workers, include [`../poteto-mode/worker.md`](../poteto-mode/worker.md) in the kickoff instructions. Verification-only workers follow their check brief, not the implementation playbook.
 
 When a worker needs a non-default pushed branch, prepare its isolated checkout from that exact branch before dispatch and include the checkout path in its brief.
 

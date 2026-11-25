@@ -85,7 +85,7 @@ The contract above drives one task to one finish condition. Some nights hold mor
 /poteto-mode autopilot these five changes, but don't merge. i'll land them in the morning.
 ```
 
-[Orchestrate](../../skills/poteto-mode/playbooks/orchestrate.md) is for a program that outlives any single agent: multi-day, many stacked PRs, fleets of subagents under one standing coordinator chat. The coordinator decides which agent does each piece of work, checks what each one produces, and never writes code itself. If one agent could finish the work in a session, the playbook itself routes you back to the overnight contract above:
+[Orchestrate](../../skills/poteto-mode/playbooks/orchestrate.md) is for a program that outlives any single agent: multi-day, many stacked PRs, dozens to hundreds of subagents, and few human turns. One coordinator chat runs the program, never the code. It dispatches a fresh owner for each PR, requires a verifier that is not the author, and keeps the program's state in durable tracker files. One ambitious run that needs a bespoke workflow, but not a standing program, goes to [`/figure-it-out`](../../skills/figure-it-out/SKILL.md), which designs that run's phases.
 
 ```text
 /poteto-mode orchestrate the store migration. own it until every package is converted and merged. i'll check in twice a day.
@@ -93,7 +93,7 @@ The contract above drives one task to one finish condition. Some nights hold mor
 
 ## Run many projects in parallel
 
-Give each body of work a persistent OMP coordinator session. The coordinator does not write code. It directs native background task agents with isolated worktrees or separately hosted sessions. Work continues only while the hosting machine and OMP session remain running. This is the shape the Orchestrate playbook expects. Start the coordinator with `/poteto-mode`. Its prepared Poteto delegates read the same playbooks.
+Give each body of work a persistent OMP coordinator session. The coordinator does not write code. It directs native background task agents with isolated worktrees or separately hosted sessions. Work continues only while the hosting machine and OMP session remain running. This is the shape the Orchestrate playbook expects. Start the coordinator with `/poteto-mode`. Its prepared Poteto delegates read the same playbooks. Each delegate reads [`worker.md`](../../skills/poteto-mode/worker.md) before its first change, so workers hold to the kickoff's bar, decide reversible calls instead of asking you, and open PRs ready for review.
 
 A few habits help:
 

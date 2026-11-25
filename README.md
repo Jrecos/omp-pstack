@@ -57,7 +57,7 @@ updating replaces the plugin code (skills, CLI, runtime) but keeps your configur
 
 upgrading from a pre-0.15.0 config: the `how critics` role is retired and the 17-role parser rejects a config still carrying its line. before the next `/setup-pstack` save, edit `rules/pstack-models.md` to remove the `how critics:` role line, and any stale `# how critics[...]` address comments next to it. keep the approved model pool and every other role assignment. do not delete the whole config.
 
-This package ports canonical P Stack 0.15.36. It adds statechart model checking and video catch-ups, replaces orchestration scripts with native agent coordination, and requires reproduced findings for adversarial review. OMP retains its configured model pool, persistent mode, native task agents, workspace-scoped history, and bottom-only stack landing. Autopilot uses the upstream full-swarm-once policy and stacks only dependent PRs. The [Claude Code provenance assessment](./docs/harness/claude-code.md) explains why upstream host artifacts are recorded but not installed.
+This package ports P Stack 0.15.48. It adds `/reframe`, shorter design and investigation workflows, and native Windows support for `/statechart`. The port keeps OMP's approved model pools, persistent mode, native tasks, and workspace-scoped history. OMP still ships Orchestrate and `check-plan`, which upstream removed. The [Claude Code provenance assessment](./docs/harness/claude-code.md) explains why OMP records but does not install the upstream host artifacts.
 
 repo maintainers can verify manifest completeness, recorded source blobs, and byte-exact unadapted files against the pinned upstream commit with `bun scripts/check-upstream.ts <cursor/plugins checkout>`.
 
@@ -149,9 +149,9 @@ morning.
 | [babysit](./skills/poteto-mode/playbooks/babysit.md) | drive a pr or a stack to merge-ready: conflicts, review threads, ci. |
 | [shipping](./skills/poteto-mode/playbooks/shipping.md) | independently verify a green stack, then land the contiguous verified run bottom-up through github by default or origin when available. |
 | [autonomous run](./skills/poteto-mode/playbooks/autonomous-run.md) | drive a long task to completion without stopping. |
-| [orchestrate](./skills/poteto-mode/playbooks/orchestrate.md) | a standing project handed to one coordinator chat: multi-day, many stacked prs, fleets of subagents. |
 | [autopilot-full](./skills/poteto-mode/playbooks/autopilot-full.md) | run independent prs to merged with one owner per pr. a swarm verifies each code-ready head, and every later change to the patch gets a fresh check. |
 | [autopilot-stack](./skills/poteto-mode/playbooks/autopilot-stack.md) | autopilot-full without the merge. build and verify prs for the operator to review and land, stacking a pr only on a pr it builds on. |
+| [orchestrate](./skills/poteto-mode/playbooks/orchestrate.md) | run a standing program from one coordinator chat: one owner per pr, an independent verifier, durable tracker state. omp keeps this after upstream moved programs to `/figure-it-out`. |
 | [session pickup](./skills/poteto-mode/playbooks/session-pickup.md) | resume or take over a prior agent's in-flight work. |
 | [pause safely](./skills/poteto-mode/playbooks/pause-safely.md) | suspend in-flight work cleanly so it can be resumed later. |
 | [multi-phase plan](./skills/poteto-mode/playbooks/multi-phase-plan.md) | work that spans phases or stacked PRs. |
@@ -186,13 +186,14 @@ Invoking [`/poteto-mode`](./skills/poteto-mode/SKILL.md) turns on persistent mod
 /interrogate review this pr.
 ```
 
-The [complete skills reference](./docs/guide/skills.md) lists all 59 discoverable skills with their purposes and source files. It separates 35 direct workflow skills from 24 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 59.
+The [complete skills reference](./docs/guide/skills.md) lists all 60 discoverable skills with their purposes and source files. It separates 36 direct workflow skills from 24 supporting principles. Bare `/<name>` commands are available for direct skills when no other command owns the name. OMP's `/skill:<name>` form reaches all 60.
 
 | New skill | Use it when |
 |---|---|
 | [`/poteto-help`](./skills/poteto-help/SKILL.md) | Find the skill, playbook, or principle for your goal and get a prompt to send. It runs only when you invoke it and does not start the work. |
 | [`/in-your-own-words`](./skills/in-your-own-words/SKILL.md) | Restate the user's goal and problem before starting. |
 | [`/sharpen`](./skills/sharpen/SKILL.md) | Rewrite a prompt with expert methods, primary material, and an outside check without executing the task. |
+| [`/reframe`](./skills/reframe/SKILL.md) | Teach the expert terms for what you are building. When your description could name more than one problem, it lists the candidates with the sign that tells them apart before it picks one. It runs only when you invoke it. |
 | [`/create-formal-verification-skill`](./skills/create-formal-verification-skill/SKILL.md) | Generate a project-local formal check of a high-risk property and prove it catches a real break. |
 | [`/maintain-formal-verification-skill`](./skills/maintain-formal-verification-skill/SKILL.md) | Bring formal checks back in sync with changed code and distinguish verification drift from product bugs. |
 | [`/ketchup`](./skills/ketchup/SKILL.md) | Catch up on this chat with real visuals and every waiting user decision, including older waiting items. Do not replace an item list with a count. |
@@ -201,7 +202,7 @@ The [complete skills reference](./docs/guide/skills.md) lists all 59 discoverabl
 | [`/statechart`](./skills/statechart/SKILL.md) | Check a TLA+ state model with TLC and draw a Mermaid chart. Mark each state that breaks a rule and give the shortest path to it. |
 | [`/ketchup-video`](./skills/ketchup-video/SKILL.md) | Catch up with a short subtitled video and waiting decisions. Deliver a file link or attachment when the client cannot embed video. |
 
-The 0.15.36 upstream port replaces the `orch` helper with agent-driven orchestration through native tasks and durable tracker files. `/interrogate` now reports only findings demonstrated by a run and verified by the parent. `/statechart` ships the upstream skill and its tests byte for byte, except one added `SKILL.md` paragraph. Before modelling, the agent checks for `mise` or `TLA2TOOLS` and asks before it installs mise. By default the skill needs `mise` on `PATH`. mise installs TLC 1.7.4 and Temurin 25 Java when they are missing, which needs network access. Setting `TLA2TOOLS` bypasses mise. Root `tsc` skips `skills/statechart/scripts`, which keeps upstream's own `tsconfig.json`. Video generation uses available rendering tools outside the repository.
+Statechart now reads Windows CRLF output, cleans up TLC child processes across platforms, and renders nested-state edges in Mermaid. On Windows, run `node --disable-warning=ExperimentalWarning <skill dir>/scripts/statechart.ts` with Node 22.18 through 22.x, or 23.6 and later. The Statechart runtime and tests are unchanged from upstream. OMP adds a preflight that checks `mise` or `TLA2TOOLS` and asks before installing mise. The first run through mise may need the network to install TLC 1.7.4 and Temurin 25 Java. Setting `TLA2TOOLS` bypasses mise. Root `tsc` skips `skills/statechart/scripts` and leaves that directory's upstream `tsconfig.json` in place. `/ketchup-video` uses rendering tools outside this repository.
 
 `/session-review` reviews the last 10 sessions in the current workspace. Use `/session-review 25` to select the last 25, or `/session-review 25 --plugin-report` to add a separate, sanitized plugin-feedback section. The bare command rejects invalid counts and flags locally before dispatching a model turn. The `/skill:session-review` alternative is prompt-driven and has no host-side argument gate. The review uses the full available history window, not only the last seven days, and never edits the repository or sends a report elsewhere. Results appear in chat unless you explicitly request a private saved copy.
 
@@ -395,6 +396,6 @@ The token needs permission to write repository contents. Future branch rules mus
 
 ## credits and license
 
-Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.36`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
+Based on [P Stack](https://github.com/cursor/plugins/tree/main/pstack) by [Lauren Tan (poteto)](https://x.com/poteto), adapted from upstream version `0.15.48`. Exact upstream repository, commit, file lineage, and adaptation records are tracked in [`upstream.json`](./upstream.json).
 
 Released under the [MIT License](./LICENSE). The original copyright notice is retained.

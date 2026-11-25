@@ -23,22 +23,25 @@ Load the existing choices with `pstack_models` (`action: "show"`) when a rule ex
 
 **Ask for a budget.** Use `ask` to offer these exact labels:
 
-- `unlimited — max reasoning`
 - `large — xhigh reasoning`
 - `medium — high reasoning`
 - `small — medium reasoning`
 
-On a re-run, infer and name the current effective budget from existing concrete selectors' thinking suffixes. `max`, `xhigh`, `high`, and `medium` correspond to `unlimited`, `large`, `medium`, and `small`. If suffixes differ, name the current budget as mixed and show the efforts. If only lower efforts occur, name the budget as custom. If no suffix records an effort, say the current budget is unknown. Model caps can hide the original target. Do not claim a stored target or a default budget.
+The offered budgets stop at `xhigh`. Keep a higher supported effort on an existing role only if the user explicitly asks. Do not import upstream model defaults or replace configured identities.
+
+On a re-run, infer the current effective budget from existing concrete selectors' thinking suffixes. `xhigh`, `high`, and `medium` correspond to `large`, `medium`, and `small`. If suffixes differ, call the budget mixed and show the efforts. If the effort is outside those three, call it custom. If no suffix records an effort, call the budget unknown. Model caps can hide the original target. Do not claim a stored target or a default budget.
 
 **Recommend the map.** Using only pool members, propose a value for each of the 17 roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`, `judgment and prose`, `hardest tasks`, `how explorer`, `how explainer`, `why investigators`, `why synthesizer`, `reflect tooling`, `reflect judgment, divergent, synthesizer`, `arena runners`, `arena cross-judge pool`, `swarm workers`, `architect runners`, `interrogate reviewers`). Preserve existing choices on a re-run. State a short rationale based on detected capabilities and the user's preferences. Use the `poteto` kind for code-writing roles, `general` for judgment roles, and `readonly` for review panels. A role with no value is unconfigured. Do not silently fill it.
 
-**Apply the budget.** `unlimited`, `large`, `medium`, and `small` target `max`, `xhigh`, `high`, and `medium`. Set the `:<effort>` thinking suffix on every concrete role selector, including every panel entry. Keep the exact provider and model id. Match the full registry identity before separating a thinking suffix. Do not rewrite effort-like tokens inside a model id or switch models to obtain an effort. Use the model's `efforts` from `pstack_models list`. If the target is unsupported, select its highest supported effort at or below the target on the ladder `max` > `xhigh` > `high` > `medium` > `low` > `minimal`. If no supported effort qualifies, mark the role as needing a choice. A model without reasoning support or efforts gets no suffix. Leave `inherit-parent` and `auto` unchanged.
+`how explorer`, `reflect tooling`, and `reflect judgment, divergent, synthesizer` are reserved for existing configurations and custom workflows. Built-in `/how` uses `how explainer`, and built-in `/reflect` works inline. Keep any existing assignments to reserved roles. Include their keys in the save, with empty values if no workflow uses them.
+
+**Apply the budget.** `large`, `medium`, and `small` target `xhigh`, `high`, and `medium`. Set the `:<effort>` suffix on every concrete selector, including panel entries. Keep the exact provider and model id. Match the full registry identity before separating a suffix. Do not switch models to obtain an effort. If `pstack_models list` does not show the target effort for a model, use its highest supported effort at or below the target. If none qualifies, mark the role as needing a choice. A model without reasoning gets no suffix. Leave `inherit-parent` and `auto` unchanged.
 
 **Confirm the roles.** Show all roles with their budget-adjusted selectors. Mark unavailable models and choices outside the pool as needing a choice. List any retired lines removed. Use `ask` to confirm the map or change specific roles. Offer only available approved models and explicitly approved aliases. Reapply the chosen budget to any changed concrete entries. `swarm workers` supplies each worker's model unless a race assigns an approved model per arm.
 
 ### 4. Confirm panel count and diversity
 
-For panel roles (`arena runners`, `architect runners`, `interrogate reviewers`), one subagent runs per ordered entry, including aliases. The list length sets the fan-out count. `arena cross-judge pool` is also an ordered list, but Arena selects one judge, preferring a different family from the parent's. Show each panel's proposed count and model spread. Use `ask` to confirm the count and diversity. Ordered duplicate entries count separately. Never deduplicate or silently shrink a list.
+For panel roles (`arena runners`, `architect runners`, `interrogate reviewers`), one subagent runs per ordered entry, including aliases. The list length sets the fan-out count. `arena cross-judge pool` is also an ordered list, but Arena selects one concrete judge from another vendor than the parent's. Aliases cannot judge. Show each panel's proposed count and model spread. Use `ask` to confirm the count and diversity. Ordered duplicate entries count separately. Never deduplicate or silently shrink a list.
 
 ### 5. Validate
 

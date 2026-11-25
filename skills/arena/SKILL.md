@@ -14,20 +14,24 @@ Every candidate gets the same prompt, so the prompt is the contract.
 
 1. State the artifact each candidate is producing.
 2. Derive the rubric, 3-6 concrete gradeable criteria for what success looks like on *this* task. It is the picker's tool in Phase D. Candidates only see the task.
-3. Pick the runners from the configured `arena runners` role in `rules/pstack-models.md`. Query it with `pstack_models` action `show`. If the role is unset or a selected model is unavailable, run `/setup-pstack` first. Never substitute another model. `inherit-parent` and `auto` entries resolve to the live parent model through the returned agent, including cross-judge entries. Spawn more runners when the arena covers multiple design directions. Use the same model N times when generation, rather than judgment, limits the work. Ordered duplicate entries count as separate runners.
+3. Pick the runners from the configured `arena runners` role in `rules/pstack-models.md`. Query it with `pstack_models` action `show`. If the role is unset or a selected model is unavailable, run `/setup-pstack` first. Never substitute another model. `inherit-parent` and `auto` entries resolve to the live parent model through the returned agent. Spawn more runners when the arena covers multiple design directions. Use the same model N times when generation, rather than judgment, limits the work. Ordered duplicate entries count as separate runners.
+   Match each runner's reasoning effort to the job through the approved pool and `/setup-pstack`, per the Subagents section of **poteto-mode**.
+   Require at least two available configured seats. If fewer can dispatch, report that Arena cannot compare candidates. Run `/setup-pstack` to configure more seats before retrying.
 4. Give each candidate its own output location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill.
 
 ## Phase B: Fan out
 
 Get each runner's descriptor from `pstack_agent` with `{role: "arena runners", index: <1-based entry number>, kind: "general"}`. Spawn all N subagents in one native `task` batch, each with the returned `agent`, the task, the path to the shared grounding, its own output path, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected. Dispatch is asynchronous. The returned `model` is metadata, not a native `task` field.
 
+For code-writing candidates, include [`../poteto-mode/worker.md`](../poteto-mode/worker.md) in the kickoff instructions. Read-only judges do not run the implementation playbook.
+
 For code-writing candidates, add per-item `isolated: true` only when the native schema advertises it, with isolation enabled and plan mode off. Use controlled `task.isolation.apply=false` when one owner selects and integrates the winner. Retain candidate patch or branch artifacts until grafting and verification finish. Otherwise prepare distinct worktrees or checkouts before dispatch. Verify the intended base, branch, and actual cwd. Check dependencies and environment files after clone fallback, and recheck private enablement per checkout. Do not change global settings. A main worktree or transcript fork does not isolate sibling candidates, and native isolation does not replace Docker. Ordinary task results are final text by default, not `yield`. Eval `agent()` and `workpool` keep their structured contract.
 
-If a candidate produces no output, proceed with N-1 and note the dropout.
+Report any candidate that produces no output. If fewer than two candidates complete, report that there is no comparison and do not select a winner.
 
 ## Phase C: Cross-judge
 
-After all Phase B candidates complete, get the judge descriptor from `pstack_agent` with `{role: "arena cross-judge pool", kind: "readonly"}` and no index. The tool selects the first configured entry from a different family than the live parent's, or the first entry if none differs. If the role is unset or unavailable, run `/setup-pstack`. Spawn one readonly judge through native `task` with the returned `agent`. It sees the rubric and candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with your reading in Phase D. Do not spawn it while candidates are still writing.
+After all Phase B candidates complete, read the configured `arena cross-judge pool` and the session registry. Select the first available concrete entry from another vendor than the live parent's. Check model identity, not the gateway provider. Aliases use the parent and cannot judge. Resolve `pstack_agent` with `{role: "arena cross-judge pool", index: <selected 1-based entry>, kind: "readonly"}`. Pass only its returned `agent` to native `task`. If the role is unset or unavailable, run `/setup-pstack`. If no cross-vendor entry exists, skip the judge and report that gap. If the parent's identity is unknown, select the first concrete entry and report that the vendor check did not run. Never substitute an unapproved model. The judge scores each candidate by path label against the rubric and recommends a base. Run it alongside your reading in Phase D, never while candidates are still writing.
 
 ## Phase D: Pick a base
 

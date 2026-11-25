@@ -29,9 +29,11 @@ Run:
 
 There are no built-in model defaults. A role with no line in the rule is unconfigured. It cannot dispatch until `/setup-pstack` assigns it a model from the pool. Every selector must belong to the pool. pstack fails closed rather than substituting a model you did not approve. Unused pool members stay saved for later routing.
 
-The budgets target reasoning effort. `unlimited` targets `max`, `large` targets `xhigh`, `medium` targets `high`, and `small` targets `medium`. Each concrete role selector gets an effort suffix capped to the model's authenticated supported efforts. Non-reasoning models have no suffix. Aliases stay unchanged and keep the parent chat's reasoning. Rerunning setup infers the current budget from saved suffixes and keeps your approved pool and role identities unless you change them. Removing a role line makes it unconfigured, not defaulted.
+Setup offers reasoning targets of `xhigh`, `high`, and `medium`. Model capabilities can lower the effective effort. Models without reasoning get no suffix. Aliases keep the parent chat's effort. Setup can retain a higher supported effort on an existing role when you explicitly ask.
 
-Set a role to `inherit-parent` or `auto` to use your parent chat model. The alias must appear in the approved pool. `pstack_agent` resolves the prepared worker for the configured role. Ordinary delegates use `kind: "poteto"`. Native `task` receives only the returned `agent`, not a `model` field. Both aliases mean the same thing, and neither is a model slug. A panel list sets the number of candidates or reviewers. Arena selects one judge from `arena cross-judge pool`, preferring a different model family when possible. Setup also configures `swarm workers`, the model every `/swarm` worker uses unless a race names a model for each arm.
+OMP retains the configured role names. Built-in `/how` now uses one explainer and built-in `/reflect` works inline. Keep any assignments that custom workflows use in `how explorer`, `reflect tooling`, or `reflect judgment, divergent, synthesizer`. Those keys can have empty values if they are unused.
+
+Set a role to `inherit-parent` or `auto` to use your parent chat model. Include the alias in the approved pool. `pstack_agent` resolves the prepared worker for the configured role. Ordinary delegates use `kind: "poteto"`. Native `task` receives the returned `agent`, not a `model` field. Panel lists set the number of candidates or reviewers. [Design the change](./04-design.md#fan-out-attempts-with-arena) explains how Arena selects a judge. `/swarm` uses `swarm workers` unless a race names a model for each arm.
 
 ## Accept the verification offers, or don't
 
@@ -62,7 +64,7 @@ Pick something real but small, and describe it the way you'd describe it to a co
 /poteto-mode add a --json flag to this command. text output stays byte-identical. verify both.
 ```
 
-Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/poteto-mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.
+Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt.
 
 From here you can type normal follow-ups. Invoking `/poteto-mode` turns on persistent mode for this OMP session branch. The plugin keeps its rules in context on later turns until you opt out. Say "stop poteto mode" or "normal mode" to turn it off.
 

@@ -141,6 +141,7 @@ try {
     const swapSource = JSON.parse(swapSources[0]!);
     assert(!swapSource.includes("/cache/plugins/"), `swapped mode source still names the deleted version: ${swapSource}`);
     assert(await Bun.file(join(swapSource, "SKILL.md")).exists(), "swapped mode source stays readable through the repointed runtime link");
+    assert(await Bun.file(join(swapSource, "worker.md")).exists(), "worker kickoff stays readable through the repointed runtime link");
   } finally { await swapped.dispose(); }
   console.log(JSON.stringify({ ok: true, model: requested, skills: loaded.skills.length, promptModeBlocks: promptModes, branchReplay: "passed", compaction: "active", resume: "active", naturalLanguageOptOut: "inactive", separateSession: "inactive", factorySwap: "stable-source" }));
 } finally {

@@ -58,9 +58,9 @@ start from [`configuration.example.yaml`](./templates/configuration.example.yaml
 
 the human installs benny by running `bun "$PSTACK_ROOT/src/cli.ts" benny setup --target <repo>` from the omp-pstack checkout. do not look for or invoke a discovered benny slash skill. the intent below describes what setup and the later gates must deliver.
 1. ask which repository will run the automations.
-2. run `bun "$PSTACK_ROOT/src/cli.ts" benny setup --target <repo>`. it merges the source pack into `<target-repository>/.omp/automations/benny/`: new files copied, identical files no-op, differing managed files reported as conflicts for review, destination-only files preserved. it never deletes unrelated files or overwrites user-owned configuration, feature maps, or routing maps.
-4. verify that the copied `FOR_AGENTS.md` and `skills/setup-benny/SKILL.md` exist in the target repository.
-5. read and follow `.omp/automations/benny/skills/setup-benny/SKILL.md` directly from the target repository.
+2. run `bun "$PSTACK_ROOT/src/cli.ts" benny setup --target <repo>`. it merges the source pack into `<target-repository>/.omp/automations/benny/`: new files copied, identical files no-op, differing managed files reported as conflicts for review, destination-only files preserved. review each reported diff and merge it without discarding local edits; when ownership is ambiguous, stop and ask before replacing the file. it never deletes unrelated files or overwrites user-owned configuration, feature maps, or routing maps.
+3. verify that the copied `FOR_AGENTS.md` and `skills/setup-benny/SKILL.md` exist in the target repository.
+4. read and follow `.omp/automations/benny/skills/setup-benny/SKILL.md` directly from the target repository.
 
 setup installs the omp-pstack plugin at project scope in the target (`omp plugin marketplace add <this package>` plus `omp plugin install --scope project omp-pstack@omp-pstack`) and verifies the durable declarations `.omp/plugins/installed_plugins.json` and `.omp/plugins/omp-plugins.lock.json` name omp-pstack. preserve every unrelated project configuration file.
 
