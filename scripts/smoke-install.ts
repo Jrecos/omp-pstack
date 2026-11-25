@@ -63,7 +63,7 @@ try {
     const {agents} = await task.discoverAgents(process.cwd());
     console.log(JSON.stringify({skills, agents}));
   `]));
-  for (const name of ["principle-attack-the-premise", "principle-test-behavior-not-implementation", "in-your-own-words", "sharpen", "create-formal-verification-skill", "maintain-formal-verification-skill"]) {
+  for (const name of ["principle-attack-the-premise", "principle-test-behavior-not-implementation", "in-your-own-words", "reframe", "sharpen", "create-formal-verification-skill", "maintain-formal-verification-skill"]) {
     const skill = discovered.skills.find((entry: { name: string }) => entry.name === name);
     assert(skill?.filePath.startsWith(temporary), `${name} missing from project installation`);
   }
@@ -77,6 +77,8 @@ try {
   }
   assert(discovered.skills.find((skill: { name: string; hide: boolean }) => skill.name === "poteto-mode")?.hide);
   assert(discovered.skills.find((skill: { name: string; hide: boolean }) => skill.name === "session-review")?.hide, "session-review must be discovered without model invocation");
+  assert(discovered.skills.find((skill: { name: string; hide: boolean }) => skill.name === "reframe")?.hide, "reframe must be discoverable for explicit invocation");
+  assert(existsSync(join(installedRoot, "skills", "poteto-mode", "worker.md")), "delegated workers must be able to read their kickoff reference");
   console.log(JSON.stringify({ ok: true, projectInstallation: true, bennyPackInstalled: true, destinationOnlyFilePreserved: true, cliDependenciesInstalled: true, sanitizedLogPreserved: true, skills: discovered.skills.length, upstreamAgents: 2, bennyDiscovered: false, modelInvocationDisabledPreserved: true }));
 } finally {
   await rm(temporary, { recursive: true, force: true });

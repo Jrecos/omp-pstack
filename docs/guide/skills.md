@@ -1,10 +1,10 @@
 # Skills reference
 
-The plugin ships 59 discoverable skills under `skills/`. The 35 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 59 through `/skill:<name>`.
+The plugin ships 60 discoverable skills under `skills/`. The 36 direct workflow skills have bare `/<name>` commands. The 24 supporting `principle-*` skills do not have bare commands. OMP also exposes all 60 through `/skill:<name>`.
 
 A foreign command or an OMP built-in can own a bare name. In that case, use `/skill:<name>` for the plugin skill. Workflows that dispatch agents require configured model roles. `/setup-pstack` selects an approved model pool and saves the role map. An unset or unavailable role blocks dispatch rather than choosing another model.
 
-## Direct workflow skills (35)
+## Direct workflow skills (36)
 
 | Skill | Purpose and use case |
 |---|---|
@@ -21,6 +21,7 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 | [`interrogate`](../../skills/interrogate/SKILL.md) | Run independent adversaries in isolated worktrees and retain only findings whose commands reproduce a failure against the intended behavior. |
 | [`/in-your-own-words`](../../skills/in-your-own-words/SKILL.md) | Restate the user's goal and problem before starting. |
 | [`/sharpen`](../../skills/sharpen/SKILL.md) | Rewrite a prompt with expert methods, primary material, and an outside check without executing the task. |
+| [`reframe`](../../skills/reframe/SKILL.md) | Teach the expert terms for what you are building, check whether the description names more than one problem, and rewrite it with the words. |
 | [`/create-formal-verification-skill`](../../skills/create-formal-verification-skill/SKILL.md) | Generate a project-local formal check of a high-risk property and prove it catches a real break. |
 | [`/maintain-formal-verification-skill`](../../skills/maintain-formal-verification-skill/SKILL.md) | Bring formal checks back in sync with changed code and distinguish verification drift from product bugs. |
 | [`/ketchup`](../../skills/ketchup/SKILL.md) | Explain current-chat changes with real visuals and list every waiting user decision without truncation. |
@@ -31,7 +32,7 @@ A foreign command or an OMP built-in can own a bare name. In that case, use `/sk
 | [`/poteto-help`](../../skills/poteto-help/SKILL.md) | Find the skill, playbook, or principle for your goal and return a prompt to send. It runs only when invoked and does not start the work. |
 | [`poteto-mode`](../../skills/poteto-mode/SKILL.md) | Route a nontrivial task through a matching playbook and supporting skills. The mode stays active until disabled. |
 | [`recall`](../../skills/recall/SKILL.md) | Rebuild recent working context from chat history and the shared record into a current-state brief. |
-| [`reflect`](../../skills/reflect/SKILL.md) | Review the active transcript with parallel reviewers and propose concrete skill edits from durable lessons. |
+| [`reflect`](../../skills/reflect/SKILL.md) | Mine the active transcript for durable lessons and propose concrete skill edits for explicit approval. |
 | [`session-review`](../../skills/session-review/SKILL.md) | Review recent workspace sessions for supported repository navigation, setup, or documentation problems. |
 | [`setup-pstack`](../../skills/setup-pstack/SKILL.md) | Choose an approved model pool and save the role map used by delegated workflows. |
 | [`show-me-your-work`](../../skills/show-me-your-work/SKILL.md) | Keep a TSV decision trail with reasons and evidence during long or unattended work. |
@@ -79,7 +80,9 @@ These skills guide decisions within workflows, especially `/poteto-mode`. They h
 
 ## Other packaged material
 
-The [23 playbooks](../../skills/poteto-mode/playbooks/) are files routed by `poteto-mode`, not separately discoverable skills or slash commands. Nested `references/` files support skill bodies; they are not skills. The `pstack_models`, `pstack_agent`, and `pstack_history` tools are tools, not slash commands. The `poteto-agent` and `comment-sicko` agents are dispatched through the native task tool. The Benny operational skills under `automations/benny/skills/` are read by their automation runner. They are outside the plugin's skill discovery root and do not have `/skill:<name>` entries here.
+The [23 playbooks](../../skills/poteto-mode/playbooks/) are routed by `poteto-mode`. They are not separately discoverable skills or slash commands. OMP retains Orchestrate for standing programs. It also retains `check-plan` after upstream removed both. Use `bun "$PSTACK_ROOT/src/cli.ts" check-plan <plan.md>` to check a written plan's structure before execution.
+
+Nested `references/` files support skills. `pstack_models`, `pstack_agent`, and `pstack_history` are tools, not slash commands. `poteto-agent` and `comment-sicko` are native task agents. The Benny runner reads its operational skills under `automations/benny/skills/`, outside the plugin's skill discovery root.
 
 `bun run check:content` verifies the shipped skill set and reports its count.
 

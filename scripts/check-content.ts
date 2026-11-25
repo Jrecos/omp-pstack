@@ -8,16 +8,16 @@ import { manifestDigest } from "./manifest-digest.ts";
 
 const EXPECTED_HEADER = {
   repository: "https://github.com/cursor/plugins",
-  commit: "1ba91fc25c0977741dd0e267849e6234b037ed0a",
-  version: "0.15.36",
-  subtree: "4719e1c4b4c43bac85d4206a8b41dd2899769c1c",
+  commit: "41e400932eca14f289e7db717a70455256b6d388",
+  version: "0.15.48",
+  subtree: "971573532de6714a4ddff8ec39b52d021ebf161a",
 };
 
 const DIRECT_SKILLS = [
   "architect", "arena", "automate-me", "benchmark-checklist", "blast-radius", "bro",
   "correct", "create-formal-verification-skill", "create-verification-skill", "figure-it-out", "how", "in-your-own-words", "interrogate", "ketchup", "ketchup-video",
   "maintain-formal-verification-skill", "maintain-verification-skill", "make-bot-ui", "no-comments", "poteto-help", "poteto-mode",
-  "recall", "reflect", "session-review", "setup-pstack", "sharpen", "show-me-your-work", "statechart", "swarm", "tdd",
+  "recall", "reflect", "reframe", "session-review", "setup-pstack", "sharpen", "show-me-your-work", "statechart", "swarm", "tdd",
   "teach", "technical-writing", "typescript-best-practices", "unslop", "why",
 ];
 
@@ -129,10 +129,10 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
   },
   {
     id: "native-agent-dispatch",
-    pattern: /^agents\/(comment-sicko|poteto-agent)\.md$|^skills\/no-comments\/SKILL\.md$/,
+    pattern: /^agents\/(comment-sicko|poteto-agent)\.md$|^skills\/no-comments\/SKILL\.md$|^skills\/poteto-mode\/worker\.md$/,
     kind: "omp/cli scenario",
     artifacts: ["scripts/smoke-install.ts", "scripts/smoke.ts"],
-    contract: "Native agent frontmatter (tools, autoloadSkills, no-spawns) proven by discovery of both upstream agents from a real project install, plus the poteto-mode autoload session scenario.",
+    contract: "Marketplace installation discovers both upstream agents and ships the worker kickoff reference. The native mode smoke also checks that a running session can read that reference after a plugin-version swap.",
   },
   {
     id: "benny-deployment-prose",
@@ -275,20 +275,6 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     contract: "Playbook host translations are instructions, never executed as a unit; the honest claim is link/asset health and inventory integrity.",
   },
   {
-    id: "reviewer-reference-prose",
-    pattern: /^skills\/reflect\/references\/(divergent|judgment|tooling)-reviewer\.md$/,
-    kind: "pinned-byte/link inspection",
-    artifacts: ["scripts/check-content.ts"],
-    contract: "Reviewer scan-pattern translations are prose; honest claim is link health and inventory integrity. The reviewer dispatch itself is covered by the model-dispatch class.",
-  },
-  {
-    id: "why-source-registry-prose",
-    pattern: /^skills\/why\/references\/source-playbook\.md$/,
-    kind: "pinned-byte/link inspection",
-    artifacts: ["scripts/check-content.ts"],
-    contract: "The source-category registry is prose the why skill reads to pick one playbook per investigator, never executed as a unit; the honest claim is link health and inventory integrity for the added Plane row.",
-  },
-  {
     id: "watch-pr-mergeability-gate",
     pattern: /^skills\/poteto-mode\/scripts\/watch-pr\/(policy(?:\.test)?|render|types)\.ts$/,
     kind: "omp/cli scenario",
@@ -309,20 +295,6 @@ const VERIFICATION_CLASSES: VerificationClass[] = [
     artifacts: ["skills/poteto-mode/scripts/watch-pr/cli.test.ts"],
     contract: "Nested-manifest removal is covered by the watch-pr CLI suite resolving commander through the root package graph.",
     authorizesAbsence: true,
-  },
-  {
-    id: "helper-check-plan",
-    pattern: /^skills\/poteto-mode\/scripts\/check-plan\.mjs$/,
-    kind: "omp/cli scenario",
-    artifacts: ["tests/check-plan.test.ts"],
-    contract: "check-plan wording adaptation proven by its focused suite: complete plan passes, missing ten-lane swarm-workers sentence fails.",
-  },
-  {
-    id: "helper-check-plan-fixture",
-    pattern: /^skills\/poteto-mode\/scripts\/check-plan\.test\.ts$/,
-    kind: "pinned-byte/link inspection",
-    artifacts: ["scripts/check-content.ts"],
-    contract: "The upstream fence regression fixture uses Bun and the native plan vocabulary. This class verifies fixture provenance and links, not a model-driven workflow.",
   },
   {
     id: "helper-worktree-audit",
@@ -749,10 +721,14 @@ async function checkWhySourceRegistry(root: string): Promise<void> {
 }
 
 async function checkLinks(root: string, inv: Inventory): Promise<void> {
+  const targets = new Set(inv.files.map(({ target }) => target));
+  targets.add("docs/guide/skills.md");
+  targets.add("skills/poteto-mode/playbooks/orchestrate.md");
+  for await (const target of new Bun.Glob("skills/why/references/**/*.md").scan({ cwd: root })) targets.add(target);
   let placeholders = 0;
-  for (const f of inv.files) {
-    if (!f.target.endsWith(".md") || !(await exists(join(root, f.target)))) continue;
-    const text = await readFile(join(root, f.target), "utf8");
+  for (const file of targets) {
+    if (!file.endsWith(".md") || !(await exists(join(root, file)))) continue;
+    const text = await readFile(join(root, file), "utf8");
     for (const { line, target } of markdownLinks(text)) {
       if (/^(https?:|mailto:|<)/i.test(target) || target.startsWith("#")) continue; // external or in-page anchor
       const path = target.split("#")[0].split("?")[0];
@@ -763,9 +739,9 @@ async function checkLinks(root: string, inv: Inventory): Promise<void> {
         placeholders++;
         continue;
       }
-      const resolved = normalize(join(dirname(f.target), path));
+      const resolved = normalize(join(dirname(file), path));
       if (!(await exists(join(root, resolved)))) {
-        fail(`${f.target}:${line}: broken relative link "${target}" -> ${resolved}`);
+        fail(`${file}:${line}: broken relative link "${target}" -> ${resolved}`);
       }
     }
   }
@@ -1094,7 +1070,7 @@ async function main(): Promise<void> {
   } else {
     checkHeader(inv);
     const digest = inventoryDigest(inv.files);
-    const pinnedDigest = "b5d6ae58923e929c15d223472da855201c7660091bee2dbb6e3e6ef63fa7cfb1";
+    const pinnedDigest = "a9cc99fc9ccf6a40c032ad893cd34e0fbd94eee58e782c8b9ef0c0bb68aa10dd";
     if (digest !== pinnedDigest) {
       fail(`upstream.json: pinned integrity digest mismatch (computed ${digest}, pinned ${pinnedDigest}) — source rows, targets, modes, or adaptation verification metadata (kind/artifacts) were changed without repinning`);
     }

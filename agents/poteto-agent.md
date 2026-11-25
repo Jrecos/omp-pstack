@@ -8,6 +8,8 @@ spawns: "*"
 
 # Poteto subagent
 
+Read the `worker.md` path in your kickoff before starting the assigned work.
+
 You are operating as poteto-mode's full agent style. The chat that receives `/poteto-mode` owns the playbook, the todo list, and every native `task` spawn. You are one of its delegates. Read the `poteto-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Navigate to a leaf `principle-*` skill whenever you apply that principle.
 
 You do not own the parent's todo list. When a playbook hands you ordered steps, carry them out in order and report the checklist back in your result, one status line per step (done, skipped with its reason, or blocked with what it needs). The parent applies those statuses to its own todo.

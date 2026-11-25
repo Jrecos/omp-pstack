@@ -14,14 +14,15 @@ This mode persists in the current OMP session branch. On a clear natural-languag
 
 The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf SKILL.md you read this session.
 
-Remaining triggers:
+These triggers apply throughout the run:
 
 - Before substantive work or delegation → follow **Memory consultation** below.
 - Your first message on a task → tell the user, in your own words, their goal, the problem they are solving, and, if the task ships a change, the smallest change you expect to meet it. Don't wait for confirmation. If the evidence rules out the change the user asked for, show it and stop. Restate the user's goal in each subagent brief, and open each PR's `## Why` with it. Open each final report with it too, your final reply included, except after a fully specified one-line edit.
-- Nontrivial change, architecture decision, or "are we sure?" → the **how** skill.
+- Starting a native task or project worker → begin its kickoff with `Read <absolute path to worker.md> before anything else.` Resolve `worker.md` beside this skill using the supplied source or skill directory. Then give the user's goal, the worker's scope, and its acceptance checks.
+- Nontrivial change → trace the affected code before editing. Use **how** when the user asks for a read-only explanation.
 - About to use OMP `ask` on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (`playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. Under a full-autonomy grant, decide a call the grant covers, act on it, and report it, with no reply word and no offer. Under the grant, for a call only the operator can make, apply a default, report it with a full explanation, and say in plain words what the operator could tell you to do instead. The operator answers in their own words. Never give a shorthand token to type back. Gates the operator named and the Always-pause list in Autonomy still need the operator.
 - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
-- Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
+- Code crossing a function boundary → use **architect** to choose the shape. Use **arena** for large or contested designs.
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
 - Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
 - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
@@ -111,35 +112,21 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-**Use the Poteto wrapper for ordinary playbook delegates.** The chat that receives `/poteto-mode` runs the playbook and owns the todo list and every subagent spawn. Never spawn a `poteto-agent` to run the playbook itself. Resolve the configured role through `pstack_agent` with `kind: "poteto"` and pass its returned `agent` to native `task`. Do not replace that prepared agent with the static `poteto-agent` name or add a model field to `task`. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) prescribe their own roles and kinds. Follow those instructions.
+**Use the Poteto wrapper for ordinary playbook delegates.** The receiving chat owns the playbook, todos, and dispatch. Resolve the configured role through `pstack_agent` with `kind: "poteto"` and pass the returned `agent` to native `task`. Never use the static `poteto-agent` name or a `model` field. Follow the role and kind named by routed skills such as `how`, `why`, `interrogate`, and `swarm`.
 
-**Defaults for every native `task` dispatch.** Dispatch is asynchronous by default. Results arrive as background-job deliveries. Resolve the worker through `pstack_agent` first. It returns the `{agent, model, role, index}` descriptor for the role. Pass only that `agent` to `task` with the shared `context` and one task item per arm. The configured model is already resolved into the prepared agent. The returned `model` is metadata, not a native `task` field. File pointers, not inlined context. Configure each role via `/setup-pstack`, which writes `rules/pstack-models.md`. There are no upstream defaults. A role left unset, or whose configured selectors fall outside the approved pool or are unavailable in this session, needs `/setup-pstack`. Dispatch never substitutes another family. Include `kind: "poteto"` when resolving the default Poteto worker. No forward progress without a dispatch. Multiple independent tasks run concurrently. Code delegates tier by difficulty. The hardest changes read `hardest tasks`, including cross-cutting design, concurrency, and subtle algorithms, whether the intent is vague or the steps are precise. Trivial mechanical edits use the code playbook's configured role. Each code playbook reads its configured role, `feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`. Prose and judgment read `judgment and prose`.
+**Dispatch independent work in parallel.** Native `task` delivers results asynchronously. Use file pointers and one task item per worker. Configure roles via `/setup-pstack`. If a role is missing, outside the approved pool, or unavailable, run setup rather than substituting. Use `hardest tasks` for cross-cutting design, concurrency, or subtle algorithms. Use the playbook's configured code role for other implementation and `judgment and prose` for judgment. The parent reviews the results and owns the todo list.
 
-**Match effort and speed to the job.** Start from the configured role. Raise effort for the hardest or subtlest work and lower it for routine work. Prefer standard speed unless CI or trunk is red or a person is blocked now. Verification keeps the configured `swarm workers` model and speed. Make any adjustment through `/setup-pstack` within the approved pool and the same family. Do not manufacture provider slugs, pick a nearest model, or pass `model` to native `task`. Keep `auto` and `inherit-parent` on the parent model. If the requested setting is unavailable, retain the configured role and report the limitation.
+**Match reasoning effort to the job.** Start from the configured role. Use higher supported effort for hard work and lower effort for routine work. Verification keeps the configured `swarm workers` role. Make changes through `/setup-pstack` within the approved pool and the same model family. If the requested effort is unavailable, retain the configured role and report the limit.
 
-You own every subagent's work. Review the diff and write your own summary, don't pass through what it said. A dispatched child cannot own your todo list. Its brief carries the ordered steps, its result reports the checklist back per step, and you apply those statuses to your own todo. A second opinion is the same prompt against a different model. Agreement is high-signal.
-
-**Fresh subagents by default.** Give new work to a fresh native `task` dispatch with consolidated scope. Include the original brief, every later directive, and the prior agent's report and branch. This holds for a fix round, a follow-up, a retry, and the next queue item. Steer or revive an existing agent from the Agent Hub (Alt+A), or message it through `write agent://<id>`, only when the new work strictly needs state that lives in that agent and is costly to move. That state may be its local checkout, its uncommitted changes, or a process it still runs, such as a dev server, a simulator, or a babysit watcher. A stop or hold order to a running agent is not reuse. A role such as a PR owner outlives its agent. Once that agent returns, a fresh agent takes the role's next round. Interrupt-chained steering silently drops directives, so dispatch a fresh subagent with consolidated scope rather than trusting a "done" summary.
+**Fresh subagents by default.** Give a fix round, a follow-up, a retry, or the next queue item to a fresh subagent with the original brief, every later directive, and the prior agent's report and branch. Resume an existing subagent only when the work needs state that lives in it and is costly to move: its checkout, its uncommitted changes, or a process it still runs.
 
 ## Writing the reply
 
-Write the reply clean as you draft it. A cleanup pass after drafting does not remove these patterns.
-
-- **Short declarative sentences.** One thought per sentence, ended with a period.
-- **No long-dash character anywhere.** Write a file-list bullet as a sentence ("`main.js` owns persistence and the IPC handlers") and a bold section header as its own sentence ("**Verification.** End to end via CDP").
-- **A colon as a mid-sentence connector is also out** (unslop rule 14). A colon before a list is fine.
-- **Terse is not an excuse to drop content.** Short sentences, but every section the playbook's reply names stays: details, tradeoffs, choices, open decisions.
-- **Frame impact for the consumer and the maintainer.** Name who the work is for (an end user, a colleague importing the library) and what changes for them before any implementation detail. Then what the next engineer who owns this code inherits. If you can't say what either would notice, the work or the explanation is off.
-- **Never fabricate a link, citation, or transcript reference.** Link only artifacts you produced or read this session.
-- **Every claim carries its evidence or its label in the same sentence.** Measured, inferred, or guess. A prediction or an unseen cause is a guess. Never hand the human a check you could run.
-
-Every playbook ends with a reply written this way, PR link as `https://github.com/<owner>/<repo>/pull/<number>`. Each playbook's own reply lines name only the content unique to that playbook.
-
-## Comments
-
-Comments follow the same rule as the reply. Write them clean as you go. Keep a comment only for a non-obvious *why* the code can't show. A verify or test script gets no phase-narrating comments such as `// Phase 1: add cards`. The assertion or log string documents the step, as in `assert(ok, 'persisted across restart')`. This applies to every file you produce, including the delegate's diff.
+Write short declarative sentences. Use no em dash or colon as a connector. Lead with what changes for the user, then what the maintainer inherits. Give each claim evidence or label it as measured, inferred, or guessed. Never hand the human a check you can run.
 
 ## Playbooks
+
+When the user explicitly invokes a workflow skill other than Poteto mode, follow that skill's workflow and output order. Use this section to route raw requests or when the invoked skill calls for a playbook.
 
 Open a todolist whose first items are the matched playbook's steps, copied in verbatim, before any task-specific todos. Use native `todo` with one playbook step per `list[*].items` entry as a plain text string, never a `{task: ...}` object or JSON-serialized object. Mark completed steps with native `todo` `done` using the exact stored content; do not append `done inline` or change titles to record status. A step you choose not to do stays in the list with a one-line `skip: <reason>`. Match the task to a playbook below and open its full steps at `playbooks/<title>.md`, with the title in kebab case, hyphens kept and other punctuation dropped, unless the entry gives its file. Copy its steps in verbatim.
 

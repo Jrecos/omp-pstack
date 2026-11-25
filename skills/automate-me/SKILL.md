@@ -33,7 +33,11 @@ Update mode changes the rest of the flow:
 
 Mine the active workspace's chat history before fanning out. Reach it with `pstack_history` (`action: "list"` then `action: "read"`; workspace-scoped, excludes the current and subagent sessions). Use only that workspace's sessions. Don't glob across other workspaces' session directories. That crosses workspace boundaries and reads private chats from unrelated projects.
 
-Survey recent agent conversations within that scope for recurring patterns. Run multiple parallel subagents across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Each slice mining subagent reads the slice the parent provides (the `pstack_history` list entries or session JSONL paths, workspace-scoped), looks for the signals below, and returns a short structured list of patterns it saw with evidence pointers. Default signals worth hunting:
+Survey recent agent conversations within that scope for recurring patterns. Run parallel subagents across slices of history, such as the last 2-4 weeks split into three slices. Each miner reads the workspace-scoped slice the parent provides through `pstack_history` list entries or session JSONL paths. Each returns a short structured list of patterns with evidence pointers.
+
+Resolve history miners through `pstack_agent` with `role: "judgment and prose"` and `kind: "readonly"`, then dispatch native `task` with only the returned `agent`. Use the configured pool and supported reasoning effort, per **poteto-mode**. If the role is unset or unavailable, run `/setup-pstack`. Never substitute a model.
+
+Hunt for these signals:
 
 - Response preferences (length, tone, format, "dumb it down" corrections)
 - Delegation habits (subagents, models, specialized workflows, parallelism)

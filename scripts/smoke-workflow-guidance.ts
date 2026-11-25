@@ -41,6 +41,7 @@ const observations = join(temporary, "documentation-observations.txt");
 const noImpactSource = join(temporary, "documentation-no-impact.ts");
 const noImpactDiff = join(temporary, "documentation-no-impact.diff");
 const noImpactReference = join(temporary, "documentation-no-impact-reference.md");
+const importer = join(temporary, "webhook-importer.ts");
 const fixtureFiles = [
   [boundarySource, `export const listenerHost = "127.0.0.1";
 export const auditRetentionDays = 30;
@@ -91,6 +92,15 @@ No executable statement, signature, configuration, or contract changed.
 acceptCount accepts nonnegative integers and rejects other numbers.
 The spelling of source comments is not part of the public contract.
 `],
+  [importer, `export class Importer {
+  pending: string[] = [];
+  accept(eventId: string) {
+    if (this.pending.length === 100) return 503;
+    this.pending.push(eventId);
+    return 202;
+  }
+}
+`],
 ] as const;
 type Seed = {
   role: "user" | "assistant" | "notification" | "subagent";
@@ -105,6 +115,16 @@ type Scenario = {
   semanticConditions?: string[];
 };
 const cases: Scenario[] = [
+  {
+    name: "reframe",
+    files: [importer],
+    prompt: `/reframe I want to stop webhooks from overwhelming our importer. Start from ${importer}. Separate the possible problems before picking a term. Use read-only tools.`,
+    semanticConditions: [
+      "Before choosing a term, distinguish two or three plausible problems and give a sign that separates each from the others.",
+      "Use the source's bounded pending queue and HTTP 503 response to justify the most likely interpretation. Do not claim the importer deduplicates or rate-limits requests.",
+      "Rewrite the operator's description using the chosen terms. Do not cite any source the run could not verify.",
+    ],
+  },
   {
     name: "autopilot-full",
     files: [full],
@@ -271,7 +291,9 @@ try {
             reportRuntimeError: (error) => { throw new Error(error.error); },
           });
           await session.setActiveToolsByName(["read"]);
-          if (scenario.name === "ketchup") assert(session.extensionRunner?.getCommand("ketchup"), "native ketchup command registered");
+          if (scenario.name === "ketchup" || scenario.name === "reframe") {
+            assert(session.extensionRunner?.getCommand(scenario.name), `native ${scenario.name} command registered`);
+          }
           await session.prompt(scenario.prompt);
         })(),
         completion.promise,
